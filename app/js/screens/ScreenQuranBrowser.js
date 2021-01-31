@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View, StatusBar, Text } from "react-native";
+import { StyleSheet, View, StatusBar, Text, ScrollView } from "react-native";
 import QuranPage from "../helpers/QuranPage";
 import Ayah from "../helpers/Ayah";
 import AyahRenderer from "../subComponents/AyahRenderer";
@@ -17,16 +17,18 @@ export default class ScreenQuranBrowser extends Component {
     var longPressHandlers = this.getItemOnLongPressHandlers();
     return (
       <View style={styles.pageContainer}>
-        <Text>
-          {this.props.curPage.ayat.map((ayah) => (
-            <AyahRenderer
-              key={ayah.id}
-              curAyah={ayah}
-              onPresses={pressHandlers}
-              onLongPresses={longPressHandlers}
-            />
-          ))}
-        </Text>
+        <ScrollView>
+          <Text style={styles.textContainer}>
+            {this.props.curPage.ayat.map((ayah) => (
+              <AyahRenderer
+                key={ayah.id}
+                curAyah={ayah}
+                onPresses={pressHandlers}
+                onLongPresses={longPressHandlers}
+              />
+            ))}
+          </Text>
+        </ScrollView>
       </View>
     );
   }
@@ -50,7 +52,7 @@ export default class ScreenQuranBrowser extends Component {
   }
 
   onAyahPress(ayah) {
-    Toast.showWithGravity("ayah press " + ayah.id, Toast.LONG, Toast.CENTER);
+    Toast.showWithGravity("ayah press " + ayah.id, Toast.SHORT, Toast.CENTER);
   }
 }
 const styles = StyleSheet.create({
@@ -61,11 +63,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     flexDirection: "row",
-    alignItems: "flex-start",
-    alignContent: "flex-start",
     backgroundColor: "#666666",
+  },
+  textContainer: {
     direction: "rtl",
-    flexWrap: "wrap",
-    justifyContent: "flex-end",
+    marginRight: 8,
+    marginLeft: 8,
+    marginTop: 5,
+    marginBottom: 5,
+    textAlign: "justify",
   },
 });

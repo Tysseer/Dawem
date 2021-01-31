@@ -33,7 +33,7 @@ export default class AyahRenderer extends Component {
 }
 const styles = StyleSheet.create({
   ayahStyle: {
-    direction: "rtl",
     fontSize: 25,
+    padding: 2,
   },
 });
