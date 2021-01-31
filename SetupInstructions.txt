@@ -1,0 +1,8 @@
+npm install expo-cli --global
+npx expo init Dawem   // blank
+cd Dawem
+npm start
+npm i react-native
+npm i react-native-check-box --save
+npm i react-native-svg --save
+npm install react-native-simple-toast --save
