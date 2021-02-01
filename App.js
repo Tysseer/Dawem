@@ -10,7 +10,7 @@ import QuranReader from "./app/js/helpers/QuranReader";
 export default function App() {
   var read = new QuranReader();
   var page = read.getPage(3);
-  return <ScreenQuranBrowser curPage={page} />;
+  return <ScreenQuranBrowser strtPage={page} quranReader={read} />;
   //return <ScreenRevisions revisionsManager={rev} />;
   //return <ScreenWelcome />;
   //return <ScreenLanguage />;

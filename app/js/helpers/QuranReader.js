@@ -2,7 +2,39 @@ import Ayah from "./Ayah";
 import QuranPage from "./QuranPage";
 export default class QuranReader {
   constructor() {}
-  getPage(nPage) {
+  getSurahFromPage(iPage) {
+    var nNumPages = this.getNumPages();
+    while (iPage < 1) iPage += nNumPages;
+    while (iPage > nNumPages) iPage -= nNumPages;
+
+    return 1;
+  }
+  getPageFromSurah(iSurah) {
+    var nNumSuras = 114;
+    while (iSurah < 1) iSurah += nNumSuras;
+    while (iSurah > nNumSuras) iSurah -= nNumSuras;
+    return 1;
+  }
+  getJuzuFromPage(iPage) {
+    var nNumPages = this.getNumPages();
+    while (iPage < 1) iPage += nNumPages;
+    while (iPage > nNumPages) iPage -= nNumPages;
+    return 1;
+  }
+  getPageFromJuzu(iJuzu) {
+    var nNumJuzu = 30;
+    while (iJuzu < 1) iJuzu += nNumJuzu;
+    while (iJuzu > nNumJuzu) iJuzu -= nNumJuzu;
+    return 1;
+  }
+  getNumPages() {
+    return 604; // todo: read from db
+  }
+  getPage(iPage) {
+    console.log("loading quran page # " + iPage);
+    var nNumPages = this.getNumPages();
+    while (iPage < 1) iPage += nNumPages;
+    while (iPage > nNumPages) iPage -= nNumPages;
     // return array of pbject of Ayah for page,
     var retPage = [];
     retPage.push(
@@ -89,6 +121,6 @@ export default class QuranReader {
         "أُولَٰئِكَ الَّذِينَ اشْتَرَوُا الضَّلَالَةَ بِالْهُدَىٰ فَمَا رَبِحَت تِّجَارَتُهُمْ وَمَا كَانُوا مُهْتَدِينَ"
       )
     );
-    return new QuranPage(3, retPage);
+    return new QuranPage(iPage, retPage);
   }
 }

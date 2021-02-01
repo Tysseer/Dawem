@@ -11,14 +11,19 @@ import {
   PanResponder,
 } from "react-native";
 import QuranPage from "../helpers/QuranPage";
+import QuranReader from "../helpers/QuranReader";
 import AyahRenderer from "../subComponents/AyahRenderer";
 import Toast from "react-native-simple-toast";
 export default class ScreenQuranBrowser extends Component {
   static propTypes = {
-    curPage: PropTypes.instanceOf(QuranPage),
+    strtPage: PropTypes.instanceOf(QuranPage).isRequired,
+    quranReader: PropTypes.instanceOf(QuranReader).isRequired,
   };
   constructor(props) {
     super(props);
+    this.state = {
+      curPage: this.props.strtPage,
+    };
   }
 
   render() {
@@ -31,7 +36,7 @@ export default class ScreenQuranBrowser extends Component {
         <View style={styles.pageContainer}>
           <ScrollView>
             <Text style={styles.textContainer}>
-              {this.props.curPage.ayat.map((ayah) => (
+              {this.state.curPage.ayat.map((ayah) => (
                 <AyahRenderer
                   key={ayah.id}
                   curAyah={ayah}
@@ -153,51 +158,45 @@ export default class ScreenQuranBrowser extends Component {
         break;
       }
       default: {
-        console.log("Undeteceted action");
+        console.log("Undetected action");
       }
     }
   }
   onNextPage() {
-    Toast.showWithGravity(
-      "next page " + this.props.curPage.pageNumber,
-      Toast.SHORT,
-      Toast.CENTER
-    );
+    var iPage = this.state.curPage.pageNumber + 1;
+    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
   }
   onNextSurah() {
-    Toast.showWithGravity(
-      "next surah " + this.props.curPage.pageNumber,
-      Toast.SHORT,
-      Toast.CENTER
+    var iSurah = this.props.quranReader.getSurahFromPage(
+      this.state.curPage.pageNumber
     );
+    var iPage = this.props.quranReader.getPageFromSurah(iSurah + 1);
+    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
   }
   onNextJuzu() {
-    Toast.showWithGravity(
-      "next juzuu " + this.props.curPage.pageNumber,
-      Toast.SHORT,
-      Toast.CENTER
+    var iJuzu = this.props.quranReader.getJuzuFromPage(
+      this.state.curPage.pageNumber
     );
+    var iPage = this.props.quranReader.getPageFromJuzu(iJuzu + 1);
+    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
   }
   onPrevPage() {
-    Toast.showWithGravity(
-      "prev page " + this.props.curPage.pageNumber,
-      Toast.SHORT,
-      Toast.CENTER
-    );
+    var iPage = this.state.curPage.pageNumber - 1;
+    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
   }
   onPrevSurah() {
-    Toast.showWithGravity(
-      "prev surah " + this.props.curPage.pageNumber,
-      Toast.SHORT,
-      Toast.CENTER
+    var iSurah = this.props.quranReader.getSurahFromPage(
+      this.state.curPage.pageNumber
     );
+    var iPage = this.props.quranReader.getPageFromSurah(iSurah - 1);
+    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
   }
   onPrevJuzu() {
-    Toast.showWithGravity(
-      "prev juzuu " + this.props.curPage.pageNumber,
-      Toast.SHORT,
-      Toast.CENTER
+    var iJuzu = this.props.quranReader.getJuzuFromPage(
+      this.state.curPage.pageNumber
     );
+    var iPage = this.props.quranReader.getPageFromJuzu(iJuzu - 1);
+    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
   }
 }
 const styles = StyleSheet.create({
