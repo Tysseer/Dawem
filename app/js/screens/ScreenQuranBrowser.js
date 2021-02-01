@@ -16,19 +16,24 @@ export default class ScreenQuranBrowser extends Component {
     var pressHandlers = this.getItemOnPressHandlers();
     var longPressHandlers = this.getItemOnLongPressHandlers();
     return (
-      <View style={styles.pageContainer}>
-        <ScrollView>
-          <Text style={styles.textContainer}>
-            {this.props.curPage.ayat.map((ayah) => (
-              <AyahRenderer
-                key={ayah.id}
-                curAyah={ayah}
-                onPresses={pressHandlers}
-                onLongPresses={longPressHandlers}
-              />
-            ))}
-          </Text>
-        </ScrollView>
+      <View style={styles.background}>
+        <View style={styles.pageContainer}>
+          <ScrollView>
+            <Text style={styles.textContainer}>
+              {this.props.curPage.ayat.map((ayah) => (
+                <AyahRenderer
+                  key={ayah.id}
+                  curAyah={ayah}
+                  onPresses={pressHandlers}
+                  onLongPresses={longPressHandlers}
+                />
+              ))}
+            </Text>
+          </ScrollView>
+        </View>
+        <View style={styles.toolBar}>
+          <Text>{"\t"} nav. buttons here</Text>
+        </View>
       </View>
     );
   }
@@ -46,7 +51,7 @@ export default class ScreenQuranBrowser extends Component {
   onAyahLongPress(ayah) {
     Toast.showWithGravity(
       "ayah Longpress " + ayah.id,
-      Toast.LONG,
+      Toast.SHORT,
       Toast.CENTER
     );
   }
@@ -56,12 +61,17 @@ export default class ScreenQuranBrowser extends Component {
   }
 }
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
   pageContainer: {
     marginTop: StatusBar.currentHeight + 2,
-    borderColor: "#ffffffaa",
-    borderWidth: 4,
+
     width: "100%",
-    height: "100%",
+    height: "91%",
     flexDirection: "row",
     backgroundColor: "#666666",
   },
@@ -72,5 +82,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     textAlign: "justify",
+  },
+  toolBar: {
+    width: "100%",
+    flex: 1,
+    alignSelf: "flex-end",
+    borderTopColor: "yellow",
+    borderTopWidth: 1,
   },
 });
