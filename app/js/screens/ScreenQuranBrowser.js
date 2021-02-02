@@ -18,7 +18,7 @@ import Toast from "react-native-simple-toast";
 export default class ScreenQuranBrowser extends Component {
   constructor(props) {
     super(props);
-    this.strtPage = 3;
+    this.strtPage = props.route.params.strtPage;
     this.quranReader = new QuranReader();
     this.quranIndexer = new QuranIndexer();
     var page = this.quranReader.getPage(this.strtPage);
