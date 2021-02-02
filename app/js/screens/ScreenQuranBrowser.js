@@ -11,18 +11,19 @@ import {
   PanResponder,
 } from "react-native";
 import QuranPage from "../helpers/QuranPage";
+import QuranIndexer from "../helpers/QuranIndexer";
 import QuranReader from "../helpers/QuranReader";
 import AyahRenderer from "../subComponents/AyahRenderer";
 import Toast from "react-native-simple-toast";
 export default class ScreenQuranBrowser extends Component {
-  static propTypes = {
-    strtPage: PropTypes.instanceOf(QuranPage).isRequired,
-    quranReader: PropTypes.instanceOf(QuranReader).isRequired,
-  };
   constructor(props) {
     super(props);
+    this.strtPage = 3;
+    this.quranReader = new QuranReader();
+    this.quranIndexer = new QuranIndexer();
+    var page = this.quranReader.getPage(this.strtPage);
     this.state = {
-      curPage: this.props.strtPage,
+      curPage: page,
     };
   }
 
@@ -49,6 +50,14 @@ export default class ScreenQuranBrowser extends Component {
         </View>
         <View style={styles.toolBar}>
           {nextBtns}
+          <View style={styles.toolButton}>
+            <TouchableWithoutFeedback onPress={this.onBackToList.bind(this)}>
+              <Image
+                source={require("../../assets/icons/list.png")}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </TouchableWithoutFeedback>
+          </View>
           {prevBtns}
         </View>
       </View>
@@ -164,39 +173,42 @@ export default class ScreenQuranBrowser extends Component {
   }
   onNextPage() {
     var iPage = this.state.curPage.pageNumber + 1;
-    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
+    this.setState({ curPage: this.quranReader.getPage(iPage) });
   }
   onNextSurah() {
-    var iSurah = this.props.quranReader.getSurahFromPage(
+    var iSurah = this.quranIndexer.getSurahFromPage(
       this.state.curPage.pageNumber
     );
-    var iPage = this.props.quranReader.getPageFromSurah(iSurah + 1);
-    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
+    var iPage = this.quranIndexer.getPageFromSurah(iSurah + 1);
+    this.setState({ curPage: this.quranReader.getPage(iPage) });
   }
   onNextJuzu() {
-    var iJuzu = this.props.quranReader.getJuzuFromPage(
+    var iJuzu = this.quranIndexer.getJuzuFromPage(
       this.state.curPage.pageNumber
     );
-    var iPage = this.props.quranReader.getPageFromJuzu(iJuzu + 1);
-    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
+    var iPage = this.quranIndexer.getPageFromJuzu(iJuzu + 1);
+    this.setState({ curPage: this.quranReader.getPage(iPage) });
   }
   onPrevPage() {
     var iPage = this.state.curPage.pageNumber - 1;
-    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
+    this.setState({ curPage: this.quranReader.getPage(iPage) });
   }
   onPrevSurah() {
-    var iSurah = this.props.quranReader.getSurahFromPage(
+    var iSurah = this.quranIndexer.getSurahFromPage(
       this.state.curPage.pageNumber
     );
-    var iPage = this.props.quranReader.getPageFromSurah(iSurah - 1);
-    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
+    var iPage = this.quranIndexer.getPageFromSurah(iSurah - 1);
+    this.setState({ curPage: this.quranReader.getPage(iPage) });
   }
   onPrevJuzu() {
-    var iJuzu = this.props.quranReader.getJuzuFromPage(
+    var iJuzu = this.quranIndexer.getJuzuFromPage(
       this.state.curPage.pageNumber
     );
-    var iPage = this.props.quranReader.getPageFromJuzu(iJuzu - 1);
-    this.setState({ curPage: this.props.quranReader.getPage(iPage) });
+    var iPage = this.quranIndexer.getPageFromJuzu(iJuzu - 1);
+    this.setState({ curPage: this.quranReader.getPage(iPage) });
+  }
+  onBackToList() {
+    this.props.navigation.navigate("ScrList");
   }
 }
 const styles = StyleSheet.create({
@@ -212,7 +224,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
     flexDirection: "row",
-    backgroundColor: "#666666",
+    backgroundColor: "#FFFAF1",
   },
   textContainer: {
     direction: "rtl",
@@ -227,7 +239,7 @@ const styles = StyleSheet.create({
     height: 35,
     flexDirection: "row",
     alignSelf: "flex-end",
-    borderTopColor: "yellow",
+    borderTopColor: "grey",
     borderTopWidth: 1,
   },
   nextToolBar: {

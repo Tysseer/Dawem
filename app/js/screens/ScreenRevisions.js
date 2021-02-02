@@ -9,9 +9,6 @@ import ModalBadgeDay from "../modals/ModalBadgeDay.js";
 import ModalBadgeMonth from "../modals/ModalBadgeMonth.js";
 import ModalBadgeWeek from "../modals/ModalBadgeWeek.js";
 export default class ScreenRevisions extends Component {
-  static propTypes = {
-    revisionsManager: PropTypes.instanceOf(RevisionsManager).isRequired,
-  };
   constructor(props) {
     super(props);
 
@@ -24,6 +21,7 @@ export default class ScreenRevisions extends Component {
       bShowModalBadgeWeek: false,
     };
     this.svgLoader = new SVGLoader();
+    this.revisionsManager = new RevisionsManager();
   }
 
   render() {
@@ -47,7 +45,10 @@ export default class ScreenRevisions extends Component {
 
         <View style={styles.listContainer}>
           {modalContent}
-          <RevisionsList revisionsManager={this.props.revisionsManager} />
+          <RevisionsList
+            revisionsManager={this.revisionsManager}
+            navigation={this.props.navigation}
+          />
         </View>
         <View style={styles.toolBar}></View>
       </ImageBackground>

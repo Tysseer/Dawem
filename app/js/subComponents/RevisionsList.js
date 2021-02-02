@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, View, ScrollView } from "react-native";
 import RevisionsManager from "../helpers/RevisionsManager";
+import QuranIndexer from "../helpers/QuranIndexer";
 import SVGLoader from "../helpers/SVGLoader";
 import RevisionItem from "./RevisionItem";
-
 export default class RevisionsList extends Component {
   static propTypes = {
     revisionsManager: PropTypes.instanceOf(RevisionsManager).isRequired,
+    navigation: PropTypes.object.isRequired,
   };
   constructor(props) {
     super(props);
@@ -15,6 +16,7 @@ export default class RevisionsList extends Component {
       refreshFlag: true,
     };
     this.svgLoader = new SVGLoader();
+    this.quranIndexer = new QuranIndexer();
 
     console.log(
       "RevisionsList constructed, manager has " +
@@ -95,6 +97,8 @@ export default class RevisionsList extends Component {
 
   onItemIconReadPress(revision) {
     console.log("IconRead press " + revision.id);
+    var strtPage = this.quranIndexer.getPageFromAyah(revision.strt);
+    this.props.navigation.navigate("ScrQuran", { strtPage: strtPage });
   }
 
   onItemIconEditPress(revision) {

@@ -20,9 +20,15 @@ export default class App extends Component {
 
     return (
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
-          <Stack.Screen name="SctLang" component={ScreenLanguage} />
+          <Stack.Screen name="ScrLang" component={ScreenLanguage} />
+          <Stack.Screen name="ScrList" component={ScreenRevisions} />
+          <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
         </Stack.Navigator>
       </NavigationContainer>
     );

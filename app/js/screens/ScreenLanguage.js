@@ -12,7 +12,6 @@ export default class ScreenLanguage extends Component {
     this.state = {
       curLang: "en",
     };
-    console.log("ScreenLanguage constructed");
   }
   getlangStyle(strLang) {
     if (strLang == this.state.curLang) {
@@ -28,6 +27,9 @@ export default class ScreenLanguage extends Component {
   enLangPressed() {
     console.log("set lang to en, was: " + this.state.curLang);
     this.setState({ curLang: "en" });
+  }
+  okButtonPressed() {
+    this.props.navigation.navigate("ScrList");
   }
   render() {
     return (
@@ -51,6 +53,15 @@ export default class ScreenLanguage extends Component {
             />
           </TouchableWithoutFeedback>
         </View>
+
+        <View style={styles.okButton}>
+          <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
+            <Image
+              source={require("../../assets/icons/ok_icon.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
       </ImageBackground>
     );
   }
@@ -66,6 +77,14 @@ const styles = StyleSheet.create({
     width: 180,
     height: 180,
     margin: 10,
+  },
+
+  okButton: {
+    alignSelf: "center",
+
+    width: 90,
+    height: 90,
+    marginTop: 30,
   },
 
   langSelView: {

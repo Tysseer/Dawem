@@ -19,7 +19,7 @@ export default class ScreenWelcome extends Component {
   }
 
   handlePress() {
-    console.log("move to main pressed");
+    this.props.navigation.navigate("ScrLang");
   }
 
   render() {
@@ -47,7 +47,7 @@ export default class ScreenWelcome extends Component {
         </View>
 
         <TouchableHighlight
-          onPress={this.handlePress}
+          onPress={this.handlePress.bind(this)}
           style={styles.touchable}
           underlayColor="#FFFFFF11"
         >
