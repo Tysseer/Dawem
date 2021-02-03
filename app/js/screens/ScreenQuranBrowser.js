@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import {
   StyleSheet,
   View,
@@ -8,13 +7,13 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Image,
-  PanResponder,
 } from "react-native";
-import QuranPage from "../helpers/QuranPage";
 import QuranIndexer from "../helpers/QuranIndexer";
 import QuranReader from "../helpers/QuranReader";
 import AyahRenderer from "../subComponents/AyahRenderer";
 import Toast from "react-native-simple-toast";
+import Swipeable from "react-native-gesture-handler/Swipeable";
+
 export default class ScreenQuranBrowser extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +24,7 @@ export default class ScreenQuranBrowser extends Component {
     this.state = {
       curPage: page,
     };
+    this.swipeableRef = React.createRef();
   }
 
   render() {
@@ -36,16 +36,26 @@ export default class ScreenQuranBrowser extends Component {
       <View style={styles.background}>
         <View style={styles.pageContainer}>
           <ScrollView>
-            <Text style={styles.textContainer}>
-              {this.state.curPage.ayat.map((ayah) => (
-                <AyahRenderer
-                  key={ayah.id}
-                  curAyah={ayah}
-                  onPresses={pressHandlers}
-                  onLongPresses={longPressHandlers}
-                />
-              ))}
-            </Text>
+            <Swipeable
+              renderLeftActions={this.dummyRender}
+              renderRightActions={this.dummyRender}
+              onSwipeableLeftOpen={this.onswipeLeft.bind(this)}
+              onSwipeableRightOpen={this.onswipeRight.bind(this)}
+              lleftThreshold={35}
+              rightThreshold={35}
+              ref={this.swipeableRef}
+            >
+              <Text style={styles.textContainer}>
+                {this.state.curPage.ayat.map((ayah) => (
+                  <AyahRenderer
+                    key={ayah.id}
+                    curAyah={ayah}
+                    onPresses={pressHandlers}
+                    onLongPresses={longPressHandlers}
+                  />
+                ))}
+              </Text>
+            </Swipeable>
           </ScrollView>
         </View>
         <View style={styles.toolBar}>
@@ -61,6 +71,27 @@ export default class ScreenQuranBrowser extends Component {
           {prevBtns}
         </View>
       </View>
+    );
+  }
+  onswipeLeft() {
+    this.swipeableRef.current.close();
+    this.onNextPage();
+  }
+  onswipeRight() {
+    this.swipeableRef.current.close();
+    this.onPrevPage();
+  }
+  dummyRender(progress, dragX) {
+    return (
+      <View
+        style={{
+          backgroundColor: "#00FF00",
+          width: 5,
+          margin: 0,
+          padding: 0,
+          height: "100%",
+        }}
+      ></View>
     );
   }
   getNextButtons() {
@@ -145,31 +176,6 @@ export default class ScreenQuranBrowser extends Component {
 
   onAyahPress(ayah) {
     Toast.showWithGravity("ayah press " + ayah.id, Toast.SHORT, Toast.CENTER);
-  }
-  onSwipePerformed(strDir) {
-    switch (action) {
-      case "left": {
-        onPrevPage();
-        console.log("left Swipe performed");
-        break;
-      }
-      case "right": {
-        onNextPage();
-        console.log("right Swipe performed");
-        break;
-      }
-      case "up": {
-        console.log("up Swipe performed");
-        break;
-      }
-      case "down": {
-        console.log("down Swipe performed");
-        break;
-      }
-      default: {
-        console.log("Undetected action");
-      }
-    }
   }
   onNextPage() {
     var iPage = this.state.curPage.pageNumber + 1;

@@ -13,7 +13,10 @@ export default class QuranReader {
     while (iPage > nNumPages) iPage -= nNumPages;
     if (iPage != 3) {
       var retPage = [];
-      retPage.push(new Ayah(-3, -3, "هنا ستكون الآيات لصفحة " + iPage));
+      for (var i = 0; i < 20; i++)
+        retPage.push(
+          new Ayah(-3 - i, -3 - i, "هنا ستكون الآيات لصفحة " + iPage)
+        );
       return new QuranPage(iPage, retPage);
     }
     // return array of pbject of Ayah for page,
