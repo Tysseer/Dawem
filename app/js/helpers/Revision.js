@@ -1,13 +1,24 @@
 export default class Revision {
-  constructor(id, title, progress, strt, end, numDays) {
+  constructor(id, title, progress, strt, end, dateofLastRevision) {
     this.id = id;
     this.title = title;
     this.progress = progress;
     this.strt = strt;
     this.end = end;
-    this.numDays = numDays;
+    this.dateofLastRevision = dateofLastRevision;
+    this.updateNumDays();
   }
-
+  updateNumDays() {
+    this.numDays = Math.round(
+      (new Date().getTime() - this.dateofLastRevision.getTime()) /
+        (1000 * 60 * 60 * 24)
+    );
+  }
+  makeRevisionDateNow() {
+    this.dateofLastRevision = new Date();
+    this.numDays = 0;
+    this.progress = 0;
+  }
   getRevisionTitle() {
     var strTitle = this.title;
     if (strTitle.length > 14) {

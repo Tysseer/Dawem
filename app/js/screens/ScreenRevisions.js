@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { StyleSheet, View, ImageBackground } from "react-native";
 import RevisionsList from "../subComponents/RevisionsList";
 import RevisionsManager from "../helpers/RevisionsManager";
@@ -12,18 +11,52 @@ export default class ScreenRevisions extends Component {
   constructor(props) {
     super(props);
 
+    this.svgLoader = new SVGLoader();
+    this.revisionsManager = new RevisionsManager();
+    console.log(
+      "RevisionsList constructed, manager has " +
+        this.revisionsManager.m_loadedRevisions.length +
+        " revisions"
+    );
+    var res = this.getBadgesStates();
+
     this.state = {
-      isBadgeDay: true,
-      isBadgeMonth: true,
-      isBadgeWeek: true,
+      isBadgeDay: res[0],
+      isBadgeMonth: res[1],
+      isBadgeWeek: res[2],
       bShowModalBadgeDay: false,
       bShowModalBadgeMonth: false,
       bShowModalBadgeWeek: false,
     };
-    this.svgLoader = new SVGLoader();
-    this.revisionsManager = new RevisionsManager();
   }
+  getBadgesStates() {
+    if (this.revisionsManager.m_loadedRevisions.length == 0)
+      return [false, false, false];
+    var bIsToday = false;
+    var maxDays = 0;
+    for (var i = 0; i < this.revisionsManager.m_loadedRevisions.length; i++) {
+      this.revisionsManager.m_loadedRevisions[i].updateNumDays();
+      if (this.revisionsManager.m_loadedRevisions[i].numDays > maxDays)
+        maxDays = this.revisionsManager.m_loadedRevisions[i].numDays;
+      if (this.revisionsManager.m_loadedRevisions[i].numDays == 0)
+        bIsToday = true;
+    }
+    var bIsWeek = maxDays <= 7;
+    var bIsMonth = maxDays <= 30;
+    return [bIsToday, bIsMonth, bIsWeek];
+  }
+  updateBadgesStates() {
+    var res = this.getBadgesStates();
 
+    this.setState({
+      isBadgeDay: res[0],
+      isBadgeMonth: res[1],
+      isBadgeWeek: res[2],
+    });
+  }
+  refresh() {
+    this.updateBadgesStates();
+  }
   render() {
     var pressHandlers = this.getBadgesOnPressHandlers();
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
@@ -48,6 +81,7 @@ export default class ScreenRevisions extends Component {
           <RevisionsList
             revisionsManager={this.revisionsManager}
             navigation={this.props.navigation}
+            refreshFn={this.refresh.bind(this)}
           />
         </View>
         <View style={styles.toolBar}></View>

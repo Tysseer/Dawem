@@ -9,6 +9,7 @@ export default class RevisionsList extends Component {
   static propTypes = {
     revisionsManager: PropTypes.instanceOf(RevisionsManager).isRequired,
     navigation: PropTypes.object.isRequired,
+    refreshFn: PropTypes.func.isRequired,
   };
   constructor(props) {
     super(props);
@@ -17,17 +18,9 @@ export default class RevisionsList extends Component {
     };
     this.svgLoader = new SVGLoader();
     this.quranIndexer = new QuranIndexer();
-
-    console.log(
-      "RevisionsList constructed, manager has " +
-        this.props.revisionsManager.m_loadedRevisions.length +
-        " revisions"
-    );
   }
   refresh() {
-    let newval = this.state.refreshFlag;
-
-    this.setState({ refreshFlag: newval });
+    this.props.refreshFn();
   }
 
   render() {
@@ -75,7 +68,10 @@ export default class RevisionsList extends Component {
     console.log("Item Longpress " + revision.id);
 
     revision.progress += 9;
-    if (revision.progress > 100) revision.progress = 0;
+    if (revision.progress > 100) {
+      revision.makeRevisionDateNow();
+      this.props.revisionsManager.sortRevisions();
+    }
     this.refresh();
   }
 
@@ -92,7 +88,9 @@ export default class RevisionsList extends Component {
   }
 
   onItemIconRevisedPress(revision) {
-    console.log("IconRevised press " + revision.id);
+    revision.makeRevisionDateNow();
+    this.props.revisionsManager.sortRevisions();
+    this.refresh();
   }
 
   onItemIconReadPress(revision) {
