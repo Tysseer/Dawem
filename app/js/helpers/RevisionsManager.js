@@ -9,7 +9,8 @@ export default class RevisionsManager {
   getPastDate(nNumDaysBack) {
     return new Date(new Date().getTime() - nNumDaysBack * 24 * 60 * 60 * 1000);
   }
-  loadRevisions(loadedRevisions) {
+  loadRevisions(loadedRevisions) {}
+  loadTestRevisions(loadedRevisions) {
     // todo: load from DB
     loadedRevisions.push(
       new Revision(1, "Fatiha", 10, 1, 7, this.getPastDate(1000))

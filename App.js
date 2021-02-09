@@ -10,6 +10,9 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { Provider as StateProvider } from "react-redux";
+import reduxStore from "./app/js/redux/reduxStore";
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -19,18 +22,20 @@ export default class App extends Component {
     const Stack = createStackNavigator();
 
     return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
-          <Stack.Screen name="ScrLang" component={ScreenLanguage} />
-          <Stack.Screen name="ScrList" component={ScreenRevisions} />
-          <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <StateProvider store={reduxStore}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
+            <Stack.Screen name="ScrLang" component={ScreenLanguage} />
+            <Stack.Screen name="ScrList" component={ScreenRevisions} />
+            <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </StateProvider>
     );
 
     // var read = new QuranReader();

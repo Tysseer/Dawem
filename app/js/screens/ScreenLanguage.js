@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { reduxActionSetLanguage } from "../redux/reduxActions";
 import {
   ImageBackground,
   StyleSheet,
@@ -6,32 +8,33 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
-export default class ScreenLanguage extends Component {
+
+class ScreenLanguage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      curLang: "en",
-    };
   }
   getlangStyle(strLang) {
-    if (strLang == this.state.curLang) {
+    if (strLang == this.props.curLang) {
       return styles.langSelView;
     } else {
       return styles.langNonView;
     }
   }
   arLangPressed() {
-    console.log("set lang to ar, was: " + this.state.curLang);
-    this.setState({ curLang: "ar" });
+    console.log("set lang to ar, was: " + this.props.curLang);
+    //this.setState({ curLang: "ar" });
+    this.props.reduxActionSetLanguage("ar");
   }
   enLangPressed() {
-    console.log("set lang to en, was: " + this.state.curLang);
-    this.setState({ curLang: "en" });
+    console.log("set lang to en, was: " + this.props.curLang);
+    //this.setState({ curLang: "en" });
+    this.props.reduxActionSetLanguage("en");
   }
   okButtonPressed() {
     this.props.navigation.navigate("ScrList");
   }
   render() {
+    console.log(this.props.curLang);
     return (
       <ImageBackground
         style={styles.background}
@@ -66,6 +69,15 @@ export default class ScreenLanguage extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  curLang: state.strLang,
+});
+const mapDispatchToProps = () => {
+  return {
+    reduxActionSetLanguage,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps())(ScreenLanguage);
 const styles = StyleSheet.create({
   background: {
     flex: 1,

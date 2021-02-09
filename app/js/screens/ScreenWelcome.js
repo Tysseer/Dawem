@@ -8,13 +8,11 @@ import {
   TouchableHighlight,
 } from "react-native";
 import CheckBox from "react-native-check-box";
-
-export default class ScreenWelcome extends Component {
+import { connect } from "react-redux";
+import { reduxSetWelcomeFlag } from "../redux/reduxActions";
+class ScreenWelcome extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isDontShowChecked: false,
-    };
     console.log("ScreenWelcome constructed");
   }
 
@@ -56,18 +54,14 @@ export default class ScreenWelcome extends Component {
         <View style={styles.checkBoxContainer}>
           <CheckBox
             onClick={() => {
-              this.setState({
-                isDontShowChecked: !this.state.isDontShowChecked,
-              });
+              this.props.reduxSetWelcomeFlag(!this.props.isDontShowChecked);
             }}
-            isChecked={this.state.isDontShowChecked}
+            isChecked={this.props.isDontShowChecked}
             checkBoxColor="white"
           />
           <TouchableHighlight
             onPress={() => {
-              this.setState({
-                isDontShowChecked: !this.state.isDontShowChecked,
-              });
+              this.props.reduxSetWelcomeFlag(!this.props.isDontShowChecked);
             }}
             underlayColor="#FFFFFF11"
           >
@@ -78,7 +72,15 @@ export default class ScreenWelcome extends Component {
     );
   }
 }
-
+const mapStateToProps = (state) => ({
+  isDontShowChecked: state.bShowWelcome,
+});
+const mapDispatchToProps = () => {
+  return {
+    reduxSetWelcomeFlag,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps())(ScreenWelcome);
 const styles = StyleSheet.create({
   background: {
     flex: 1,

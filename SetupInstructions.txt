@@ -11,3 +11,5 @@ npm install react-native-reanimated react-native-gesture-handler react-native-sc
 npm install @react-navigation/stack
 npm start -c
 npm i react-native-svg --save        // this is needed i don't know why!
+npm install react-redux
+npm install redux
