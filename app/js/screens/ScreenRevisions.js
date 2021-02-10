@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  TouchableWithoutFeedback,
+  Image,
+} from "react-native";
 import RevisionsList from "../subComponents/RevisionsList";
 import RevisionsManager from "../helpers/RevisionsManager";
 import SVGLoader from "../helpers/SVGLoader";
@@ -13,6 +19,7 @@ export default class ScreenRevisions extends Component {
 
     this.svgLoader = new SVGLoader();
     this.revisionsManager = new RevisionsManager();
+    this.revisionsManager.loadTestRevisions(true);
     console.log(
       "RevisionsList constructed, manager has " +
         this.revisionsManager.m_loadedRevisions.length +
@@ -61,7 +68,7 @@ export default class ScreenRevisions extends Component {
     var pressHandlers = this.getBadgesOnPressHandlers();
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
     var modalContent = this.getModal();
-
+    var bottomToolBar = this.getBottomToolBar();
     return (
       <ImageBackground
         style={styles.background}
@@ -84,7 +91,7 @@ export default class ScreenRevisions extends Component {
             refreshFn={this.refresh.bind(this)}
           />
         </View>
-        <View style={styles.toolBar}></View>
+        {bottomToolBar}
       </ImageBackground>
     );
   }
@@ -120,7 +127,71 @@ export default class ScreenRevisions extends Component {
   onBadgeLongPress() {
     // todo: explain badges
   }
+  onAddRevision() {
+    // not sure if this should be a modal or a screen?
+  }
 
+  onSettings() {}
+  onDelete() {}
+  onEdit() {}
+  onShare() {}
+  onDonate() {}
+  getBottomToolBar() {
+    return (
+      <View style={styles.toolBar}>
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onAddRevision.bind(this)}>
+            <Image
+              source={require("../../assets/icons/add.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onSettings.bind(this)}>
+            <Image
+              source={require("../../assets/icons/settings.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onEdit.bind(this)}>
+            <Image
+              source={require("../../assets/icons/edit.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onDelete.bind(this)}>
+            <Image
+              source={require("../../assets/icons/delete.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onDonate.bind(this)}>
+            <Image
+              source={require("../../assets/icons/donate.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onShare.bind(this)}>
+            <Image
+              source={require("../../assets/icons/share.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+    );
+  }
   getModal() {
     var modal = this.getBadgesModal();
     if (modal != null) return modal;
@@ -163,6 +234,15 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     borderTopColor: "yellow",
     borderTopWidth: 1,
+    paddingHorizontal: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  toolButton: {
+    width: 38,
+    height: 38,
+    marginHorizontal: 2,
   },
   listContainer: {
     width: "100%",
