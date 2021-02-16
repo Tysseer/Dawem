@@ -8,14 +8,16 @@ import {
   TextInput,
   Dimensions,
 } from "react-native";
+import allAyat from "../helpers/quranAyat";
 import QuranIndexer from "../helpers/QuranIndexer";
+
 export default class ModalAyahSelector {
   constructor(parent /* should have state.bShowAyahSelector */) {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
 
-    this.selAyah = 1;
-    this.ayahRange = 1;
+    this.selAyah = 7;
+    this.surahNumber = 1;
   }
   handlePress() {
     this.parent.setState({ bShowAyahSelector: false });
@@ -24,7 +26,15 @@ export default class ModalAyahSelector {
 
   getModal() {
     if (this.parent.state.bShowAyahSelector == false) return null;
-
+    this.ayahRange = this.surahInfo.getSurahNumAyah(this.surahNumber);
+    var bIsValidSel =
+      this.surahNumber >= 1 &&
+      this.surahNumber <= 114 &&
+      this.selAyah >= 1 &&
+      this.selAyah <= this.ayahRange;
+    var indx = this.surahInfo.getAyahGlobalIndx(this.surahNumber, this.selAyah);
+    console.log(indx);
+    console.log(allAyat[indx]);
     return (
       <Modal
         animationType="fade"
@@ -39,20 +49,30 @@ export default class ModalAyahSelector {
       >
         <View style={styles.contentContainer}>
           <View style={styles.selectorsContainer}>
-            <View>
+            <View style={{ flexDirection: "row" }}>
               <TextInput
                 style={{
                   flex: 0.3,
                   borderBottomWidth: 5,
                   borderBottomColor: "grey",
                   textAlign: "center",
+                  textAlignVertical: "center",
                 }}
                 keyboardType="numeric"
                 onChangeText={this.onNumberChange.bind(this)}
                 value={"" + this.selAyah}
                 onSubmitEditing={this.onNumberSubmit.bind(this)}
               />
-              <Text style={{ flex: 0.6 }}></Text>
+              <Text
+                numberOfLines={1}
+                style={{
+                  flex: 0.6,
+                  textAlign: "center",
+                  textAlignVertical: "center",
+                }}
+              >
+                {bIsValidSel ? allAyat[indx].text : "Choose Ayah Number"}
+              </Text>
             </View>
           </View>
           <View style={styles.toolbar}>
@@ -69,11 +89,12 @@ export default class ModalAyahSelector {
   }
   onNumberChange(text) {
     console.log("new text " + text);
-    this.setState({ title: text });
+    // to do: check if text if number and in range, then set selAyah
+    this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
   }
   onNumberSubmit(text) {
     console.log("new text " + text);
-    this.revision.title = this.state.title;
+    this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
   }
 }
 const styles = StyleSheet.create({
