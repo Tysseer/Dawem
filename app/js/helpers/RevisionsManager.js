@@ -175,7 +175,9 @@ export default class RevisionsManager {
     this.m_loadedRevisions.push(
       new Revision(
         18,
-        bArabic ? "" : "123456789012345678901234567890",
+        bArabic
+          ? "۱۲۳٤٥٦٧۸۹۱۲۳٤٥٦٧۸۹۱۲۳٤٥٦٧۸۹۱۲۳٤٥٦٧۸۹"
+          : "123456789012345678901234567890",
         99,
         4613,
         4630,

@@ -226,10 +226,9 @@ const styles = StyleSheet.create({
   },
   pageContainer: {
     marginTop: StatusBar.currentHeight + 2,
-
+    alignItems: "center",
     width: "100%",
     flex: 1,
-    flexDirection: "row",
     backgroundColor: "#FFFAF1",
   },
   textContainer: {
@@ -238,6 +237,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginTop: 5,
     marginBottom: 5,
+    flexDirection: "row",
     textAlign: "justify",
   },
   toolBar: {

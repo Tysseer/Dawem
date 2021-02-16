@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
-import QuranReader from "./app/js/helpers/QuranReader";
-import RevisionsManager from "./app/js/helpers/RevisionsManager";
+
 import ScreenRevisions from "./app/js/screens/ScreenRevisions";
 import ScreenWelcome from "./app/js/screens/ScreenWelcome";
 import ScreenLanguage from "./app/js/screens/ScreenLanguage";
 import ScreenQuranBrowser from "./app/js/screens/ScreenQuranBrowser";
+import ScreenRevisionDetails from "./app/js/screens/ScreenRevisionDetails";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -29,9 +29,10 @@ export default class App extends Component {
               headerShown: false,
             }}
           >
-            <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
             <Stack.Screen name="ScrLang" component={ScreenLanguage} />
+            <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
             <Stack.Screen name="ScrList" component={ScreenRevisions} />
+            <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
             <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
           </Stack.Navigator>
         </NavigationContainer>

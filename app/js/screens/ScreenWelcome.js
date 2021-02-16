@@ -17,7 +17,7 @@ class ScreenWelcome extends Component {
   }
 
   handlePress() {
-    this.props.navigation.navigate("ScrLang");
+    this.props.navigation.navigate("ScrList");
   }
 
   render() {
@@ -54,14 +54,14 @@ class ScreenWelcome extends Component {
         <View style={styles.checkBoxContainer}>
           <CheckBox
             onClick={() => {
-              this.props.reduxSetWelcomeFlag(!this.props.isDontShowChecked);
+              this.props.reduxSetWelcomeFlag(!this.props.bSkipWelcome);
             }}
-            isChecked={this.props.isDontShowChecked}
+            isChecked={this.props.bSkipWelcome}
             checkBoxColor="white"
           />
           <TouchableHighlight
             onPress={() => {
-              this.props.reduxSetWelcomeFlag(!this.props.isDontShowChecked);
+              this.props.reduxSetWelcomeFlag(!this.props.bSkipWelcome);
             }}
             underlayColor="#FFFFFF11"
           >
@@ -73,7 +73,7 @@ class ScreenWelcome extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  isDontShowChecked: state.bShowWelcome,
+  bSkipWelcome: state.bSkipWelcome,
 });
 const mapDispatchToProps = () => {
   return {

@@ -31,7 +31,9 @@ class ScreenLanguage extends Component {
     this.props.reduxActionSetLanguage("en");
   }
   okButtonPressed() {
-    this.props.navigation.navigate("ScrList");
+    if (this.props.isSkipWelcome == false)
+      this.props.navigation.navigate("ScrWelcome");
+    else this.props.navigation.navigate("ScrList");
   }
   render() {
     console.log(this.props.curLang);
@@ -70,6 +72,7 @@ class ScreenLanguage extends Component {
   }
 }
 const mapStateToProps = (state) => ({
+  isSkipWelcome: state.bSkipWelcome,
   curLang: state.strLang,
 });
 const mapDispatchToProps = () => {

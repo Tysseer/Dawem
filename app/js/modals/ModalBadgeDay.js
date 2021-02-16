@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
 } from "react-native";
 import SVGLoader from "../helpers/SVGLoader.js";
-class ModalBadgeDay {
+export default class ModalBadgeDay {
   constructor(parent /* should have state.bShowModalBadgeDay */) {
     this.parent = parent;
   }
@@ -27,9 +27,7 @@ class ModalBadgeDay {
         animationType="fade"
         transparent={true}
         visible={this.parent.state.bShowModalBadgeDay}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
+        onRequestClose={() => {}}
       >
         <View style={styles.contentContainer}>
           <View style={styles.badge}>{dayBadge}</View>
@@ -112,4 +110,3 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
   },
 });
-export default ModalBadgeDay;

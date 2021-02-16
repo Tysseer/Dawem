@@ -1,12 +1,12 @@
 import * as allActions from "./reduxActions";
 import INITIAL_STATE from "./reduxState";
 const actionsReducer = (state = INITIAL_STATE, action) => {
-  const { bShowWelcome, strLang, revisions } = state;
+  const { bSkipWelcome, strLang, revisions } = state;
   switch (action.type) {
     case allActions.WELCOME_FLAG: {
       const newflag = action.payload;
       const newState = {
-        bShowWelcome: newflag,
+        bSkipWelcome: newflag,
         strLang: strLang,
         revisions: revisions,
       };
@@ -15,7 +15,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
     case allActions.LANGUAGE: {
       const newlang = action.payload;
       const newState = {
-        bShowWelcome: bShowWelcome,
+        bSkipWelcome: bSkipWelcome,
         strLang: newlang,
         revisions: revisions,
       };
@@ -25,7 +25,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       const rev = action.payload;
       var newRevArr = currev.concat([rev]);
       const newState = {
-        bShowWelcome: bShowWelcome,
+        bSkipWelcome: bSkipWelcome,
         strLang: newlang,
         revisions: newRevArr,
       };
@@ -44,7 +44,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         if (action.type == allActions.UPDATE_REVISION) newRevArr.push(rev); //rev.clone()
       }
       const newState = {
-        bShowWelcome: bShowWelcome,
+        bSkipWelcome: bSkipWelcome,
         strLang: newlang,
         revisions: newRevArr,
       };

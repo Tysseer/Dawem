@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  bShowWelcome: false,
+  bSkipWelcome: false,
   strLang: "ar",
   revisions: [],
 };

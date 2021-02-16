@@ -5,6 +5,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Image,
+  Text,
 } from "react-native";
 import RevisionsList from "../subComponents/RevisionsList";
 import RevisionsManager from "../helpers/RevisionsManager";
@@ -36,34 +37,7 @@ export default class ScreenRevisions extends Component {
       bShowModalBadgeWeek: false,
     };
   }
-  getBadgesStates() {
-    if (this.revisionsManager.m_loadedRevisions.length == 0)
-      return [false, false, false];
-    var bIsToday = false;
-    var maxDays = 0;
-    for (var i = 0; i < this.revisionsManager.m_loadedRevisions.length; i++) {
-      this.revisionsManager.m_loadedRevisions[i].updateNumDays();
-      if (this.revisionsManager.m_loadedRevisions[i].numDays > maxDays)
-        maxDays = this.revisionsManager.m_loadedRevisions[i].numDays;
-      if (this.revisionsManager.m_loadedRevisions[i].numDays == 0)
-        bIsToday = true;
-    }
-    var bIsWeek = maxDays <= 7;
-    var bIsMonth = maxDays <= 30;
-    return [bIsToday, bIsMonth, bIsWeek];
-  }
-  updateBadgesStates() {
-    var res = this.getBadgesStates();
 
-    this.setState({
-      isBadgeDay: res[0],
-      isBadgeMonth: res[1],
-      isBadgeWeek: res[2],
-    });
-  }
-  refresh() {
-    this.updateBadgesStates();
-  }
   render() {
     var pressHandlers = this.getBadgesOnPressHandlers();
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
@@ -85,11 +59,15 @@ export default class ScreenRevisions extends Component {
 
         <View style={styles.listContainer}>
           {modalContent}
-          <RevisionsList
-            revisionsManager={this.revisionsManager}
-            navigation={this.props.navigation}
-            refreshFn={this.refresh.bind(this)}
-          />
+          {this.revisionsManager.m_loadedRevisions.length == 0 ? (
+            this.getInitialPrompt()
+          ) : (
+            <RevisionsList
+              revisionsManager={this.revisionsManager}
+              navigation={this.props.navigation}
+              refreshFn={this.refresh.bind(this)}
+            />
+          )}
         </View>
         {bottomToolBar}
       </ImageBackground>
@@ -113,22 +91,23 @@ export default class ScreenRevisions extends Component {
   }
 
   onDayBadgePressed() {
-    let newval = this.state.isBadgeDay == false;
-    this.setState({ isBadgeDay: newval, bShowModalBadgeDay: true });
+    let newval = this.state.bShowModalBadgeDay == false;
+    this.setState({ bShowModalBadgeDay: newval });
   }
   onMonthBadgePressed() {
-    let newval = this.state.isBadgeMonth == false;
-    this.setState({ isBadgeMonth: newval, bShowModalBadgeMonth: true });
+    let newval = this.state.bShowModalBadgeMonth == false;
+    this.setState({ bShowModalBadgeMonth: newval });
   }
   onWeekBadgePressed() {
-    let newval = this.state.isBadgeWeek == false;
-    this.setState({ isBadgeWeek: newval, bShowModalBadgeWeek: true });
+    let newval = this.state.bShowModalBadgeWeek == false;
+    this.setState({ bShowModalBadgeWeek: newval });
   }
   onBadgeLongPress() {
     // todo: explain badges
   }
   onAddRevision() {
-    // not sure if this should be a modal or a screen?
+    console.log("add revision pressed");
+    this.props.navigation.navigate("ScrRev");
   }
 
   onSettings() {}
@@ -136,6 +115,27 @@ export default class ScreenRevisions extends Component {
   onEdit() {}
   onShare() {}
   onDonate() {}
+  getInitialPrompt() {
+    return (
+      <View style={styles.textContainer}>
+        <Text style={styles.textPrompt}>
+          You didn't add any revisions!{"\n"}Start your journey with the Quran
+          now...
+        </Text>
+
+        <TouchableWithoutFeedback onPress={this.onAddRevision.bind(this)}>
+          <Image
+            style={{
+              width: 160,
+              height: 160,
+              marginHorizontal: 2,
+            }}
+            source={require("../../assets/icons/add.png")}
+          />
+        </TouchableWithoutFeedback>
+      </View>
+    );
+  }
   getBottomToolBar() {
     return (
       <View style={styles.toolBar}>
@@ -192,6 +192,7 @@ export default class ScreenRevisions extends Component {
       </View>
     );
   }
+
   getModal() {
     var modal = this.getBadgesModal();
     if (modal != null) return modal;
@@ -218,6 +219,34 @@ export default class ScreenRevisions extends Component {
       return <View>{modalWeek}</View>;
     }
     return null;
+  }
+  getBadgesStates() {
+    if (this.revisionsManager.m_loadedRevisions.length == 0)
+      return [false, false, false];
+    var bIsToday = false;
+    var maxDays = 0;
+    for (var i = 0; i < this.revisionsManager.m_loadedRevisions.length; i++) {
+      this.revisionsManager.m_loadedRevisions[i].updateNumDays();
+      if (this.revisionsManager.m_loadedRevisions[i].numDays > maxDays)
+        maxDays = this.revisionsManager.m_loadedRevisions[i].numDays;
+      if (this.revisionsManager.m_loadedRevisions[i].numDays == 0)
+        bIsToday = true;
+    }
+    var bIsWeek = maxDays <= 7;
+    var bIsMonth = maxDays <= 30;
+    return [bIsToday, bIsMonth, bIsWeek];
+  }
+  updateBadgesStates() {
+    var res = this.getBadgesStates();
+
+    this.setState({
+      isBadgeDay: res[0],
+      isBadgeMonth: res[1],
+      isBadgeWeek: res[2],
+    });
+  }
+  refresh() {
+    this.updateBadgesStates();
   }
 }
 const styles = StyleSheet.create({
@@ -247,5 +276,22 @@ const styles = StyleSheet.create({
   listContainer: {
     width: "100%",
     flex: 1,
+  },
+  textContainer: {
+    backgroundColor: "#FFFFFF4D",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    padding: 5,
+    margin: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textPrompt: {
+    fontSize: 30,
+    fontFamily: "sans-serif",
+    textAlign: "center",
+    color: "#FFBB66",
   },
 });
