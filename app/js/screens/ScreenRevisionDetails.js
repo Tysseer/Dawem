@@ -12,15 +12,18 @@ import {
 import { TouchableHighlight } from "react-native-gesture-handler";
 import Revision from "../helpers/Revision";
 import ModalSurahSelector from "../modals/ModalSurahSelector";
+import ModalAyahSelector from "../modals/ModalAyahSelector";
 export default class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bShowSurahSelector: false,
+      bShowAyahSelector: false,
       title: "",
     };
     this.modalSurah = new ModalSurahSelector(this);
-    this.revision = new Revision(-1, "Enter name", 0, 1, 1, new Date());
+    this.modalAyah = new ModalAyahSelector(this);
+    this.revision = new Revision(0, "Enter name", 0, 1, 1, new Date());
     console.log("ScreenWelcome constructed");
   }
   render() {
@@ -31,6 +34,7 @@ export default class ScreenRevisionDetails extends Component {
       >
         <View style={styles.container}>
           {this.modalSurah.getModal()}
+          {this.modalAyah.getModal()}
           {this.getRevisionTitle()}
           {this.getStartAyah()}
           {this.getEndAyah()}
@@ -109,7 +113,9 @@ export default class ScreenRevisionDetails extends Component {
                 onPress={this.selectSurah.bind(this)}
                 underlayColor="#FFFFFF11"
               >
-                <Text style={styles.buttonText}>Select Surah</Text>
+                <Text style={styles.buttonText}>
+                  {this.modalSurah.getSelSurahName()}
+                </Text>
               </TouchableHighlight>
             </View>
             <View style={{ margin: 10 }}>
@@ -129,7 +135,9 @@ export default class ScreenRevisionDetails extends Component {
   selectSurah() {
     this.setState({ bShowSurahSelector: true });
   }
-  selectAyah() {}
+  selectAyah() {
+    this.setState({ bShowAyahSelector: true });
+  }
 }
 const styles = StyleSheet.create({
   background: {

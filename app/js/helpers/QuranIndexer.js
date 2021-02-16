@@ -1,11 +1,11 @@
 export default class QuranIndexer {
   constructor() {
-    this.arrPageFirstAyah = [];
-    this.arrSurahPage = [];
-    this.arrSurahNamesAr = [];
-    this.arrSurahNamesEn = [];
-    this.arrSurahNamesTrns = [];
-    this.arrSurahNumAyah = [];
+    this.arrPageFirstAyah = []; // the global index of first ayah in each oage
+    this.arrSurahPage = []; // the page index for surah starting ayah
+    this.arrSurahNamesAr = []; // the names in arabic
+    this.arrSurahNamesEn = []; // the names in english
+    this.arrSurahNamesTrns = []; // the names in transliration
+    this.arrSurahNumAyah = []; // number of ayat for each surah
   }
   getSurahNameAr(iSurah /*one-based */) {
     iSurah = this.secureIndexRange(iSurah, 114);
@@ -40,6 +40,16 @@ export default class QuranIndexer {
     }
     return 604;
   }
+  getPageAyahRange(iPage) {
+    iPage = this.secureIndexRange(iPage, this.getNumPages());
+    if (this.arrPageFirstAyah.length == 0) this.fillArrPageFirstAyah();
+    var start = this.arrPageFirstAyah[iPage];
+    var end =
+      iPage == this.getNumPages() /*last page */
+        ? 6236
+        : this.arrPageFirstAyah[iPage + 1] - 1;
+    return [start, end];
+  }
   getSurahFromPage(iPage) {
     iPage = this.secureIndexRange(iPage, this.getNumPages());
     if (this.arrSurahPage.length == 0) this.fillArrSurahPage();
@@ -48,6 +58,7 @@ export default class QuranIndexer {
     }
     return -1;
   }
+  getAllSurahFromPage() {}
 
   getPageFromSurah(iSurah) {
     iSurah = this.secureIndexRange(iSurah, 114);

@@ -16,7 +16,7 @@ export default class AyahRenderer extends Component {
     var ayahNum =
       this.props.curAyah.getType() == "Ayah"
         ? " (" + this.props.curAyah.index + ") "
-        : "";
+        : "\n";
     var ayahText = this.props.curAyah.text + ayahNum;
     return (
       <Text
@@ -35,5 +35,6 @@ const styles = StyleSheet.create({
   ayahStyle: {
     fontSize: 26,
     padding: 2,
+    textAlign: "center",
   },
 });

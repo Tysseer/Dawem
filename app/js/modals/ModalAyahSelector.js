@@ -5,46 +5,56 @@ import {
   Modal,
   Text,
   TouchableHighlight,
-  ScrollView,
+  TextInput,
   Dimensions,
 } from "react-native";
 import QuranIndexer from "../helpers/QuranIndexer";
-export default class ModalSurahSelector {
-  constructor(parent /* should have state.bShowSurahSelector */) {
+export default class ModalAyahSelector {
+  constructor(parent /* should have state.bShowAyahSelector */) {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
-    this.surahInfo.fillArrSurahNamesAr();
-    this.surahInfo.fillArrSurahNumAyah();
-    this.indexes = Array(114)
-      .fill(0)
-      .map((e, i) => i + 1);
 
-    this.selSurah = 0;
-    console.log(Dimensions.get("window").width);
+    this.selAyah = 1;
+    this.ayahRange = 1;
   }
   handlePress() {
-    console.log("closing modal");
-    this.parent.setState({ bShowSurahSelector: false });
+    this.parent.setState({ bShowAyahSelector: false });
     //console.log(this.parent);
   }
 
   getModal() {
-    if (this.parent.state.bShowSurahSelector == false) return null;
+    if (this.parent.state.bShowAyahSelector == false) return null;
+
     return (
       <Modal
         animationType="fade"
         transparent={true}
-        visible={this.parent.state.bShowSurahSelector}
-        onRequestClose={this.handlePress.bind(this)}
-        onDismiss={this.handlePress.bind(this)}
+        visible={this.parent.state.bShowAyahSelector}
+        onRequestClose={() => {
+          console.log("onRequestClose");
+        }}
+        onDismiss={() => {
+          console.log("onDismiss");
+        }}
       >
         <View style={styles.contentContainer}>
-          <ScrollView>
-            <View style={styles.selectorsContainer}>
-              {this.indexes.map((iS) => this.getSurahBtn(iS))}
+          <View style={styles.selectorsContainer}>
+            <View>
+              <TextInput
+                style={{
+                  flex: 0.3,
+                  borderBottomWidth: 5,
+                  borderBottomColor: "grey",
+                  textAlign: "center",
+                }}
+                keyboardType="numeric"
+                onChangeText={this.onNumberChange.bind(this)}
+                value={"" + this.selAyah}
+                onSubmitEditing={this.onNumberSubmit.bind(this)}
+              />
+              <Text style={{ flex: 0.6 }}></Text>
             </View>
-          </ScrollView>
-
+          </View>
           <View style={styles.toolbar}>
             <TouchableHighlight
               onPress={this.handlePress.bind(this)}
@@ -57,32 +67,13 @@ export default class ModalSurahSelector {
       </Modal>
     );
   }
-  getSurahBtn(iSurah) {
-    var bordercol =
-      iSurah == this.selSurah
-        ? { borderColor: "#540000" }
-        : { borderColor: "#545454" };
-    return (
-      <View style={{ margin: 10 }} key={iSurah + 123}>
-        <TouchableHighlight
-          onPress={() => this.selectSurah.bind(this)(iSurah)}
-          underlayColor="#FFFFFF11"
-        >
-          <Text style={[styles.buttonText, bordercol]}>
-            {this.surahInfo.getSurahNameAr(iSurah)}
-          </Text>
-        </TouchableHighlight>
-      </View>
-    );
+  onNumberChange(text) {
+    console.log("new text " + text);
+    this.setState({ title: text });
   }
-  selectSurah(iSurah) {
-    console.log("selected surah " + iSurah);
-    this.selSurah = iSurah;
-    this.parent.setState({ bShowSurahSelector: true }); // just to render
-  }
-  getSelSurahName() {
-    if (this.selSurah == 0) return "Select Surah";
-    else return this.surahInfo.getSurahNameAr(this.selSurah);
+  onNumberSubmit(text) {
+    console.log("new text " + text);
+    this.revision.title = this.state.title;
   }
 }
 const styles = StyleSheet.create({
