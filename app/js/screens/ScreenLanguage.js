@@ -21,12 +21,10 @@ class ScreenLanguage extends Component {
     }
   }
   arLangPressed() {
-    console.log("set lang to ar, was: " + this.props.curLang);
     //this.setState({ curLang: "ar" });
     this.props.reduxActionSetLanguage("ar");
   }
   enLangPressed() {
-    console.log("set lang to en, was: " + this.props.curLang);
     //this.setState({ curLang: "en" });
     this.props.reduxActionSetLanguage("en");
   }
@@ -36,7 +34,6 @@ class ScreenLanguage extends Component {
     else this.props.navigation.navigate("ScrList");
   }
   render() {
-    console.log(this.props.curLang);
     return (
       <ImageBackground
         style={styles.background}

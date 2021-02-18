@@ -11,7 +11,6 @@ export default class QuranReader {
     iPage = this.indexer.secureIndexRange(iPage, this.indexer.getNumPages());
 
     [strt, end] = this.indexer.getPageAyahRange(iPage);
-    console.log("loading quran page " + iPage + " from " + strt + " to " + end);
     var retPage = [];
     for (var i = strt; i <= end; i++) {
       if (allAyat[i].index == 1) {

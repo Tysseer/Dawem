@@ -13,7 +13,6 @@ export default class ModalBadgeDay {
   }
   handlePress() {
     this.parent.setState({ bShowModalBadgeDay: false });
-    //console.log(this.parent);
   }
   getModal() {
     var svgLoader = new SVGLoader();

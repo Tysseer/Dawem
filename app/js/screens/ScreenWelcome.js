@@ -13,7 +13,6 @@ import { reduxSetWelcomeFlag } from "../redux/reduxActions";
 class ScreenWelcome extends Component {
   constructor(props) {
     super(props);
-    console.log("ScreenWelcome constructed");
   }
 
   handlePress() {

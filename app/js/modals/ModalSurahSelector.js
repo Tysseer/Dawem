@@ -14,20 +14,22 @@ export default class ModalSurahSelector {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
     this.surahInfo.fillArrSurahNamesAr();
-    this.surahInfo.fillArrSurahNumAyah();
     this.indexes = Array(114)
       .fill(0)
       .map((e, i) => i + 1);
 
     this.selSurah = 0;
-    console.log(Dimensions.get("window").width);
+    this.onSelect = null;
+    this.onCancel = null;
   }
   handlePress() {
-    console.log("closing modal");
     this.parent.setState({ bShowSurahSelector: false });
-    //console.log(this.parent);
+    if (this.onSelect != null) this.onSelect(this.selSurah);
   }
-
+  handleCancel() {
+    this.parent.setState({ bShowSurahSelector: false });
+    if (this.onCancel != null) this.onCancel();
+  }
   getModal() {
     if (this.parent.state.bShowSurahSelector == false) return null;
     return (
@@ -50,7 +52,13 @@ export default class ModalSurahSelector {
               onPress={this.handlePress.bind(this)}
               underlayColor="#FFFFFF11"
             >
-              <Text style={styles.buttonText}>Select</Text>
+              <Text style={[styles.buttonText, { margin: 5 }]}>Select</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.handleCancel.bind(this)}
+              underlayColor="#FFFFFF11"
+            >
+              <Text style={[styles.buttonText, { margin: 5 }]}>Cancel</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -76,7 +84,6 @@ export default class ModalSurahSelector {
     );
   }
   selectSurah(iSurah) {
-    console.log("selected surah " + iSurah);
     this.selSurah = iSurah;
     this.parent.setState({ bShowSurahSelector: true }); // just to render
   }

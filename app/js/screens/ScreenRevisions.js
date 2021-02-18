@@ -21,11 +21,7 @@ export default class ScreenRevisions extends Component {
     this.svgLoader = new SVGLoader();
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.loadTestRevisions(true);
-    console.log(
-      "RevisionsList constructed, manager has " +
-        this.revisionsManager.m_loadedRevisions.length +
-        " revisions"
-    );
+
     var res = this.getBadgesStates();
 
     this.state = {
@@ -106,7 +102,6 @@ export default class ScreenRevisions extends Component {
     // todo: explain badges
   }
   onAddRevision() {
-    console.log("add revision pressed");
     this.props.navigation.navigate("ScrRev");
   }
 

@@ -28,6 +28,16 @@ export default class QuranIndexer {
     if (this.arrSurahNumAyah.length == 0) this.fillArrSurahNumAyah();
     return this.arrSurahNumAyah[iSurah];
   }
+  getSurahFromAyah(iAyah /*one-based */) {
+    iAyah = this.secureIndexRange(iAyah, 6236);
+    if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
+    for (var i = 1; i < this.arrSurahAyahStart.length; i++) {
+      if (this.arrPageFirstAyah[i] > iAyah) {
+        return i - 1;
+      }
+    }
+    return 114;
+  }
   getPageFromAyah(iAyah /*global index */) {
     iAyah = this.secureIndexRange(iAyah, 6236);
 
@@ -35,7 +45,6 @@ export default class QuranIndexer {
     if (this.arrPageFirstAyah.length == 0) this.fillArrPageFirstAyah();
     for (var i = 2; i < this.arrPageFirstAyah.length; i++) {
       if (this.arrPageFirstAyah[i] > iAyah) {
-        console.log("getPageFromAyah " + iAyah + "result is " + i);
         return i - 1;
       }
     }
@@ -52,12 +61,10 @@ export default class QuranIndexer {
     return [start, end];
   }
   getAyahGlobalIndx(iSurah, iAyah) {
-    console.log("getAyahGlobalIndx( " + iSurah + " , " + iAyah + " )");
     iSurah = this.secureIndexRange(iSurah, 114);
     if (this.arrSurahNumAyah.length == 0) this.fillArrSurahNumAyah();
     iAyah = this.secureIndexRange(iAyah, this.arrSurahNumAyah[iSurah]);
-    console.log("getAyahGlobalIndx( " + iSurah + " , " + iAyah + " )");
-    if (this.arrSurahAyahStart.length == 0) this.fillArrSurahStartAyah();
+    if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
     return this.arrSurahAyahStart[iSurah] + (iAyah - 1);
   }
   getSurahFromPage(iPage) {
@@ -1299,7 +1306,7 @@ export default class QuranIndexer {
       6,
     ];
   }
-  fillArrSurahStartAyah() {
+  fillArrSurahAyahStart() {
     this.arrSurahAyahStart = [
       0,
       1,

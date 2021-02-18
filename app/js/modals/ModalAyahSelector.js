@@ -18,10 +18,19 @@ export default class ModalAyahSelector {
 
     this.selAyah = 7;
     this.surahNumber = 1;
+    this.onSelect = null;
+    this.onCancel = null;
+    this.curText = "1";
   }
   handlePress() {
+    this.onNumberSubmit(this.curText);
+    if (this.onSelect != null) this.onSelect(this.selAyah);
     this.parent.setState({ bShowAyahSelector: false });
-    //console.log(this.parent);
+  }
+  handleCancel() {
+    this.onNumberSubmit(this.curText);
+    if (this.onCancel != null) this.onCancel();
+    this.parent.setState({ bShowAyahSelector: false });
   }
 
   getModal() {
@@ -32,20 +41,15 @@ export default class ModalAyahSelector {
       this.surahNumber <= 114 &&
       this.selAyah >= 1 &&
       this.selAyah <= this.ayahRange;
+
     var indx = this.surahInfo.getAyahGlobalIndx(this.surahNumber, this.selAyah);
-    console.log(indx);
-    console.log(allAyat[indx]);
     return (
       <Modal
         animationType="fade"
         transparent={true}
         visible={this.parent.state.bShowAyahSelector}
-        onRequestClose={() => {
-          console.log("onRequestClose");
-        }}
-        onDismiss={() => {
-          console.log("onDismiss");
-        }}
+        onRequestClose={() => {}}
+        onDismiss={() => {}}
       >
         <View style={styles.contentContainer}>
           <View style={styles.selectorsContainer}>
@@ -60,7 +64,7 @@ export default class ModalAyahSelector {
                 }}
                 keyboardType="numeric"
                 onChangeText={this.onNumberChange.bind(this)}
-                value={"" + this.selAyah}
+                value={this.curText}
                 onSubmitEditing={this.onNumberSubmit.bind(this)}
               />
               <Text
@@ -69,6 +73,7 @@ export default class ModalAyahSelector {
                   flex: 0.6,
                   textAlign: "center",
                   textAlignVertical: "center",
+                  fontSize: 18,
                 }}
               >
                 {bIsValidSel ? allAyat[indx].text : "Choose Ayah Number"}
@@ -82,18 +87,36 @@ export default class ModalAyahSelector {
             >
               <Text style={styles.buttonText}>Select</Text>
             </TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.handleCancel.bind(this)}
+              underlayColor="#FFFFFF11"
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableHighlight>
           </View>
         </View>
       </Modal>
     );
   }
   onNumberChange(text) {
-    console.log("new text " + text);
-    // to do: check if text if number and in range, then set selAyah
+    var str = "";
+    str = text;
+    let isnum = /^\d+$/.test(str);
+    if (isnum || str == "") this.curText = str;
+    if (this.curText != "") {
+      this.selAyah = parseInt(this.curText);
+    }
     this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
   }
   onNumberSubmit(text) {
-    console.log("new text " + text);
+    var str = "";
+    str = this.curText;
+    if (str != "") {
+      this.selAyah = parseInt(str);
+    } else {
+      this.curText = "1";
+    }
+
     this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
   }
 }
@@ -107,7 +130,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: "#FFFFFFd5",
+    backgroundColor: "#FFFFFFd9",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     borderBottomLeftRadius: 30,
@@ -138,6 +161,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+    margin: 5,
   },
   toolbar: {
     flexDirection: "row",

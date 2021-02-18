@@ -65,8 +65,6 @@ export default class RevisionsList extends Component {
     return longPressHandlers;
   }
   onLongPress(revision) {
-    console.log("Item Longpress " + revision.id);
-
     revision.progress += 9;
     if (revision.progress > 100) {
       revision.makeRevisionDateNow();
@@ -75,17 +73,11 @@ export default class RevisionsList extends Component {
     this.refresh();
   }
 
-  onItemPress(revision) {
-    console.log("Item press " + revision.id);
-  }
+  onItemPress(revision) {}
 
-  onItemTitlePress(revision) {
-    console.log("title press " + revision.id);
-  }
+  onItemTitlePress(revision) {}
 
-  onItemNumDaysPress(revision) {
-    console.log("NumDays press " + revision.id);
-  }
+  onItemNumDaysPress(revision) {}
 
   onItemIconRevisedPress(revision) {
     revision.makeRevisionDateNow();
@@ -94,18 +86,13 @@ export default class RevisionsList extends Component {
   }
 
   onItemIconReadPress(revision) {
-    console.log("IconRead press " + revision.id);
     var strtPage = this.quranIndexer.getPageFromAyah(revision.strt);
     this.props.navigation.navigate("ScrQuran", { strtPage: strtPage });
   }
 
-  onItemIconEditPress(revision) {
-    console.log("IconEdit press " + revision.id);
-  }
+  onItemIconEditPress(revision) {}
 
-  onItemIconDeletePress(revision) {
-    console.log("IconDelete press " + revision.id);
-  }
+  onItemIconDeletePress(revision) {}
 }
 const styles = StyleSheet.create({
   listContainer: {
