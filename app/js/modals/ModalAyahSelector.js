@@ -12,7 +12,7 @@ import allAyat from "../helpers/quranAyat";
 import QuranIndexer from "../helpers/QuranIndexer";
 
 export default class ModalAyahSelector {
-  constructor(parent /* should have state.bShowAyahSelector */) {
+  constructor(parent /* should have .bShowAyahSelector & .refresh()*/) {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
 
@@ -25,16 +25,18 @@ export default class ModalAyahSelector {
   handlePress() {
     this.onNumberSubmit(this.curText);
     if (this.onSelect != null) this.onSelect(this.selAyah);
-    this.parent.setState({ bShowAyahSelector: false });
+    this.parent.bShowAyahSelector = false; //this.parent.setState({ bShowAyahSelector: false });
+    this.parent.refresh();
   }
   handleCancel() {
     this.onNumberSubmit(this.curText);
     if (this.onCancel != null) this.onCancel();
-    this.parent.setState({ bShowAyahSelector: false });
+    this.parent.bShowAyahSelector = false; //this.parent.setState({ bShowAyahSelector: false });
+    this.parent.refresh();
   }
 
   getModal() {
-    if (this.parent.state.bShowAyahSelector == false) return null;
+    if (this.parent.bShowAyahSelector == false) return null;
     this.ayahRange = this.surahInfo.getSurahNumAyah(this.surahNumber);
     var bIsValidSel =
       this.surahNumber >= 1 &&
@@ -47,7 +49,7 @@ export default class ModalAyahSelector {
       <Modal
         animationType="fade"
         transparent={true}
-        visible={this.parent.state.bShowAyahSelector}
+        visible={this.parent.bShowAyahSelector}
         onRequestClose={() => {}}
         onDismiss={() => {}}
       >
@@ -106,7 +108,7 @@ export default class ModalAyahSelector {
     if (this.curText != "") {
       this.selAyah = parseInt(this.curText);
     }
-    this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
+    this.parent.refresh(); //this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
   }
   onNumberSubmit(text) {
     var str = "";
@@ -117,7 +119,7 @@ export default class ModalAyahSelector {
       this.curText = "1";
     }
 
-    this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
+    this.parent.refresh(); //this.parent.setState({ bShowAyahSelector: true }); //just to refresh render
   }
 }
 const styles = StyleSheet.create({

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import QuranIndexer from "../helpers/QuranIndexer";
 export default class ModalSurahSelector {
-  constructor(parent /* should have state.bShowSurahSelector */) {
+  constructor(parent /* should have .bShowSurahSelector and .refresh()*/) {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
     this.surahInfo.fillArrSurahNamesAr();
@@ -23,20 +23,24 @@ export default class ModalSurahSelector {
     this.onCancel = null;
   }
   handlePress() {
-    this.parent.setState({ bShowSurahSelector: false });
+    //this.parent.setState({ bShowSurahSelector: false });
     if (this.onSelect != null) this.onSelect(this.selSurah);
+    this.parent.bShowSurahSelector = false;
+    this.parent.refresh();
   }
   handleCancel() {
-    this.parent.setState({ bShowSurahSelector: false });
+    //this.parent.setState({ bShowSurahSelector: false });
     if (this.onCancel != null) this.onCancel();
+    this.parent.bShowSurahSelector = false;
+    this.parent.refresh();
   }
   getModal() {
-    if (this.parent.state.bShowSurahSelector == false) return null;
+    if (this.parent.bShowSurahSelector == false) return null;
     return (
       <Modal
         animationType="fade"
         transparent={true}
-        visible={this.parent.state.bShowSurahSelector}
+        visible={this.parent.bShowSurahSelector}
         onRequestClose={this.handlePress.bind(this)}
         onDismiss={this.handlePress.bind(this)}
       >
@@ -85,7 +89,7 @@ export default class ModalSurahSelector {
   }
   selectSurah(iSurah) {
     this.selSurah = iSurah;
-    this.parent.setState({ bShowSurahSelector: true }); // just to render
+    this.parent.refresh(); //this.parent.setState({ bShowSurahSelector: true }); // just to render
   }
   getSelSurahName() {
     if (this.selSurah == 0) return "Select Surah";

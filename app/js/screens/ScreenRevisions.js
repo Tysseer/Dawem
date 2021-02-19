@@ -14,13 +14,16 @@ import BadgesBar from "../subComponents/BadgesBar";
 import ModalBadgeDay from "../modals/ModalBadgeDay.js";
 import ModalBadgeMonth from "../modals/ModalBadgeMonth.js";
 import ModalBadgeWeek from "../modals/ModalBadgeWeek.js";
-export default class ScreenRevisions extends Component {
+import { connect } from "react-redux";
+import { reduxActionSetCurRevision } from "../redux/reduxActions";
+class ScreenRevisions extends Component {
   constructor(props) {
     super(props);
 
     this.svgLoader = new SVGLoader();
     this.revisionsManager = new RevisionsManager();
-    this.revisionsManager.loadTestRevisions(true);
+    //this.revisionsManager.loadTestRevisions(true);
+    this.revisionsManager.m_loadedRevisions = this.props.revisions;
 
     var res = this.getBadgesStates();
 
@@ -35,6 +38,7 @@ export default class ScreenRevisions extends Component {
   }
 
   render() {
+    this.revisionsManager.m_loadedRevisions = this.props.revisions;
     var pressHandlers = this.getBadgesOnPressHandlers();
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
     var modalContent = this.getModal();
@@ -102,6 +106,7 @@ export default class ScreenRevisions extends Component {
     // todo: explain badges
   }
   onAddRevision() {
+    this.props.reduxActionSetCurRevision(null);
     this.props.navigation.navigate("ScrRev");
   }
 
@@ -244,6 +249,15 @@ export default class ScreenRevisions extends Component {
     this.updateBadgesStates();
   }
 }
+const mapStateToProps = (state) => ({
+  revisions: state.revisions,
+});
+const mapDispatchToProps = () => {
+  return {
+    reduxActionSetCurRevision,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps())(ScreenRevisions);
 const styles = StyleSheet.create({
   background: {
     flex: 1,

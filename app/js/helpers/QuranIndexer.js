@@ -67,6 +67,17 @@ export default class QuranIndexer {
     if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
     return this.arrSurahAyahStart[iSurah] + (iAyah - 1);
   }
+  getAyahLocalIndx(iAyah) {
+    iAyah = this.secureIndexRange(iAyah, 6236);
+    iSurah = this.getSurahFromAyah(iAyah);
+    if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
+    return iAyah + 1 - this.arrSurahAyahStart[iSurah];
+  }
+  isValidLocalAyahIndex(iSurah, iAyah) {
+    iSurah = this.secureIndexRange(iSurah, 114);
+    if (this.arrSurahNumAyah.length == 0) this.fillArrSurahNumAyah();
+    return iAyah >= 1 && iAyah <= this.arrSurahNumAyah[iSurah];
+  }
   getSurahFromPage(iPage) {
     iPage = this.secureIndexRange(iPage, this.getNumPages());
     if (this.arrSurahPage.length == 0) this.fillArrSurahPage();

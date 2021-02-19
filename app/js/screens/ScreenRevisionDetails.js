@@ -5,31 +5,64 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
-  Button,
   TextInput,
   Text,
-  ViewBase,
 } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import Revision from "../helpers/Revision";
 import ModalSurahSelector from "../modals/ModalSurahSelector";
 import ModalAyahSelector from "../modals/ModalAyahSelector";
-export default class ScreenRevisionDetails extends Component {
+import { connect } from "react-redux";
+import {
+  reduxActionUpdateRevision,
+  reduxActionAddRevision,
+  reducActionForceRender,
+} from "../redux/reduxActions";
+import RevisionsManager from "../helpers/RevisionsManager";
+class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      bShowSurahSelector: false,
-      bShowAyahSelector: false,
-      title: "",
-      strtSurah: 0,
-      strtAyah: 1,
-      endSurah: 0,
-      endAyah: 1,
-    };
+
     this.modalSurah = new ModalSurahSelector(this);
     this.modalAyah = new ModalAyahSelector(this);
-    this.revision = new Revision(0, "Enter name", 0, 1, 1, new Date());
-    this.bAutoName = true;
+    this.revision = this.props.curRevision;
+    if (this.revision == null) {
+      this.bIsNewRev = true;
+      this.revision = new Revision(0, "", 0, 1, 1, new Date());
+
+      this.bShowSurahSelector = false;
+      this.bShowAyahSelector = false;
+      this.title = "";
+      this.strtSurah = 0;
+      this.strtAyah = 1;
+      this.endSurah = 0;
+      this.endAyah = 1;
+      this.bAutoName = true;
+
+      var revisionsManager = new RevisionsManager();
+      //this.revisionsManager.loadTestRevisions(true);
+      revisionsManager.m_loadedRevisions = this.props.revisions;
+      this.revision.id = revisionsManager.getNewRevisionId();
+    } else {
+      this.bIsNewRev = false;
+      this.bAutoName = false;
+
+      this.bShowSurahSelector = false;
+      this.bShowAyahSelector = false;
+      this.title = this.revision.title;
+      this.strtSurah = this.modalSurah.surahInfo.getSurahFromAyah(
+        this.revision.strt
+      );
+      this.strtAyah = this.modalSurah.surahInfo.getAyahLocalIndx(
+        this.revision.strt
+      );
+      this.endSurah = this.modalSurah.surahInfo.getSurahFromAyah(
+        this.revision.end
+      );
+      this.endAyah = this.modalSurah.surahInfo.getAyahLocalIndx(
+        this.revision.end
+      );
+    }
   }
   render() {
     return (
@@ -40,7 +73,6 @@ export default class ScreenRevisionDetails extends Component {
         <View style={styles.container}>
           {this.modalSurah.getModal()}
           {this.modalAyah.getModal()}
-
           {this.getStartAyah()}
           {this.getEndAyah()}
           {this.getRevisionTitle()}
@@ -69,19 +101,36 @@ export default class ScreenRevisionDetails extends Component {
     );
   }
   okButtonPressed() {
-    // add new or update revision here
+    // todo: validation
+    this.revision.title = this.title;
+    this.revision.strt = this.modalSurah.surahInfo.getAyahGlobalIndx(
+      this.strtSurah,
+      this.strtAyah
+    );
+    this.revision.end = this.modalSurah.surahInfo.getAyahGlobalIndx(
+      this.endSurah,
+      this.endAyah
+    );
+    if (this.bIsNewRev) this.props.reduxActionAddRevision(this.revision);
+    else this.props.reduxActionUpdateRevision(this.revision);
     this.props.navigation.navigate("ScrList");
   }
+  refresh() {
+    this.props.reducActionForceRender();
+  }
+
   backButtonPressed() {
-    // add new or update revision here
     this.props.navigation.navigate("ScrList");
   }
   onTitleChange(text) {
-    this.setState({ title: text });
+    var str = "";
+    str = text;
+    this.title = str; //this.setState({ title: text });
     this.bAutoName = false;
+    this.refresh();
   }
   onTitleSubmit(text) {
-    this.revision.title = this.state.title;
+    this.revision.title = this.title;
     this.bAutoName = false;
   }
   getRevisionTitle() {
@@ -100,7 +149,7 @@ export default class ScreenRevisionDetails extends Component {
             color: "#323223",
           }}
           onChangeText={this.onTitleChange.bind(this)}
-          value={this.state.title}
+          value={this.title}
           onSubmitEditing={this.onTitleSubmit.bind(this)}
         />
       </View>
@@ -176,26 +225,51 @@ export default class ScreenRevisionDetails extends Component {
     );
   }
   getSurahTxt(bIsStart) {
-    var nSurah = bIsStart ? this.state.strtSurah : this.state.endSurah;
+    var nSurah = bIsStart ? this.strtSurah : this.endSurah;
     if (nSurah == 0) return "Select Surah";
     return this.modalSurah.surahInfo.getSurahNameAr(nSurah);
   }
   getAyahTxt(bIsStart) {
-    var nSurah = bIsStart ? this.state.strtSurah : this.state.endSurah;
-    var nAyah = bIsStart ? this.state.strtAyah : this.state.endAyah;
+    var nSurah = bIsStart ? this.strtSurah : this.endSurah;
+    var nAyah = bIsStart ? this.strtAyah : this.endAyah;
     if (nSurah == 0 || nAyah == 0) return "Select Ayah";
     return "" + nAyah;
   }
   selectStartSurah() {
-    this.modalSurah.selSurah = this.state.strtSurah;
+    this.modalSurah.selSurah = this.strtSurah;
     this.modalSurah.onSelect = this.OnStartSurahSelChange.bind(this);
     this.modalSurah.onCancel = null;
-    this.setState({ bShowSurahSelector: true });
+    this.bShowSurahSelector = true; //this.setState({ bShowSurahSelector: true });
+    this.refresh();
   }
   OnStartSurahSelChange(nSelSurah) {
-    this.state.strtSurah = nSelSurah; // not setState to avoid render
+    var ayahTxt = this.getAyahTxt(true);
+    this.strtSurah = nSelSurah;
+    if (
+      ayahTxt == "Select Ayah" ||
+      this.modalSurah.surahInfo.isValidLocalAyahIndex(
+        this.strtSurah,
+        this.strtAyah
+      ) == false
+    ) {
+      this.strtAyah = 1;
+    }
+    ayahTxt = this.getAyahTxt(false);
+    var endTxt = this.getSurahTxt(false);
+    if (endTxt == "Select Surah") {
+      this.endSurah = nSelSurah;
+    }
+    if (
+      ayahTxt == "Select Ayah" ||
+      this.modalSurah.surahInfo.isValidLocalAyahIndex(
+        this.endSurah,
+        this.endAyah
+      ) == false
+    ) {
+      this.endAyah = this.modalSurah.surahInfo.getSurahNumAyah(this.endSurah);
+    }
     if (this.bAutoName) {
-      this.state.title = this.getAutoTitle();
+      this.title = this.getAutoTitle();
     }
   }
   getAutoTitle() {
@@ -205,6 +279,14 @@ export default class ScreenRevisionDetails extends Component {
     if (strEnd == "Select Surah") strEnd = "";
 
     if (strStrt == strEnd) {
+      if (
+        strStrt != "" &&
+        this.strtAyah == 1 &&
+        this.endAyah ==
+          this.modalSurah.surahInfo.getSurahNumAyah(this.strtSurah)
+      ) {
+        return this.modalSurah.surahInfo.getSurahNameAr(this.strtSurah);
+      }
       // same surah
       var strtAyah = this.getAyahTxt(true);
       if (strtAyah == "Select Ayah") strtAyah = "";
@@ -227,51 +309,97 @@ export default class ScreenRevisionDetails extends Component {
   selectStartAyah() {
     var surahTxt = this.getSurahTxt(true);
     if (surahTxt == "Select Surah") return;
-    this.modalAyah.selAyah = this.state.strtAyah;
-    this.modalAyah.surahNumber = this.state.strtSurah;
+    this.modalAyah.selAyah = this.strtAyah;
+    this.modalAyah.surahNumber = this.strtSurah;
     this.modalAyah.curText =
       this.modalAyah.selAyah == 0 ? "1" : "" + this.modalAyah.selAyah;
     this.modalAyah.onSelect = this.OnStartAyahSelChange.bind(this);
     this.modalAyah.onCancel = null;
-    this.setState({ bShowAyahSelector: true });
+    this.bShowAyahSelector = true; //this.setState({ bShowAyahSelector: true });
+    this.refresh();
   }
   OnStartAyahSelChange(nSelAyah) {
-    this.state.strtAyah = nSelAyah; // not setState to avoid render
+    this.strtAyah = nSelAyah;
+
     if (this.bAutoName) {
-      this.state.title = this.getAutoTitle();
+      this.title = this.getAutoTitle();
     }
   }
   selectEndSurah() {
-    this.modalSurah.selSurah = this.state.endSurah;
+    this.modalSurah.selSurah = this.endSurah;
     this.modalSurah.onSelect = this.OnEndSurahSelChange.bind(this);
     this.modalSurah.onCancel = null;
-    this.setState({ bShowSurahSelector: true });
+    this.bShowSurahSelector = true; //this.setState({ bShowSurahSelector: true });
+    this.refresh();
   }
   OnEndSurahSelChange(nSelSurah) {
-    this.state.endSurah = nSelSurah; // not setState to avoid render
+    this.endSurah = nSelSurah;
+
+    var ayahTxt = this.getAyahTxt(false);
+    if (
+      ayahTxt == "Select Ayah" ||
+      this.modalSurah.surahInfo.isValidLocalAyahIndex(
+        this.endSurah,
+        this.endAyah
+      ) == false
+    ) {
+      this.endAyah = this.modalSurah.surahInfo.getSurahNumAyah(this.endSurah);
+    }
+    var strtTxt = this.getSurahTxt(true);
+    if (strtTxt == "Select Surah") {
+      this.strtSurah = nSelSurah;
+    }
+    ayahTxt = this.getAyahTxt(true);
+    if (
+      ayahTxt == "Select Ayah" ||
+      this.modalSurah.surahInfo.isValidLocalAyahIndex(
+        this.strtSurah,
+        this.strtAyah
+      ) == false
+    ) {
+      this.strtAyah = 1;
+    }
+
     if (this.bAutoName) {
-      this.state.title = this.getAutoTitle();
+      this.title = this.getAutoTitle();
     }
   }
   selectEndAyah() {
     var surahTxt = this.getSurahTxt(false);
     if (surahTxt == "Select Surah") return;
 
-    this.modalAyah.selAyah = this.state.endAyah;
-    this.modalAyah.surahNumber = this.state.endSurah;
+    this.modalAyah.selAyah = this.endAyah;
+    this.modalAyah.surahNumber = this.endSurah;
     this.modalAyah.curText =
       this.modalAyah.selAyah == 0 ? "1" : "" + this.modalAyah.selAyah;
     this.modalAyah.onSelect = this.OnEndAyahSelChange.bind(this);
     this.modalAyah.onCancel = null;
-    this.setState({ bShowAyahSelector: true });
+    this.bShowAyahSelector = true; //this.setState({ bShowAyahSelector: true });
+    this.refresh();
   }
   OnEndAyahSelChange(nSelAyah) {
-    this.state.endAyah = nSelAyah; // not setState to avoid render
+    this.endAyah = nSelAyah; // not setState to avoid render
     if (this.bAutoName) {
-      this.state.title = this.getAutoTitle();
+      this.title = this.getAutoTitle();
     }
   }
 }
+const mapStateToProps = (state) => ({
+  revisions: state.revisions,
+  curRevision: state.curRevision,
+  bRenderFlag: state.bRenderFlag,
+});
+const mapDispatchToProps = () => {
+  return {
+    reduxActionUpdateRevision,
+    reduxActionAddRevision,
+    reducActionForceRender,
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps()
+)(ScreenRevisionDetails);
 const styles = StyleSheet.create({
   background: {
     flex: 1,

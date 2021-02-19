@@ -3,6 +3,10 @@ export const LANGUAGE = "LANGUAGE";
 export const ADD_REVISION = "ADD_REVISION";
 export const UPDATE_REVISION = "UPDATE_REVISION";
 export const DEL_REVISION = "DEL_REVISION";
+export const SET_CUR_REVISION = "SET_CUR_REVISION";
+export const FORCE_RENDER = "FORCE_RENDER";
+
+export const reducActionForceRender = () => ({ type: FORCE_RENDER });
 export const reduxSetWelcomeFlag = (bIsChecked) => ({
   type: WELCOME_FLAG,
   payload: bIsChecked,
@@ -21,5 +25,9 @@ export const reduxActionUpdateRevision = (revision) => ({
 });
 export const reduxActionDelRevision = (revision) => ({
   type: DEL_REVISION,
+  payload: revision,
+});
+export const reduxActionSetCurRevision = (revision) => ({
+  type: SET_CUR_REVISION,
   payload: revision,
 });

@@ -3,13 +3,19 @@ export default class RevisionsManager {
   // loads from db, saves to db
   constructor() {
     this.m_loadedRevisions = [];
-    this.loadRevisions();
-    this.sortRevisions();
   }
   getPastDate(nNumDaysBack) {
     return new Date(new Date().getTime() - nNumDaysBack * 24 * 60 * 60 * 1000);
   }
-  loadRevisions() {}
+  getNewRevisionId() {
+    var iMaxId = 0;
+    for (var i = 0; i < this.m_loadedRevisions.length; i++) {
+      if (this.m_loadedRevisions[i].id > iMaxId)
+        iMaxId = this.m_loadedRevisions[i].id;
+    }
+    return iMaxId + 1;
+  }
+
   loadTestRevisions(bArabic) {
     // todo: load from DB
     this.m_loadedRevisions.push(
