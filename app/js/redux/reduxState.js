@@ -3,6 +3,5 @@ const INITIAL_STATE = {
   strLang: "ar",
   revisions: [],
   curRevision: null,
-  bRenderFlag: false,
 };
 export default INITIAL_STATE;

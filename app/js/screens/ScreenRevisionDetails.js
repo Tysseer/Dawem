@@ -16,12 +16,14 @@ import { connect } from "react-redux";
 import {
   reduxActionUpdateRevision,
   reduxActionAddRevision,
-  reducActionForceRender,
 } from "../redux/reduxActions";
 import RevisionsManager from "../helpers/RevisionsManager";
 class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      bRefresh: true,
+    };
 
     this.modalSurah = new ModalSurahSelector(this);
     this.modalAyah = new ModalAyahSelector(this);
@@ -116,7 +118,8 @@ class ScreenRevisionDetails extends Component {
     this.props.navigation.navigate("ScrList");
   }
   refresh() {
-    this.props.reducActionForceRender();
+    var bVal = this.state.bRefresh == false;
+    this.setState({ bRefresh: bVal });
   }
 
   backButtonPressed() {
@@ -387,13 +390,11 @@ class ScreenRevisionDetails extends Component {
 const mapStateToProps = (state) => ({
   revisions: state.revisions,
   curRevision: state.curRevision,
-  bRenderFlag: state.bRenderFlag,
 });
 const mapDispatchToProps = () => {
   return {
     reduxActionUpdateRevision,
     reduxActionAddRevision,
-    reducActionForceRender,
   };
 };
 export default connect(

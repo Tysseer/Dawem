@@ -2,19 +2,8 @@ import RevisionsManager from "../helpers/RevisionsManager";
 import * as allActions from "./reduxActions";
 import INITIAL_STATE from "./reduxState";
 const actionsReducer = (state = INITIAL_STATE, action) => {
-  const { bSkipWelcome, strLang, revisions, curRevision, bRenderFlag } = state;
+  const { bSkipWelcome, strLang, revisions, curRevision } = state;
   switch (action.type) {
-    case allActions.FORCE_RENDER: {
-      var bNewRender = bRenderFlag == false;
-      const newState = {
-        bSkipWelcome: bSkipWelcome,
-        strLang: strLang,
-        revisions: revisions,
-        curRevision: curRevision,
-        bRenderFlag: bNewRender,
-      };
-      return newState;
-    }
     case allActions.WELCOME_FLAG: {
       const newflag = action.payload;
       const newState = {
@@ -22,7 +11,6 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: revisions,
         curRevision: curRevision,
-        bRenderFlag: bRenderFlag,
       };
       return newState;
     }
@@ -33,7 +21,6 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: newlang,
         revisions: revisions,
         curRevision: curRevision,
-        bRenderFlag: bRenderFlag,
       };
       return newState;
     }
@@ -44,7 +31,6 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: revisions,
         curRevision: rev,
-        bRenderFlag: bRenderFlag,
       };
       return newState;
     }
@@ -60,7 +46,6 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: newRevArr,
         curRevision: null,
-        bRenderFlag: bRenderFlag,
       };
 
       return newState;
@@ -88,7 +73,6 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: newRevArr,
         curRevision: null,
-        bRenderFlag: bRenderFlag,
       };
 
       return newState;
