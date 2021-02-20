@@ -4,9 +4,9 @@ import {
   View,
   Modal,
   Text,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Image,
   TextInput,
-  Dimensions,
 } from "react-native";
 import allAyat from "../helpers/quranAyat";
 import QuranIndexer from "../helpers/QuranIndexer";
@@ -83,18 +83,22 @@ export default class ModalAyahSelector {
             </View>
           </View>
           <View style={styles.toolbar}>
-            <TouchableHighlight
-              onPress={this.handlePress.bind(this)}
-              underlayColor="#FFFFFF11"
-            >
-              <Text style={styles.buttonText}>Select</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this.handleCancel.bind(this)}
-              underlayColor="#FFFFFF11"
-            >
-              <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableHighlight>
+            <View style={styles.okButton}>
+              <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
+                <Image
+                  source={require("../../assets/icons/ok_icon.png")}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </TouchableWithoutFeedback>
+            </View>
+            <View style={styles.okButton}>
+              <TouchableWithoutFeedback onPress={this.handleCancel.bind(this)}>
+                <Image
+                  source={require("../../assets/icons/back.png")}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </TouchableWithoutFeedback>
+            </View>
           </View>
         </View>
       </Modal>
@@ -150,20 +154,11 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
-  buttonText: {
-    width: Dimensions.get("window").width / 5,
-    borderWidth: 2,
-    backgroundColor: "#EBEBA4",
-    fontSize: (Dimensions.get("window").width * 20) / 411,
-    fontFamily: "sans-serif",
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "#121212",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    margin: 5,
+  okButton: {
+    alignSelf: "center",
+    width: 70,
+    height: 70,
+    marginTop: 30,
   },
   toolbar: {
     flexDirection: "row",

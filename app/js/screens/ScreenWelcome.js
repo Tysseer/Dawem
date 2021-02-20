@@ -6,13 +6,20 @@ import {
   View,
   StatusBar,
   TouchableHighlight,
+  TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { connect } from "react-redux";
 import { reduxSetWelcomeFlag } from "../redux/reduxActions";
+import * as strings from "../helpers/StringsManager";
+import StringsManager from "../helpers/StringsManager";
+
 class ScreenWelcome extends Component {
   constructor(props) {
     super(props);
+    this.stringsManager = new StringsManager();
+    this.stringsManager.setLanguage(this.props.strLang);
   }
 
   handlePress() {
@@ -27,29 +34,27 @@ class ScreenWelcome extends Component {
       >
         <View style={styles.textContainer}>
           <Text style={styles.welcomeMessage}>
-            Welcome, Seeker of the Quran!
+            {this.stringsManager.getStr(strings.STR_GREETING)}
           </Text>
           <Text style={styles.motivation}>
-            Embark on your journey with the holy Quran and build the habit of
-            consistently reviewing what you have learned.{"\n"}
+            {this.stringsManager.getStr(strings.STR_MOTIVATION)}
           </Text>
           <Text style={(styles.instructions, { fontSize: 22 })}>
-            Here's how it works:
+            {this.stringsManager.getStr(strings.STR_INSTRUCTIONS_TITLE)}
           </Text>
           <Text style={styles.instructions}>
-            1- Setup your list of revisions.{"\n"}
-            2- Update the list as you revise.{"\n"}
-            3- Light up badges and stay on track.{"\n"}
+            {this.stringsManager.getStr(strings.STR_INSTRUCTIONS)}
           </Text>
         </View>
 
-        <TouchableHighlight
-          onPress={this.handlePress.bind(this)}
-          style={styles.touchable}
-          underlayColor="#FFFFFF11"
-        >
-          <Text style={styles.buttonText}>Let's Go!</Text>
-        </TouchableHighlight>
+        <View style={styles.okButton}>
+          <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
+            <Image
+              source={require("../../assets/icons/ok_icon.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
         <View style={styles.checkBoxContainer}>
           <CheckBox
             onClick={() => {
@@ -64,7 +69,9 @@ class ScreenWelcome extends Component {
             }}
             underlayColor="#FFFFFF11"
           >
-            <Text style={styles.checkBoxText}>Don't show again</Text>
+            <Text style={styles.checkBoxText}>
+              {this.stringsManager.getStr(strings.STR_SKIP_SCREEN)}
+            </Text>
           </TouchableHighlight>
         </View>
       </ImageBackground>
@@ -73,6 +80,7 @@ class ScreenWelcome extends Component {
 }
 const mapStateToProps = (state) => ({
   bSkipWelcome: state.bSkipWelcome,
+  strLang: state.strLang,
 });
 const mapDispatchToProps = () => {
   return {
@@ -109,13 +117,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "sans-serif",
     fontStyle: "italic",
-    textAlign: "justify",
+    textAlign: "center",
     color: "#112222",
   },
   instructions: {
     fontSize: 20,
     fontFamily: "sans-serif",
-    textAlign: "left",
+    textAlign: "center",
 
     color: "#081135",
   },
@@ -142,6 +150,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  okButton: {
+    alignSelf: "center",
+    width: 90,
+    height: 90,
+    marginTop: 30,
   },
   checkBoxText: {
     fontSize: 15,

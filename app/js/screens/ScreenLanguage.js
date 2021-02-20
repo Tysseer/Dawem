@@ -14,7 +14,7 @@ class ScreenLanguage extends Component {
     super(props);
   }
   getlangStyle(strLang) {
-    if (strLang == this.props.curLang) {
+    if (strLang == this.props.strLang) {
       return styles.langSelView;
     } else {
       return styles.langNonView;
@@ -70,7 +70,7 @@ class ScreenLanguage extends Component {
 }
 const mapStateToProps = (state) => ({
   isSkipWelcome: state.bSkipWelcome,
-  curLang: state.strLang,
+  strLang: state.strLang,
 });
 const mapDispatchToProps = () => {
   return {

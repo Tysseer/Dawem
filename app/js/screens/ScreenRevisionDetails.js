@@ -18,13 +18,16 @@ import {
   reduxActionAddRevision,
 } from "../redux/reduxActions";
 import RevisionsManager from "../helpers/RevisionsManager";
+import * as strings from "../helpers/StringsManager";
+import StringsManager from "../helpers/StringsManager";
 class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bRefresh: true,
     };
-
+    this.stringsManager = new StringsManager();
+    this.stringsManager.setLanguage(this.props.strLang);
     this.modalSurah = new ModalSurahSelector(this);
     this.modalAyah = new ModalAyahSelector(this);
     this.revision = this.props.curRevision;
@@ -139,7 +142,9 @@ class ScreenRevisionDetails extends Component {
   getRevisionTitle() {
     return (
       <View style={{ flexDirection: "row", margin: 20 }}>
-        <Text style={styles.revisionTitle}>Title</Text>
+        <Text style={styles.revisionTitle}>
+          {this.stringsManager.getStr(strings.STR_TITLE)}
+        </Text>
         <TextInput
           style={{
             flex: 0.75,
@@ -159,6 +164,9 @@ class ScreenRevisionDetails extends Component {
     );
   }
   getStartEndAyah(bIsStart) {
+    var strAyahTxt = bIsStart
+      ? this.stringsManager.getStr(strings.STR_STRT_AYAH)
+      : this.stringsManager.getStr(strings.STR_END_AYAH);
     return (
       <View style={{ alignSelf: "flex-start", margin: 10, width: "90%" }}>
         <View
@@ -168,9 +176,7 @@ class ScreenRevisionDetails extends Component {
             borderTopRightRadius: 3,
           }}
         >
-          <Text style={styles.startEndTitle}>
-            {bIsStart ? "Starting Ayah" : "Ending Ayah"}
-          </Text>
+          <Text style={styles.startEndTitle}>{strAyahTxt}</Text>
         </View>
         {this.getAyahSelector(bIsStart)}
       </View>
@@ -184,8 +190,14 @@ class ScreenRevisionDetails extends Component {
   }
   getAyahSelector(bIsStart) {
     var surahTxt = this.getSurahTxt(bIsStart);
-    var btnColor = surahTxt == "Select Surah" ? "#404040" : "#EBEBA4";
-    var txtColor = surahTxt == "Select Surah" ? "#888888" : "#323223";
+    var btnColor =
+      surahTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)
+        ? "#404040"
+        : "#EBEBA4";
+    var txtColor =
+      surahTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)
+        ? "#888888"
+        : "#323223";
     return (
       <View style={styles.ayahContainer}>
         <View>
@@ -229,13 +241,14 @@ class ScreenRevisionDetails extends Component {
   }
   getSurahTxt(bIsStart) {
     var nSurah = bIsStart ? this.strtSurah : this.endSurah;
-    if (nSurah == 0) return "Select Surah";
+    if (nSurah == 0) return this.stringsManager.getStr(strings.STR_SEL_SURAH);
     return this.modalSurah.surahInfo.getSurahNameAr(nSurah);
   }
   getAyahTxt(bIsStart) {
     var nSurah = bIsStart ? this.strtSurah : this.endSurah;
     var nAyah = bIsStart ? this.strtAyah : this.endAyah;
-    if (nSurah == 0 || nAyah == 0) return "Select Ayah";
+    if (nSurah == 0 || nAyah == 0)
+      return this.stringsManager.getStr(strings.STR_SEL_AYAH);
     return "" + nAyah;
   }
   selectStartSurah() {
@@ -249,7 +262,7 @@ class ScreenRevisionDetails extends Component {
     var ayahTxt = this.getAyahTxt(true);
     this.strtSurah = nSelSurah;
     if (
-      ayahTxt == "Select Ayah" ||
+      ayahTxt == this.stringsManager.getStr(strings.STR_SEL_AYAH) ||
       this.modalSurah.surahInfo.isValidLocalAyahIndex(
         this.strtSurah,
         this.strtAyah
@@ -259,11 +272,11 @@ class ScreenRevisionDetails extends Component {
     }
     ayahTxt = this.getAyahTxt(false);
     var endTxt = this.getSurahTxt(false);
-    if (endTxt == "Select Surah") {
+    if (endTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)) {
       this.endSurah = nSelSurah;
     }
     if (
-      ayahTxt == "Select Ayah" ||
+      ayahTxt == this.stringsManager.getStr(strings.STR_SEL_AYAH) ||
       this.modalSurah.surahInfo.isValidLocalAyahIndex(
         this.endSurah,
         this.endAyah
@@ -277,9 +290,11 @@ class ScreenRevisionDetails extends Component {
   }
   getAutoTitle() {
     var strStrt = this.getSurahTxt(true);
-    if (strStrt == "Select Surah") strStrt = "";
+    if (strStrt == this.stringsManager.getStr(strings.STR_SEL_SURAH))
+      strStrt = "";
     var strEnd = this.getSurahTxt(false);
-    if (strEnd == "Select Surah") strEnd = "";
+    if (strEnd == this.stringsManager.getStr(strings.STR_SEL_SURAH))
+      strEnd = "";
 
     if (strStrt == strEnd) {
       if (
@@ -292,9 +307,11 @@ class ScreenRevisionDetails extends Component {
       }
       // same surah
       var strtAyah = this.getAyahTxt(true);
-      if (strtAyah == "Select Ayah") strtAyah = "";
+      if (strtAyah == this.stringsManager.getStr(strings.STR_SEL_AYAH))
+        strtAyah = "";
       var endAyah = this.getAyahTxt(false);
-      if (endAyah == "Select Ayah") endAyah = "";
+      if (endAyah == this.stringsManager.getStr(strings.STR_SEL_AYAH))
+        endAyah = "";
       if (strtAyah == "" && endAyah == "") return strStrt;
       if (endAyah == "") return strStrt + " (" + strtAyah + ")";
       if (strtAyah == "") return strStrt + " (" + endAyah + ")";
@@ -302,16 +319,18 @@ class ScreenRevisionDetails extends Component {
     }
 
     var strtAyah = this.getAyahTxt(true);
-    if (strtAyah != "Select Ayah") strStrt += " (" + strtAyah + ")";
+    if (strtAyah != this.stringsManager.getStr(strings.STR_SEL_AYAH))
+      strStrt += " (" + strtAyah + ")";
     var endAyah = this.getAyahTxt(false);
-    if (endAyah != "Select Ayah") strEnd += " (" + endAyah + ")";
+    if (endAyah != this.stringsManager.getStr(strings.STR_SEL_AYAH))
+      strEnd += " (" + endAyah + ")";
     if (strEnd == "") return strStrt;
     if (strStrt == "") return strEnd;
     return strStrt + " " + strEnd;
   }
   selectStartAyah() {
     var surahTxt = this.getSurahTxt(true);
-    if (surahTxt == "Select Surah") return;
+    if (surahTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)) return;
     this.modalAyah.selAyah = this.strtAyah;
     this.modalAyah.surahNumber = this.strtSurah;
     this.modalAyah.curText =
@@ -340,7 +359,7 @@ class ScreenRevisionDetails extends Component {
 
     var ayahTxt = this.getAyahTxt(false);
     if (
-      ayahTxt == "Select Ayah" ||
+      ayahTxt == this.stringsManager.getStr(strings.STR_SEL_AYAH) ||
       this.modalSurah.surahInfo.isValidLocalAyahIndex(
         this.endSurah,
         this.endAyah
@@ -349,12 +368,12 @@ class ScreenRevisionDetails extends Component {
       this.endAyah = this.modalSurah.surahInfo.getSurahNumAyah(this.endSurah);
     }
     var strtTxt = this.getSurahTxt(true);
-    if (strtTxt == "Select Surah") {
+    if (strtTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)) {
       this.strtSurah = nSelSurah;
     }
     ayahTxt = this.getAyahTxt(true);
     if (
-      ayahTxt == "Select Ayah" ||
+      ayahTxt == this.stringsManager.getStr(strings.STR_SEL_AYAH) ||
       this.modalSurah.surahInfo.isValidLocalAyahIndex(
         this.strtSurah,
         this.strtAyah
@@ -369,7 +388,7 @@ class ScreenRevisionDetails extends Component {
   }
   selectEndAyah() {
     var surahTxt = this.getSurahTxt(false);
-    if (surahTxt == "Select Surah") return;
+    if (surahTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)) return;
 
     this.modalAyah.selAyah = this.endAyah;
     this.modalAyah.surahNumber = this.endSurah;
@@ -390,6 +409,7 @@ class ScreenRevisionDetails extends Component {
 const mapStateToProps = (state) => ({
   revisions: state.revisions,
   curRevision: state.curRevision,
+  strLang: state.strLang,
 });
 const mapDispatchToProps = () => {
   return {

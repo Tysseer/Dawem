@@ -4,9 +4,11 @@ import {
   View,
   Modal,
   Text,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import SVGLoader from "../helpers/SVGLoader.js";
+import * as strings from "../helpers/StringsManager";
 export default class ModalBadgeWeek {
   constructor(parent /* should have state.bShowModalBadgeWeek */) {
     this.parent = parent;
@@ -19,8 +21,8 @@ export default class ModalBadgeWeek {
     var WeekBadge = svgLoader.getWeekBadge(false);
     var strStatus =
       this.parent.state.isBadgeWeek == false
-        ? "You Still Did Not Activate This Badge. Finish all revisions in 7 days to light it up!"
-        : "Great Job! You activated your Ultimate Dawem Badge.";
+        ? this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_INACTIVE)
+        : this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_ACTIVE);
     return (
       <Modal
         animationType="fade"
@@ -31,19 +33,17 @@ export default class ModalBadgeWeek {
         <View style={styles.contentContainer}>
           <View style={styles.badge}>{WeekBadge}</View>
           <Text style={styles.motivationText}>
-            This Badge Activates When You Finish All Revisions in 7 Days or
-            Less.
-            {"\n"}
-            Make It a Habit and Visit All Your Revisions at Least Once a Week!
+            {this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_DESC)}
           </Text>
           <Text style={styles.statusText}>{strStatus}</Text>
-          <TouchableHighlight
-            onPress={this.handlePress.bind(this)}
-            style={styles.touchable}
-            underlayColor="#FFFFFF11"
-          >
-            <Text style={styles.buttonText}>Got it!</Text>
-          </TouchableHighlight>
+          <View style={styles.okButton}>
+            <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
+              <Image
+                source={require("../../assets/icons/ok_icon.png")}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </TouchableWithoutFeedback>
+          </View>
         </View>
       </Modal>
     );
@@ -108,5 +108,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  okButton: {
+    alignSelf: "center",
+    width: 70,
+    height: 70,
+    marginTop: 30,
   },
 });

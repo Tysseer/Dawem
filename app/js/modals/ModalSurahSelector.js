@@ -7,6 +7,8 @@ import {
   TouchableHighlight,
   ScrollView,
   Dimensions,
+  TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import QuranIndexer from "../helpers/QuranIndexer";
 export default class ModalSurahSelector {
@@ -52,18 +54,22 @@ export default class ModalSurahSelector {
           </ScrollView>
 
           <View style={styles.toolbar}>
-            <TouchableHighlight
-              onPress={this.handlePress.bind(this)}
-              underlayColor="#FFFFFF11"
-            >
-              <Text style={[styles.buttonText, { margin: 5 }]}>Select</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={this.handleCancel.bind(this)}
-              underlayColor="#FFFFFF11"
-            >
-              <Text style={[styles.buttonText, { margin: 5 }]}>Cancel</Text>
-            </TouchableHighlight>
+            <View style={styles.okButton}>
+              <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
+                <Image
+                  source={require("../../assets/icons/ok_icon.png")}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </TouchableWithoutFeedback>
+            </View>
+            <View style={styles.okButton}>
+              <TouchableWithoutFeedback onPress={this.handleCancel.bind(this)}>
+                <Image
+                  source={require("../../assets/icons/back.png")}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </TouchableWithoutFeedback>
+            </View>
           </View>
         </View>
       </Modal>
@@ -137,6 +143,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  okButton: {
+    alignSelf: "center",
+    width: 70,
+    height: 70,
+    marginTop: 30,
   },
   toolbar: {
     flexDirection: "row",

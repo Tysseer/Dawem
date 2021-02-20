@@ -16,10 +16,13 @@ import ModalBadgeMonth from "../modals/ModalBadgeMonth.js";
 import ModalBadgeWeek from "../modals/ModalBadgeWeek.js";
 import { connect } from "react-redux";
 import { reduxActionSetCurRevision } from "../redux/reduxActions";
+import * as strings from "../helpers/StringsManager";
+import StringsManager from "../helpers/StringsManager";
 class ScreenRevisions extends Component {
   constructor(props) {
     super(props);
-
+    this.stringsManager = new StringsManager();
+    this.stringsManager.setLanguage(this.props.strLang);
     this.svgLoader = new SVGLoader();
     this.revisionsManager = new RevisionsManager();
     //this.revisionsManager.loadTestRevisions(true);
@@ -119,8 +122,7 @@ class ScreenRevisions extends Component {
     return (
       <View style={styles.textContainer}>
         <Text style={styles.textPrompt}>
-          You didn't add any revisions!{"\n"}Start your journey with the Quran
-          now...
+          {this.stringsManager.getStr(strings.STR_REVS_PROMPT)}
         </Text>
 
         <TouchableWithoutFeedback onPress={this.onAddRevision.bind(this)}>
@@ -251,6 +253,7 @@ class ScreenRevisions extends Component {
 }
 const mapStateToProps = (state) => ({
   revisions: state.revisions,
+  strLang: state.strLang,
 });
 const mapDispatchToProps = () => {
   return {
