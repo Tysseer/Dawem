@@ -6,6 +6,7 @@ import SVGLoader from "../helpers/SVGLoader";
 export default class RevisionItem extends Component {
   static propTypes = {
     svgLoader: PropTypes.instanceOf(SVGLoader).isRequired,
+    isDetailed: PropTypes.bool.isRequired,
     revision: PropTypes.instanceOf(Revision).isRequired,
     onPresses: PropTypes.instanceOf(Map).isRequired,
     onLongPresses: PropTypes.instanceOf(Map).isRequired,
@@ -19,10 +20,22 @@ export default class RevisionItem extends Component {
     var NumDaysBtn = this.getNumDaysButton(this.props.revision);
     var RevisedBtn = this.getRevisedButton(this.props.revision);
     var ReadBtn = this.getReadButton(this.props.revision);
+    var extrBtns = this.getExtraButtons(this.props.revision);
     return (
       <View
         key={this.props.revision.id + 1254}
-        style={{ borderBottomColor: "black", borderBottomWidth: 0.2 }}
+        style={
+          this.props.isDetailed
+            ? {
+                borderBottomColor: "yellow",
+                borderBottomWidth: 0.2,
+                backgroundColor: "#FFFFFF33",
+              }
+            : {
+                borderBottomColor: "black",
+                borderBottomWidth: 0.2,
+              }
+        }
       >
         <TouchableHighlight
           onPress={() => this.props.onPresses.get("item")(revision)}
@@ -44,6 +57,7 @@ export default class RevisionItem extends Component {
             </View>
           </View>
         </TouchableHighlight>
+        {extrBtns}
         <View
           key={this.props.revision.id + 1002}
           style={{
@@ -104,6 +118,22 @@ export default class RevisionItem extends Component {
           {IconRevised}
         </View>
       </TouchableHighlight>
+    );
+  }
+  getExtraButtons(revision) {
+    if (this.props.isDetailed == false) return null;
+    return (
+      <View
+        key={this.props.revision.id + 1003}
+        style={{
+          flexDirection: "row",
+          height: styles.listItemContainer.height,
+          width: "100%",
+        }}
+      >
+        {this.getEditButton(revision)}
+        {this.getDeleteButton(revision)}
+      </View>
     );
   }
   getReadButton(revision) {

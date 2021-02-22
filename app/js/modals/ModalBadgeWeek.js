@@ -20,7 +20,9 @@ export default class ModalBadgeWeek {
     var svgLoader = new SVGLoader();
     var WeekBadge = svgLoader.getWeekBadge(false);
     var strStatus =
-      this.parent.state.isBadgeWeek == false
+      this.parent.revisionsManager.getNumRevisions() < 7
+        ? this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_MIN_REV)
+        : this.parent.state.isBadgeWeek == false
         ? this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_INACTIVE)
         : this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_ACTIVE);
     return (

@@ -5,20 +5,24 @@ export const STR_END_AYAH = 4;
 export const STR_TITLE = 5;
 export const STR_REVS_PROMPT = 6;
 export const STR_DAY_BADGE_DESC = 7;
-export const STR_DAY_BADGE_ACTIVE = 8;
-export const STR_DAY_BADGE_INACTIVE = 9;
-export const STR_MONTH_BADGE_DESC = 10;
-export const STR_MONTH_BADGE_ACTIVE = 11;
-export const STR_MONTH_BADGE_INACTIVE = 12;
-export const STR_WEEK_BADGE_DESC = 13;
-export const STR_WEEK_BADGE_ACTIVE = 14;
-export const STR_WEEK_BADGE_INACTIVE = 15;
-export const STR_GREETING = 16;
-export const STR_MOTIVATION = 17;
-export const STR_INSTRUCTIONS_TITLE = 18;
-export const STR_INSTRUCTIONS = 19;
-export const STR_SKIP_SCREEN = 20;
-
+export const STR_DAY_BADGE_MIN_REV = 8;
+export const STR_DAY_BADGE_ACTIVE = 9;
+export const STR_DAY_BADGE_INACTIVE = 10;
+export const STR_MONTH_BADGE_DESC = 11;
+export const STR_MONTH_BADGE_MIN_REV = 12;
+export const STR_MONTH_BADGE_ACTIVE = 13;
+export const STR_MONTH_BADGE_INACTIVE = 14;
+export const STR_WEEK_BADGE_DESC = 15;
+export const STR_WEEK_BADGE_MIN_REV = 16;
+export const STR_WEEK_BADGE_ACTIVE = 17;
+export const STR_WEEK_BADGE_INACTIVE = 18;
+export const STR_GREETING = 19;
+export const STR_MOTIVATION = 20;
+export const STR_INSTRUCTIONS_TITLE = 21;
+export const STR_INSTRUCTIONS = 22;
+export const STR_SKIP_SCREEN = 23;
+export const STR_DAYS_SINCE_REV = 24;
+export const STR_REVISED = 25;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -71,6 +75,13 @@ export default class StringsManager {
         return "This Badge Activates When You Finish at Least One Revision Daily.\nMake It a Habit and Visit Your List of Revisions Everyday!";
       return "unsupported language";
     }
+    if (nStrID == STR_DAY_BADGE_MIN_REV) {
+      if (strLang == "ar")
+        return "لا ينفتح هذا الوسام إلا بعد إضافة 5 مراجعات!";
+      if (strLang == "en")
+        return "This badge will be active after adding at least 5 revisions!";
+      return "unsupported language";
+    }
     if (nStrID == STR_DAY_BADGE_ACTIVE) {
       if (strLang == "ar")
         return "بارك الله فيك! لقد قمت بتفعيل وسام المداومة.";
@@ -91,6 +102,13 @@ export default class StringsManager {
         return "This Badge Activates When You Finish All Revisions in 30 Days or Less.\nMake It a Habit and Visit All Your Revisions at Least Once a Month!";
       return "unsupported language";
     }
+    if (nStrID == STR_MONTH_BADGE_MIN_REV) {
+      if (strLang == "ar")
+        return "لا ينفتح هذا الوسام إلا بعد إضافة 10 مراجعات!";
+      if (strLang == "en")
+        return "This badge will be active after adding at least 10 revisions!";
+      return "unsupported language";
+    }
     if (nStrID == STR_MONTH_BADGE_ACTIVE) {
       if (strLang == "ar")
         return " فتح الله عليك أبواب الخير! لقد قمت بتفعيل وسام المصاحبة, وصرت صاحبا للقرآن.";
@@ -109,6 +127,13 @@ export default class StringsManager {
         return "وسام المثابرة ينفتح لك عندما تقوم بمراجعة كل أورادك في خلال أسبوع أو أقل. فهذا كان دأب الصحابة الكرام ومن تبعهم بإحسان.";
       if (strLang == "en")
         return "This Badge Activates When You Finish All Revisions in 7 Days or Less.\nMake It a Habit and Visit All Your Revisions at Least Once a Week!";
+      return "unsupported language";
+    }
+    if (nStrID == STR_WEEK_BADGE_MIN_REV) {
+      if (strLang == "ar")
+        return "لا ينفتح هذا الوسام إلا بعد إضافة 7 مراجعات!";
+      if (strLang == "en")
+        return "This badge will be active after adding at least 7 revisions!";
       return "unsupported language";
     }
     if (nStrID == STR_WEEK_BADGE_ACTIVE) {
@@ -153,6 +178,16 @@ export default class StringsManager {
     if (nStrID == STR_SKIP_SCREEN) {
       if (strLang == "ar") return "لا تظهر هذه الشاشة";
       if (strLang == "en") return "Don't show again";
+      return "unsupported language";
+    }
+    if (nStrID == STR_DAYS_SINCE_REV) {
+      if (strLang == "ar") return "يوما منذ آخر مراجعة!";
+      if (strLang == "en") return "Days Since Last Revision!";
+      return "unsupported language";
+    }
+    if (nStrID == STR_REVISED) {
+      if (strLang == "ar") return "أحسنت صنعا! لقد راجعت هذا الورد اليوم.";
+      if (strLang == "en") return "Good Job! You revised this today.";
       return "unsupported language";
     }
     return "unkown string";

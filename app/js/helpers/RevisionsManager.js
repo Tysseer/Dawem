@@ -4,6 +4,9 @@ export default class RevisionsManager {
   constructor() {
     this.m_loadedRevisions = [];
   }
+  getNumRevisions() {
+    return this.m_loadedRevisions.length;
+  }
   getPastDate(nNumDaysBack) {
     return new Date(new Date().getTime() - nNumDaysBack * 24 * 60 * 60 * 1000);
   }

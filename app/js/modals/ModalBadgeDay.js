@@ -20,7 +20,9 @@ export default class ModalBadgeDay {
     var svgLoader = new SVGLoader();
     var dayBadge = svgLoader.getDayBadge(false);
     var strStatus =
-      this.parent.state.isBadgeDay == false
+      this.parent.revisionsManager.getNumRevisions() < 5
+        ? this.parent.stringsManager.getStr(strings.STR_DAY_BADGE_MIN_REV)
+        : this.parent.state.isBadgeDay == false
         ? this.parent.stringsManager.getStr(strings.STR_DAY_BADGE_INACTIVE)
         : this.parent.stringsManager.getStr(strings.STR_DAY_BADGE_ACTIVE);
     return (

@@ -1,0 +1,32 @@
+<View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onEdit.bind(this)}>
+            <Image
+              source={require("../../assets/icons/edit.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onDelete.bind(this)}>
+            <Image
+              source={require("../../assets/icons/delete.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+		<View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onDonate.bind(this)}>
+            <Image
+              source={require("../../assets/icons/donate.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.toolButton}>
+          <TouchableWithoutFeedback onPress={this.onShare.bind(this)}>
+            <Image
+              source={require("../../assets/icons/share.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>

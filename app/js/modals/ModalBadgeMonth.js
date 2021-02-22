@@ -21,7 +21,9 @@ export default class ModalBadgeMonth {
     var svgLoader = new SVGLoader();
     var MonthBadge = svgLoader.getMonthBadge(false);
     var strStatus =
-      this.parent.state.isBadgeMonth == false
+      this.parent.revisionsManager.getNumRevisions() < 10
+        ? this.parent.stringsManager.getStr(strings.STR_MONTH_BADGE_MIN_REV)
+        : this.parent.state.isBadgeMonth == false
         ? this.parent.stringsManager.getStr(strings.STR_MONTH_BADGE_INACTIVE)
         : this.parent.stringsManager.getStr(strings.STR_MONTH_BADGE_ACTIVE);
     return (

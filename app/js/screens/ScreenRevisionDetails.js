@@ -69,6 +69,7 @@ class ScreenRevisionDetails extends Component {
       );
     }
   }
+
   render() {
     return (
       <ImageBackground

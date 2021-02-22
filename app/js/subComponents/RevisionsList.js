@@ -5,16 +5,22 @@ import RevisionsManager from "../helpers/RevisionsManager";
 import QuranIndexer from "../helpers/QuranIndexer";
 import SVGLoader from "../helpers/SVGLoader";
 import RevisionItem from "./RevisionItem";
+import Toast from "react-native-simple-toast";
+import * as strings from "../helpers/StringsManager";
+import StringsManager from "../helpers/StringsManager";
 export default class RevisionsList extends Component {
   static propTypes = {
     revisionsManager: PropTypes.instanceOf(RevisionsManager).isRequired,
+    stringsManager: PropTypes.instanceOf(StringsManager).isRequired,
     navigation: PropTypes.object.isRequired,
+    updateRevFn: PropTypes.func.isRequired,
     refreshFn: PropTypes.func.isRequired,
   };
   constructor(props) {
     super(props);
     this.state = {
       refreshFlag: true,
+      detailedRev: null,
     };
     this.svgLoader = new SVGLoader();
     this.quranIndexer = new QuranIndexer();
@@ -33,6 +39,7 @@ export default class RevisionsList extends Component {
             <RevisionItem
               key={curRevision.id}
               svgLoader={this.svgLoader}
+              isDetailed={this.state.detailedRev == curRevision}
               revision={curRevision}
               onPresses={pressHandlers}
               onLongPresses={longPressHandlers}
@@ -73,11 +80,26 @@ export default class RevisionsList extends Component {
     this.refresh();
   }
 
-  onItemPress(revision) {}
+  onItemPress(revision) {
+    var newRev = revision;
+    if (this.state.detailedRev == newRev) newRev = null;
 
-  onItemTitlePress(revision) {}
+    this.setState({ detailedRev: newRev });
+  }
 
-  onItemNumDaysPress(revision) {}
+  onItemTitlePress(revision) {
+    this.onItemPress(revision);
+  }
+
+  onItemNumDaysPress(revision) {
+    var strMsg =
+      revision.numDays == 0
+        ? this.props.stringsManager.getStr(strings.STR_REVISED)
+        : revision.numDays +
+          " " +
+          this.props.stringsManager.getStr(strings.STR_DAYS_SINCE_REV);
+    Toast.showWithGravity(strMsg, Toast.SHORT, Toast.CENTER);
+  }
 
   onItemIconRevisedPress(revision) {
     revision.makeRevisionDateNow();
@@ -90,9 +112,13 @@ export default class RevisionsList extends Component {
     this.props.navigation.navigate("ScrQuran", { strtPage: strtPage });
   }
 
-  onItemIconEditPress(revision) {}
+  onItemIconEditPress(revision) {
+    this.props.updateRevFn(revision);
+  }
 
-  onItemIconDeletePress(revision) {}
+  onItemIconDeletePress(revision) {
+    this.props.deleteRevFn(revision);
+  }
 }
 const styles = StyleSheet.create({
   listContainer: {

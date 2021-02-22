@@ -15,7 +15,10 @@ import ModalBadgeDay from "../modals/ModalBadgeDay.js";
 import ModalBadgeMonth from "../modals/ModalBadgeMonth.js";
 import ModalBadgeWeek from "../modals/ModalBadgeWeek.js";
 import { connect } from "react-redux";
-import { reduxActionSetCurRevision } from "../redux/reduxActions";
+import {
+  reduxActionSetCurRevision,
+  reduxActionDelRevision,
+} from "../redux/reduxActions";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 class ScreenRevisions extends Component {
@@ -67,8 +70,11 @@ class ScreenRevisions extends Component {
           ) : (
             <RevisionsList
               revisionsManager={this.revisionsManager}
+              stringsManager={this.stringsManager}
               navigation={this.props.navigation}
               refreshFn={this.refresh.bind(this)}
+              updateRevFn={this.onEditRevision.bind(this)}
+              deleteRevFn={this.onDeleteRevision.bind(this)}
             />
           )}
         </View>
@@ -114,10 +120,16 @@ class ScreenRevisions extends Component {
   }
 
   onSettings() {}
-  onDelete() {}
-  onEdit() {}
-  onShare() {}
   onDonate() {}
+
+  onEditRevision(revision) {
+    this.props.reduxActionSetCurRevision(revision);
+    this.props.navigation.navigate("ScrRev");
+  }
+  onDeleteRevision(revision) {
+    this.props.reduxActionDelRevision(revision);
+    this.refresh();
+  }
   getInitialPrompt() {
     return (
       <View style={styles.textContainer}>
@@ -157,36 +169,10 @@ class ScreenRevisions extends Component {
             />
           </TouchableWithoutFeedback>
         </View>
-
-        <View style={styles.toolButton}>
-          <TouchableWithoutFeedback onPress={this.onEdit.bind(this)}>
-            <Image
-              source={require("../../assets/icons/edit.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.toolButton}>
-          <TouchableWithoutFeedback onPress={this.onDelete.bind(this)}>
-            <Image
-              source={require("../../assets/icons/delete.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-
         <View style={styles.toolButton}>
           <TouchableWithoutFeedback onPress={this.onDonate.bind(this)}>
             <Image
               source={require("../../assets/icons/donate.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.toolButton}>
-          <TouchableWithoutFeedback onPress={this.onShare.bind(this)}>
-            <Image
-              source={require("../../assets/icons/share.png")}
               style={{ width: "100%", height: "100%" }}
             />
           </TouchableWithoutFeedback>
@@ -234,8 +220,13 @@ class ScreenRevisions extends Component {
       if (this.revisionsManager.m_loadedRevisions[i].numDays == 0)
         bIsToday = true;
     }
+
     var bIsWeek = maxDays <= 7;
     var bIsMonth = maxDays <= 30;
+
+    bIsToday = bIsToday && this.revisionsManager.m_loadedRevisions.length >= 5;
+    bIsWeek = bIsWeek && this.revisionsManager.m_loadedRevisions.length >= 7;
+    bIsMonth = bIsMonth && this.revisionsManager.m_loadedRevisions.length >= 10;
     return [bIsToday, bIsMonth, bIsWeek];
   }
   updateBadgesStates() {
@@ -258,6 +249,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = () => {
   return {
     reduxActionSetCurRevision,
+    reduxActionDelRevision,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenRevisions);

@@ -30,9 +30,10 @@ export default class QuranIndexer {
   }
   getSurahFromAyah(iAyah /*one-based */) {
     iAyah = this.secureIndexRange(iAyah, 6236);
+
     if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
     for (var i = 1; i < this.arrSurahAyahStart.length; i++) {
-      if (this.arrPageFirstAyah[i] > iAyah) {
+      if (this.arrSurahAyahStart[i] > iAyah) {
         return i - 1;
       }
     }
