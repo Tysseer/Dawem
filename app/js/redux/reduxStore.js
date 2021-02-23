@@ -1,4 +1,4 @@
 import { createStore } from "redux";
-import actionsReducer from "./reducer";
-const reduxStore = createStore(actionsReducer);
+import persistedReducer from "./reduxPersist";
+const reduxStore = createStore(persistedReducer);
 export default reduxStore;

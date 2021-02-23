@@ -1,12 +1,36 @@
 import RevisionsManager from "../helpers/RevisionsManager";
 import * as allActions from "./reduxActions";
 import INITIAL_STATE from "./reduxState";
+import { REHYDRATE } from "redux-persist";
 const actionsReducer = (state = INITIAL_STATE, action) => {
-  const { bSkipWelcome, strLang, revisions, curRevision } = state;
+  const { bIsFirstRun, bSkipWelcome, strLang, revisions, curRevision } = state;
   switch (action.type) {
+    case REHYDRATE: {
+      const newState = {
+        bIsFirstRun: bIsFirstRun,
+        bSkipWelcome: bSkipWelcome,
+        strLang: strLang,
+        revisions: revisions,
+        curRevision: curRevision,
+      };
+      console.log(newState);
+      return newState;
+    }
+    case allActions.APP_FIRST_RUN_FLAG: {
+      const newflag = action.payload;
+      const newState = {
+        bIsFirstRun: newflag,
+        bSkipWelcome: bSkipWelcome,
+        strLang: strLang,
+        revisions: revisions,
+        curRevision: curRevision,
+      };
+      return newState;
+    }
     case allActions.WELCOME_FLAG: {
       const newflag = action.payload;
       const newState = {
+        bIsFirstRun: bIsFirstRun,
         bSkipWelcome: newflag,
         strLang: strLang,
         revisions: revisions,
@@ -17,6 +41,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
     case allActions.LANGUAGE: {
       const newlang = action.payload;
       const newState = {
+        bIsFirstRun: bIsFirstRun,
         bSkipWelcome: bSkipWelcome,
         strLang: newlang,
         revisions: revisions,
@@ -27,6 +52,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
     case allActions.SET_CUR_REVISION: {
       const rev = action.payload;
       const newState = {
+        bIsFirstRun: bIsFirstRun,
         bSkipWelcome: bSkipWelcome,
         strLang: strLang,
         revisions: revisions,
@@ -42,6 +68,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       revisionsManager.sortRevisions();
       newRevArr = revisionsManager.m_loadedRevisions;
       const newState = {
+        bIsFirstRun: bIsFirstRun,
         bSkipWelcome: bSkipWelcome,
         strLang: strLang,
         revisions: newRevArr,
@@ -69,6 +96,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       revisionsManager.sortRevisions();
       newRevArr = revisionsManager.m_loadedRevisions;
       const newState = {
+        bIsFirstRun: bIsFirstRun,
         bSkipWelcome: bSkipWelcome,
         strLang: strLang,
         revisions: newRevArr,

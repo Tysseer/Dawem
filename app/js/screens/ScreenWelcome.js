@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { connect } from "react-redux";
-import { reduxSetWelcomeFlag } from "../redux/reduxActions";
+import { reduxActionSetWelcomeFlag } from "../redux/reduxActions";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 
@@ -58,14 +58,14 @@ class ScreenWelcome extends Component {
         <View style={styles.checkBoxContainer}>
           <CheckBox
             onClick={() => {
-              this.props.reduxSetWelcomeFlag(!this.props.bSkipWelcome);
+              this.props.reduxActionSetWelcomeFlag(!this.props.bSkipWelcome);
             }}
             isChecked={this.props.bSkipWelcome}
             checkBoxColor="white"
           />
           <TouchableHighlight
             onPress={() => {
-              this.props.reduxSetWelcomeFlag(!this.props.bSkipWelcome);
+              this.props.reduxActionSetWelcomeFlag(!this.props.bSkipWelcome);
             }}
             underlayColor="#FFFFFF11"
           >
@@ -84,7 +84,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = () => {
   return {
-    reduxSetWelcomeFlag,
+    reduxActionSetWelcomeFlag,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenWelcome);

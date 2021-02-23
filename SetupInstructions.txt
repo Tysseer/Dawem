@@ -13,5 +13,7 @@ npm start -c
 npm i react-native-svg --save        // this is needed i don't know why!
 npm install react-redux
 npm install redux
+npm install @react-native-async-storage/async-storage
+npm install redux-persist
 
 ///// to run react-native.ps1 without changing the policy use: powershell -ExecutionPolicy Bypass -File script.ps1

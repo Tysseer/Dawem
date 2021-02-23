@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+  bIsFirstRun: true,
   bSkipWelcome: false,
   strLang: "ar",
   revisions: [],

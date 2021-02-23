@@ -30,3 +30,28 @@
             />
           </TouchableWithoutFeedback>
         </View>
+
+
+            case REHYDRATE: {
+      // convert revisions to array of Revision
+      console.log("rehydrate");
+      console.log(revisions);
+
+      var newRevArr = new Array(revisions.length);
+      for (var i = 0; i < revisions.length; i++) {
+        newRevArr[i] = new Revision();
+        newRevArr[i].fillFromObj(revisions[i]);
+      }
+      console.log(newRevArr);
+      const newState = {
+        bIsFirstRun: bIsFirstRun,
+        bSkipWelcome: bSkipWelcome,
+        strLang: strLang,
+        revisions: newRevArr,
+        curRevision: curRevision,
+      };
+      return newState;
+    }
+
+    import { REHYDRATE } from "redux-persist";
+import Revision from "../helpers/Revision";

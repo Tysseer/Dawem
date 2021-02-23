@@ -1,11 +1,27 @@
 export default class Revision {
-  constructor(id, title, progress, strt, end, dateofLastRevision) {
+  constructor(
+    id = 0,
+    title = "",
+    progress = 0,
+    strt = 0,
+    end = 0,
+    dateofLastRevision = new Date()
+  ) {
     this.id = id;
     this.title = title;
     this.progress = progress;
     this.strt = strt;
     this.end = end;
     this.dateofLastRevision = dateofLastRevision;
+    this.updateNumDays();
+  }
+  fillFromSerializedObj(obj) {
+    this.id = obj.id;
+    this.title = obj.title;
+    this.progress = obj.progress;
+    this.strt = obj.strt;
+    this.end = obj.end;
+    this.dateofLastRevision = new Date(obj.dateofLastRevision);
     this.updateNumDays();
   }
   updateNumDays() {

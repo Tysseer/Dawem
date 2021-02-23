@@ -30,7 +30,7 @@ class ScreenRevisions extends Component {
     this.revisionsManager = new RevisionsManager();
     //this.revisionsManager.loadTestRevisions(true);
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
-
+    console.log(this.revisionsManager.m_loadedRevisions);
     var res = this.getBadgesStates();
 
     this.state = {
