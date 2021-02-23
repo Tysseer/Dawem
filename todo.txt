@@ -1,0 +1,8 @@
+1- activate first run flag to skip language selection
+2- settings screen -->export/import
+3- installation/publish
+4- quran reader (custom font? surah divider?)
+5- share button
+6- donate button
+7- play button with revision
+8- icons/badges design
