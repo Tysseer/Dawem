@@ -18,54 +18,66 @@ import Revision from "./app/js/helpers/Revision";
 export default class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      bIsLoaded: false,
+    };
   }
 
   onBeforeLift() {
     // take some action before the gate lifts
-    console.log("onbeforelift: " + reduxStore.getState().strLang);
+    console.log("onBeforeLift " + reduxStore.getState().bIsFirstRun);
     for (var i = 0; i < reduxStore.getState().revisions.length; i++) {
       var rev = new Revision();
       rev.fillFromSerializedObj(reduxStore.getState().revisions[i]);
       reduxStore.getState().revisions[i] = rev;
     }
+    this.setState({ bIsLoaded: true });
+  }
+  getLoadingRender() {
+    return (
+      <View style={styles.container}>
+        <Text style={{ fontSize: 40, color: "red" }}>Loading</Text>
+      </View>
+    );
+  }
+  getNavigationStack() {
+    const Stack = createStackNavigator();
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          {reduxStore.getState().bIsFirstRun ? (
+            <Stack.Screen name="ScrLang" component={ScreenLanguage} />
+          ) : null}
+          {reduxStore.getState().bSkipWelcome == false ? (
+            <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
+          ) : null}
+          <Stack.Screen name="ScrList" component={ScreenRevisions} />
+          <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
+          <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
   }
   render() {
-    const Stack = createStackNavigator();
+    console.log("render " + reduxStore.getState().bIsFirstRun);
 
     return (
       <Provider store={reduxStore}>
         <PersistGate
-          loading={
-            <View style={styles.container}>
-              <Text style={{ fontSize: 40, color: "red" }}>Loading</Text>
-            </View>
-          }
+          loading={null}
           persistor={reduxPersistor}
           onBeforeLift={this.onBeforeLift.bind(this)}
         >
-          <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}
-            >
-              <Stack.Screen name="ScrLang" component={ScreenLanguage} />
-              <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
-              <Stack.Screen name="ScrList" component={ScreenRevisions} />
-              <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
-              <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
-            </Stack.Navigator>
-          </NavigationContainer>
+          {this.state.bIsLoaded
+            ? this.getNavigationStack()
+            : this.getLoadingRender()}
         </PersistGate>
       </Provider>
     );
-
-    // var read = new QuranReader();
-    // var page = read.getPage(3);
-    // return <ScreenQuranBrowser strtPage={page} quranReader={read} />;
-    //return <ScreenRevisions revisionsManager={rev} />;
-    //return <ScreenWelcome />;
-    //return <ScreenLanguage />;
   }
 }
 const styles = StyleSheet.create({
