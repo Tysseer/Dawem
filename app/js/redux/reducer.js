@@ -7,13 +7,13 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REHYDRATE: {
       const newState = {
-        bIsFirstRun: bIsFirstRun,
+        bIsFirstRun: false,
         bSkipWelcome: bSkipWelcome,
         strLang: strLang,
         revisions: revisions,
         curRevision: curRevision,
       };
-      console.log(newState);
+
       return newState;
     }
     case allActions.APP_FIRST_RUN_FLAG: {
