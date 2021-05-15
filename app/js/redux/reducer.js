@@ -7,7 +7,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REHYDRATE: {
       const newState = {
-        bIsFirstRun: false,
+        bIsFirstRun: bIsFirstRun,
         bSkipWelcome: bSkipWelcome,
         strLang: strLang,
         revisions: revisions,
@@ -27,7 +27,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       };
       return newState;
     }
-    case allActions.WELCOME_FLAG: {
+    case allActions.SKIP_WELCOME_FLAG: {
       const newflag = action.payload;
       const newState = {
         bIsFirstRun: bIsFirstRun,

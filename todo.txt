@@ -1,5 +1,5 @@
-1- activate first run flag to skip language selection
-2- settings screen -->export/import
+
+2- settings screen: font size -->export/import
 3- installation/publish
 4- quran reader (custom font? surah divider?)
 5- share button

@@ -28,9 +28,7 @@ class ScreenRevisions extends Component {
     this.stringsManager.setLanguage(this.props.strLang);
     this.svgLoader = new SVGLoader();
     this.revisionsManager = new RevisionsManager();
-    //this.revisionsManager.loadTestRevisions(true);
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
-    console.log(this.revisionsManager.m_loadedRevisions);
     var res = this.getBadgesStates();
 
     this.state = {
@@ -44,6 +42,7 @@ class ScreenRevisions extends Component {
   }
 
   render() {
+    this.stringsManager.setLanguage(this.props.strLang);
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
     var pressHandlers = this.getBadgesOnPressHandlers();
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
@@ -119,7 +118,9 @@ class ScreenRevisions extends Component {
     this.props.navigation.navigate("ScrRev");
   }
 
-  onSettings() {}
+  onSettings() {
+    this.props.navigation.navigate("ScrSettings");
+  }
   onDonate() {}
 
   onEditRevision(revision) {

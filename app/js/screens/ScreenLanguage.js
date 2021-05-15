@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { reduxActionSetLanguage } from "../redux/reduxActions";
+import {
+  reduxActionSetLanguage,
+  reduxActionSetFirstRunFlag,
+} from "../redux/reduxActions";
 import {
   ImageBackground,
   StyleSheet,
@@ -14,21 +17,21 @@ class ScreenLanguage extends Component {
     super(props);
   }
   getlangStyle(strLang) {
-    if (strLang == this.props.strLang) {
-      return styles.langSelView;
-    } else {
-      return styles.langNonView;
-    }
+    return [
+      styles.langView,
+      this.props.strLang == strLang
+        ? { borderColor: "#dddddd" }
+        : { borderColor: "#dddddd00" },
+    ];
   }
   arLangPressed() {
-    //this.setState({ curLang: "ar" });
     this.props.reduxActionSetLanguage("ar");
   }
   enLangPressed() {
-    //this.setState({ curLang: "en" });
     this.props.reduxActionSetLanguage("en");
   }
   okButtonPressed() {
+    this.props.reduxActionSetFirstRunFlag(false);
     if (this.props.isSkipWelcome == false)
       this.props.navigation.navigate("ScrWelcome");
     else this.props.navigation.navigate("ScrList");
@@ -74,6 +77,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = () => {
   return {
+    reduxActionSetFirstRunFlag,
     reduxActionSetLanguage,
   };
 };
@@ -99,18 +103,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 
-  langSelView: {
+  langView: {
     borderColor: "#dddddd",
-    borderWidth: 5,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  langNonView: {
-    borderColor: "#dddddd00",
     borderWidth: 5,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

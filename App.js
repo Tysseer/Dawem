@@ -6,6 +6,7 @@ import ScreenWelcome from "./app/js/screens/ScreenWelcome";
 import ScreenLanguage from "./app/js/screens/ScreenLanguage";
 import ScreenQuranBrowser from "./app/js/screens/ScreenQuranBrowser";
 import ScreenRevisionDetails from "./app/js/screens/ScreenRevisionDetails";
+import ScreenSettings from "./app/js/screens/ScreenSettings";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -25,7 +26,6 @@ export default class App extends Component {
 
   onBeforeLift() {
     // take some action before the gate lifts
-    console.log("onBeforeLift " + reduxStore.getState().bIsFirstRun);
     for (var i = 0; i < reduxStore.getState().revisions.length; i++) {
       var rev = new Revision();
       rev.fillFromSerializedObj(reduxStore.getState().revisions[i]);
@@ -58,13 +58,12 @@ export default class App extends Component {
           <Stack.Screen name="ScrList" component={ScreenRevisions} />
           <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
           <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
+          <Stack.Screen name="ScrSettings" component={ScreenSettings} />
         </Stack.Navigator>
       </NavigationContainer>
     );
   }
   render() {
-    console.log("render " + reduxStore.getState().bIsFirstRun);
-
     return (
       <Provider store={reduxStore}>
         <PersistGate

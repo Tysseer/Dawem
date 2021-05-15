@@ -1,5 +1,5 @@
 export const APP_FIRST_RUN_FLAG = "APP_FIRST_RUN_FLAG";
-export const WELCOME_FLAG = "WELCOME_FLAG";
+export const SKIP_WELCOME_FLAG = "SKIP_WELCOME_FLAG";
 export const LANGUAGE = "LANGUAGE";
 export const ADD_REVISION = "ADD_REVISION";
 export const UPDATE_REVISION = "UPDATE_REVISION";
@@ -7,11 +7,11 @@ export const DEL_REVISION = "DEL_REVISION";
 export const SET_CUR_REVISION = "SET_CUR_REVISION";
 
 export const reduxActionSetFirstRunFlag = (bIsFirstRun) => ({
-  type: APP_FIRST_RUN,
+  type: APP_FIRST_RUN_FLAG,
   payload: bIsFirstRun,
 });
 export const reduxActionSetWelcomeFlag = (bIsChecked) => ({
-  type: WELCOME_FLAG,
+  type: SKIP_WELCOME_FLAG,
   payload: bIsChecked,
 });
 export const reduxActionSetLanguage = (strCurLang) => ({
