@@ -7,12 +7,14 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Image,
+  I18nManager,
 } from "react-native";
 import QuranIndexer from "../helpers/QuranIndexer";
 import QuranReader from "../helpers/QuranReader";
 import AyahRenderer from "../subComponents/AyahRenderer";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import { WebView } from "react-native-webview";
 
 export default class ScreenQuranBrowser extends Component {
   constructor(props) {
@@ -46,9 +48,13 @@ export default class ScreenQuranBrowser extends Component {
               ref={this.swipeableRef}
             >
               <Text style={styles.textContainer}>
-                {this.state.curPage.ayat.map((ayah) => (
+                {this.state.curPage.ayat.map((ayah, index) => (
                   <AyahRenderer
                     key={ayah.id}
+                    lastAyah={
+                      index == this.state.curPage.ayat.length - 1 ? true : false
+                    }
+                    ayah={this.state.curPage.ayat}
                     curAyah={ayah}
                     onPresses={pressHandlers}
                     onLongPresses={longPressHandlers}
@@ -73,6 +79,7 @@ export default class ScreenQuranBrowser extends Component {
       </View>
     );
   }
+
   onswipeLeft() {
     this.swipeableRef.current.close();
     this.onNextPage();
@@ -167,15 +174,16 @@ export default class ScreenQuranBrowser extends Component {
     return longPressHandlers;
   }
   onAyahLongPress(ayah) {
-    Toast.showWithGravity(
-      "ayah Longpress " + ayah.id,
-      Toast.SHORT,
-      Toast.CENTER
-    );
+    // Toast.showWithGravity(
+    //   "ayah Longpress " + ayah.id,
+    //   Toast.SHORT,
+    //   Toast.CENTER
+    // );
+    console.log("ayah Longpress " + ayah.id);
   }
-
   onAyahPress(ayah) {
-    Toast.showWithGravity("ayah press " + ayah.id, Toast.SHORT, Toast.CENTER);
+    // Toast.showWithGravity("ayah press " + ayah.id, Toast.SHORT, Toast.CENTER);
+    console.log("ayah press " + ayah.id);
   }
   onNextPage() {
     var iPage = this.state.curPage.pageNumber + 1;
@@ -220,25 +228,33 @@ export default class ScreenQuranBrowser extends Component {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    // justifyContent: "space-evenly",
+    // alignItems: "center",
     backgroundColor: "white",
+    // alignContent: "stretch",
   },
   pageContainer: {
     marginTop: StatusBar.currentHeight + 2,
-    alignItems: "center",
-    width: "100%",
+    // alignContent: "stretch",
+    // flexDirection: "column-reverse",
+    // alignItems: "center",
+    // direction: "rtl",
+    // width: "100%",
     flex: 1,
     backgroundColor: "#FFFAF1",
   },
   textContainer: {
-    direction: "rtl",
-    marginRight: 8,
-    marginLeft: 8,
-    marginTop: 5,
-    marginBottom: 5,
     flexDirection: "row",
-    textAlign: "justify",
+    alignItems: "center",
+    // marginRight: 8,
+    // marginLeft: 8,
+    // marginTop: 5,
+    // marginBottom: 5,
+    // flexDirection: "row",
+    // marginLeft: "auto",
+    // textAlign: "justify",
+    // textAlign: "right",
+    margin: 30,
   },
   toolBar: {
     width: "100%",

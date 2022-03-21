@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 20,
-    fontFamily: "Roboto",
+    fontFamily: "sans-serif",
     textAlign: "left",
     fontWeight: "bold",
     color: "white",
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   },
   itemNumDays: {
     fontSize: 18,
-    fontFamily: "Roboto",
+    fontFamily: "sans-serif",
     textAlign: "center",
     fontWeight: "bold",
     color: "#AAAAAA",

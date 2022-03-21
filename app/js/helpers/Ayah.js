@@ -9,8 +9,8 @@ export default class Ayah {
   }
 
   getType() {
-    if (this.id == 7000) return "Surah";
-    if (this.id == 7001) return "Basmalah";
+    if (this.id > 7000 && 8000 > this.id) return "Surah";
+    if (this.id > 8000) return "Basmalah";
     if (this.id < 1 || this.id > 6236) return "Unkown";
     return "Ayah";
   }

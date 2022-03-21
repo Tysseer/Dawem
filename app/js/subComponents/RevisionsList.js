@@ -5,7 +5,7 @@ import RevisionsManager from "../helpers/RevisionsManager";
 import QuranIndexer from "../helpers/QuranIndexer";
 import SVGLoader from "../helpers/SVGLoader";
 import RevisionItem from "./RevisionItem";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 export default class RevisionsList extends Component {
@@ -98,7 +98,8 @@ export default class RevisionsList extends Component {
         : revision.numDays +
           " " +
           this.props.stringsManager.getStr(strings.STR_DAYS_SINCE_REV);
-    Toast.showWithGravity(strMsg, Toast.SHORT, Toast.CENTER);
+    // Toast.showWithGravity(strMsg, Toast.SHORT, Toast.CENTER);
+    console.log(strMsg);
   }
 
   onItemIconRevisedPress(revision) {

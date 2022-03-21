@@ -98,7 +98,7 @@ class SVGLoader {
             </G>
             <Text
               fill="#FFFFFF"
-              fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
+              // fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
               fontWeight="900"
               fontSize="53"
               transform="translate(405.802 410)"
@@ -203,7 +203,7 @@ class SVGLoader {
             </G>
             <Text
               fill="#FFFFFF"
-              fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
+              // fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
               fontWeight="900"
               fontSize="53"
               transform="translate(405.802 410)"
@@ -269,7 +269,7 @@ class SVGLoader {
             </G>
             <Text
               fill="#757171"
-              fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
+              // fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
               fontWeight="900"
               fontSize="88"
               transform="translate(210.837 226)"
@@ -331,7 +331,7 @@ class SVGLoader {
             </G>
             <Text
               fill="#1F1F1F"
-              fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
+              // fontFamily="Segoe UI,Segoe UI_MSFontService,sans-serif"
               fontWeight="900"
               fontSize="88"
               transform="translate(210.837 226)"

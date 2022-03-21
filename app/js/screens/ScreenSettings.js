@@ -10,7 +10,9 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
+  I18nManager,
 } from "react-native";
+import * as Updates from "expo-updates";
 
 class ScreenSettings extends Component {
   constructor(props) {
@@ -77,9 +79,13 @@ class ScreenSettings extends Component {
   }
   arLangPressed() {
     this.props.reduxActionSetLanguage("ar");
+    I18nManager.forceRTL(true);
+    Updates.reloadAsync();
   }
   enLangPressed() {
     this.props.reduxActionSetLanguage("en");
+    I18nManager.forceRTL(false);
+    Updates.reloadAsync();
   }
   okButtonPressed() {
     this.props.navigation.navigate("ScrList");
