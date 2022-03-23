@@ -23,6 +23,7 @@ export const STR_INSTRUCTIONS = 22;
 export const STR_SKIP_SCREEN = 23;
 export const STR_DAYS_SINCE_REV = 24;
 export const STR_REVISED = 25;
+export const STR_SEL_LANGUAGE = 26;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -188,6 +189,11 @@ export default class StringsManager {
     if (nStrID == STR_REVISED) {
       if (strLang == "ar") return "أحسنت صنعا! لقد راجعت هذا الورد اليوم.";
       if (strLang == "en") return "Good Job! You revised this today.";
+      return "unsupported language";
+    }
+    if (nStrID == STR_SEL_LANGUAGE) {
+      if (strLang == "ar") return "اختر اللغة";
+      if (strLang == "en") return "Select Language";
       return "unsupported language";
     }
     return "unkown string";

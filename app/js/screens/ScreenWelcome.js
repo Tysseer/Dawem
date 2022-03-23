@@ -108,21 +108,21 @@ const styles = StyleSheet.create({
   },
   welcomeMessage: {
     fontSize: 30,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     fontWeight: "bold",
     textAlign: "center",
     color: "#5A0912",
   },
   motivation: {
     fontSize: 25,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     fontStyle: "italic",
     textAlign: "center",
     color: "#112222",
   },
   instructions: {
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
 
     color: "#081135",
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderColor: "#6B2504",
     backgroundColor: "#6B2504",
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     fontWeight: "bold",
     color: "white",
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   checkBoxText: {
     fontSize: 15,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     color: "white",
   },

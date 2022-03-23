@@ -24,6 +24,10 @@ export default class App extends Component {
       "sans-serif": require("./app/assets/fonts/ArabicKufi.ttf"),
       "Segoe UI": require("./app/assets/fonts/SegoeUI.ttf"),
       "Segoe UI_MSFontService": require("./app/assets/fonts/SegoeUIBold.ttf"),
+      Amiri: require("./app/assets/fonts/Amiri-Regular.ttf"),
+      Amiri_Bold: require("./app/assets/fonts/Amiri-Bold.ttf"),
+      Poppins: require("./app/assets/fonts/Poppins-Regular.ttf"),
+      Poppins_xBold: require("./app/assets/fonts/Poppins-ExtraBold.ttf"),
     });
     this.setState({ fontLoadedFinished: true });
     return y;

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   motivationText: {
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     fontWeight: "bold",
     color: "#232393",
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     fontWeight: "bold",
     marginHorizontal: 10,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     borderColor: "#6B2504",
     backgroundColor: "#6B2504",
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     fontWeight: "bold",
     color: "white",
