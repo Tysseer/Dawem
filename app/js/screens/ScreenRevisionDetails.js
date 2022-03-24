@@ -45,7 +45,7 @@ class ScreenRevisionDetails extends Component {
       this.bAutoName = true;
 
       var revisionsManager = new RevisionsManager();
-      //this.revisionsManager.loadTestRevisions(true);
+
       revisionsManager.m_loadedRevisions = this.props.revisions;
       this.revision.id = revisionsManager.getNewRevisionId();
     } else {

@@ -29,6 +29,7 @@ class ScreenRevisions extends Component {
     this.svgLoader = new SVGLoader();
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
+    this.revisionsManager.loadTestRevisions(true);
     var res = this.getBadgesStates();
 
     this.state = {

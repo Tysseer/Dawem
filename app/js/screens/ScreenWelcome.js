@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import { reduxActionSetWelcomeFlag } from "../redux/reduxActions";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
-import SVGLoader from "../helpers/SVGLoader";
 
 class ScreenWelcome extends Component {
   constructor(props) {
@@ -28,29 +27,54 @@ class ScreenWelcome extends Component {
   }
 
   render() {
-    var svgLoader = new SVGLoader();
-    var nH = StatusBar.currentHeight;
     return (
-      <View style={styles.background}>
-        <View
-          style={{
-            width: "100%",
-            height: nH,
-            borderWidth: 1,
-            borderColor: "#00FF00",
-          }}
-        ></View>
-        <View
-          style={{
-            width: 300,
-            height: 300,
-            borderWidth: 1,
-            borderColor: "#00FF00",
-          }}
-        >
-          {svgLoader.getPurpleBox()}
+      <ImageBackground
+        style={styles.background}
+        source={require("../../assets/backgroundPNG/sunrise_bk.png")}
+      >
+        <View style={styles.textContainer}>
+          <Text style={styles.welcomeMessage}>
+            {this.stringsManager.getStr(strings.STR_GREETING)}
+          </Text>
+          <Text style={styles.motivation}>
+            {this.stringsManager.getStr(strings.STR_MOTIVATION)}
+          </Text>
+          <Text style={(styles.instructions, { fontSize: 22 })}>
+            {this.stringsManager.getStr(strings.STR_INSTRUCTIONS_TITLE)}
+          </Text>
+          <Text style={styles.instructions}>
+            {this.stringsManager.getStr(strings.STR_INSTRUCTIONS)}
+          </Text>
         </View>
-      </View>
+
+        <View style={styles.okButton}>
+          <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
+            <Image
+              source={require("../../assets/icons/ok_icon.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.checkBoxContainer}>
+          <CheckBox
+            onClick={() => {
+              this.props.reduxActionSetWelcomeFlag(!this.props.bSkipWelcome);
+            }}
+            isChecked={this.props.bSkipWelcome}
+            checkBoxColor="white"
+          />
+          <TouchableHighlight
+            onPress={() => {
+              this.props.reduxActionSetWelcomeFlag(!this.props.bSkipWelcome);
+            }}
+            underlayColor="#FFFFFF11"
+          >
+            <Text style={styles.checkBoxText}>
+              {this.stringsManager.getStr(strings.STR_SKIP_SCREEN)}
+            </Text>
+          </TouchableHighlight>
+        </View>
+      </ImageBackground>
     );
   }
 }
