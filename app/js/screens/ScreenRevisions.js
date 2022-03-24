@@ -54,14 +54,14 @@ class ScreenRevisions extends Component {
         style={styles.background}
         source={require("../../assets/backgroundPNG/sunset_bk.png")}
       >
-        <BadgesBar
+        {/* <BadgesBar
           svgLoader={this.svgLoader}
           isBadgeDay={this.state.isBadgeDay}
           isBadgeMonth={this.state.isBadgeMonth}
           isBadgeWeek={this.state.isBadgeWeek}
           onPresses={pressHandlers}
           onLongPresses={longPressHandlers}
-        />
+        /> */}
 
         <View style={styles.listContainer}>
           {modalContent}
