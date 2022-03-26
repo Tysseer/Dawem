@@ -50,7 +50,7 @@ export default class ScreenQuranBrowser extends Component {
               <Text style={styles.textContainer}>
                 {this.state.curPage.ayat.map((ayah, index) => (
                   <AyahRenderer
-                    key={ayah.id}
+                    key={Math.random().toString()}
                     lastAyah={
                       index == this.state.curPage.ayat.length - 1 ? true : false
                     }

@@ -37,7 +37,7 @@ export default class RevisionsList extends Component {
         <ScrollView>
           {this.props.revisionsManager.m_loadedRevisions.map((curRevision) => (
             <RevisionItem
-              key={curRevision.id}
+              key={Math.random().toString()}
               svgLoader={this.svgLoader}
               isDetailed={this.state.detailedRev == curRevision}
               revision={curRevision}
