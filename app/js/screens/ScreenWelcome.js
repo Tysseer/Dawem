@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { reduxActionSetWelcomeFlag } from "../redux/reduxActions";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
+import { BackgroundFetch } from "expo";
 
 class ScreenWelcome extends Component {
   constructor(props) {
@@ -22,59 +23,82 @@ class ScreenWelcome extends Component {
     this.stringsManager.setLanguage(this.props.strLang);
   }
 
-  handlePress() {
+  okButtonPressed() {
     this.props.navigation.navigate("ScrList");
   }
 
   render() {
     return (
-      <ImageBackground
-        style={styles.background}
-        source={require("../../assets/backgroundPNG/sunrise_bk.png")}
-      >
-        <View style={styles.textContainer}>
-          <Text style={styles.welcomeMessage}>
+      <View style={styles.mainContainer}>
+        <View>
+          <Text style={this.getTitleStyle()}>
             {this.stringsManager.getStr(strings.STR_GREETING)}
           </Text>
-          <Text style={styles.motivation}>
+          <Text style={this.getSubTitleStyle()}>
             {this.stringsManager.getStr(strings.STR_MOTIVATION)}
           </Text>
-          <Text style={(styles.instructions, { fontSize: 22 })}>
-            {this.stringsManager.getStr(strings.STR_INSTRUCTIONS_TITLE)}
-          </Text>
-          <Text style={styles.instructions}>
-            {this.stringsManager.getStr(strings.STR_INSTRUCTIONS)}
-          </Text>
+          <View style={styles.separator}></View>
         </View>
 
-        <View style={styles.okButton}>
-          <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
-            <Image
-              source={require("../../assets/icons/ok_icon.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.checkBoxContainer}>
-          <CheckBox
-            onClick={() => {
-              this.props.reduxActionSetWelcomeFlag(!this.props.bSkipWelcome);
-            }}
-            isChecked={this.props.bSkipWelcome}
-            checkBoxColor="white"
-          />
-          <TouchableHighlight
-            onPress={() => {
-              this.props.reduxActionSetWelcomeFlag(!this.props.bSkipWelcome);
-            }}
-            underlayColor="#FFFFFF11"
-          >
-            <Text style={styles.checkBoxText}>
-              {this.stringsManager.getStr(strings.STR_SKIP_SCREEN)}
+        {this.renderOKButton(
+          strings.STR_START_NOW,
+          this.okButtonPressed.bind(this)
+        )}
+      </View>
+    );
+  }
+  getTitleStyle() {
+    return {
+      fontSize: this.props.strLang == "ar" ? 40 : 36,
+      lineHeight: 63,
+      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
+      textAlign: "center",
+      color: "#FFFFFF",
+      margin: 20,
+    };
+  }
+  getSubTitleStyle() {
+    return {
+      fontSize: this.props.strLang == "ar" ? 22 : 18,
+      lineHeight: 36,
+      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
+      textAlign: "center",
+      color: "#FFFFFF",
+    };
+  }
+  renderOKButton(nStrID) {
+    var styleOKButton = {
+      backgroundColor: "#0B721E",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "93%",
+      height: 70,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      marginTop: 50,
+      marginBottom: 25,
+    };
+    var styleOkButtonTxt = {
+      textAlign: "center",
+      color: "#FFFFFF",
+      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
+      justifyContent: "center",
+      fontSize: this.props.strLang == "ar" ? 22 : 20,
+      lineHeight: 35,
+      fontWeight: "600",
+    };
+    return (
+      <View style={styleOKButton}>
+        <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
+          <View>
+            <Text style={styleOkButtonTxt}>
+              {this.stringsManager.getStr(nStrID)}
             </Text>
-          </TouchableHighlight>
-        </View>
-      </ImageBackground>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     );
   }
 }
@@ -89,85 +113,29 @@ const mapDispatchToProps = () => {
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenWelcome);
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: "flex-start",
-    backgroundColor: "white",
-  },
-
-  textContainer: {
-    backgroundColor: "#FFFFFF4D",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    padding: 5,
-    marginTop: StatusBar.currentHeight + 70,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-  welcomeMessage: {
-    fontSize: 30,
-    fontFamily: "Amiri_Bold",
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#5A0912",
-  },
-  motivation: {
-    fontSize: 25,
-    fontFamily: "Amiri_Bold",
-    fontStyle: "italic",
-    textAlign: "center",
-    color: "#112222",
-  },
-  instructions: {
-    fontSize: 20,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-
-    color: "#081135",
-  },
-  touchable: {
-    position: "absolute",
-    bottom: 30,
-    width: "80%",
-    alignSelf: "center",
-  },
-  buttonText: {
+  mainContainer: {
     width: "100%",
-    alignSelf: "center",
+    height: "100%",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    backgroundColor: "#EEEEEE",
+  },
+  background: {
+    width: "100%",
+    height: "80%",
+    justifyContent: "flex-start",
+    backgroundColor: "#EEEEEE00",
+    alignItems: "center",
+  },
+  separator: {
+    borderColor: "#FFFFFF59",
     borderWidth: 1,
-    padding: 25,
-    margin: 10,
-    borderColor: "#6B2504",
-    backgroundColor: "#6B2504",
-    fontSize: 20,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "white",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-  },
-  okButton: {
-    alignSelf: "center",
-    width: 90,
-    height: 90,
-    marginTop: 30,
-  },
-  checkBoxText: {
-    fontSize: 15,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-    color: "white",
-  },
-  checkBoxContainer: {
-    position: "absolute",
-    bottom: 6,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
+    height: 1,
+    width: "66%",
+    marginBottom: 15,
   },
 });

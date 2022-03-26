@@ -26,6 +26,7 @@ export const STR_REVISED = 25;
 export const STR_SEL_LANGUAGE = 26;
 export const STR_REV_TITLE = 27;
 export const STR_ADD_REV = 28;
+export const STR_START_NOW = 29;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -208,6 +209,7 @@ export default class StringsManager {
       if (strLang == "en") return "Select Language";
       return "unsupported language";
     }
+
     if (nStrID == STR_START_NOW) {
       if (strLang == "ar") return "ابدأ الآن";
       if (strLang == "en") return "Start Now";
