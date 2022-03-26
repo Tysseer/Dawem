@@ -23,6 +23,7 @@ import StringsManager from "../helpers/StringsManager";
 class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       bRefresh: true,
     };

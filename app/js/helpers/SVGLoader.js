@@ -495,7 +495,17 @@ class SVGLoader {
             />
           </ClipPath>
         </Defs>
-        <Text x="14" y="22" fill="#0B721E">
+        <Text
+          x={
+            num.toString().length == 1
+              ? 15
+              : num.toString().length == 2
+              ? 11
+              : 9
+          }
+          y="22"
+          fill="#0B721E"
+        >
           {num}
         </Text>
       </Svg>
