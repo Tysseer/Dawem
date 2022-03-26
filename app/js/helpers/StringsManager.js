@@ -24,7 +24,8 @@ export const STR_SKIP_SCREEN = 23;
 export const STR_DAYS_SINCE_REV = 24;
 export const STR_REVISED = 25;
 export const STR_SEL_LANGUAGE = 26;
-export const STR_START_NOW = 27;
+export const STR_REV_TITLE = 27;
+export const STR_ADD_REV = 28;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -37,8 +38,18 @@ export default class StringsManager {
     return this.getStrLang(this.strLang, nStrID);
   }
   getStrLang(strLang, nStrID) {
+    if (nStrID == STR_REV_TITLE) {
+      if (strLang == "ar") return "اضافة ورد";
+      if (strLang == "en") return "Add Revision";
+      return "unsupported language";
+    }
+    if (nStrID == STR_ADD_REV) {
+      if (strLang == "ar") return "+ اضف";
+      if (strLang == "en") return "+ Add";
+      return "unsupported language";
+    }
     if (nStrID == STR_SEL_AYAH) {
-      if (strLang == "ar") return "اختر الآية";
+      if (strLang == "ar") return "رقم الآية";
       if (strLang == "en") return "Select Ayah";
       return "unsupported language";
     }

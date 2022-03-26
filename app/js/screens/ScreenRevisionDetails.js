@@ -23,6 +23,7 @@ import StringsManager from "../helpers/StringsManager";
 class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       bRefresh: true,
     };
@@ -71,39 +72,53 @@ class ScreenRevisionDetails extends Component {
   }
 
   render() {
+    var surahTxt = this.getSurahTxt(true);
+
     return (
-      <ImageBackground
-        style={styles.background}
-        source={require("../../assets/backgroundPNG/sunset_bk.png")}
-      >
-        <View style={styles.container}>
+      <View style={styles.background}>
+        <View style={{ height: "5%", marginTop: "20%" }}>
+          <Text
+            style={[
+              styles.startTitle,
+              {
+                alignSelf: "flex-start",
+                fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
+              },
+            ]}
+          >
+            {this.stringsManager.getStr(strings.STR_REV_TITLE)}
+          </Text>
+        </View>
+
+        <View
+          style={{
+            height: "50%",
+          }}
+        >
           {this.modalSurah.getModal()}
           {this.modalAyah.getModal()}
           {this.getStartAyah()}
           {this.getEndAyah()}
           {this.getRevisionTitle()}
         </View>
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.okButton}>
-            <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
-              <Image
-                source={require("../../assets/icons/ok_icon.png")}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </TouchableWithoutFeedback>
-          </View>
-          <View style={styles.okButton}>
-            <TouchableWithoutFeedback
-              onPress={this.backButtonPressed.bind(this)}
-            >
-              <Image
-                source={require("../../assets/icons/back.png")}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </TouchableWithoutFeedback>
-          </View>
+        <View>
+          {this.getSelectSurahBtn(
+            this.stringsManager.getStr(strings.STR_ADD_REV),
+            true,
+            [
+              styles.buttonSubmitContainer,
+              {
+                margin: 10,
+              },
+            ],
+            [
+              styles.buttonText,
+              { fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins" },
+            ],
+            this.okButtonPressed.bind(this)
+          )}
         </View>
-      </ImageBackground>
+      </View>
     );
   }
   okButtonPressed() {
@@ -142,16 +157,31 @@ class ScreenRevisionDetails extends Component {
   }
   getRevisionTitle() {
     return (
-      <View style={{ flexDirection: "row", margin: 20 }}>
-        <Text style={styles.revisionTitle}>
+      <View
+        style={{
+          flexDirection: "column",
+        }}
+      >
+        <Text
+          style={[
+            styles.revisionTitle,
+            { fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins" },
+          ]}
+        >
           {this.stringsManager.getStr(strings.STR_TITLE)}
         </Text>
         <TextInput
           style={{
-            flex: 0.75,
-            borderBottomWidth: 1,
-            borderBottomColor: "white",
-            textAlign: "center",
+            // flex: 1,
+            marginTop: 5,
+            marginRight: 20,
+            marginLeft: 20,
+            padding: 10,
+            height: 55,
+            borderWidth: 1,
+            borderColor: "#0B721E",
+            borderRadius: 10,
+            textAlign: "right",
             textAlignVertical: "center",
             fontSize: 20,
             fontFamily: "sans-serif",
@@ -169,15 +199,25 @@ class ScreenRevisionDetails extends Component {
       ? this.stringsManager.getStr(strings.STR_STRT_AYAH)
       : this.stringsManager.getStr(strings.STR_END_AYAH);
     return (
-      <View style={{ alignSelf: "flex-start", margin: 10, width: "90%" }}>
-        <View
-          style={{
-            width: "50%",
-            backgroundColor: "#FFFFFF4D",
-            borderTopRightRadius: 3,
-          }}
-        >
-          <Text style={styles.startEndTitle}>{strAyahTxt}</Text>
+      <View
+        style={{
+          alignSelf: "flex-start",
+          margin: 10,
+          width: "90%",
+        }}
+      >
+        <View>
+          <Text
+            style={[
+              styles.startEndTitle,
+              {
+                alignSelf: "flex-start",
+                fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
+              },
+            ]}
+          >
+            {strAyahTxt}
+          </Text>
         </View>
         {this.getAyahSelector(bIsStart)}
       </View>
@@ -189,54 +229,75 @@ class ScreenRevisionDetails extends Component {
   getEndAyah() {
     return this.getStartEndAyah(false);
   }
+  getSelectSurahBtn(surahTxt, bIsStart, viewStyle, btnStyle, onPress) {
+    return (
+      <View style={{ margin: 10 }} style={viewStyle}>
+        <TouchableHighlight onPress={onPress} underlayColor="#FFFFFF11">
+          <Text style={btnStyle}>{surahTxt}</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
   getAyahSelector(bIsStart) {
     var surahTxt = this.getSurahTxt(bIsStart);
-    var btnColor =
-      surahTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)
-        ? "#404040"
-        : "#EBEBA4";
-    var txtColor =
-      surahTxt == this.stringsManager.getStr(strings.STR_SEL_SURAH)
-        ? "#888888"
-        : "#323223";
     return (
-      <View style={styles.ayahContainer}>
-        <View>
-          <View style={{ flexDirection: "row", width: "100%" }}>
-            <View style={{ margin: 10 }}>
-              <TouchableHighlight
-                onPress={
-                  bIsStart
-                    ? this.selectStartSurah.bind(this)
-                    : this.selectEndSurah.bind(this)
-                }
-                underlayColor="#FFFFFF11"
-              >
-                <Text style={styles.buttonText}>{surahTxt}</Text>
-              </TouchableHighlight>
-            </View>
-            <View style={{ margin: 10 }}>
-              <TouchableHighlight
-                onPress={
-                  bIsStart
-                    ? this.selectStartAyah.bind(this)
-                    : this.selectEndAyah.bind(this)
-                }
-                underlayColor="#FFFFFF11"
-              >
-                <Text
-                  style={[
-                    styles.buttonText,
-                    { color: txtColor, backgroundColor: btnColor },
-                  ]}
-                >
-                  {this.getAyahTxt(bIsStart)}
-                </Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-          <View style={{ flexDirection: "row", width: "100%" }}></View>
-        </View>
+      <View style={{ flexDirection: "row", width: "100%" }}>
+        {this.getSelectSurahBtn(
+          surahTxt,
+          bIsStart,
+          [styles.buttonTextContainer, { margin: 10 }],
+          [
+            styles.buttonText,
+            { fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins" },
+          ],
+          bIsStart
+            ? this.selectStartSurah.bind(this)
+            : this.selectEndSurah.bind(this)
+        )}
+        {this.modalAyah.getModal()}
+
+        {/* <TextInput
+          placeholder={this.getAyahTxt(bIsStart)}
+          style={[
+            styles.buttonTextContainer,
+            {
+              backgroundColor: "transparent",
+              margin: 10,
+              borderRadius: 10,
+              borderStyle: "solid",
+              borderColor: "#0B721E",
+              borderWidth: 1,
+              textAlign: "center",
+            },
+          ]}
+        ></TextInput> */}
+        {this.getSelectSurahBtn(
+          this.getAyahTxt(bIsStart),
+          bIsStart,
+          [
+            styles.buttonTextContainer,
+            {
+              backgroundColor: "transparent",
+              margin: 10,
+              borderRadius: 10,
+              borderStyle: "solid",
+              borderColor: "#0B721E",
+              borderWidth: 1,
+            },
+          ],
+          [
+            styles.buttonText,
+            {
+              color: "#B0B0B0",
+              alignSelf: "flex-start",
+              padding: 10,
+              fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
+            },
+          ],
+          bIsStart
+            ? this.selectStartAyah.bind(this)
+            : this.selectEndAyah.bind(this)
+        )}
       </View>
     );
   }
@@ -425,9 +486,8 @@ export default connect(
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#EEEEEE",
+    height: "100%",
   },
   okButton: {
     alignSelf: "center",
@@ -436,40 +496,51 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   container: {
-    backgroundColor: "#FFFFFF42",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "84%",
+    width: "80%",
   },
   revisionTitle: {
-    flex: 0.25,
-    textAlign: "center",
-    textAlignVertical: "center",
+    alignSelf: "flex-start",
     fontSize: 20,
+    margin: 10,
     fontFamily: "sans-serif",
-    color: "#DCDCDE",
+    color: "#323223",
   },
   buttonText: {
     textAlign: "center",
     textAlignVertical: "center",
     fontSize: 20,
-    fontFamily: "sans-serif",
-    color: "#323223",
-    backgroundColor: "#EBEBA4",
-    margin: 5,
-    padding: 5,
-    width: 130,
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
-    borderBottomLeftRadius: 3,
-    borderBottomRightRadius: 3,
+    // fontFamily: "sans-serif",
+    color: "#fff",
+  },
+  buttonTextContainer: {
+    justifyContent: "center",
+    width: "48%",
+    height: 55,
+    backgroundColor: "#0B721E",
+    borderRadius: 10,
+    borderStyle: "solid",
+  },
+  buttonSubmitContainer: {
+    marginRight: 20,
+    marginLeft: 20,
+    justifyContent: "center",
+    // width: "90%",
+    height: 55,
+    backgroundColor: "#0B721E",
+    borderRadius: 10,
+    borderStyle: "solid",
   },
   startEndTitle: {
     paddingHorizontal: 3,
     textAlignVertical: "center",
     color: "#323223",
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "sans-serif",
+  },
+  startTitle: {
+    paddingHorizontal: 50,
+    color: "#0B721E",
+    fontSize: 20,
   },
   ayahContainer: {
     backgroundColor: "#FFFFFF4D",
