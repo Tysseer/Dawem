@@ -24,6 +24,7 @@ export const STR_SKIP_SCREEN = 23;
 export const STR_DAYS_SINCE_REV = 24;
 export const STR_REVISED = 25;
 export const STR_SEL_LANGUAGE = 26;
+export const STR_START_NOW = 27;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -194,6 +195,11 @@ export default class StringsManager {
     if (nStrID == STR_SEL_LANGUAGE) {
       if (strLang == "ar") return "اختر اللغة";
       if (strLang == "en") return "Select Language";
+      return "unsupported language";
+    }
+    if (nStrID == STR_START_NOW) {
+      if (strLang == "ar") return "ابدأ الآن";
+      if (strLang == "en") return "Start Now";
       return "unsupported language";
     }
     return "unkown string";
