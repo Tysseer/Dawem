@@ -110,7 +110,7 @@ export default class ModalAyahSelector {
               this.handlePress.bind(this)
             )}
             {this.parent.getSelectSurahBtn(
-              this.stringsManager.getStr(strings.STR_CANSEL),
+              this.stringsManager.getStr(strings.STR_CANCEL),
               true,
               {
                 justifyContent: "center",
