@@ -26,6 +26,7 @@ export const STR_REVISED = 25;
 export const STR_SEL_LANGUAGE = 26;
 export const STR_REV_TITLE = 27;
 export const STR_ADD_REV = 28;
+export const STR_CANCEL = 30;
 export const STR_START_NOW = 29;
 export default class StringsManager {
   constructor() {
@@ -47,6 +48,11 @@ export default class StringsManager {
     if (nStrID == STR_ADD_REV) {
       if (strLang == "ar") return "+ اضف";
       if (strLang == "en") return "+ Add";
+      return "unsupported language";
+    }
+    if (nStrID == STR_CANCEL) {
+      if (strLang == "ar") return "إلغاء";
+      if (strLang == "en") return "+ Cancel";
       return "unsupported language";
     }
     if (nStrID == STR_SEL_AYAH) {

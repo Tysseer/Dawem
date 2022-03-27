@@ -73,7 +73,6 @@ class ScreenRevisionDetails extends Component {
 
   render() {
     var surahTxt = this.getSurahTxt(true);
-
     return (
       <View style={styles.background}>
         <View style={{ height: "5%", marginTop: "20%" }}>
@@ -254,7 +253,7 @@ class ScreenRevisionDetails extends Component {
             ? this.selectStartSurah.bind(this)
             : this.selectEndSurah.bind(this)
         )}
-        {this.modalAyah.getModal()}
+        {/* {this.modalAyah.getModal()} */}
 
         {/* <TextInput
           placeholder={this.getAyahTxt(bIsStart)}

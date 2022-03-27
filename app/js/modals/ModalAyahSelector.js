@@ -10,12 +10,15 @@ import {
 } from "react-native";
 import allAyat from "../helpers/quranAyat";
 import QuranIndexer from "../helpers/QuranIndexer";
+import * as strings from "../helpers/StringsManager";
+import StringsManager from "../helpers/StringsManager";
 
 export default class ModalAyahSelector {
   constructor(parent /* should have .bShowAyahSelector & .refresh()*/) {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
-
+    this.stringsManager = new StringsManager();
+    this.stringsManager.setLanguage(this.parent.props.strLang);
     this.selAyah = 7;
     this.surahNumber = 1;
     this.onSelect = null;
@@ -83,22 +86,59 @@ export default class ModalAyahSelector {
             </View>
           </View>
           <View style={styles.toolbar}>
-            <View style={styles.okButton}>
-              <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
-                <Image
-                  source={require("../../assets/icons/ok_icon.png")}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </TouchableWithoutFeedback>
-            </View>
-            <View style={styles.okButton}>
-              <TouchableWithoutFeedback onPress={this.handleCancel.bind(this)}>
-                <Image
-                  source={require("../../assets/icons/back.png")}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </TouchableWithoutFeedback>
-            </View>
+            {this.parent.getSelectSurahBtn(
+              this.stringsManager.getStr(strings.STR_ADD_REV),
+              true,
+              {
+                margin: 10,
+                justifyContent: "center",
+                width: "48%",
+                height: 55,
+                backgroundColor: "#0B721E",
+                borderRadius: 10,
+                borderStyle: "solid",
+              },
+
+              {
+                fontFamily:
+                  this.parent.props.strLang == "ar" ? "Amiri" : "Poppins",
+                textAlign: "center",
+                textAlignVertical: "center",
+                fontSize: 20,
+                color: "#fff",
+              },
+              this.handlePress.bind(this)
+            )}
+            {this.parent.getSelectSurahBtn(
+              this.stringsManager.getStr(strings.STR_CANCEL),
+              true,
+              {
+                justifyContent: "center",
+                width: "48%",
+                height: 55,
+                backgroundColor: "#0B721E",
+                borderRadius: 10,
+                borderStyle: "solid",
+                backgroundColor: "transparent",
+                margin: 10,
+                borderRadius: 10,
+                borderStyle: "solid",
+                borderColor: "#0B721E",
+                borderWidth: 1,
+              },
+              {
+                textAlign: "center",
+                textAlignVertical: "center",
+                fontSize: 20,
+                color: "#fff",
+                color: "#B0B0B0",
+                alignSelf: "center",
+                padding: 10,
+                fontFamily:
+                  this.parent.props.strLang == "ar" ? "Amiri" : "Poppins",
+              },
+              this.handleCancel.bind(this)
+            )}
           </View>
         </View>
       </Modal>
@@ -162,9 +202,11 @@ const styles = StyleSheet.create({
   },
   toolbar: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 5,
-    padding: 5,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // alignContent: "center",
+    // backgroundColor: "red",
+    // // margin: 5,
+    padding: 15,
   },
 });
