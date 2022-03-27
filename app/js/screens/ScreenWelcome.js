@@ -30,7 +30,8 @@ class ScreenWelcome extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <View>
+        <View style={styles.curStatusBar}></View>
+        <View style={styles.messageContainer}>
           <Text style={this.getTitleStyle()}>
             {this.stringsManager.getStr(strings.STR_GREETING)}
           </Text>
@@ -39,7 +40,6 @@ class ScreenWelcome extends Component {
           </Text>
           <View style={styles.separator}></View>
         </View>
-
         {this.renderOKButton(
           strings.STR_START_NOW,
           this.okButtonPressed.bind(this)
@@ -53,7 +53,7 @@ class ScreenWelcome extends Component {
       lineHeight: 63,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
       textAlign: "center",
-      color: "#FFFFFF",
+      color: "#FF00FF",
       margin: 20,
     };
   }
@@ -63,20 +63,25 @@ class ScreenWelcome extends Component {
       lineHeight: 36,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
       textAlign: "center",
-      color: "#FFFFFF",
+      color: "#FF00FF",
     };
   }
   renderOKButton(nStrID) {
+    var styleContainer = {
+      flex: 1,
+      justifyContent: "flex-end",
+      marginBottom: 5,
+      width: "100%",
+      alignItems: "center",
+    };
+
     var styleOKButton = {
       backgroundColor: "#0B721E",
       alignItems: "center",
       justifyContent: "center",
       width: "93%",
       height: 70,
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
+      borderRadius: 10,
       marginTop: 50,
       marginBottom: 25,
     };
@@ -90,14 +95,16 @@ class ScreenWelcome extends Component {
       fontWeight: "600",
     };
     return (
-      <View style={styleOKButton}>
-        <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
-          <View>
-            <Text style={styleOkButtonTxt}>
-              {this.stringsManager.getStr(nStrID)}
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
+      <View style={styleContainer}>
+        <View style={styleOKButton}>
+          <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
+            <View>
+              <Text style={styleOkButtonTxt}>
+                {this.stringsManager.getStr(nStrID)}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     );
   }
@@ -114,26 +121,25 @@ const mapDispatchToProps = () => {
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenWelcome);
 const styles = StyleSheet.create({
   mainContainer: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "space-evenly",
+    flex: 1,
     alignItems: "center",
+    justifyContent: "flex-start",
     backgroundColor: "#EEEEEE",
   },
-  background: {
+  curStatusBar: {
     width: "100%",
-    height: "80%",
-    justifyContent: "flex-start",
-    backgroundColor: "#EEEEEE00",
+    height: StatusBar.currentHeight + 10,
+  },
+  messageContainer: {
     alignItems: "center",
+    backgroundColor: "#FFFFF",
+    borderColor: "#FF0000",
+    borderWidth: 1,
   },
   separator: {
     borderColor: "#FFFFFF59",
     borderWidth: 1,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderRadius: 10,
     height: 1,
     width: "66%",
     marginBottom: 15,
