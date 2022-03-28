@@ -1,20 +1,20 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View } from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Text, View } from "react-native";
 
-import ScreenRevisions from '../screens/ScreenRevisions';
-import ScreenWelcome from '../screens/ScreenWelcome';
-import ScreenLanguage from '../screens/ScreenLanguage';
-import ScreenQuranBrowser from '../screens/ScreenQuranBrowser';
-import ScreenRevisionDetails from '../screens/ScreenRevisionDetails';
-import ScreenSettings from '../screens/ScreenSettings';
-import reduxStore from '../redux/reduxStore';
-import { colors } from '../../constants';
-import Doaa from '../../assets/svg/Doaa.js';
-import Mushaf from '../../assets/svg/Mushaf';
+import ScreenRevisions from "../screens/ScreenRevisions";
+import ScreenWelcome from "../screens/ScreenWelcome";
+import ScreenLanguage from "../screens/ScreenLanguage";
+import ScreenQuranBrowser from "../screens/ScreenQuranBrowser";
+import ScreenRevisionDetails from "../screens/ScreenRevisionDetails";
+import ScreenSettings from "../screens/ScreenSettings";
+import reduxStore from "../redux/reduxStore";
+import { colors } from "../../constants";
+import Doaa from "../../assets/svg/Doaa.js";
+import Mushaf from "../../assets/svg/Mushaf";
 
 export default function Navigation() {
   return (
@@ -25,19 +25,35 @@ export default function Navigation() {
 }
 
 const Stack = createNativeStackNavigator();
-
+function getHeaderComponent() {
+  return (
+    <View
+      style={{ height: 60, backgroundColor: "#EEEEEE", width: "100%" }}
+    ></View>
+  );
+}
 function StackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+
+        header: () => getHeaderComponent(),
       }}
     >
       {reduxStore.getState().bIsFirstRun ? (
         <Stack.Screen name="ScrLang" component={ScreenLanguage} />
       ) : null}
       {reduxStore.getState().bSkipWelcome == false ? (
-        <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
+        <Stack.Screen
+          name="ScrWelcome"
+          component={ScreenWelcome}
+          options={{
+            headerShown: true,
+            title: "",
+            headerBackTitleVisible: false,
+          }}
+        />
       ) : null}
       <Stack.Screen name="ScrList" component={ScreenRevisions} />
       <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
@@ -71,18 +87,18 @@ function RootNavigator() {
         tabBarShowLabel: false,
 
         tabBarIcon: ({ focused }) => {
-          if (route.name === 'Main') {
-            return <Mushaf color={focused ? colors.primary : '#8789A3'} />;
-          } else if (route.name === 'Settings') {
+          if (route.name === "Main") {
+            return <Mushaf color={focused ? colors.primary : "#8789A3"} />;
+          } else if (route.name === "Settings") {
             return (
               <Ionicons
                 name="md-settings-sharp"
                 size={24}
-                color={focused ? colors.primary : '#8789A3'}
+                color={focused ? colors.primary : "#8789A3"}
               />
             );
-          } else if (route.name === 'Doaa') {
-            return <Doaa color={focused ? colors.primary : '#8789A3'} />;
+          } else if (route.name === "Doaa") {
+            return <Doaa color={focused ? colors.primary : "#8789A3"} />;
           }
         },
       })}
