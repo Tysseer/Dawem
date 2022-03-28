@@ -26,8 +26,12 @@ export const STR_REVISED = 25;
 export const STR_SEL_LANGUAGE = 26;
 export const STR_REV_TITLE = 27;
 export const STR_ADD_REV = 28;
-export const STR_CANCEL = 30;
 export const STR_START_NOW = 29;
+export const STR_CANCEL = 30;
+export const STR_DAYBADGE_NAME = 31;
+export const STR_WEEKBADGE_NAME = 32;
+export const STR_MONTHBADGE_NAME = 33;
+
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -35,6 +39,9 @@ export default class StringsManager {
   setLanguage(strLang) {
     if (strLang == "ar" || strLang == "en") this.strLang = strLang;
     return this.strLang == strLang;
+  }
+  getLanguage() {
+    return this.strLang;
   }
   getStr(nStrID) {
     return this.getStrLang(this.strLang, nStrID);
@@ -104,7 +111,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_DAY_BADGE_ACTIVE) {
       if (strLang == "ar")
-        return "بارك الله فيك! لقد قمت بتفعيل وسام المداومة.";
+        return "بارك الله فيك! لقد قمت بتفعيل وسام المبادرة.";
       if (strLang == "en") return "Great Job! You activated your Dawem Badge.";
       return "unsupported language";
     }
@@ -221,6 +228,23 @@ export default class StringsManager {
       if (strLang == "en") return "Start Now";
       return "unsupported language";
     }
+
+    if (nStrID == STR_DAYBADGE_NAME) {
+      if (strLang == "ar") return "وسام المبادرة";
+      if (strLang == "en") return "Initiative Badge";
+      return "unsupported language";
+    }
+    if (nStrID == STR_WEEKBADGE_NAME) {
+      if (strLang == "ar") return "وسام المثابرة";
+      if (strLang == "en") return "Perseverance Badge";
+      return "unsupported language";
+    }
+    if (nStrID == STR_MONTHBADGE_NAME) {
+      if (strLang == "ar") return "وسام المصاحبة";
+      if (strLang == "en") return "Companionship Badge";
+      return "unsupported language";
+    }
+
     return "unkown string";
   }
 }

@@ -96,15 +96,17 @@ class ScreenLanguage extends Component {
       fontWeight: "600",
     };
     return (
-      <View style={styleOKButton}>
-        <TouchableWithoutFeedback onPress={pressHandler}>
-          <View>
-            <Text style={styleOkButtonTxt}>
-              {this.stringsManager.getStr(nStrID)}
-            </Text>
+      <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
+        <View style={styleContainer}>
+          <View style={styleOKButton}>
+            <View>
+              <Text style={styleOkButtonTxt}>
+                {this.stringsManager.getStr(nStrID)}
+              </Text>
+            </View>
           </View>
-        </TouchableWithoutFeedback>
-      </View>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 

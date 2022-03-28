@@ -5,6 +5,7 @@ import {
   Modal,
   Text,
   TouchableWithoutFeedback,
+  StatusBar,
   Image,
 } from "react-native";
 import SVGLoader from "../helpers/SVGLoader.js";
@@ -18,7 +19,6 @@ export default class ModalBadgeDay {
   }
   getModal() {
     var svgLoader = new SVGLoader();
-    var dayBadge = svgLoader.getDayBadge(false);
     var strStatus =
       this.parent.revisionsManager.getNumRevisions() < 5
         ? this.parent.stringsManager.getStr(strings.STR_DAY_BADGE_MIN_REV)
@@ -28,44 +28,97 @@ export default class ModalBadgeDay {
     return (
       <Modal
         animationType="fade"
-        transparent={true}
+        transparent={false}
         visible={this.parent.state.bShowModalBadgeDay}
         onRequestClose={() => {}}
       >
+        <View style={styles.gobackBtn}></View>
         <View style={styles.contentContainer}>
-          <View style={styles.badge}>{dayBadge}</View>
-          <Text style={styles.motivationText}>
+          <Image
+            source={require("../../assets/backgroundPNG/green_background.png")}
+            style={styles.backgroundImage}
+          ></Image>
+          <Image
+            style={styles.badge}
+            source={require("../../assets/images/dayBadge.png")}
+          ></Image>
+          <Text style={this.getTitleStyle()}>
+            {this.parent.stringsManager.getStr(strings.STR_DAYBADGE_NAME)}
+          </Text>
+          <Text style={this.getSubTitleStyle()}>
             {this.parent.stringsManager.getStr(strings.STR_DAY_BADGE_DESC)}
           </Text>
-          <Text style={styles.statusText}>{strStatus}</Text>
-          <View style={styles.okButton}>
-            <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
-              <Image
-                source={require("../../assets/icons/ok_icon.png")}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </TouchableWithoutFeedback>
-          </View>
+          <View style={styles.separator}></View>
+          <Text style={this.getSubTitleStyle()}>{strStatus}</Text>
         </View>
       </Modal>
     );
   }
+
+  getTitleStyle() {
+    return {
+      fontSize: this.parent.stringsManager.getLanguage() == "ar" ? 40 : 36,
+      lineHeight: 63,
+      fontFamily:
+        this.parent.stringsManager.getLanguage() == "ar"
+          ? "Amiri_Bold"
+          : "Poppins",
+      textAlign: "center",
+      color: "#FFFFFF",
+      margin: 20,
+    };
+  }
+  getSubTitleStyle() {
+    return {
+      fontSize: this.parent.stringsManager.getLanguage() == "ar" ? 22 : 18,
+      lineHeight: 36,
+      fontFamily:
+        this.parent.stringsManager.getLanguage() == "ar"
+          ? "Amiri_Bold"
+          : "Poppins",
+      textAlign: "center",
+      color: "#FFFFFF",
+      marginHorizontal: 50,
+    };
+  }
 }
 const styles = StyleSheet.create({
+  separator: {
+    borderColor: "#FFFFFF59",
+    borderWidth: 1,
+    borderRadius: 10,
+    width: 280,
+    height: 1,
+    marginBottom: 15,
+  },
+  gobackBtn: {
+    borderColor: "red",
+    borderWidth: 1,
+    borderRadius: 10,
+    width: "100%",
+    height: 10,
+  },
   contentContainer: {
-    width: "80%",
-    height: "80%",
+    width: "90%",
+    height: "90%",
     alignSelf: "center",
-    marginTop: 110,
+    marginTop: "8%",
     marginBottom: 20,
     marginHorizontal: 20,
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: "#FFFFFFd5",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+  },
+  backgroundImage: {
+    position: "absolute",
+    top: 1,
+    width: "100%",
+    height: "100%",
+    borderRadius: 10,
+    resizeMode: "stretch",
   },
   badge: {
     width: 140,

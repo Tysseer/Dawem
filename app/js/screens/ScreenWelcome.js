@@ -165,17 +165,17 @@ class ScreenWelcome extends Component {
       fontWeight: "600",
     };
     return (
-      <View style={styleContainer}>
-        <View style={styleOKButton}>
-          <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
+      <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
+        <View style={styleContainer}>
+          <View style={styleOKButton}>
             <View>
               <Text style={styleOkButtonTxt}>
                 {this.stringsManager.getStr(nStrID)}
               </Text>
             </View>
-          </TouchableWithoutFeedback>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
