@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   reduxActionSetLanguage,
   reduxActionSetWelcomeFlag,
-} from "../redux/reduxActions";
+} from '../redux/reduxActions';
 import {
   ImageBackground,
   StyleSheet,
@@ -11,8 +11,8 @@ import {
   Image,
   TouchableWithoutFeedback,
   I18nManager,
-} from "react-native";
-import * as Updates from "expo-updates";
+} from 'react-native';
+import * as Updates from 'expo-updates';
 
 class ScreenSettings extends Component {
   constructor(props) {
@@ -22,21 +22,21 @@ class ScreenSettings extends Component {
     return (
       <ImageBackground
         style={styles.background}
-        source={require("../../assets/backgroundPNG/crescent_bk.png")}
+        source={require('../../assets/backgroundPNG/crescent_bk.png')}
       >
         <View style={styles.controlsRow}>
-          <View style={this.getlangStyle("ar")}>
+          <View style={this.getlangStyle('ar')}>
             <TouchableWithoutFeedback onPress={this.arLangPressed.bind(this)}>
               <Image
-                source={require("../../assets/images/lang_ar.png")}
+                source={require('../../assets/images/lang_ar.png')}
                 style={styles.imgIcon}
               />
             </TouchableWithoutFeedback>
           </View>
-          <View style={this.getlangStyle("en")}>
+          <View style={this.getlangStyle('en')}>
             <TouchableWithoutFeedback onPress={this.enLangPressed.bind(this)}>
               <Image
-                source={require("../../assets/images/lang_en.png")}
+                source={require('../../assets/images/lang_en.png')}
                 style={styles.imgIcon}
               />
             </TouchableWithoutFeedback>
@@ -52,8 +52,8 @@ class ScreenSettings extends Component {
         <View style={styles.okButton}>
           <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
             <Image
-              source={require("../../assets/icons/ok_icon.png")}
-              style={{ width: "100%", height: "100%" }}
+              source={require('../../assets/icons/ok_icon.png')}
+              style={{ width: '100%', height: '100%' }}
             />
           </TouchableWithoutFeedback>
         </View>
@@ -61,34 +61,34 @@ class ScreenSettings extends Component {
     );
   }
   getFontSizeIcon() {
-    if (this.props.strLang == "ar") {
-      return require("../../assets/icons/fontSize_ar.png");
+    if (this.props.strLang == 'ar') {
+      return require('../../assets/icons/fontSize_ar.png');
     }
-    if (this.props.strLang == "en") {
-      return require("../../assets/icons/fontSize_en.png");
+    if (this.props.strLang == 'en') {
+      return require('../../assets/icons/fontSize_en.png');
     }
-    return require("../../assets/icons/fontSize_ar.png");
+    return require('../../assets/icons/fontSize_ar.png');
   }
   getlangStyle(strLang) {
     return [
       styles.iconView,
       this.props.strLang == strLang
-        ? { borderColor: "#dddddd" }
-        : { borderColor: "#dddddd00" },
+        ? { borderColor: '#dddddd' }
+        : { borderColor: '#dddddd00' },
     ];
   }
   arLangPressed() {
-    this.props.reduxActionSetLanguage("ar");
+    this.props.reduxActionSetLanguage('ar');
     I18nManager.forceRTL(true);
     Updates.reloadAsync();
   }
   enLangPressed() {
-    this.props.reduxActionSetLanguage("en");
+    this.props.reduxActionSetLanguage('en');
     I18nManager.forceRTL(false);
     Updates.reloadAsync();
   }
   okButtonPressed() {
-    this.props.navigation.navigate("ScrList");
+    this.props.navigation.navigate('ScrList');
   }
 }
 const mapStateToProps = (state) => ({
@@ -105,14 +105,14 @@ export default connect(mapStateToProps, mapDispatchToProps())(ScreenSettings);
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    backgroundColor: "white",
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   controlsRow: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    width: "100%",
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
     height: 120,
     margin: 20,
   },
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
 
   okButton: {
-    alignSelf: "center",
+    alignSelf: 'center',
 
     width: 90,
     height: 90,
@@ -131,13 +131,13 @@ const styles = StyleSheet.create({
   },
 
   iconView: {
-    borderColor: "#dddddd",
+    borderColor: '#dddddd',
     borderWidth: 5,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

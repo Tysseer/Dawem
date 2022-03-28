@@ -28,6 +28,8 @@ export const STR_REV_TITLE = 27;
 export const STR_ADD_REV = 28;
 export const STR_START_NOW = 29;
 export const STR_CANCEL = 30;
+export const STR_ADD_REV_TITLE = 31;
+export const STR_LATEST_DONE = 32;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -40,14 +42,26 @@ export default class StringsManager {
     return this.getStrLang(this.strLang, nStrID);
   }
   getStrLang(strLang, nStrID) {
+    if (nStrID == STR_LATEST_DONE) {
+      if (strLang == "ar") return "اخر الإنجازات";
+      if (strLang == "en") return "Latest Accomplishments";
+      return "unsupported language";
+    }
+
+    if (nStrID == STR_ADD_REV_TITLE) {
+      if (strLang == "ar") return "ضع عنوانا لهذا الورد";
+      if (strLang == "en") return "Enter a title for this revision";
+      return "unsupported language";
+    }
+
     if (nStrID == STR_REV_TITLE) {
-      if (strLang == "ar") return "اضافة ورد";
-      if (strLang == "en") return "Add Revision";
+      if (strLang == "ar") return "اضافة ورد جديد";
+      if (strLang == "en") return "Add new Revision";
       return "unsupported language";
     }
     if (nStrID == STR_ADD_REV) {
-      if (strLang == "ar") return "+ اضف";
-      if (strLang == "en") return "+ Add";
+      if (strLang == "ar") return "اضف";
+      if (strLang == "en") return "Add";
       return "unsupported language";
     }
     if (nStrID == STR_CANCEL) {

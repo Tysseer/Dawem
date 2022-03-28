@@ -1,31 +1,35 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
-  ImageBackground,
   StyleSheet,
   View,
-  Image,
-  TouchableWithoutFeedback,
+  TouchableHighlight,
   TextInput,
   Text,
-} from "react-native";
-import { TouchableHighlight } from "react-native-gesture-handler";
-import Revision from "../helpers/Revision";
-import ModalSurahSelector from "../modals/ModalSurahSelector";
-import ModalAyahSelector from "../modals/ModalAyahSelector";
-import { connect } from "react-redux";
+  TouchableOpacity,
+} from 'react-native';
+
+import Revision from '../helpers/Revision';
+import ModalSurahSelector from '../modals/ModalSurahSelector';
+import ModalAyahSelector from '../modals/ModalAyahSelector';
+import { connect } from 'react-redux';
 import {
   reduxActionUpdateRevision,
   reduxActionAddRevision,
-} from "../redux/reduxActions";
-import RevisionsManager from "../helpers/RevisionsManager";
-import * as strings from "../helpers/StringsManager";
-import StringsManager from "../helpers/StringsManager";
+} from '../redux/reduxActions';
+import RevisionsManager from '../helpers/RevisionsManager';
+import * as strings from '../helpers/StringsManager';
+import StringsManager from '../helpers/StringsManager';
+import { colors } from '../../constants';
+import { getFontFamily } from '../helpers/scripts';
+import Header from '../../components/Header';
+import ActionBtn from '../../components/ActionBtn';
 class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       bRefresh: true,
+      addBtnDisabled: true,
     };
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
@@ -34,11 +38,11 @@ class ScreenRevisionDetails extends Component {
     this.revision = this.props.curRevision;
     if (this.revision == null) {
       this.bIsNewRev = true;
-      this.revision = new Revision(0, "", 0, 1, 1, new Date());
+      this.revision = new Revision(0, '', 0, 1, 1, new Date());
 
       this.bShowSurahSelector = false;
       this.bShowAyahSelector = false;
-      this.title = "";
+      this.title = '';
       this.strtSurah = 0;
       this.strtAyah = 1;
       this.endSurah = 0;
@@ -69,53 +73,51 @@ class ScreenRevisionDetails extends Component {
         this.revision.end
       );
     }
+
+    this.getFontFamily = getFontFamily(this.props.strLang);
   }
 
   render() {
-    var surahTxt = this.getSurahTxt(true);
-    return (
-      <View style={styles.background}>
-        <View style={{ height: "5%", marginTop: "20%" }}>
-          <Text
-            style={[
-              styles.startTitle,
-              {
-                alignSelf: "flex-start",
-                fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-              },
-            ]}
-          >
-            {this.stringsManager.getStr(strings.STR_REV_TITLE)}
-          </Text>
-        </View>
+    // var surahTxt = this.getSurahTxt(true);
 
+    return (
+      <View style={styles.container}>
+        {/* header */}
+        <Header
+          title={this.stringsManager.getStr(strings.STR_REV_TITLE)}
+          lang={this.props.strLang}
+        />
+
+        {/* content */}
         <View
           style={{
-            height: "50%",
+            flex: 1,
+            justifyContent: 'space-between',
           }}
         >
-          {this.modalSurah.getModal()}
-          {this.modalAyah.getModal()}
-          {this.getStartAyah()}
-          {this.getEndAyah()}
-          {this.getRevisionTitle()}
-        </View>
-        <View>
-          {this.getSelectSurahBtn(
-            this.stringsManager.getStr(strings.STR_ADD_REV),
-            true,
-            [
-              styles.buttonSubmitContainer,
-              {
-                margin: 10,
-              },
-            ],
-            [
-              styles.buttonText,
-              { fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins" },
-            ],
-            this.okButtonPressed.bind(this)
-          )}
+          <View>
+            {this.modalSurah.getModal()}
+            {this.modalAyah.getModal()}
+            {this.getStartAyah()}
+            {this.getEndAyah()}
+            {this.getRevisionTitle()}
+          </View>
+
+          <ActionBtn
+            text={this.stringsManager.getStr(strings.STR_ADD_REV)}
+            fullWidth={true}
+            handler={this.okButtonPressed.bind(this)}
+            disabled={!this.title.length}
+            lang={this.props.strLang}
+            icon={true}
+          />
+
+          {/* {this.renderBtn({
+            text: this.stringsManager.getStr(strings.STR_ADD_REV),
+            fullWidth: true,
+            handler: this.okButtonPressed.bind(this),
+            disabled: !this.title.length,
+          })} */}
         </View>
       </View>
     );
@@ -133,7 +135,7 @@ class ScreenRevisionDetails extends Component {
     );
     if (this.bIsNewRev) this.props.reduxActionAddRevision(this.revision);
     else this.props.reduxActionUpdateRevision(this.revision);
-    this.props.navigation.navigate("ScrList");
+    this.props.navigation.navigate('ScrList');
   }
   refresh() {
     var bVal = this.state.bRefresh == false;
@@ -141,12 +143,12 @@ class ScreenRevisionDetails extends Component {
   }
 
   backButtonPressed() {
-    this.props.navigation.navigate("ScrList");
+    this.props.navigation.navigate('ScrList');
   }
   onTitleChange(text) {
-    var str = "";
+    var str = '';
     str = text;
-    this.title = str; //this.setState({ title: text });
+    this.title = str;
     this.bAutoName = false;
     this.refresh();
   }
@@ -156,38 +158,15 @@ class ScreenRevisionDetails extends Component {
   }
   getRevisionTitle() {
     return (
-      <View
-        style={{
-          flexDirection: "column",
-        }}
-      >
-        <Text
-          style={[
-            styles.revisionTitle,
-            { fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins" },
-          ]}
-        >
+      <View style={{ marginTop: 13 }}>
+        <Text style={[styles.revisionTitle, this.getFontFamily]}>
           {this.stringsManager.getStr(strings.STR_TITLE)}
         </Text>
         <TextInput
-          style={{
-            // flex: 1,
-            marginTop: 5,
-            marginRight: 20,
-            marginLeft: 20,
-            padding: 10,
-            height: 55,
-            borderWidth: 1,
-            borderColor: "#0B721E",
-            borderRadius: 10,
-            textAlign: "right",
-            textAlignVertical: "center",
-            fontSize: 20,
-            fontFamily: "sans-serif",
-            color: "#323223",
-          }}
+          style={{ ...styles.input, ...this.getFontFamily }}
           onChangeText={this.onTitleChange.bind(this)}
           value={this.title}
+          placeholder={this.stringsManager.getStr(strings.STR_ADD_REV_TITLE)}
           onSubmitEditing={this.onTitleSubmit.bind(this)}
         />
       </View>
@@ -198,23 +177,9 @@ class ScreenRevisionDetails extends Component {
       ? this.stringsManager.getStr(strings.STR_STRT_AYAH)
       : this.stringsManager.getStr(strings.STR_END_AYAH);
     return (
-      <View
-        style={{
-          alignSelf: "flex-start",
-          margin: 10,
-          width: "90%",
-        }}
-      >
+      <View style={{ marginTop: 20 }}>
         <View>
-          <Text
-            style={[
-              styles.startEndTitle,
-              {
-                alignSelf: "flex-start",
-                fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-              },
-            ]}
-          >
+          <Text style={[styles.startEndTitle, this.getFontFamily]}>
             {strAyahTxt}
           </Text>
         </View>
@@ -228,75 +193,90 @@ class ScreenRevisionDetails extends Component {
   getEndAyah() {
     return this.getStartEndAyah(false);
   }
-  getSelectSurahBtn(surahTxt, bIsStart, viewStyle, btnStyle, onPress) {
+
+  renderBtn({
+    contained = false,
+    text,
+    handler,
+    disabled = false,
+    fullWidth = false,
+  }) {
+    const extraStyle = {
+      borderStyle: contained ? 'solid' : 'none',
+      borderWidth: contained ? 1 : 0,
+      backgroundColor: disabled
+        ? colors.primary_disabled
+        : contained
+        ? colors.light_bg
+        : colors.primary,
+      width: fullWidth ? '100%' : '48%',
+    };
+
     return (
-      <View style={{ margin: 10 }} style={viewStyle}>
-        <TouchableHighlight onPress={onPress} underlayColor="#FFFFFF11">
-          <Text style={btnStyle}>{surahTxt}</Text>
-        </TouchableHighlight>
-      </View>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={handler}
+        style={{ ...styles.btnStyle, ...extraStyle }}
+      >
+        <Text
+          style={{
+            color: contained ? '#B0B0B0' : '#fff',
+            alignSelf: fullWidth ? 'center' : 'flex-start',
+            fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+            fontSize: 18,
+          }}
+        >
+          {text}
+        </Text>
+      </TouchableOpacity>
     );
   }
   getAyahSelector(bIsStart) {
     var surahTxt = this.getSurahTxt(bIsStart);
     return (
-      <View style={{ flexDirection: "row", width: "100%" }}>
-        {this.getSelectSurahBtn(
-          surahTxt,
-          bIsStart,
-          [styles.buttonTextContainer, { margin: 10 }],
-          [
-            styles.buttonText,
-            { fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins" },
-          ],
-          bIsStart
-            ? this.selectStartSurah.bind(this)
-            : this.selectEndSurah.bind(this)
-        )}
-        {/* {this.modalAyah.getModal()} */}
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <ActionBtn
+          text={surahTxt}
+          handler={
+            bIsStart
+              ? this.selectStartSurah.bind(this)
+              : this.selectEndSurah.bind(this)
+          }
+          lang={this.props.strLang}
+        />
 
-        {/* <TextInput
-          placeholder={this.getAyahTxt(bIsStart)}
-          style={[
-            styles.buttonTextContainer,
-            {
-              backgroundColor: "transparent",
-              margin: 10,
-              borderRadius: 10,
-              borderStyle: "solid",
-              borderColor: "#0B721E",
-              borderWidth: 1,
-              textAlign: "center",
-            },
-          ]}
-        ></TextInput> */}
-        {this.getSelectSurahBtn(
-          this.getAyahTxt(bIsStart),
-          bIsStart,
-          [
-            styles.buttonTextContainer,
-            {
-              backgroundColor: "transparent",
-              margin: 10,
-              borderRadius: 10,
-              borderStyle: "solid",
-              borderColor: "#0B721E",
-              borderWidth: 1,
-            },
-          ],
-          [
-            styles.buttonText,
-            {
-              color: "#B0B0B0",
-              alignSelf: "flex-start",
-              padding: 10,
-              fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-            },
-          ],
-          bIsStart
+        {/* {this.renderBtn({
+          text: surahTxt,
+          handler: bIsStart
+            ? this.selectStartSurah.bind(this)
+            : this.selectEndSurah.bind(this),
+        })} */}
+
+        {this.modalAyah.getModal()}
+        <ActionBtn
+          text={this.getAyahTxt(bIsStart)}
+          contained={true}
+          handler={
+            bIsStart
+              ? this.selectStartAyah.bind(this)
+              : this.selectEndAyah.bind(this)
+          }
+          lang={this.props.strLang}
+        />
+        {/* {this.renderBtn({
+          text: this.getAyahTxt(bIsStart),
+          contained: true,
+          handler: bIsStart
             ? this.selectStartAyah.bind(this)
-            : this.selectEndAyah.bind(this)
-        )}
+            : this.selectEndAyah.bind(this),
+        })} */}
       </View>
     );
   }
@@ -310,7 +290,7 @@ class ScreenRevisionDetails extends Component {
     var nAyah = bIsStart ? this.strtAyah : this.endAyah;
     if (nSurah == 0 || nAyah == 0)
       return this.stringsManager.getStr(strings.STR_SEL_AYAH);
-    return "" + nAyah;
+    return '' + nAyah;
   }
   selectStartSurah() {
     this.modalSurah.selSurah = this.strtSurah;
@@ -352,14 +332,14 @@ class ScreenRevisionDetails extends Component {
   getAutoTitle() {
     var strStrt = this.getSurahTxt(true);
     if (strStrt == this.stringsManager.getStr(strings.STR_SEL_SURAH))
-      strStrt = "";
+      strStrt = '';
     var strEnd = this.getSurahTxt(false);
     if (strEnd == this.stringsManager.getStr(strings.STR_SEL_SURAH))
-      strEnd = "";
+      strEnd = '';
 
     if (strStrt == strEnd) {
       if (
-        strStrt != "" &&
+        strStrt != '' &&
         this.strtAyah == 1 &&
         this.endAyah ==
           this.modalSurah.surahInfo.getSurahNumAyah(this.strtSurah)
@@ -369,25 +349,25 @@ class ScreenRevisionDetails extends Component {
       // same surah
       var strtAyah = this.getAyahTxt(true);
       if (strtAyah == this.stringsManager.getStr(strings.STR_SEL_AYAH))
-        strtAyah = "";
+        strtAyah = '';
       var endAyah = this.getAyahTxt(false);
       if (endAyah == this.stringsManager.getStr(strings.STR_SEL_AYAH))
-        endAyah = "";
-      if (strtAyah == "" && endAyah == "") return strStrt;
-      if (endAyah == "") return strStrt + " (" + strtAyah + ")";
-      if (strtAyah == "") return strStrt + " (" + endAyah + ")";
-      return strStrt + " (" + strtAyah + " - " + endAyah + ")";
+        endAyah = '';
+      if (strtAyah == '' && endAyah == '') return strStrt;
+      if (endAyah == '') return strStrt + ' (' + strtAyah + ')';
+      if (strtAyah == '') return strStrt + ' (' + endAyah + ')';
+      return strStrt + ' (' + strtAyah + ' - ' + endAyah + ')';
     }
 
     var strtAyah = this.getAyahTxt(true);
     if (strtAyah != this.stringsManager.getStr(strings.STR_SEL_AYAH))
-      strStrt += " (" + strtAyah + ")";
+      strStrt += ' (' + strtAyah + ')';
     var endAyah = this.getAyahTxt(false);
     if (endAyah != this.stringsManager.getStr(strings.STR_SEL_AYAH))
-      strEnd += " (" + endAyah + ")";
-    if (strEnd == "") return strStrt;
-    if (strStrt == "") return strEnd;
-    return strStrt + " " + strEnd;
+      strEnd += ' (' + endAyah + ')';
+    if (strEnd == '') return strStrt;
+    if (strStrt == '') return strEnd;
+    return strStrt + ' ' + strEnd;
   }
   selectStartAyah() {
     var surahTxt = this.getSurahTxt(true);
@@ -395,7 +375,7 @@ class ScreenRevisionDetails extends Component {
     this.modalAyah.selAyah = this.strtAyah;
     this.modalAyah.surahNumber = this.strtSurah;
     this.modalAyah.curText =
-      this.modalAyah.selAyah == 0 ? "1" : "" + this.modalAyah.selAyah;
+      this.modalAyah.selAyah == 0 ? '1' : '' + this.modalAyah.selAyah;
     this.modalAyah.onSelect = this.OnStartAyahSelChange.bind(this);
     this.modalAyah.onCancel = null;
     this.bShowAyahSelector = true; //this.setState({ bShowAyahSelector: true });
@@ -454,7 +434,7 @@ class ScreenRevisionDetails extends Component {
     this.modalAyah.selAyah = this.endAyah;
     this.modalAyah.surahNumber = this.endSurah;
     this.modalAyah.curText =
-      this.modalAyah.selAyah == 0 ? "1" : "" + this.modalAyah.selAyah;
+      this.modalAyah.selAyah == 0 ? '1' : '' + this.modalAyah.selAyah;
     this.modalAyah.onSelect = this.OnEndAyahSelChange.bind(this);
     this.modalAyah.onCancel = null;
     this.bShowAyahSelector = true; //this.setState({ bShowAyahSelector: true });
@@ -483,72 +463,88 @@ export default connect(
   mapDispatchToProps()
 )(ScreenRevisionDetails);
 const styles = StyleSheet.create({
-  background: {
+  container: {
     flex: 1,
-    backgroundColor: "#EEEEEE",
-    height: "100%",
+    backgroundColor: '#EEEEEE',
+    height: '100%',
+    padding: 20,
+    paddingTop: 40,
   },
   okButton: {
-    alignSelf: "center",
+    alignSelf: 'center',
     width: 90,
     height: 90,
     marginTop: 30,
   },
-  container: {
-    width: "80%",
-  },
+
   revisionTitle: {
-    alignSelf: "flex-start",
-    fontSize: 20,
+    alignSelf: 'flex-start',
+    fontSize: 18,
     margin: 10,
-    fontFamily: "sans-serif",
-    color: "#323223",
+    fontFamily: 'sans-serif',
+    color: '#323223',
   },
   buttonText: {
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 20,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 18,
     // fontFamily: "sans-serif",
-    color: "#fff",
+    color: '#fff',
   },
   buttonTextContainer: {
-    justifyContent: "center",
-    width: "48%",
+    justifyContent: 'center',
+    width: '48%',
     height: 55,
-    backgroundColor: "#0B721E",
+    backgroundColor: '#0B721E',
     borderRadius: 10,
-    borderStyle: "solid",
+    borderStyle: 'solid',
   },
   buttonSubmitContainer: {
     marginRight: 20,
     marginLeft: 20,
-    justifyContent: "center",
+    justifyContent: 'center',
     // width: "90%",
     height: 55,
-    backgroundColor: "#0B721E",
+    backgroundColor: '#0B721E',
     borderRadius: 10,
-    borderStyle: "solid",
+    borderStyle: 'solid',
   },
   startEndTitle: {
     paddingHorizontal: 3,
-    textAlignVertical: "center",
-    color: "#323223",
-    fontSize: 20,
-    fontFamily: "sans-serif",
+    textAlignVertical: 'center',
+    color: '#333',
+    fontSize: 18,
+    alignSelf: 'flex-start',
+    marginBottom: 6,
   },
-  startTitle: {
-    paddingHorizontal: 50,
-    color: "#0B721E",
-    fontSize: 20,
-  },
+
   ayahContainer: {
-    backgroundColor: "#FFFFFF4D",
+    backgroundColor: '#FFFFFF4D',
     borderTopRightRadius: 3,
 
-    width: "100%",
+    width: '100%',
     padding: 8,
     margin: 0,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    padding: 12,
+    height: 55,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderRadius: 10,
+    textAlign: 'right',
+    fontSize: 18,
+    color: colors.primary,
+    backgroundColor: colors.light_bg,
+  },
+  btnStyle: {
+    justifyContent: 'center',
+    height: 55,
+    borderRadius: 10,
+    borderColor: colors.primary,
+    paddingHorizontal: 10,
   },
 });

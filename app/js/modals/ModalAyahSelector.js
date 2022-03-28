@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import ActionBtn from "../../components/ActionBtn";
 import allAyat from "../helpers/quranAyat";
 import QuranIndexer from "../helpers/QuranIndexer";
 import * as strings from "../helpers/StringsManager";
@@ -86,59 +87,17 @@ export default class ModalAyahSelector {
             </View>
           </View>
           <View style={styles.toolbar}>
-            {this.parent.getSelectSurahBtn(
-              this.stringsManager.getStr(strings.STR_ADD_REV),
-              true,
-              {
-                margin: 10,
-                justifyContent: "center",
-                width: "48%",
-                height: 55,
-                backgroundColor: "#0B721E",
-                borderRadius: 10,
-                borderStyle: "solid",
-              },
-
-              {
-                fontFamily:
-                  this.parent.props.strLang == "ar" ? "Amiri" : "Poppins",
-                textAlign: "center",
-                textAlignVertical: "center",
-                fontSize: 20,
-                color: "#fff",
-              },
-              this.handlePress.bind(this)
-            )}
-            {this.parent.getSelectSurahBtn(
-              this.stringsManager.getStr(strings.STR_CANCEL),
-              true,
-              {
-                justifyContent: "center",
-                width: "48%",
-                height: 55,
-                backgroundColor: "#0B721E",
-                borderRadius: 10,
-                borderStyle: "solid",
-                backgroundColor: "transparent",
-                margin: 10,
-                borderRadius: 10,
-                borderStyle: "solid",
-                borderColor: "#0B721E",
-                borderWidth: 1,
-              },
-              {
-                textAlign: "center",
-                textAlignVertical: "center",
-                fontSize: 20,
-                color: "#fff",
-                color: "#B0B0B0",
-                alignSelf: "center",
-                padding: 10,
-                fontFamily:
-                  this.parent.props.strLang == "ar" ? "Amiri" : "Poppins",
-              },
-              this.handleCancel.bind(this)
-            )}
+            <ActionBtn
+              text={this.stringsManager.getStr(strings.STR_ADD_REV)}
+              handler={this.handlePress.bind(this)}
+              lang={this.parent.props.strLang}
+            />
+            <ActionBtn
+              text={this.stringsManager.getStr(strings.STR_CANCEL)}
+              contained={true}
+              handler={this.handleCancel.bind(this)}
+              lang={this.parent.props.strLang}
+            />
           </View>
         </View>
       </Modal>
