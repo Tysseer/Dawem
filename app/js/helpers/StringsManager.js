@@ -26,8 +26,8 @@ export const STR_REVISED = 25;
 export const STR_SEL_LANGUAGE = 26;
 export const STR_REV_TITLE = 27;
 export const STR_ADD_REV = 28;
-export const STR_CANCEL = 30;
 export const STR_START_NOW = 29;
+export const STR_CANCEL = 30;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
