@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
 
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 
-import ScreenRevisions from './app/js/screens/ScreenRevisions';
-import ScreenWelcome from './app/js/screens/ScreenWelcome';
-import ScreenLanguage from './app/js/screens/ScreenLanguage';
-import ScreenQuranBrowser from './app/js/screens/ScreenQuranBrowser';
-import ScreenRevisionDetails from './app/js/screens/ScreenRevisionDetails';
-import ScreenSettings from './app/js/screens/ScreenSettings';
 import reduxStore from './app/js/redux/reduxStore';
 import reduxPersistor from './app/js/redux/reduxPersistor';
 
@@ -81,30 +73,6 @@ export default class App extends Component {
 
   getFonts() {}
 
-  getNavigationStack() {
-    const Stack = createNativeStackNavigator();
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {reduxStore.getState().bIsFirstRun ? (
-            <Stack.Screen name="ScrLang" component={ScreenLanguage} />
-          ) : null}
-          {reduxStore.getState().bSkipWelcome == false ? (
-            <Stack.Screen name="ScrWelcome" component={ScreenWelcome} />
-          ) : null}
-          <Stack.Screen name="ScrList" component={ScreenRevisions} />
-          <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
-          <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
-          <Stack.Screen name="ScrSettings" component={ScreenSettings} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
-
   render() {
     if (!this.state.fontLoadedFinished) {
       return null;
@@ -117,15 +85,17 @@ export default class App extends Component {
               persistor={reduxPersistor}
               onBeforeLift={this.onBeforeLift.bind(this)}
             >
-              <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar style="auto" />
-                {this.state.bIsLoaded ? (
-                  <Navigation />
-                ) : (
-                  this.getLoadingRender()
-                )}
-              </SafeAreaView>
+              <SafeAreaProvider>
+                <SafeAreaView style={{ flex: 1 }}>
+                  {this.state.bIsLoaded ? (
+                    <Navigation />
+                  ) : (
+                    this.getLoadingRender()
+                  )}
+                </SafeAreaView>
+              </SafeAreaProvider>
             </PersistGate>
+            <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
           </Provider>
         </>
       );
