@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableHighlight,
-  TextInput,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, TextInput, Text } from 'react-native';
 
 import Revision from '../helpers/Revision';
 import ModalSurahSelector from '../modals/ModalSurahSelector';
@@ -78,8 +71,6 @@ class ScreenRevisionDetails extends Component {
   }
 
   render() {
-    // var surahTxt = this.getSurahTxt(true);
-
     return (
       <View style={styles.container}>
         {/* header */}
@@ -111,13 +102,6 @@ class ScreenRevisionDetails extends Component {
             lang={this.props.strLang}
             icon={true}
           />
-
-          {/* {this.renderBtn({
-            text: this.stringsManager.getStr(strings.STR_ADD_REV),
-            fullWidth: true,
-            handler: this.okButtonPressed.bind(this),
-            disabled: !this.title.length,
-          })} */}
         </View>
       </View>
     );
@@ -194,43 +178,6 @@ class ScreenRevisionDetails extends Component {
     return this.getStartEndAyah(false);
   }
 
-  renderBtn({
-    contained = false,
-    text,
-    handler,
-    disabled = false,
-    fullWidth = false,
-  }) {
-    const extraStyle = {
-      borderStyle: contained ? 'solid' : 'none',
-      borderWidth: contained ? 1 : 0,
-      backgroundColor: disabled
-        ? colors.primary_disabled
-        : contained
-        ? colors.light_bg
-        : colors.primary,
-      width: fullWidth ? '100%' : '48%',
-    };
-
-    return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={handler}
-        style={{ ...styles.btnStyle, ...extraStyle }}
-      >
-        <Text
-          style={{
-            color: contained ? '#B0B0B0' : '#fff',
-            alignSelf: fullWidth ? 'center' : 'flex-start',
-            fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
-            fontSize: 18,
-          }}
-        >
-          {text}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
   getAyahSelector(bIsStart) {
     var surahTxt = this.getSurahTxt(bIsStart);
     return (
@@ -252,13 +199,6 @@ class ScreenRevisionDetails extends Component {
           lang={this.props.strLang}
         />
 
-        {/* {this.renderBtn({
-          text: surahTxt,
-          handler: bIsStart
-            ? this.selectStartSurah.bind(this)
-            : this.selectEndSurah.bind(this),
-        })} */}
-
         {this.modalAyah.getModal()}
         <ActionBtn
           text={this.getAyahTxt(bIsStart)}
@@ -270,13 +210,6 @@ class ScreenRevisionDetails extends Component {
           }
           lang={this.props.strLang}
         />
-        {/* {this.renderBtn({
-          text: this.getAyahTxt(bIsStart),
-          contained: true,
-          handler: bIsStart
-            ? this.selectStartAyah.bind(this)
-            : this.selectEndAyah.bind(this),
-        })} */}
       </View>
     );
   }

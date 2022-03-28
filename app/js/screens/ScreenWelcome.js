@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  ImageBackground,
   StyleSheet,
   Text,
   View,
@@ -14,7 +13,6 @@ import { connect } from 'react-redux';
 import { reduxActionSetWelcomeFlag } from '../redux/reduxActions';
 import * as strings from '../helpers/StringsManager';
 import StringsManager from '../helpers/StringsManager';
-import { BackgroundFetch } from 'expo';
 
 class ScreenWelcome extends Component {
   constructor(props) {

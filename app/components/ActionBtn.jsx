@@ -11,7 +11,6 @@ const ActionBtn = ({
   icon = false,
   handler,
   lang,
-
   contained = false,
   disabled = false,
   fullWidth = false,
