@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
-  ImageBackground,
   StyleSheet,
   Text,
   View,
@@ -8,13 +7,12 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Image,
-} from "react-native";
-import CheckBox from "react-native-check-box";
-import { connect } from "react-redux";
-import { reduxActionSetWelcomeFlag } from "../redux/reduxActions";
-import * as strings from "../helpers/StringsManager";
-import StringsManager from "../helpers/StringsManager";
-import { BackgroundFetch } from "expo";
+} from 'react-native';
+import CheckBox from 'react-native-check-box';
+import { connect } from 'react-redux';
+import { reduxActionSetWelcomeFlag } from '../redux/reduxActions';
+import * as strings from '../helpers/StringsManager';
+import StringsManager from '../helpers/StringsManager';
 
 class ScreenWelcome extends Component {
   constructor(props) {
@@ -24,7 +22,7 @@ class ScreenWelcome extends Component {
   }
 
   okButtonPressed() {
-    this.props.navigation.navigate("ScrList");
+    this.props.navigation.navigate('ScrList');
   }
 
   render() {
@@ -32,7 +30,7 @@ class ScreenWelcome extends Component {
       <View style={styles.mainContainer}>
         <View style={styles.curStatusBar}></View>
         <Image
-          source={require("../../assets/backgroundPNG/green_background_withQuran.png")}
+          source={require('../../assets/backgroundPNG/green_background_withQuran.png')}
           style={styles.backgroundImage}
         ></Image>
         <View style={styles.messageContainer}>
@@ -78,42 +76,42 @@ class ScreenWelcome extends Component {
   }
   getTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 40 : 36,
+      fontSize: this.props.strLang == 'ar' ? 40 : 36,
       lineHeight: 63,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
-      textAlign: "center",
-      color: "#FFFFFF",
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: 'center',
+      color: '#FFFFFF',
       margin: 20,
     };
   }
   getSubTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 18,
+      fontSize: this.props.strLang == 'ar' ? 22 : 18,
       lineHeight: 36,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
-      textAlign: "center",
-      color: "#FFFFFF",
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: 'center',
+      color: '#FFFFFF',
       marginHorizontal: 50,
     };
   }
   getInstructionsTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 18,
+      fontSize: this.props.strLang == 'ar' ? 22 : 18,
       lineHeight: 36,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
-      textAlign: this.props.strLang == "ar" ? "right" : "left",
-      textDecorationLine: "underline",
-      color: "#FFFFFF",
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: this.props.strLang == 'ar' ? 'right' : 'left',
+      textDecorationLine: 'underline',
+      color: '#FFFFFF',
       marginHorizontal: 50,
     };
   }
   getInstructionsStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 18,
+      fontSize: this.props.strLang == 'ar' ? 22 : 18,
       lineHeight: 36,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
-      textAlign: this.props.strLang == "ar" ? "right" : "left",
-      color: "#FFFFFF",
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: this.props.strLang == 'ar' ? 'right' : 'left',
+      color: '#FFFFFF',
       marginHorizontal: 40,
     };
   }
@@ -122,47 +120,47 @@ class ScreenWelcome extends Component {
       marginVertical: 30,
       marginHorizontal: 70,
       height: 55,
-      flexDirection: this.props.strLang == "ar" ? "row-reverse" : "row",
-      alignContent: "center",
-      width: "93%",
+      flexDirection: this.props.strLang == 'ar' ? 'row-reverse' : 'row',
+      alignContent: 'center',
+      width: '93%',
     };
   }
   getCheckBoxTextStyle() {
     return {
       fontSize: 15,
-      fontFamily: "Amiri_Bold",
-      textAlign: "center",
-      color: "#0C3D11",
+      fontFamily: 'Amiri_Bold',
+      textAlign: 'center',
+      color: '#0C3D11',
       lineHeight: 30,
     };
   }
   renderOKButton(nStrID) {
     var styleContainer = {
       flex: 1,
-      justifyContent: "flex-end",
+      justifyContent: 'flex-end',
       marginBottom: 5,
-      width: "100%",
-      alignItems: "center",
+      width: '100%',
+      alignItems: 'center',
     };
 
     var styleOKButton = {
-      backgroundColor: "#0B721E",
-      alignItems: "center",
-      justifyContent: "center",
-      width: "93%",
+      backgroundColor: '#0B721E',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '93%',
       height: 70,
       borderRadius: 10,
       marginTop: 50,
       marginBottom: 25,
     };
     var styleOkButtonTxt = {
-      textAlign: "center",
-      color: "#FFFFFF",
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      justifyContent: "center",
-      fontSize: this.props.strLang == "ar" ? 22 : 20,
+      textAlign: 'center',
+      color: '#FFFFFF',
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri' : 'Poppins',
+      justifyContent: 'center',
+      fontSize: this.props.strLang == 'ar' ? 22 : 20,
       lineHeight: 35,
-      fontWeight: "600",
+      fontWeight: '600',
     };
     return (
       <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
@@ -192,28 +190,28 @@ export default connect(mapStateToProps, mapDispatchToProps())(ScreenWelcome);
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: "#EEEEEE",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#EEEEEE',
   },
   backgroundImage: {
-    position: "absolute",
+    position: 'absolute',
     top: StatusBar.currentHeight + 36,
-    width: "93%",
-    height: "60%",
+    width: '93%',
+    height: '60%',
     borderRadius: 10,
   },
   curStatusBar: {
-    width: "100%",
+    width: '100%',
     height: StatusBar.currentHeight + 35,
   },
   messageContainer: {
-    alignItems: "center",
-    backgroundColor: "#FFFFF",
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   separator: {
-    borderColor: "#FFFFFF59",
+    borderColor: '#FFFFFF59',
     borderWidth: 1,
     borderRadius: 10,
     width: 280,
