@@ -26,8 +26,10 @@ export const STR_REVISED = 25;
 export const STR_SEL_LANGUAGE = 26;
 export const STR_REV_TITLE = 27;
 export const STR_ADD_REV = 28;
-export const STR_ADD_REV_TITLE = 29;
-export const STR_LATEST_DONE = 30;
+export const STR_START_NOW = 29;
+export const STR_CANCEL = 30;
+export const STR_ADD_REV_TITLE = 31;
+export const STR_LATEST_DONE = 32;
 export default class StringsManager {
   constructor() {
     this.strLang = 'ar';
@@ -60,6 +62,11 @@ export default class StringsManager {
     if (nStrID == STR_ADD_REV) {
       if (strLang == 'ar') return 'اضف';
       if (strLang == 'en') return 'Add';
+      return 'unsupported language';
+    }
+    if (nStrID == STR_CANCEL) {
+      if (strLang == 'ar') return 'إلغاء';
+      if (strLang == 'en') return '+ Cancel';
       return 'unsupported language';
     }
     if (nStrID == STR_SEL_AYAH) {
@@ -220,6 +227,12 @@ export default class StringsManager {
     if (nStrID == STR_SEL_LANGUAGE) {
       if (strLang == 'ar') return 'اختر اللغة';
       if (strLang == 'en') return 'Select Language';
+      return 'unsupported language';
+    }
+
+    if (nStrID == STR_START_NOW) {
+      if (strLang == 'ar') return 'ابدأ الآن';
+      if (strLang == 'en') return 'Start Now';
       return 'unsupported language';
     }
     return 'unkown string';

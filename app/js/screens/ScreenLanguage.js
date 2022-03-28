@@ -72,15 +72,46 @@ class ScreenLanguage extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <View style={styles.okButton}>
-          <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
-            <View>
-              <Text style={this.getlangButtonTextStyle()}>
-                {this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
+        {this.renderOKButton(
+          strings.STR_SEL_LANGUAGE,
+          this.okButtonPressed.bind(this)
+        )}
+      </View>
+    );
+  }
+
+  renderOKButton(nStrID, pressHandler) {
+    var styleOKButton = {
+      backgroundColor: "#0B721E",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "93%",
+      height: 70,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      marginTop: 50,
+      marginBottom: 25,
+    };
+    var styleOkButtonTxt = {
+      textAlign: "center",
+      color: "#FFFFFF",
+      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
+      justifyContent: "center",
+      fontSize: this.props.strLang == "ar" ? 22 : 20,
+      lineHeight: 35,
+      fontWeight: "600",
+    };
+    return (
+      <View style={styleOKButton}>
+        <TouchableWithoutFeedback onPress={pressHandler}>
+          <View>
+            <Text style={styleOkButtonTxt}>
+              {this.stringsManager.getStr(nStrID)}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }

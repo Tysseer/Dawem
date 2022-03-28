@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -8,12 +8,13 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Image,
-} from "react-native";
-import CheckBox from "react-native-check-box";
-import { connect } from "react-redux";
-import { reduxActionSetWelcomeFlag } from "../redux/reduxActions";
-import * as strings from "../helpers/StringsManager";
-import StringsManager from "../helpers/StringsManager";
+} from 'react-native';
+import CheckBox from 'react-native-check-box';
+import { connect } from 'react-redux';
+import { reduxActionSetWelcomeFlag } from '../redux/reduxActions';
+import * as strings from '../helpers/StringsManager';
+import StringsManager from '../helpers/StringsManager';
+import { BackgroundFetch } from 'expo';
 
 class ScreenWelcome extends Component {
   constructor(props) {
@@ -22,46 +23,40 @@ class ScreenWelcome extends Component {
     this.stringsManager.setLanguage(this.props.strLang);
   }
 
-  handlePress() {
-    this.props.navigation.navigate("ScrList");
+  okButtonPressed() {
+    this.props.navigation.navigate('ScrList');
   }
 
   render() {
     return (
-      <ImageBackground
-        style={styles.background}
-        source={require("../../assets/backgroundPNG/sunrise_bk.png")}
-      >
-        <View style={styles.textContainer}>
-          <Text style={styles.welcomeMessage}>
+      <View style={styles.mainContainer}>
+        <View style={styles.curStatusBar}></View>
+        <Image
+          source={require('../../assets/backgroundPNG/green_background_withQuran.png')}
+          style={styles.backgroundImage}
+        ></Image>
+        <View style={styles.messageContainer}>
+          <Text style={this.getTitleStyle()}>
             {this.stringsManager.getStr(strings.STR_GREETING)}
           </Text>
-          <Text style={styles.motivation}>
+          <Text style={this.getSubTitleStyle()}>
             {this.stringsManager.getStr(strings.STR_MOTIVATION)}
           </Text>
-          <Text style={(styles.instructions, { fontSize: 22 })}>
+          <View style={styles.separator}></View>
+          <Text style={this.getInstructionsTitleStyle()}>
             {this.stringsManager.getStr(strings.STR_INSTRUCTIONS_TITLE)}
           </Text>
-          <Text style={styles.instructions}>
+          <Text style={this.getInstructionsStyle()}>
             {this.stringsManager.getStr(strings.STR_INSTRUCTIONS)}
           </Text>
         </View>
-
-        <View style={styles.okButton}>
-          <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
-            <Image
-              source={require("../../assets/icons/ok_icon.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.checkBoxContainer}>
+        <View style={this.getCheckBoxContainerStyle()}>
           <CheckBox
             onClick={() => {
               this.props.reduxActionSetWelcomeFlag(!this.props.bSkipWelcome);
             }}
             isChecked={this.props.bSkipWelcome}
-            checkBoxColor="white"
+            checkBoxColor="#0C3D11"
           />
           <TouchableHighlight
             onPress={() => {
@@ -69,12 +64,118 @@ class ScreenWelcome extends Component {
             }}
             underlayColor="#FFFFFF11"
           >
-            <Text style={styles.checkBoxText}>
+            <Text style={this.getCheckBoxTextStyle()}>
               {this.stringsManager.getStr(strings.STR_SKIP_SCREEN)}
             </Text>
           </TouchableHighlight>
         </View>
-      </ImageBackground>
+        {this.renderOKButton(
+          strings.STR_START_NOW,
+          this.okButtonPressed.bind(this)
+        )}
+      </View>
+    );
+  }
+  getTitleStyle() {
+    return {
+      fontSize: this.props.strLang == 'ar' ? 40 : 36,
+      lineHeight: 63,
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: 'center',
+      color: '#FFFFFF',
+      margin: 20,
+    };
+  }
+  getSubTitleStyle() {
+    return {
+      fontSize: this.props.strLang == 'ar' ? 22 : 18,
+      lineHeight: 36,
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: 'center',
+      color: '#FFFFFF',
+      marginHorizontal: 50,
+    };
+  }
+  getInstructionsTitleStyle() {
+    return {
+      fontSize: this.props.strLang == 'ar' ? 22 : 18,
+      lineHeight: 36,
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: this.props.strLang == 'ar' ? 'right' : 'left',
+      textDecorationLine: 'underline',
+      color: '#FFFFFF',
+      marginHorizontal: 50,
+    };
+  }
+  getInstructionsStyle() {
+    return {
+      fontSize: this.props.strLang == 'ar' ? 22 : 18,
+      lineHeight: 36,
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri_Bold' : 'Poppins',
+      textAlign: this.props.strLang == 'ar' ? 'right' : 'left',
+      color: '#FFFFFF',
+      marginHorizontal: 40,
+    };
+  }
+  getCheckBoxContainerStyle() {
+    return {
+      marginVertical: 30,
+      marginHorizontal: 70,
+      height: 55,
+      flexDirection: this.props.strLang == 'ar' ? 'row-reverse' : 'row',
+      alignContent: 'center',
+      width: '93%',
+    };
+  }
+  getCheckBoxTextStyle() {
+    return {
+      fontSize: 15,
+      fontFamily: 'Amiri_Bold',
+      textAlign: 'center',
+      color: '#0C3D11',
+      lineHeight: 30,
+    };
+  }
+  renderOKButton(nStrID) {
+    var styleContainer = {
+      flex: 1,
+      justifyContent: 'flex-end',
+      marginBottom: 5,
+      width: '100%',
+      alignItems: 'center',
+    };
+
+    var styleOKButton = {
+      backgroundColor: '#0B721E',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '93%',
+      height: 70,
+      borderRadius: 10,
+      marginTop: 50,
+      marginBottom: 25,
+    };
+    var styleOkButtonTxt = {
+      textAlign: 'center',
+      color: '#FFFFFF',
+      fontFamily: this.props.strLang == 'ar' ? 'Amiri' : 'Poppins',
+      justifyContent: 'center',
+      fontSize: this.props.strLang == 'ar' ? 22 : 20,
+      lineHeight: 35,
+      fontWeight: '600',
+    };
+    return (
+      <View style={styleContainer}>
+        <View style={styleOKButton}>
+          <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
+            <View>
+              <Text style={styleOkButtonTxt}>
+                {this.stringsManager.getStr(nStrID)}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
     );
   }
 }
@@ -89,85 +190,34 @@ const mapDispatchToProps = () => {
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenWelcome);
 const styles = StyleSheet.create({
-  background: {
+  mainContainer: {
     flex: 1,
-    justifyContent: "flex-start",
-    backgroundColor: "white",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#EEEEEE',
   },
-
-  textContainer: {
-    backgroundColor: "#FFFFFF4D",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    padding: 5,
-    marginTop: StatusBar.currentHeight + 70,
-    marginLeft: 5,
-    marginRight: 5,
+  backgroundImage: {
+    position: 'absolute',
+    top: StatusBar.currentHeight + 36,
+    width: '93%',
+    height: '60%',
+    borderRadius: 10,
   },
-  welcomeMessage: {
-    fontSize: 30,
-    fontFamily: "Amiri_Bold",
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#5A0912",
+  curStatusBar: {
+    width: '100%',
+    height: StatusBar.currentHeight + 35,
   },
-  motivation: {
-    fontSize: 25,
-    fontFamily: "Amiri_Bold",
-    fontStyle: "italic",
-    textAlign: "center",
-    color: "#112222",
+  messageContainer: {
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
-  instructions: {
-    fontSize: 20,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-
-    color: "#081135",
-  },
-  touchable: {
-    position: "absolute",
-    bottom: 30,
-    width: "80%",
-    alignSelf: "center",
-  },
-  buttonText: {
-    width: "100%",
-    alignSelf: "center",
+  separator: {
+    borderColor: '#FFFFFF59',
     borderWidth: 1,
-    padding: 25,
-    margin: 10,
-    borderColor: "#6B2504",
-    backgroundColor: "#6B2504",
-    fontSize: 20,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "white",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-  },
-  okButton: {
-    alignSelf: "center",
-    width: 90,
-    height: 90,
-    marginTop: 30,
-  },
-  checkBoxText: {
-    fontSize: 15,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-    color: "white",
-  },
-  checkBoxContainer: {
-    position: "absolute",
-    bottom: 6,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
+    borderRadius: 10,
+    width: 280,
+    height: 1,
+    marginBottom: 15,
   },
 });

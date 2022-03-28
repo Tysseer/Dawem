@@ -1,1 +1,1 @@
-expo install expo-modules-core
+react-native --v
