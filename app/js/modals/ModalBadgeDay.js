@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,9 +6,9 @@ import {
   Text,
   TouchableWithoutFeedback,
   Image,
-} from "react-native";
-import SVGLoader from "../helpers/SVGLoader.js";
-import * as strings from "../helpers/StringsManager";
+} from 'react-native';
+import SVGLoader from '../helpers/SVGLoader.js';
+import * as strings from '../helpers/StringsManager';
 export default class ModalBadgeDay {
   constructor(parent /* should have state.bShowModalBadgeDay */) {
     this.parent = parent;
@@ -41,8 +41,8 @@ export default class ModalBadgeDay {
           <View style={styles.okButton}>
             <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
               <Image
-                source={require("../../assets/icons/ok_icon.png")}
-                style={{ width: "100%", height: "100%" }}
+                source={require('../../assets/icons/ok_icon.png')}
+                style={{ width: '100%', height: '100%' }}
               />
             </TouchableWithoutFeedback>
           </View>
@@ -53,15 +53,15 @@ export default class ModalBadgeDay {
 }
 const styles = StyleSheet.create({
   contentContainer: {
-    width: "80%",
-    height: "80%",
-    alignSelf: "center",
+    width: '80%',
+    height: '80%',
+    alignSelf: 'center',
     marginTop: 110,
     marginBottom: 20,
     marginHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "space-around",
-    backgroundColor: "#FFFFFFd5",
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: '#FFFFFFd5',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     borderBottomLeftRadius: 30,
@@ -73,46 +73,46 @@ const styles = StyleSheet.create({
   },
   motivationText: {
     fontSize: 20,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "#232393",
+    fontFamily: 'Amiri_Bold',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#232393',
     marginHorizontal: 10,
-    borderBottomColor: "#939393",
+    borderBottomColor: '#939393',
     borderBottomWidth: 1,
   },
   statusText: {
     fontSize: 20,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-    fontWeight: "bold",
+    fontFamily: 'Amiri_Bold',
+    textAlign: 'center',
+    fontWeight: 'bold',
     marginHorizontal: 10,
-    color: "#081133",
+    color: '#081133',
   },
   touchable: {
     height: 30,
-    width: "80%",
-    alignSelf: "center",
+    width: '80%',
+    alignSelf: 'center',
   },
   buttonText: {
-    width: "50%",
-    alignSelf: "center",
+    width: '50%',
+    alignSelf: 'center',
     borderWidth: 1,
 
-    borderColor: "#6B2504",
-    backgroundColor: "#6B2504",
+    borderColor: '#6B2504',
+    backgroundColor: '#6B2504',
     fontSize: 20,
-    fontFamily: "Amiri_Bold",
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "white",
+    fontFamily: 'Amiri_Bold',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'white',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
   okButton: {
-    alignSelf: "center",
+    alignSelf: 'center',
     width: 70,
     height: 70,
     marginTop: 30,

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,8 +9,13 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Image,
-} from "react-native";
-import QuranIndexer from "../helpers/QuranIndexer";
+} from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import Center from '../../components/Center';
+import { colors } from '../../constants';
+import QuranIndexer from '../helpers/QuranIndexer';
+import SVGLoader from '../helpers/SVGLoader';
+const { width } = Dimensions.get('window');
 export default class ModalSurahSelector {
   constructor(parent /* should have .bShowSurahSelector and .refresh()*/) {
     this.parent = parent;
@@ -40,120 +45,147 @@ export default class ModalSurahSelector {
     if (this.parent.bShowSurahSelector == false) return null;
     return (
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         visible={this.parent.bShowSurahSelector}
         onRequestClose={this.handlePress.bind(this)}
         onDismiss={this.handlePress.bind(this)}
       >
-        <View style={styles.contentContainer}>
-          <ScrollView>
+        <Center style={styles.contentContainer}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.modalView}
+          >
             <View style={styles.selectorsContainer}>
-              {this.indexes.map((iS) => this.getSurahBtn(iS))}
+              {this.indexes.map((iS, index) => this.getSurahBtn(iS, index))}
             </View>
           </ScrollView>
-
-          <View style={styles.toolbar}>
-            <View style={styles.okButton}>
-              <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
-                <Image
-                  source={require("../../assets/icons/ok_icon.png")}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </TouchableWithoutFeedback>
-            </View>
-            <View style={styles.okButton}>
-              <TouchableWithoutFeedback onPress={this.handleCancel.bind(this)}>
-                <Image
-                  source={require("../../assets/icons/back.png")}
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </TouchableWithoutFeedback>
-            </View>
-          </View>
-        </View>
+        </Center>
       </Modal>
     );
   }
-  getSurahBtn(iSurah) {
-    var bordercol =
-      iSurah == this.selSurah
-        ? { borderColor: "#540000" }
-        : { borderColor: "#545454" };
+  getSurahBtn(item, index) {
+    // var bordercol =
+    //   item == this.selSurah
+    //     ? { borderColor: '#540000' }
+    //     : { borderColor: '#545454' };
+    var svgLoader = new SVGLoader();
+    var numBorder = svgLoader.getSurahNumBorder(index + 1);
     return (
-      <View style={{ margin: 10 }} key={iSurah + 123}>
+      <View key={Math.random().toString()}>
         <TouchableHighlight
-          onPress={() => this.selectSurah.bind(this)(iSurah)}
+          onPress={() => this.selectSurah.bind(this)(item)}
           underlayColor="#FFFFFF11"
+          style={{ width: '100%' }}
         >
-          <Text style={[styles.buttonText, bordercol]}>
-            {this.surahInfo.getSurahNameAr(iSurah)}
-          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignSelf: 'flex-start',
+                alignItems: 'center',
+                width: '100%',
+              }}
+            >
+              {numBorder}
+              <Text style={{ paddingHorizontal: 5 }}>
+                {this.surahInfo.getSurahNameAr(item)}
+              </Text>
+            </View>
+
+            {/* icon */}
+            <View
+              style={{
+                height: 14,
+                width: 14,
+                borderRadius: 7,
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#818181',
+                backgroundColor: this.selSurah == item ? colors.primary : null,
+              }}
+            />
+          </View>
         </TouchableHighlight>
+        {index + 1 < this.indexes.length && (
+          <View
+            style={{
+              height: 1,
+              width: '100%',
+              backgroundColor: 'rgba(187, 196, 206, 0.35)',
+              marginVertical: 15,
+            }}
+          />
+        )}
       </View>
     );
   }
   selectSurah(iSurah) {
     this.selSurah = iSurah;
     this.parent.refresh(); //this.parent.setState({ bShowSurahSelector: true }); // just to render
+    this.handlePress();
   }
   getSelSurahName() {
-    if (this.selSurah == 0) return "Select Surah";
+    if (this.selSurah == 0) return 'Select Surah';
     else return this.surahInfo.getSurahNameAr(this.selSurah);
   }
 }
 const styles = StyleSheet.create({
   contentContainer: {
-    width: "80%",
-    height: "80%",
-    alignSelf: "center",
-    marginTop: 110,
-    marginBottom: 20,
-    marginHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "space-around",
-    backgroundColor: "#FFFFFFd5",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    width,
+    paddingTop: 40,
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,.6)',
+  },
+  modalView: {
+    borderRadius: 30,
+    backgroundColor: 'white',
+    // padding: 20,
+    width: width * 0.95,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   selectorsContainer: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-    flexWrap: "wrap",
-    direction: "rtl",
-    margin: 5,
-    padding: 5,
+    margin: '10%',
   },
 
   buttonText: {
-    width: Dimensions.get("window").width / 5,
+    width: Dimensions.get('window').width / 5,
     borderWidth: 2,
-    backgroundColor: "#EBEBA4",
-    fontSize: (Dimensions.get("window").width * 20) / 411,
-    fontFamily: "sans-serif",
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "#121212",
+    backgroundColor: '#EBEBA4',
+    fontSize: (Dimensions.get('window').width * 20) / 411,
+    fontFamily: 'sans-serif',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#121212',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
   okButton: {
-    alignSelf: "center",
+    alignSelf: 'center',
     width: 70,
     height: 70,
     marginTop: 30,
   },
   toolbar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     margin: 5,
     padding: 5,
   },

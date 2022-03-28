@@ -1,22 +1,26 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+// import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
+
 import ScreenRevisions from './app/js/screens/ScreenRevisions';
 import ScreenWelcome from './app/js/screens/ScreenWelcome';
 import ScreenLanguage from './app/js/screens/ScreenLanguage';
 import ScreenQuranBrowser from './app/js/screens/ScreenQuranBrowser';
 import ScreenRevisionDetails from './app/js/screens/ScreenRevisionDetails';
 import ScreenSettings from './app/js/screens/ScreenSettings';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Provider } from 'react-redux';
 import reduxStore from './app/js/redux/reduxStore';
 import reduxPersistor from './app/js/redux/reduxPersistor';
-import { PersistGate } from 'redux-persist/integration/react';
+
 import Revision from './app/js/helpers/Revision';
-import AppLoading from 'expo-app-loading';
-import * as Font from 'expo-font';
+import Navigation from './app/js/navigation';
 
 export default class App extends Component {
   async fetchFonts() {
@@ -27,6 +31,7 @@ export default class App extends Component {
       Amiri: require('./app/assets/fonts/Amiri-Regular.ttf'),
       Amiri_Bold: require('./app/assets/fonts/Amiri-Bold.ttf'),
       Poppins: require('./app/assets/fonts/Poppins-Regular.ttf'),
+      'Poppins-Bold': require('./app/assets/fonts/Poppins-Bold.ttf'),
       Poppins_xBold: require('./app/assets/fonts/Poppins-ExtraBold.ttf'),
     });
     this.setState({ fontLoadedFinished: true });
@@ -77,7 +82,7 @@ export default class App extends Component {
   getFonts() {}
 
   getNavigationStack() {
-    const Stack = createStackNavigator();
+    const Stack = createNativeStackNavigator();
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -105,17 +110,24 @@ export default class App extends Component {
       return null;
     } else {
       return (
-        <Provider store={reduxStore}>
-          <PersistGate
-            loading={null}
-            persistor={reduxPersistor}
-            onBeforeLift={this.onBeforeLift.bind(this)}
-          >
-            {this.state.bIsLoaded
-              ? this.getNavigationStack()
-              : this.getLoadingRender()}
-          </PersistGate>
-        </Provider>
+        <>
+          <Provider store={reduxStore}>
+            <PersistGate
+              loading={null}
+              persistor={reduxPersistor}
+              onBeforeLift={this.onBeforeLift.bind(this)}
+            >
+              <SafeAreaView style={{ flex: 1 }}>
+                <StatusBar style="auto" />
+                {this.state.bIsLoaded ? (
+                  <Navigation />
+                ) : (
+                  this.getLoadingRender()
+                )}
+              </SafeAreaView>
+            </PersistGate>
+          </Provider>
+        </>
       );
     }
   }

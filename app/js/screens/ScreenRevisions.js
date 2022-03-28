@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,21 +6,30 @@ import {
   TouchableWithoutFeedback,
   Image,
   Text,
-} from "react-native";
-import RevisionsList from "../subComponents/RevisionsList";
-import RevisionsManager from "../helpers/RevisionsManager";
-import SVGLoader from "../helpers/SVGLoader";
-import BadgesBar from "../subComponents/BadgesBar";
-import ModalBadgeDay from "../modals/ModalBadgeDay.js";
-import ModalBadgeMonth from "../modals/ModalBadgeMonth.js";
-import ModalBadgeWeek from "../modals/ModalBadgeWeek.js";
-import { connect } from "react-redux";
+  Dimensions,
+} from 'react-native';
+
+import RevisionsList from '../subComponents/RevisionsList';
+import RevisionsManager from '../helpers/RevisionsManager';
+import SVGLoader from '../helpers/SVGLoader';
+import BadgesBar from '../subComponents/BadgesBar';
+import ModalBadgeDay from '../modals/ModalBadgeDay.js';
+import ModalBadgeMonth from '../modals/ModalBadgeMonth.js';
+import ModalBadgeWeek from '../modals/ModalBadgeWeek.js';
+import { connect } from 'react-redux';
 import {
   reduxActionSetCurRevision,
   reduxActionDelRevision,
-} from "../redux/reduxActions";
-import * as strings from "../helpers/StringsManager";
-import StringsManager from "../helpers/StringsManager";
+} from '../redux/reduxActions';
+import * as strings from '../helpers/StringsManager';
+import StringsManager from '../helpers/StringsManager';
+import { colors } from '../../constants';
+import Center from '../../components/Center';
+import { getFontFamily } from '../helpers/scripts';
+import ActionBtn from '../../components/ActionBtn';
+
+const { width, height } = Dimensions.get('window');
+
 class ScreenRevisions extends Component {
   constructor(props) {
     super(props);
@@ -48,22 +57,31 @@ class ScreenRevisions extends Component {
     var pressHandlers = this.getBadgesOnPressHandlers();
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
     var modalContent = this.getModal();
-    var bottomToolBar = this.getBottomToolBar();
-    return (
-      <ImageBackground
-        style={styles.background}
-        source={require("../../assets/backgroundPNG/sunset_bk.png")}
-      >
-        {/* <BadgesBar
-          svgLoader={this.svgLoader}
-          isBadgeDay={this.state.isBadgeDay}
-          isBadgeMonth={this.state.isBadgeMonth}
-          isBadgeWeek={this.state.isBadgeWeek}
-          onPresses={pressHandlers}
-          onLongPresses={longPressHandlers}
-        /> */}
 
+    return (
+      <View style={styles.copntainer}>
+        <Text
+          style={{
+            fontFamily: 'Poppins-Bold',
+            fontSize: 20,
+            color: colors.primary,
+            alignSelf: 'flex-start',
+            marginVertical: 30,
+          }}
+        >
+          Dawem
+        </Text>
         <View style={styles.listContainer}>
+          <BadgesBar
+            svgLoader={this.svgLoader}
+            isBadgeDay={this.state.isBadgeDay}
+            isBadgeMonth={this.state.isBadgeMonth}
+            isBadgeWeek={this.state.isBadgeWeek}
+            onPresses={pressHandlers}
+            onLongPresses={longPressHandlers}
+            strLang={this.props.strLang}
+            title={this.stringsManager.getStr(strings.STR_LATEST_DONE)}
+          />
           {modalContent}
           {this.revisionsManager.m_loadedRevisions.length == 0 ? (
             this.getInitialPrompt()
@@ -75,27 +93,35 @@ class ScreenRevisions extends Component {
               refreshFn={this.refresh.bind(this)}
               updateRevFn={this.onEditRevision.bind(this)}
               deleteRevFn={this.onDeleteRevision.bind(this)}
+              onAddRevision={this.onAddRevision.bind(this)}
             />
           )}
         </View>
-        {bottomToolBar}
-      </ImageBackground>
+        <ActionBtn
+          text={this.stringsManager.getStr(strings.STR_REV_TITLE)}
+          handler={this.onAddRevision.bind(this)}
+          icon={true}
+          lang={this.props.strLang}
+          fullWidth={true}
+          style={{ height: 60 }}
+        />
+      </View>
     );
   }
 
   getBadgesOnPressHandlers() {
     var pressHandlers = new Map();
-    pressHandlers.set("day", this.onDayBadgePressed.bind(this));
-    pressHandlers.set("month", this.onMonthBadgePressed.bind(this));
-    pressHandlers.set("week", this.onWeekBadgePressed.bind(this));
+    pressHandlers.set('day', this.onDayBadgePressed.bind(this));
+    pressHandlers.set('month', this.onMonthBadgePressed.bind(this));
+    pressHandlers.set('week', this.onWeekBadgePressed.bind(this));
 
     return pressHandlers;
   }
   getBadgesOnLongPressHandlers() {
     var longPressHandlers = new Map();
-    longPressHandlers.set("day", this.onBadgeLongPress.bind(this));
-    longPressHandlers.set("month", this.onBadgeLongPress.bind(this));
-    longPressHandlers.set("week", this.onBadgeLongPress.bind(this));
+    longPressHandlers.set('day', this.onBadgeLongPress.bind(this));
+    longPressHandlers.set('month', this.onBadgeLongPress.bind(this));
+    longPressHandlers.set('week', this.onBadgeLongPress.bind(this));
     return longPressHandlers;
   }
 
@@ -116,17 +142,17 @@ class ScreenRevisions extends Component {
   }
   onAddRevision() {
     this.props.reduxActionSetCurRevision(null);
-    this.props.navigation.navigate("ScrRev");
+    this.props.navigation.navigate('ScrRev');
   }
 
   onSettings() {
-    this.props.navigation.navigate("ScrSettings");
+    this.props.navigation.navigate('ScrSettings');
   }
   onDonate() {}
 
   onEditRevision(revision) {
     this.props.reduxActionSetCurRevision(revision);
-    this.props.navigation.navigate("ScrRev");
+    this.props.navigation.navigate('ScrRev');
   }
   onDeleteRevision(revision) {
     this.props.reduxActionDelRevision(revision);
@@ -134,52 +160,42 @@ class ScreenRevisions extends Component {
   }
   getInitialPrompt() {
     return (
-      <View style={styles.textContainer}>
-        <Text style={styles.textPrompt}>
-          {this.stringsManager.getStr(strings.STR_REVS_PROMPT)}
-        </Text>
-
-        <TouchableWithoutFeedback onPress={this.onAddRevision.bind(this)}>
-          <Image
-            style={{
-              width: 160,
-              height: 160,
-              marginHorizontal: 2,
-            }}
-            source={require("../../assets/icons/add.png")}
-          />
-        </TouchableWithoutFeedback>
-      </View>
-    );
-  }
-  getBottomToolBar() {
-    return (
-      <View style={styles.toolBar}>
-        <View style={styles.toolButton}>
+      <ImageBackground
+        source={require('../../assets/backgroundPNG/green_background.png')}
+        style={{
+          width: '100%',
+          height: 0.4 * height,
+          position: 'relative',
+          overflow: 'hidden',
+          borderRadius: 12,
+        }}
+      >
+        <Image
+          source={require('../../assets/icon.png')}
+          style={{
+            width: '96%',
+            height: '65%',
+            resizeMode: 'cover',
+            position: 'absolute',
+            bottom: -80,
+            left: -30,
+            opacity: 0.1,
+            // backgroundColor: 'red',
+          }}
+        />
+        <Center style={{ height: '100%' }}>
           <TouchableWithoutFeedback onPress={this.onAddRevision.bind(this)}>
-            <Image
-              source={require("../../assets/icons/add.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
+            <Text
+              style={{
+                ...styles.text,
+                ...getFontFamily(this.props.strLang),
+              }}
+            >
+              {this.stringsManager.getStr(strings.STR_REVS_PROMPT)}
+            </Text>
           </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.toolButton}>
-          <TouchableWithoutFeedback onPress={this.onSettings.bind(this)}>
-            <Image
-              source={require("../../assets/icons/settings.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.toolButton}>
-          <TouchableWithoutFeedback onPress={this.onDonate.bind(this)}>
-            <Image
-              source={require("../../assets/icons/donate.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-      </View>
+        </Center>
+      </ImageBackground>
     );
   }
 
@@ -256,23 +272,24 @@ const mapDispatchToProps = () => {
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenRevisions);
 const styles = StyleSheet.create({
-  background: {
+  copntainer: {
     flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    backgroundColor: "white",
+    // justifyContent: 'space-evenly',
+    // alignItems: 'center',
+    backgroundColor: '#EEE',
+    padding: 20,
   },
 
   toolBar: {
-    width: "100%",
+    width: '100%',
     height: 40,
-    alignSelf: "flex-end",
-    borderTopColor: "yellow",
+    alignSelf: 'flex-end',
+    borderTopColor: 'yellow',
     borderTopWidth: 1,
     paddingHorizontal: 6,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
   toolButton: {
     width: 38,
@@ -280,24 +297,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
   },
   listContainer: {
-    width: "100%",
+    width: '100%',
     flex: 1,
   },
   textContainer: {
-    backgroundColor: "#FFFFFF4D",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    padding: 5,
-    margin: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    // backgroundColor: '#FFFFFF4D',
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    // borderBottomLeftRadius: 20,
+    // borderBottomRightRadius: 20,
+    // padding: 5,
+    // margin: 5,
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
-  textPrompt: {
-    fontSize: 30,
-    fontFamily: "sans-serif",
-    textAlign: "center",
-    color: "#FFBB66",
+  text: {
+    fontSize: 18,
+    // textAlign: 'center',
+    color: '#fff',
   },
 });
