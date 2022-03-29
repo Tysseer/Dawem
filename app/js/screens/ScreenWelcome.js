@@ -89,17 +89,17 @@ class ScreenWelcome extends Component {
   getTitleStyle() {
     return {
       fontSize: this.props.strLang == "ar" ? 36 : 32,
-      lineHeight: 63,
+      lineHeight: this.props.strLang == "ar" ? 63 : 50,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
       color: "#FFFFFF",
-      margin: 20,
+      margin: 15,
     };
   }
   getSubTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 18,
-      lineHeight: 36,
+      fontSize: this.props.strLang == "ar" ? 22 : 16,
+      lineHeight: this.props.strLang == "ar" ? 36 : 28,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       textAlign: "center",
       color: "#FFFFFF",
@@ -107,39 +107,39 @@ class ScreenWelcome extends Component {
   }
   getInstructionsTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 18,
-      lineHeight: 36,
+      fontSize: this.props.strLang == "ar" ? 24 : 18,
+      lineHeight: this.props.strLang == "ar" ? 36 : 30,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      textAlign: this.props.strLang == "ar" ? "right" : "left",
       textDecorationLine: "underline",
       color: "#FFFFFF",
 
-      alignSelf: this.props.strLang == "ar" ? "flex-end" : "flex-start",
+      alignSelf: "flex-start",
+      marginBottom: 10,
     };
   }
   getInstructionsStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 18,
-      lineHeight: 36,
+      fontSize: this.props.strLang == "ar" ? 22 : 16,
+      lineHeight: this.props.strLang == "ar" ? 36 : 30,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      textAlign: this.props.strLang == "ar" ? "right" : "left",
+      alignSelf: "flex-start",
       color: "#FFFFFF",
     };
   }
   getCheckBoxContainerStyle() {
     return {
-      flexDirection: this.props.strLang == "ar" ? "row-reverse" : "row",
+      flexDirection: "row",
       width: "93%",
       marginTop: "2%",
     };
   }
   getCheckBoxTextStyle() {
     return {
-      fontSize: 15,
-      fontFamily: "Amiri_Bold",
+      fontSize: this.props.strLang == "ar" ? 15 : 13,
+      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
       textAlign: "center",
       color: "#0C3D11",
-      lineHeight: 30,
+      lineHeight: this.props.strLang == "ar" ? 30 : 28,
     };
   }
 }
@@ -188,6 +188,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 280,
     height: 1,
-    marginBottom: 15,
+    marginVertical: 15,
   },
 });

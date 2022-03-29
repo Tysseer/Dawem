@@ -200,21 +200,21 @@ export default class StringsManager {
     }
     if (nStrID == STR_MOTIVATION) {
       if (strLang == "ar")
-        return "ابدأ الآن رحلتك مع القرآن الكريم, وقم ببناء عادة تلاوة و مراجعة ما تعلمت منه.\n";
+        return "ابدأ الآن رحلتك مع القرآن الكريم, وقم ببناء عادة تلاوة و مراجعة ما تعلمت منه.";
       if (strLang == "en")
-        return "Embark on your journey with the holy Quran and build the habit of consistently reviewing what you have learned.\n";
+        return "Embark on your journey with the Quran and become a consistent reciter.";
       return "unsupported language";
     }
     if (nStrID == STR_INSTRUCTIONS_TITLE) {
-      if (strLang == "ar") return "إليك طريقة الاستخدام:\n";
-      if (strLang == "en") return "Here's how it works:\n";
+      if (strLang == "ar") return "إليك طريقة الاستخدام:";
+      if (strLang == "en") return "Here's how it works:";
       return "unsupported language";
     }
     if (nStrID == STR_INSTRUCTIONS) {
       if (strLang == "ar")
-        return "1- قم بملء قائمة أورادك.                           \n2- قم بتحديث القائمة كلما راجعت وردا منها.\n3- داوم على المراجعة وقم بتفعيل أوسمتك. \n";
+        return "1- قم بملء قائمة أورادك.\n2- قم بتحديث القائمة كلما راجعت وردا منها.\n3- داوم على المراجعة وقم بتفعيل أوسمتك.";
       if (strLang == "en")
-        return "1- Setup your list of revisions.             \n2- Update the list as you revise.          \n3- Light up badges and stay on track.\n";
+        return "1- Setup your list of revisions.             \n2- Update the list as you revise.          \n3- Light up badges and stay on track.";
       return "unsupported language";
     }
     if (nStrID == STR_SKIP_SCREEN) {
