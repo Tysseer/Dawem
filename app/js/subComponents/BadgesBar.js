@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   StyleSheet,
   View,
@@ -10,14 +10,14 @@ import {
   Text,
   Image,
   TouchableOpacity,
-} from 'react-native';
-import SVGLoader from '../helpers/SVGLoader';
-import { getFontFamily } from '../helpers/scripts';
-import BgImage from '../../assets/backgroundPNG/green_background.png';
-import BgBadge from '../../assets/images/trophy_transparent.png';
-import RenderBadgeImg from './RenderBadgeImg';
+} from "react-native";
+import SVGLoader from "../helpers/SVGLoader";
+import { getFontFamily } from "../helpers/scripts";
+import BgImage from "../../assets/backgroundPNG/green_background.png";
+import BgBadge from "../../assets/images/trophy_transparent.png";
+import RenderBadgeImg from "./RenderBadgeImg";
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get("window");
 
 export default class BadgesBar extends Component {
   static propTypes = {
@@ -37,7 +37,7 @@ export default class BadgesBar extends Component {
     // var monthBadge = svgLoader.getMonthBadge(!this.props.isBadgeMonth);
     // var weekBadge = svgLoader.getWeekBadge(!this.props.isBadgeWeek);
 
-    const intervals = ['day', 'month', 'week'];
+    const intervals = ["day", "month", "week"];
     const renderIntervalBadge = (interval) => (
       <TouchableOpacity
         activeOpacity={0.7}
@@ -60,7 +60,7 @@ export default class BadgesBar extends Component {
       <ImageBackground source={BgImage} style={styles.bgImage}>
         <View style={styles.container}>
           <Image source={BgBadge} style={styles.bgBadge} />
-          <View style={{ height: '40%' }}>
+          <View style={{ height: "40%" }}>
             <Text
               style={{
                 ...styles.text,
@@ -80,41 +80,42 @@ export default class BadgesBar extends Component {
 }
 const styles = StyleSheet.create({
   bgImage: {
-    width: '100%',
+    width: "100%",
     height: 0.2 * height,
     borderRadius: 12,
-    position: 'relative',
-    overflow: 'hidden',
+    position: "relative",
+    overflow: "hidden",
     marginBottom: 20,
   },
   container: {
-    width: '100%',
-    height: '100%',
-    padding: 20,
+    width: "100%",
+    height: "100%",
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   bgBadge: {
-    width: '30%',
-    height: '70%',
-    resizeMode: 'cover',
-    position: 'absolute',
+    width: "30%",
+    height: "70%",
+    resizeMode: "cover",
+    position: "absolute",
     bottom: 0,
     right: 0,
     opacity: 0.4,
   },
   badgesContainer: {
-    flexDirection: 'row',
-    height: '55%',
-    alignItems: 'flex-end',
+    flexDirection: "row",
+    height: "55%",
+    alignItems: "flex-end",
   },
   badge: {
     width: 60,
     height: 56,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     marginRight: 15,
   },
   text: {
     fontSize: 18,
-    color: '#fff',
-    alignSelf: 'flex-start',
+    color: "#fff",
+    alignSelf: "flex-start",
   },
 });

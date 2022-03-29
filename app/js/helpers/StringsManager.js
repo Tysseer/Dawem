@@ -33,6 +33,7 @@ export const STR_LATEST_DONE = 32;
 export const STR_DAYBADGE_NAME = 33;
 export const STR_WEEKBADGE_NAME = 34;
 export const STR_MONTHBADGE_NAME = 35;
+export const STR_MY_GOALS = 36;
 
 export default class StringsManager {
   constructor() {
@@ -258,7 +259,11 @@ export default class StringsManager {
       if (strLang == "en") return "Companionship Badge";
       return "unsupported language";
     }
-
+    if (nStrID == STR_MY_GOALS) {
+      if (strLang == "ar") return "إنجازاتي";
+      if (strLang == "en") return "My Achievements";
+      return "unsupported language";
+    }
     return "unkown string";
   }
 }

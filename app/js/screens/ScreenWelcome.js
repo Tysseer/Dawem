@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { connect } from "react-redux";
@@ -20,6 +21,7 @@ class ScreenWelcome extends Component {
     super(props);
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
+    //console.log(Dimensions.get("window"));
   }
 
   okButtonPressed() {
@@ -29,25 +31,31 @@ class ScreenWelcome extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.messageContainer}>
-          <ImageBackground
-            source={require("../../assets/backgroundPNG/green_background_withQuran.png")}
-            style={styles.backgroundImage}
-          >
-            <Text style={this.getTitleStyle()}>
-              {this.stringsManager.getStr(strings.STR_GREETING)}
-            </Text>
-            <Text style={this.getSubTitleStyle()}>
-              {this.stringsManager.getStr(strings.STR_MOTIVATION)}
-            </Text>
-            <View style={styles.separator}></View>
-            <Text style={this.getInstructionsTitleStyle()}>
-              {this.stringsManager.getStr(strings.STR_INSTRUCTIONS_TITLE)}
-            </Text>
-            <Text style={this.getInstructionsStyle()}>
-              {this.stringsManager.getStr(strings.STR_INSTRUCTIONS)}
-            </Text>
-          </ImageBackground>
+        <View style={{ width: "100%", alignItems: "center", height: "68%" }}>
+          <View style={styles.messageContainer}>
+            <ImageBackground
+              source={require("../../assets/backgroundPNG/green_background_withQuran.png")}
+              style={styles.backgroundImage}
+            >
+              <View style={{ width: "93%" }}>
+                <Text style={this.getTitleStyle()}>
+                  {this.stringsManager.getStr(strings.STR_GREETING)}
+                </Text>
+                <Text style={this.getSubTitleStyle()}>
+                  {this.stringsManager.getStr(strings.STR_MOTIVATION)}
+                </Text>
+                <View
+                  style={[styles.separator, { alignSelf: "center" }]}
+                ></View>
+                <Text style={this.getInstructionsTitleStyle()}>
+                  {this.stringsManager.getStr(strings.STR_INSTRUCTIONS_TITLE)}
+                </Text>
+                <Text style={this.getInstructionsStyle()}>
+                  {this.stringsManager.getStr(strings.STR_INSTRUCTIONS)}
+                </Text>
+              </View>
+            </ImageBackground>
+          </View>
 
           <View style={this.getCheckBoxContainerStyle()}>
             <CheckBox
@@ -69,18 +77,20 @@ class ScreenWelcome extends Component {
             </TouchableHighlight>
           </View>
         </View>
-        {this.renderOKButton(
-          strings.STR_START_NOW,
-          this.okButtonPressed.bind(this)
-        )}
+        <ActionBtn
+          text={this.stringsManager.getStr(strings.STR_START_NOW)}
+          handler={this.okButtonPressed.bind(this)}
+          lang={this.props.strLang}
+          style={{ height: 60, width: "93%", marginBottom: "2%" }}
+        />
       </View>
     );
   }
   getTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 40 : 36,
+      fontSize: this.props.strLang == "ar" ? 36 : 32,
       lineHeight: 63,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
+      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
       color: "#FFFFFF",
       margin: 20,
@@ -90,21 +100,20 @@ class ScreenWelcome extends Component {
     return {
       fontSize: this.props.strLang == "ar" ? 22 : 18,
       lineHeight: 36,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
+      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       textAlign: "center",
       color: "#FFFFFF",
-      marginHorizontal: 50,
     };
   }
   getInstructionsTitleStyle() {
     return {
       fontSize: this.props.strLang == "ar" ? 22 : 18,
       lineHeight: 36,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
+      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       textAlign: this.props.strLang == "ar" ? "right" : "left",
       textDecorationLine: "underline",
       color: "#FFFFFF",
-      marginHorizontal: 50,
+
       alignSelf: this.props.strLang == "ar" ? "flex-end" : "flex-start",
     };
   }
@@ -112,17 +121,16 @@ class ScreenWelcome extends Component {
     return {
       fontSize: this.props.strLang == "ar" ? 22 : 18,
       lineHeight: 36,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
+      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       textAlign: this.props.strLang == "ar" ? "right" : "left",
       color: "#FFFFFF",
-      marginHorizontal: 40,
     };
   }
   getCheckBoxContainerStyle() {
     return {
       flexDirection: this.props.strLang == "ar" ? "row-reverse" : "row",
-      width: "100%",
-      marginTop: -15,
+      width: "93%",
+      marginTop: "2%",
     };
   }
   getCheckBoxTextStyle() {
@@ -133,48 +141,6 @@ class ScreenWelcome extends Component {
       color: "#0C3D11",
       lineHeight: 30,
     };
-  }
-  renderOKButton(nStrID, onPressHandler) {
-    var styleContainer = {
-      flex: 1,
-      justifyContent: "flex-end",
-      marginBottom: 5,
-      width: "100%",
-      alignItems: "center",
-    };
-
-    var styleOKButton = {
-      backgroundColor: "#0B721E",
-      alignItems: "center",
-      justifyContent: "center",
-      width: "93%",
-      height: 70,
-      borderRadius: 10,
-      marginTop: 50,
-      marginBottom: 25,
-    };
-    var styleOkButtonTxt = {
-      textAlign: "center",
-      color: "#FFFFFF",
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      justifyContent: "center",
-      fontSize: this.props.strLang == "ar" ? 22 : 20,
-      lineHeight: 35,
-      fontWeight: "600",
-    };
-    return (
-      <View style={styleContainer}>
-        <TouchableWithoutFeedback onPress={onPressHandler}>
-          <View style={styleOKButton}>
-            <View>
-              <Text style={styleOkButtonTxt}>
-                {this.stringsManager.getStr(nStrID)}
-              </Text>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
-    );
   }
 }
 const mapStateToProps = (state) => ({
@@ -190,22 +156,24 @@ export default connect(mapStateToProps, mapDispatchToProps())(ScreenWelcome);
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    height: "100%",
     width: "100%",
     alignItems: "center",
     backgroundColor: "#EEEEEE",
-    borderWidth: 1,
-    borderColor: "red",
+    // borderWidth: 1,
+    // borderColor: "red",
+    justifyContent: "space-between",
   },
   messageContainer: {
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
     width: "93%",
-    height: "95%",
+
     borderRadius: 10,
     overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "blue",
+    // borderWidth: 1,
+    // borderColor: "blue",
   },
   backgroundImage: {
     width: "100%",

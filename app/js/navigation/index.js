@@ -36,8 +36,6 @@ function StackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
-
         header: () => getHeaderComponent(),
       }}
     >
@@ -85,7 +83,6 @@ function RootNavigator() {
         tabBarActiveTintColor: colors.primary,
         headerShown: false,
         tabBarShowLabel: false,
-
         tabBarIcon: ({ focused }) => {
           if (route.name === "Main") {
             return <Mushaf color={focused ? colors.primary : "#8789A3"} />;

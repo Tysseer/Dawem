@@ -11,6 +11,7 @@ import {
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import * as Updates from "expo-updates";
+import ActionBtn from "../../components/ActionBtn";
 
 import {
   reduxActionSetLanguage,
@@ -36,9 +37,15 @@ class ScreenLanguage extends Component {
   }
   okButtonPressed() {
     this.props.reduxActionSetFirstRunFlag(false);
-    if (this.props.isSkipWelcome == false)
-      this.props.navigation.navigate("ScrWelcome");
-    else this.props.navigation.navigate("ScrList");
+    if (this.props.strLang == "ar") {
+      I18nManager.forceRTL(true);
+    } else {
+      I18nManager.forceRTL(false);
+    }
+    Updates.reloadAsync();
+    // if (this.props.isSkipWelcome == false)
+    //   this.props.navigation.navigate("ScrWelcome");
+    // else this.props.navigation.navigate("ScrList");
   }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
@@ -72,10 +79,12 @@ class ScreenLanguage extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        {this.renderOKButton(
-          strings.STR_SEL_LANGUAGE,
-          this.okButtonPressed.bind(this)
-        )}
+        <ActionBtn
+          text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
+          handler={this.okButtonPressed.bind(this)}
+          lang={this.props.strLang}
+          style={{ height: 60, width: "93%" }}
+        />
       </View>
     );
   }
