@@ -109,7 +109,7 @@ class ScreenWelcome extends Component {
     return {
       fontSize: this.props.strLang == "ar" ? 24 : 18,
       lineHeight: this.props.strLang == "ar" ? 36 : 30,
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
+      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textDecorationLine: "underline",
       color: "#FFFFFF",
 
@@ -136,7 +136,7 @@ class ScreenWelcome extends Component {
   getCheckBoxTextStyle() {
     return {
       fontSize: this.props.strLang == "ar" ? 15 : 13,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins",
+      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
       color: "#0C3D11",
       lineHeight: this.props.strLang == "ar" ? 30 : 28,

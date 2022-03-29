@@ -14,6 +14,7 @@ const ActionBtn = ({
   contained = false,
   disabled = false,
   fullWidth = false,
+  bold=true,
   style,
   ...rest
 }) => {
@@ -50,7 +51,7 @@ const ActionBtn = ({
         <Text
           style={{
             ...styles.text,
-            ...getFontFamily(lang),
+            ...getFontFamily(lang,bold),
             ...extraTextStyle,
           }}
         >
