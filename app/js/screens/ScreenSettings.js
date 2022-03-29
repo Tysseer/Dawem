@@ -7,15 +7,19 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
-  StatusBar,
+  I18nManager,
 } from "react-native";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
+import ActionBtn from "../../components/ActionBtn";
+import * as Updates from "expo-updates";
+
 class ScreenSettings extends Component {
   constructor(props) {
     super(props);
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
+    this.originalLang = this.props.strLang;
   }
 
   arLangPressed() {
@@ -25,7 +29,17 @@ class ScreenSettings extends Component {
     this.props.reduxActionSetLanguage("en");
   }
   okButtonPressed() {
-    this.props.navigation.navigate("ScrList");
+    // this.props.navigation.navigate("ScrList");
+    // if (this.originalLang == this.props.strLang) {
+    //   this.props.navigation.navigate("ScrList");
+    //   return;
+    // }
+    if (this.props.strLang == "ar") {
+      I18nManager.forceRTL(true);
+    } else {
+      I18nManager.forceRTL(false);
+    }
+    Updates.reloadAsync();
   }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
@@ -58,10 +72,13 @@ class ScreenSettings extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        {this.renderOKButton(
-          strings.STR_SEL_LANGUAGE,
-          this.okButtonPressed.bind(this)
-        )}
+
+        <ActionBtn
+          text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
+          handler={this.okButtonPressed.bind(this)}
+          lang={this.props.strLang}
+          style={{ height: 60, width: "93%" }}
+        />
       </View>
     );
   }
