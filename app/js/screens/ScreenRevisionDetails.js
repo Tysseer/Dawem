@@ -72,6 +72,7 @@ class ScreenRevisionDetails extends Component {
 
   render() {
     return (
+      // <Text>{JSON.stringify(this.quranReaderByLine.getPage(165))}</Text>
       <View style={styles.container}>
         {/* header */}
         <Header
