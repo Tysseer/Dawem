@@ -20,7 +20,6 @@ class ScreenDayBadge extends Component {
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
     //console.log(Dimensions.get("window"));
-    console.log("screen day badge");
 
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
@@ -35,7 +34,7 @@ class ScreenDayBadge extends Component {
 
   render() {
     var strStatus =
-      this.props.revisions.length < 5
+      this.props.revisions.length < 7
         ? this.stringsManager.getStr(strings.STR_DAY_BADGE_MIN_REV)
         : this.isEnabled == false
         ? this.stringsManager.getStr(strings.STR_DAY_BADGE_INACTIVE)
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
-    width: "93%",
+    width: "100%",
     borderRadius: 10,
     overflow: "hidden",
   },

@@ -12,6 +12,7 @@ import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import * as Updates from "expo-updates";
 import ActionBtn from "../../components/ActionBtn";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import {
   reduxActionSetLanguage,
@@ -49,7 +50,6 @@ class ScreenLanguage extends Component {
   }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
-
     return (
       <View style={styles.mainContainer}>
         <View style={styles.quranLogoContainer}>

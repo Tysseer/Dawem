@@ -34,7 +34,7 @@ class ScreenMonthBadge extends Component {
 
   render() {
     var strStatus =
-      this.props.revisions.length < 10
+      this.props.revisions.length < 7
         ? this.stringsManager.getStr(strings.STR_MONTH_BADGE_MIN_REV)
         : this.isEnabled == false
         ? this.stringsManager.getStr(strings.STR_MONTH_BADGE_INACTIVE)
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
-    width: "93%",
+    width: "100%",
     borderRadius: 10,
     overflow: "hidden",
   },

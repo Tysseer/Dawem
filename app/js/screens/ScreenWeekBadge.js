@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
-    width: "93%",
+    width: "100%",
     borderRadius: 10,
     overflow: "hidden",
   },
