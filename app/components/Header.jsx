@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,7 +14,6 @@ import { colors } from '../constants';
 
 const Header = ({ lang, title, empty }) => {
   const navigation = useNavigation();
-  console.log('navigation');
 
   return (
     <View style={styles.container}>

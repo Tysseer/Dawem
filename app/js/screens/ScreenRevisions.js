@@ -29,6 +29,7 @@ import { getFontFamily } from '../helpers/scripts';
 import ActionBtn from 'app/components/ActionBtn';
 // import bgImage from 'assets/backgroundPNG/green_background.png';
 import bgImage from 'assets/images/mainBg.png';
+import Screen from 'app/components/Screen';
 
 const { height } = Dimensions.get('window');
 
@@ -61,8 +62,8 @@ class ScreenRevisions extends Component {
     var modalContent = this.getModal();
 
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
+      <Screen>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.listContainer}>
             <BadgesBar
               svgLoader={this.svgLoader}
@@ -75,11 +76,11 @@ class ScreenRevisions extends Component {
               title={this.stringsManager.getStr(strings.STR_MY_GOALS)}
             />
             {modalContent}
-            {this.revisionsManager.m_loadedRevisions.length == 0 ? (
+            {this.revisionsManager.m_loadedRevisions.length !== 0 ? (
               <>
                 <TouchableOpacity
                   onPress={() =>
-                    this.props.navigation.navigate('ScrQuran', { strtPage: 2 })
+                    this.props.navigation.navigate('Mushaf', { strtPage: 165 })
                   }
                   style={{
                     backgroundColor: '#f0f',
@@ -106,16 +107,16 @@ class ScreenRevisions extends Component {
               />
             )}
           </View>
-          <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_REV_TITLE)}
-            handler={this.onAddRevision.bind(this)}
-            icon={true}
-            lang={this.props.strLang}
-            fullWidth={true}
-            style={{ height: 60, marginTop: 20 }}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+        <ActionBtn
+          text={this.stringsManager.getStr(strings.STR_REV_TITLE)}
+          handler={this.onAddRevision.bind(this)}
+          icon={true}
+          lang={this.props.strLang}
+          fullWidth={true}
+          style={{ height: 60, marginTop: 20 }}
+        />
+      </Screen>
     );
   }
 

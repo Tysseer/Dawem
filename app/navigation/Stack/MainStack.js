@@ -24,7 +24,11 @@ export default function MainStack() {
         component={ScreenQuranBrowser}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen name="Mushaf" component={MushafScreen} /> */}
+      <Stack.Screen
+        name="Mushaf"
+        component={MushafScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="ScrSettings" component={ScreenSettings} />
     </Stack.Navigator>
   );

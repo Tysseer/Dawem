@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import Svg, {
   Circle,
@@ -11,13 +11,13 @@ import Svg, {
   LinearGradient,
   Stop,
   ClipPath,
-} from "react-native-svg";
+} from 'react-native-svg';
 class SVGLoader {
   getQuranImage() {
     return (
       <Svg
-        width={"100%"}
-        height={"100%"}
+        width={'100%'}
+        height={'100%'}
         viewBox="0 0 359 295"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +127,7 @@ class SVGLoader {
       >
         <G
           style={{
-            mixBlendMode: "soft-light",
+            mixBlendMode: 'soft-light',
           }}
           opacity={0.2}
         >
@@ -208,8 +208,8 @@ class SVGLoader {
   getGreenBox() {
     return (
       <Svg
-        width={"100%"}
-        height={"100%"}
+        width={'100%'}
+        height={'100%'}
         viewBox="0 0 327 448"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -242,8 +242,8 @@ class SVGLoader {
       <Svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        width={"100%"}
-        height={"100%"}
+        width={'100%'}
+        height={'100%'}
         viewBox="0 0 105.83333 70.908336"
       >
         <Image
@@ -470,11 +470,11 @@ class SVGLoader {
       );
     }
   }
-  getSurahNumBorder(num) {
+  getSurahNumBorder(num, width) {
     return (
       <Svg
-        width={37}
-        height={36}
+        width={width || 37}
+        height={width || 36}
         viewBox="0 0 37 36"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -657,7 +657,7 @@ class SVGLoader {
             y="3%"
             width="88%"
             height="88%"
-            href={require("../../assets/images/trophy_dim.png")}
+            href={require('../../assets/images/trophy_dim.png')}
           />
           <G transform="translate(-99 -35)">
             <G transform="translate(250 355) rotate(-135)  scale(0.35)">
@@ -689,7 +689,7 @@ class SVGLoader {
             y="3%"
             width="88%"
             height="88%"
-            href={require("../../assets/images/trophy.png")}
+            href={require('../../assets/images/trophy.png')}
           />
 
           <G transform="translate(-99 -35)">
