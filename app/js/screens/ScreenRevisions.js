@@ -83,7 +83,7 @@ class ScreenRevisions extends Component {
             title={this.stringsManager.getStr(strings.STR_LATEST_DONE)}
           />
           {modalContent}
-          {this.revisionsManager.m_loadedRevisions.length == 0 ? (
+          {this.revisionsManager.m_loadedRevisions.length !== 0 ? (
             this.getInitialPrompt()
           ) : (
             <RevisionsList
