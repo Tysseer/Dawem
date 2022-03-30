@@ -5,6 +5,7 @@ import {
   Modal,
   Text,
   TouchableWithoutFeedback,
+  StatusBar,
   Image,
 } from "react-native";
 import SVGLoader from "../helpers/SVGLoader.js";
@@ -18,7 +19,6 @@ export default class ModalBadgeWeek {
   }
   getModal() {
     var svgLoader = new SVGLoader();
-    var WeekBadge = svgLoader.getWeekBadge(false);
     var strStatus =
       this.parent.revisionsManager.getNumRevisions() < 7
         ? this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_MIN_REV)
@@ -28,44 +28,89 @@ export default class ModalBadgeWeek {
     return (
       <Modal
         animationType="fade"
-        transparent={true}
+        transparent={false}
         visible={this.parent.state.bShowModalBadgeWeek}
         onRequestClose={() => {}}
       >
         <View style={styles.contentContainer}>
-          <View style={styles.badge}>{WeekBadge}</View>
-          <Text style={styles.motivationText}>
+          <Image
+            source={require("../../assets/backgroundPNG/green_background.png")}
+            style={styles.backgroundImage}
+          ></Image>
+          <Image
+            style={styles.badge}
+            source={require("../../assets/images/weekBadge.png")}
+          ></Image>
+          <Text style={this.getTitleStyle()}>
+            {this.parent.stringsManager.getStr(strings.STR_WEEKBADGE_NAME)}
+          </Text>
+          <Text style={this.getSubTitleStyle()}>
             {this.parent.stringsManager.getStr(strings.STR_WEEK_BADGE_DESC)}
           </Text>
-          <Text style={styles.statusText}>{strStatus}</Text>
-          <View style={styles.okButton}>
-            <TouchableWithoutFeedback onPress={this.handlePress.bind(this)}>
-              <Image
-                source={require("../../assets/icons/ok_icon.png")}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </TouchableWithoutFeedback>
-          </View>
+          <View style={styles.separator}></View>
+          <Text style={this.getSubTitleStyle()}>{strStatus}</Text>
         </View>
       </Modal>
     );
   }
+
+  getTitleStyle() {
+    return {
+      fontSize: this.parent.stringsManager.getLanguage() == "ar" ? 40 : 36,
+      lineHeight: 63,
+      fontFamily:
+        this.parent.stringsManager.getLanguage() == "ar"
+          ? "Amiri_Bold"
+          : "Poppins",
+      textAlign: "center",
+      color: "#FFFFFF",
+      margin: 20,
+    };
+  }
+  getSubTitleStyle() {
+    return {
+      fontSize: this.parent.stringsManager.getLanguage() == "ar" ? 22 : 18,
+      lineHeight: 36,
+      fontFamily:
+        this.parent.stringsManager.getLanguage() == "ar"
+          ? "Amiri_Bold"
+          : "Poppins",
+      textAlign: "center",
+      color: "#FFFFFF",
+      marginHorizontal: 50,
+    };
+  }
 }
 const styles = StyleSheet.create({
+  separator: {
+    borderColor: "#FFFFFF59",
+    borderWidth: 1,
+    borderRadius: 10,
+    width: 280,
+    height: 1,
+    marginBottom: 15,
+  },
   contentContainer: {
-    width: "80%",
-    height: "80%",
+    width: "90%",
+    height: "90%",
     alignSelf: "center",
-    marginTop: 110,
+    marginTop: "8%",
     marginBottom: 20,
     marginHorizontal: 20,
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: "#FFFFFFd5",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+  },
+  backgroundImage: {
+    position: "absolute",
+    top: 1,
+    width: "93%",
+    height: "100%",
+    borderRadius: 10,
+    resizeMode: "stretch",
   },
   badge: {
     width: 140,
@@ -73,7 +118,7 @@ const styles = StyleSheet.create({
   },
   motivationText: {
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     fontWeight: "bold",
     color: "#232393",
@@ -83,7 +128,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     fontWeight: "bold",
     marginHorizontal: 10,
@@ -102,7 +147,7 @@ const styles = StyleSheet.create({
     borderColor: "#6B2504",
     backgroundColor: "#6B2504",
     fontSize: 20,
-    fontFamily: "sans-serif",
+    fontFamily: "Amiri_Bold",
     textAlign: "center",
     fontWeight: "bold",
     color: "white",

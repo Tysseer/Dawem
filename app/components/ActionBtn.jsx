@@ -14,11 +14,12 @@ const ActionBtn = ({
   contained = false,
   disabled = false,
   fullWidth = false,
+  bold=true,
   style,
   ...rest
 }) => {
   const extraStyle = {
-    borderStyle: contained ? 'solid' : 'none',
+    //borderStyle: contained ? 'solid' : 'none',
     borderWidth: contained ? 1 : 0,
     backgroundColor: disabled
       ? colors.primary_disabled
@@ -26,6 +27,7 @@ const ActionBtn = ({
       ? colors.light_bg
       : colors.primary,
     width: fullWidth ? '100%' : '48%',
+    
   };
 
   const extraTextStyle = {
@@ -49,7 +51,7 @@ const ActionBtn = ({
         <Text
           style={{
             ...styles.text,
-            ...getFontFamily(lang),
+            ...getFontFamily(lang,bold),
             ...extraTextStyle,
           }}
         >

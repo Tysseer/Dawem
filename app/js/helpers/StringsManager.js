@@ -30,6 +30,12 @@ export const STR_START_NOW = 29;
 export const STR_CANCEL = 30;
 export const STR_ADD_REV_TITLE = 31;
 export const STR_LATEST_DONE = 32;
+export const STR_DAYBADGE_NAME = 33;
+export const STR_WEEKBADGE_NAME = 34;
+export const STR_MONTHBADGE_NAME = 35;
+export const STR_MY_GOALS = 36;
+export const STR_WELCOME = 37;
+
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -37,6 +43,9 @@ export default class StringsManager {
   setLanguage(strLang) {
     if (strLang == "ar" || strLang == "en") this.strLang = strLang;
     return this.strLang == strLang;
+  }
+  getLanguage() {
+    return this.strLang;
   }
   getStr(nStrID) {
     return this.getStrLang(this.strLang, nStrID);
@@ -118,7 +127,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_DAY_BADGE_ACTIVE) {
       if (strLang == "ar")
-        return "بارك الله فيك! لقد قمت بتفعيل وسام المداومة.";
+        return "بارك الله فيك! لقد قمت بتفعيل وسام المبادرة.";
       if (strLang == "en") return "Great Job! You activated your Dawem Badge.";
       return "unsupported language";
     }
@@ -192,21 +201,21 @@ export default class StringsManager {
     }
     if (nStrID == STR_MOTIVATION) {
       if (strLang == "ar")
-        return "ابدأ الآن رحلتك مع القرآن الكريم, وقم ببناء عادة تلاوة و مراجعة ما تعلمت منه.\n";
+        return "ابدأ الآن رحلتك مع القرآن الكريم, وقم ببناء عادة تلاوة و مراجعة ما تعلمت منه.";
       if (strLang == "en")
-        return "Embark on your journey with the holy Quran and build the habit of consistently reviewing what you have learned.\n";
+        return "Embark on your journey with the Quran and become a consistent reciter.";
       return "unsupported language";
     }
     if (nStrID == STR_INSTRUCTIONS_TITLE) {
-      if (strLang == "ar") return "إليك طريقة الاستخدام:\n";
-      if (strLang == "en") return "Here's how it works:\n";
+      if (strLang == "ar") return "إليك طريقة الاستخدام:";
+      if (strLang == "en") return "Here's how it works:";
       return "unsupported language";
     }
     if (nStrID == STR_INSTRUCTIONS) {
       if (strLang == "ar")
-        return "1- قم بملء قائمة أورادك.                           \n2- قم بتحديث القائمة كلما راجعت وردا منها.\n3- داوم على المراجعة وقم بتفعيل أوسمتك. \n";
+        return "1- قم بملء قائمة أورادك.\n2- قم بتحديث القائمة كلما راجعت وردا منها.\n3- داوم على المراجعة وقم بتفعيل أوسمتك.";
       if (strLang == "en")
-        return "1- Setup your list of revisions.             \n2- Update the list as you revise.          \n3- Light up badges and stay on track.\n";
+        return "1- Setup your list of revisions.             \n2- Update the list as you revise.          \n3- Light up badges and stay on track.";
       return "unsupported language";
     }
     if (nStrID == STR_SKIP_SCREEN) {
@@ -233,6 +242,32 @@ export default class StringsManager {
     if (nStrID == STR_START_NOW) {
       if (strLang == "ar") return "ابدأ الآن";
       if (strLang == "en") return "Start Now";
+      return "unsupported language";
+    }
+
+    if (nStrID == STR_DAYBADGE_NAME) {
+      if (strLang == "ar") return "وسام المبادرة";
+      if (strLang == "en") return "Initiative Badge";
+      return "unsupported language";
+    }
+    if (nStrID == STR_WEEKBADGE_NAME) {
+      if (strLang == "ar") return "وسام المثابرة";
+      if (strLang == "en") return "Perseverance Badge";
+      return "unsupported language";
+    }
+    if (nStrID == STR_MONTHBADGE_NAME) {
+      if (strLang == "ar") return "وسام المصاحبة";
+      if (strLang == "en") return "Companionship Badge";
+      return "unsupported language";
+    }
+    if (nStrID == STR_MY_GOALS) {
+      if (strLang == "ar") return "إنجازاتي";
+      if (strLang == "en") return "My Achievements";
+      return "unsupported language";
+    }
+    if (nStrID == STR_WELCOME) {
+      if (strLang == "ar") return "مرحبا بك";
+      if (strLang == "en") return "Welcome";
       return "unsupported language";
     }
     return "unkown string";
