@@ -4,7 +4,6 @@ import allLines from "./quranLines";
 
 export default class QuranReaderByLine {
   constructor() {
-    console.log("kkkk");
     this.indexer = new QuranIndexer();
   }
 
@@ -12,7 +11,6 @@ export default class QuranReaderByLine {
     iPage = this.indexer.secureIndexRange(iPage, this.indexer.getNumPages());
 
     [strt, end] = this.indexer.getLinesFromPage(iPage);
-    let a = ["١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
 
     var retPage = [];
     let txt = "";
