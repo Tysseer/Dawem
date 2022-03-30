@@ -18,12 +18,31 @@ export default class RevisionsManager {
     }
     return iMaxId + 1;
   }
+  getBadgesStates() {
+    if (this.m_loadedRevisions.length == 0) return [false, false, false];
+    var bIsToday = false;
+    var maxDays = 0;
+    for (var i = 0; i < this.m_loadedRevisions.length; i++) {
+      this.m_loadedRevisions[i].updateNumDays();
+      if (this.m_loadedRevisions[i].numDays > maxDays)
+        maxDays = this.m_loadedRevisions[i].numDays;
+      if (this.m_loadedRevisions[i].numDays == 0) bIsToday = true;
+    }
+
+    var bIsWeek = maxDays <= 7;
+    var bIsMonth = maxDays <= 30;
+
+    bIsToday = bIsToday && this.m_loadedRevisions.length >= 5;
+    bIsWeek = bIsWeek && this.m_loadedRevisions.length >= 7;
+    bIsMonth = bIsMonth && this.m_loadedRevisions.length >= 10;
+    return [bIsToday, bIsMonth, bIsWeek];
+  }
 
   loadTestRevisions(bArabic) {
     // todo: load from DB
     this.m_loadedRevisions.push(
       new Revision(
-        1,
+        getNewRevisionId(),
         bArabic ? "الفاتحة" : "Fatiha",
         10,
         1,
@@ -33,7 +52,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        2,
+        getNewRevisionId(),
         bArabic ? "النجم" : "Najm",
         0,
         4785,
@@ -43,7 +62,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        3,
+        getNewRevisionId(),
         bArabic ? "الملك" : "Mulk",
         1,
         5242,
@@ -53,7 +72,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        4,
+        getNewRevisionId(),
         bArabic ? "الكوثر" : "AlKawthar",
         50,
         6205,
@@ -63,7 +82,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        5,
+        getNewRevisionId(),
         bArabic ? "الإخلاص" : "Ikhlas",
         80,
         6222,
@@ -73,7 +92,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        6,
+        getNewRevisionId(),
         bArabic ? "الزمر" : "Az-Zumar",
         50,
         4059,
@@ -83,7 +102,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        7,
+        getNewRevisionId(),
         bArabic ? "غافر" : "Ghaafir",
         30,
         4134,
@@ -93,7 +112,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        8,
+        getNewRevisionId(),
         bArabic ? "فصـّلت" : "Fussilat",
         20,
         4219,
@@ -103,7 +122,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        9,
+        getNewRevisionId(),
         bArabic ? "الشورى" : "Ash-Shura",
         0,
         4273,
@@ -113,7 +132,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        10,
+        getNewRevisionId(),
         bArabic ? "الزخرف" : "Az-Zukhruf",
         70,
         4326,
@@ -123,7 +142,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        11,
+        getNewRevisionId(),
         bArabic ? "الدخان" : "Ad-Dukhaan",
         35,
         4415,
@@ -133,7 +152,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        12,
+        getNewRevisionId(),
         bArabic ? "الجاثية" : "Al-Jaathiya",
         48,
         4474,
@@ -143,7 +162,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        13,
+        getNewRevisionId(),
         bArabic ? "الأحقاف" : "Al-Ahqaf",
         79,
         4511,
@@ -153,7 +172,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        14,
+        getNewRevisionId(),
         bArabic ? "محمد" : "Muhammad",
         95,
         4546,
@@ -163,7 +182,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        15,
+        getNewRevisionId(),
         bArabic ? "الفتح" : "Al-Fath",
         90,
         4584,
@@ -173,7 +192,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        16,
+        getNewRevisionId(),
         bArabic ? "الحجرات" : "Al-Hujuraat",
         99,
         4613,
@@ -183,7 +202,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        18,
+        getNewRevisionId(),
         bArabic
           ? "۱۲۳٤٥٦٧۸۹۱۲۳٤٥٦٧۸۹۱۲۳٤٥٦٧۸۹۱۲۳٤٥٦٧۸۹"
           : "123456789012345678901234567890",
@@ -195,7 +214,7 @@ export default class RevisionsManager {
     );
     this.m_loadedRevisions.push(
       new Revision(
-        17,
+        getNewRevisionId(),
         bArabic ? "ق" : "Qaaf",
         13,
         4631,
