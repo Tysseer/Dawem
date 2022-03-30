@@ -1,40 +1,61 @@
-import Ayah from "./Ayah";
 import QuranPage from "./QuranPage";
 import QuranIndexer from "./QuranIndexer";
-import allAyat from "./quranAyat";
+import allLines from "./quranLines";
 
 export default class QuranReaderByLine {
   constructor() {
+    console.log("kkkk");
     this.indexer = new QuranIndexer();
   }
 
   getPage(iPage) {
     iPage = this.indexer.secureIndexRange(iPage, this.indexer.getNumPages());
 
-    [strt, end] = this.indexer.getPageAyahRange(iPage);
+    [strt, end] = this.indexer.getLinesFromPage(iPage);
+    let a = ["١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
 
     var retPage = [];
+    let txt = "";
     for (var i = strt; i <= end; i++) {
-      if (allAyat[i].index == 1) {
-        retPage.push(
-          new Ayah(
-            7000 + allAyat[i].surah,
-            allAyat[i].surah,
-            this.indexer.getSurahNameAr(allAyat[i].surah)
-          )
-        ); //surah name
-        if (allAyat[i].surah != 1 && allAyat[i].surah != 9) {
-          // add basmalah
-          retPage.push(
-            new Ayah(
-              8000 + allAyat[i].surah,
-              allAyat[i].surah,
-              "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ"
-            )
-          );
+      var ayat = [];
+
+      let allAyat = allLines[i].lineTxt.split(" ");
+      allAyat.splice(0, 1);
+      allAyat.splice(allAyat.length - 1, 1);
+      allAyat.forEach((element, index) => {
+        let x = element.split("");
+        let y = x.filter(
+          (i) =>
+            i == "١" ||
+            i == "٢" ||
+            i == "٣" ||
+            i == "٤" ||
+            i == "٥" ||
+            i == "٦" ||
+            i == "٧" ||
+            i == "٨" ||
+            i == "٩"
+        );
+        if (y.length != 0) {
+          ayat.push({
+            txt: txt,
+            num: element,
+          });
+          txt = "";
+        } else if (index == allAyat.length - 1) {
+          txt += element + " ";
+          ayat.push({
+            txt: txt,
+          });
+        } else {
+          txt += element + " ";
         }
-      }
-      retPage.push(new Ayah(i, allAyat[i].index, allAyat[i].text));
+
+        if (index == allAyat.length - 1) {
+        }
+      });
+      allLines[i]["allAyat"] = ayat;
+      retPage.push(allLines[i]);
     }
     return new QuranPage(iPage, retPage);
   }

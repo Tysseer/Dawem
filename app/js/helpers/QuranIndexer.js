@@ -89,9 +89,9 @@ export default class QuranIndexer {
   }
   getLinesFromPage(iPage /*one-based */) {
     iPage = this.secureIndexRange(iPage, this.getNumPages());
-    if (iPage == 1) return [1, 8];
-    if (iPage == 2) return [9, 16];
-    var prev = 16 + 15 * (iPage - 3) + 1;
+    if (iPage == 1) return [0, 7];
+    if (iPage == 2) return [8, 15];
+    var prev = 15 + 15 * (iPage - 3) + 1;
     return [prev, 14 + prev];
   }
 
