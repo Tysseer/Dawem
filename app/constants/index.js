@@ -4,4 +4,5 @@ export const colors = {
   arrow: '#92AD95',
   light_bg: 'rgba(11, 114, 30, 0.05)',
   primary_disabled: 'rgba(1, 171, 20, 0.3)',
+  screenBg: '#EEE',
 };

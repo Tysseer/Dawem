@@ -12,7 +12,7 @@ import reduxStore from './app/js/redux/reduxStore';
 import reduxPersistor from './app/js/redux/reduxPersistor';
 
 import Revision from './app/js/helpers/Revision';
-import Navigation from './app/js/navigation';
+import Navigation from './app/navigation';
 
 export default class App extends Component {
   async fetchFonts() {

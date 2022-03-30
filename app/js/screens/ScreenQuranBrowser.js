@@ -15,6 +15,7 @@ import AyahRenderer from '../subComponents/AyahRenderer';
 // import Toast from "react-native-simple-toast";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { WebView } from 'react-native-webview';
+import SurahHeader from '../../assets/svg/SurahHeader';
 
 export default class ScreenQuranBrowser extends Component {
   constructor(props) {
@@ -35,8 +36,9 @@ export default class ScreenQuranBrowser extends Component {
     var nextBtns = this.getNextButtons();
     var prevBtns = this.getPrevButtons();
     return (
-      <View style={styles.background}>
+      <View style={styles.container}>
         <View style={styles.pageContainer}>
+          <SurahHeader />
           <ScrollView showsVerticalScrollIndicator={false}>
             <Swipeable
               renderLeftActions={this.dummyRender}
@@ -226,7 +228,7 @@ export default class ScreenQuranBrowser extends Component {
   }
 }
 const styles = StyleSheet.create({
-  background: {
+  container: {
     flex: 1,
     // justifyContent: "space-evenly",
     // alignItems: "center",
