@@ -76,7 +76,7 @@ class ScreenRevisions extends Component {
               title={this.stringsManager.getStr(strings.STR_MY_GOALS)}
             />
             {modalContent}
-            {this.revisionsManager.m_loadedRevisions.length !== 0 ? (
+            {this.revisionsManager.m_loadedRevisions.length == 0 ? (
               <>
                 <TouchableOpacity
                   onPress={() =>

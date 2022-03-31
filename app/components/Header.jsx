@@ -12,23 +12,25 @@ import { useNavigation } from '@react-navigation/native';
 import { getFontFamily } from '../js/helpers/scripts';
 import { colors } from '../constants';
 
-const Header = ({ lang, title, empty }) => {
+const Header = ({ lang, title, empty, showIcon = true }) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       {!empty && (
         <>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}
-          >
-            <MaterialCommunityIcons
-              name={`arrow-${I18nManager.isRTL ? 'right' : 'left'}`}
-              size={24}
-              color={colors.arrow}
-            />
-          </TouchableOpacity>
+          {showIcon && (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => navigation.goBack()}
+            >
+              <MaterialCommunityIcons
+                name={`arrow-${I18nManager.isRTL ? 'right' : 'left'}`}
+                size={24}
+                color={colors.arrow}
+              />
+            </TouchableOpacity>
+          )}
 
           {title && (
             <Text style={[styles.startTitle, getFontFamily(lang)]}>

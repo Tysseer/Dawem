@@ -25,6 +25,10 @@ export default class App extends Component {
       Poppins: require('./app/assets/fonts/Poppins-Regular.ttf'),
       'Poppins-Bold': require('./app/assets/fonts/Poppins-Bold.ttf'),
       Poppins_xBold: require('./app/assets/fonts/Poppins-ExtraBold.ttf'),
+      QuranSurah2: require('./app/assets/fonts/QuranSurah2.ttf'),
+      Quraan: require('./app/assets/fonts/Quraan.ttf'),
+      noorehidayat: require('./app/assets/fonts/noorehidayat.ttf'),
+      UthmanicHafs: require('./app/assets/fonts/UthmanicHafs.ttf'),
     });
     this.setState({ fontLoadedFinished: true });
     return y;

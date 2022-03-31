@@ -1,19 +1,27 @@
-import React, { useCallback, useEffect } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import React from 'react';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
-import Screen from "app/components/Screen";
-import QuranReaderByLine from "app/js/helpers/QuranReaderByLine";
-import { colors } from "../../constants";
-import SurahHeader from "../../assets/svg/SurahHeader";
-import Doaa from "assets/svg/Doaa";
-import allQuranLines from "../helpers/quranLines";
-import SVGLoader from "../helpers/SVGLoader";
-import Center from "../../components/Center";
-import TestComp from "app/components/TestComp";
-import AdjustLabel from "../../components/Adjustable";
+import Screen from 'app/components/Screen';
+import QuranReaderByLine from 'app/js/helpers/QuranReaderByLine';
+import SurahHeader from 'assets/svg/SurahHeader';
+import allQuranLines from '../helpers/quranLines';
+import SVGLoader from '../helpers/SVGLoader';
+import Center from 'app/components/Center';
+import { Fragment } from 'react';
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get('window');
+const coloredList = [
+  // 'رَبَّكُمُ',
+  'ٱللَّهَ',
+  'لِلَّهِ',
+  'ٱللَّهِ',
+  'ٱللَّهُ',
+  // 'بِٱللَّهِ',
+  // 'رَبُّكَ',
+  'ٱللَّهَ',
+];
+
+const pageNum = 5;
 const MushafScreen = () => {
   const quranReader = new QuranReaderByLine();
   const svgLoader = new SVGLoader();
@@ -23,10 +31,10 @@ const MushafScreen = () => {
   const renderSurahHeader = (name) => (
     <View
       key={Math.random().toString()}
-      style={{ position: "relative", marginVertical: 20 }}
+      style={{ position: 'relative', marginVertical: 20 }}
     >
       <View style={styles.surahHeader}>
-        <Text style={{}}>{name}</Text>
+        <Text style={{ fontFamily: 'Amiri_Bold', fontSize: 20 }}>{name}</Text>
       </View>
       <SurahHeader />
     </View>
@@ -35,238 +43,164 @@ const MushafScreen = () => {
   const Basmalah = () => (
     <Text
       key={Math.random().toString()}
-      // style={{ textAlign: "center", marginBottom: 10 }}
       style={{
-        // backgroundColor: "#ff0",
         fontSize: width * 0.043,
-        // flexGrow: 1,
-        textAlign: "center",
-        // textAlign: "justify",
-        // letterSpacing: 3.3,
+        textAlign: 'center',
+        fontFamily: 'UthmanicHafs',
+        fontSize: 20,
       }}
     >
       بسم الله الرحمن الرحيم
     </Text>
   );
 
-  const renderAyat2 = (ayat) => (
-    <Text
-      style={{
-        backgroundColor: "green",
-        flexDirection: "row",
-        justifyContent: "center",
-      }}
-    >
-      {ayat.map((ayah) => (
-        <Text
-          key={Math.random().toString()}
-          style={{
-            textAlign: "left",
-            // alignSelf: 'stretch',
-            backgroundColor: "#ff0",
-            // justifyContent: 'center',
-            width: "100%",
-          }}
-        >
-          {ayah.txt}
-          {/* <Text>{ayah.txt}</Text> */}
-          {ayah.num && (
-            <Text
-              style={{
-                width: 50,
-                backgroundColor: "red",
-                textAlign: "center",
-              }}
-            >
-              {ayah.num}
-            </Text>
-          )}
-        </Text>
-      ))}
-    </Text>
-  );
-
-  const renderAyat = (ayat) =>
-    ayat.map((ayah) => {
-      return (
-        <View
-          key={Math.random().toString()}
-          style={{
-            flexDirection: "row",
-            backgroundColor: "#f0f",
-
-            // alignSelf: 'baseline',
-            // width: '100%',
-            // flexGrow: 1,
-          }}
-        >
-          {/* {<AdjustLabel text={ayah.txt} numberOfLines={1} fontSize={21} />} */}
-          <Text
-            style={{
-              backgroundColor: "#ff0",
-              fontSize: width * 0.04,
-              flexGrow: 1,
-              // textAlign: 'left',
-              textAlign: "justify",
-              letterSpacing: 3.3,
-            }}
-            // allowFontScaling={true}
-            // minimumFontScale={2.2}
-            adjustsFontSizeToFit={true}
-          >
-            {ayah.txt}
-          </Text>
-          {/* {ayah.num && (
-            <Center
-              style={{
-                width: 30,
-                backgroundColor: 'red',
-                flexGrow: 1,
-              }}
-            >
-              {svgLoader.getSurahNumBorder(ayah.num, 26)}
-  
-            </Center>
-          )} */}
-        </View>
-      );
-    });
-
   const newRenderAyat = (ayat) =>
     ayat.map((ayah) => {
       return (
-        <>
-          {/* {<AdjustLabel text={ayah.txt} numberOfLines={1} fontSize={21} />} */}
+        <Fragment key={Math.random().toString()}>
           {ayah.words.length > 0 &&
-            ayah.words.map((word, index) => {
+            ayah.words.map((word) => {
               return (
-                <>
-                  <Text
-                    style={{
-                      // backgroundColor: "#ff0",
-                      fontSize: width * 0.043,
-                      flexGrow: 1,
-                      textAlign: "center",
-                      // textAlign: "justify",
-                      // letterSpacing: 3.3,
-                    }}
-                    // allowFontScaling={true}
-                    // minimumFontScale={2.2}
-                    // adjustsFontSizeToFit={true}
-                  >
-                    {word}
-                  </Text>
-                  {/* {index + 1 != ayah.words.length && (
-                    <Text
-                      style={{
-                        // backgroundColor: "#ff0",
-                        fontSize: width * 0.09,
-                        // flexGrow: 1,
-                        // textAlign: 'left',
-                        // textAlign: "justify",
-                        // letterSpacing: 3.3,
-                      }}
-                      // allowFontScaling={true}
-                      // minimumFontScale={2.2}
-                      adjustsFontSizeToFit={true}
-                    >
-                      {" "}
-                    </Text>
-                  )} */}
-                </>
+                <Text
+                  key={Math.random().toString()}
+                  style={{
+                    fontSize: width * 0.043,
+                    flexGrow: 1,
+                    textAlign: 'center',
+                    color: coloredList.includes(word) && 'red',
+                    fontFamily: 'UthmanicHafs',
+                    borderColor: 'red',
+                    borderWidth: 1,
+                    // fontFamily: 'noorehidayat',
+                    // fontSize: 'Quraan',
+                    // fontFamily: 'QuranSurah2',
+                    // fontFamily: 'Amiri_Bold',
+                  }}
+                >
+                  {word.trim()}
+                </Text>
               );
             })}
-          {ayah.num && (
-            <Center
-              style={{
-                width: 30,
-                // backgroundColor: "red",
-                flexGrow: 1,
-              }}
-            >
-              {svgLoader.getSurahNumBorder(ayah.num, 26)}
-            </Center>
-          )}
-        </>
+          {ayah.num && svgLoader.getSurahNumBorder(ayah.num, 26)}
+        </Fragment>
       );
     });
 
-  const renderPart = () => {
-    // console.log('123');
-    const replaceNum = (chars) => {
-      const numbers = ["۰", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+  const renderSpecialSurah = (ayat) => (
+    <View
+      key={Math.random().toString()}
+      style={{ flexDirection: 'row', justifyContent: 'center' }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {newRenderAyat(ayat)}
+      </View>
+      {/* {ayat.map((ayah) => {
+        return (
+          <View
+            key={Math.random().toString()}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            {ayah.words.length > 0 &&
+              ayah.words.map((word) => {
+                return (
+                  <Text
+                    key={Math.random().toString()}
+                    style={{
+                      fontSize: width * 0.05,
+                      flexGrow: 1,
+                      textAlign: 'center',
+                      color: coloredList.includes(word) && 'red',
+                      fontFamily: 'UthmanicHafs',
+                    }}
+                  >
+                    {word}
+                  </Text>
+                );
+              })}
+            {ayah.num && (
+              <Center
+                style={{
+                  width: 30,
+                }}
+              >
+                {svgLoader.getSurahNumBorder(ayah.num, 26)}
+              </Center>
+            )}
+          </View>
+        );
+      })} */}
+    </View>
+  );
 
-      for (let i = 0; i < chars.length; i++) {
-        if (numbers.includes(chars[i])) {
-          console.log(chars[i]);
-          chars[i] = <Doaa />;
-        }
-      }
-
-      return chars;
-    };
-    let string = "";
-    allQuranLines.slice(16, 31).map((line) => (string += line.lineTxt));
-
-    // const newStr = replaceNum(string);
-    let x = string.replace("٦", "SS");
-
-    string = string.replace("٦", <Doaa />);
-
-    return <Text style={{ fontSize: 17 }}>{string}</Text>;
-  };
+  // const renderSpecialSurah = (ayat) => (
+  //   <View
+  //     key={Math.random().toString()}
+  //     style={{
+  //       justifyContent: 'center',
+  //       alignItems: 'center',
+  //       flexDirection: 'row',
+  //     }}
+  //   >
+  //     {ayat.map((ayah) => (
+  //       <View style={{ flexDirection: 'row' }} key={Math.random().toString()}>
+  //         <Text
+  //           style={{
+  //             fontSize: width * 0.043,
+  //             flexGrow: 1,
+  //             textAlign: 'center',
+  //             // color: ayah.txt.indexOf(word) && 'red',
+  //             fontFamily: 'UthmanicHafs',
+  //             backgroundColor: 'red',
+  //           }}
+  //         >
+  //           {ayah.txt}
+  //         </Text>
+  //         {ayah.num && (
+  //           <Center
+  //             style={{
+  //               width: 30,
+  //               flexGrow: 1,
+  //             }}
+  //           >
+  //             {svgLoader.getSurahNumBorder(ayah.num, 26)}
+  //           </Center>
+  //         )}
+  //       </View>
+  //     ))}
+  //   </View>
+  // );
 
   const renderPageContent = () => {
-    return quranReader.getPage(106)?.map((page) => {
+    return quranReader.getPage(pageNum)?.map((page) => {
       switch (page.type) {
-        case "Basmalah":
+        case 'Basmalah':
           return Basmalah();
 
-        case "Surah":
+        case 'Surah':
           return renderSurahHeader(page.lineTxt);
 
-        case "Ayah":
-          // return (
-          //   <View
-          //     style={{
-          //       flexDirection: 'row',
-          //       justifyContent: 'center',
-          //       backgroundColor: 'blue',
-          //     }}
-          //   >
-          //     {renderAyat2(page.allAyat)}
-          //   </View>
-          // );
-
-          // return (
-          //   <View
-          //     key={Math.random().toString()}
-          //     style={{
-          //       flexDirection: 'row',
-          //       // justifyContent: 'flex-start',
-          //       // width: '100%',
-          //       backgroundColor: 'green',
-          //     }}
-          //   >
-          //     {renderAyat(page.allAyat)}
-          //   </View>
-          // );
-          return (
-            <View
-              key={Math.random().toString()}
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                // alignContent: "center",
-                alignItems: "center",
-                // width: '100%',
-                // backgroundColor: "green",
-                // height: 40,
-              }}
-            >
-              {newRenderAyat(page.allAyat)}
-            </View>
-          );
+        case 'Ayah':
+          if ([1, 2].includes(pageNum)) {
+            return renderSpecialSurah(page.allAyat);
+          } else {
+            return (
+              <View
+                key={Math.random().toString()}
+                style={{
+                  flexDirection: 'row',
+                  // justifyContent: ![1, 2].includes(pageNum)
+                  //   ? 'space-between'
+                  //   : 'center',
+                  alignItems: 'center',
+                }}
+              >
+                {newRenderAyat(page.allAyat)}
+              </View>
+            );
+          }
 
         default:
           return <Text>error</Text>;
@@ -274,17 +208,14 @@ const MushafScreen = () => {
     });
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log('MushafScreen', quranReader.getPage(160)[0]);
-  //   }, [pageNum])
-  // );
-
   return (
-    <Screen style={{ height: "100%", justifyContent: "space-between" }}>
-      {/* {renderPart()} */}
+    <Screen
+      style={{
+        height: '100%',
+        justifyContent: ![1, 2].includes(pageNum) ? 'space-between' : 'center',
+      }}
+    >
       {renderPageContent()}
-      {/* <TestComp /> */}
     </Screen>
   );
 };
@@ -293,13 +224,13 @@ export default MushafScreen;
 
 const styles = StyleSheet.create({
   surahHeader: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
-    width: "100%",
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
