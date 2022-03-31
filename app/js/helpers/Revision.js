@@ -31,15 +31,17 @@ export default class Revision {
     );
   }
   updateProgress(iAyahGlobal) {
-    //todo
-    console.log(
-      "updateProgress [id: " +
-        this.id +
-        " , title: " +
-        this.title +
-        "] , update = " +
-        iAyahGlobal
-    );
+    if (iAyahGlobal > this.strt) {
+      if (iAyahGlobal < this.end) {
+        this.progress = Math.floor(
+          (100 * (iAyahGlobal - this.strt)) / (this.end - this.strt)
+        );
+      } else {
+        this.progress = 100;
+      }
+    } else {
+      this.progress = 0;
+    }
   }
   makeRevisionDateNow() {
     this.dateofLastRevision = new Date();
