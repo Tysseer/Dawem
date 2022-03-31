@@ -165,12 +165,16 @@ class ScreenRevisions extends Component {
   onReadRevision(revision) {
     this.props.reduxActionSetCurRevision(revision);
     this.props.navigation.navigate("Mushaf", {
-      ayahIndex: revision.strt,
+      ayahIndex: revision.getProgressAyah(),
       longPressHandler: this.onRevProgress.bind(this),
     });
   }
   onRevProgress(iAyah) {
     this.props.curRevision.updateProgress(iAyah);
+    if (this.props.curRevision.progress > 100) {
+      this.props.curRevision.makeRevisionDateNow();
+      this.props.revisionsManager.sortRevisions();
+    }
     //this.refresh();
   }
   onEditRevision(revision) {
