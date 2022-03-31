@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 
 import Screen from 'app/components/Screen';
 import QuranReaderByLine from 'app/js/helpers/QuranReaderByLine';
@@ -8,6 +8,11 @@ import allQuranLines from '../helpers/quranLines';
 import SVGLoader from '../helpers/SVGLoader';
 import Center from 'app/components/Center';
 import { Fragment } from 'react';
+import { useRoute } from '@react-navigation/native';
+import { Touchable } from 'react-native-web';
+
+import QuranIndexer from '../helpers/QuranIndexer';
+import { convertToArabicNumbers } from '../helpers/scripts';
 
 const { width } = Dimensions.get('window');
 const coloredList = [
@@ -23,9 +28,26 @@ const coloredList = [
 
 const pageNum = 5;
 const MushafScreen = () => {
-  const quranReader = new QuranReaderByLine();
+  const route = useRoute();
+  const {ayahIndex,longPressHandler}=route.params;
+var quranIndexer = new QuranIndexer();
+quranIndexer.f
+  const onAyahLongPress=(iAyah/*local */,iSurah) =>{
+    var engNum = convertToArabicNumbers(iAyah,"ltr");
+    console.log("here "+iAyah+" "+engNum+" "+iSurah);
+    var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah,+engNum);
+    longPressHandler(globalAyah);
+  }
+
+  const quranReader = new QuranReaderByLine(quranIndexer);
   const svgLoader = new SVGLoader();
 
+  var pagenum = quranIndexer.getPageFromAyah(ayahIndex);
+
+  // todo: highlight
+//  var curSurah = quranIndexer.getSurahFromAyah(ayahIndex);
+  const {surahIndex : curSurah,ayahIndex:curAyah} = quranIndexer.getAyahLocalIndx(ayahIndex);
+ 
   // {JSON.stringify(QuranReaderByLine)}
 
   const renderSurahHeader = (name) => (
@@ -81,7 +103,7 @@ const MushafScreen = () => {
                 </Text>
               );
             })}
-          {ayah.num && svgLoader.getSurahNumBorder(ayah.num, 26)}
+          {ayah.num && <TouchableOpacity onPress={()=>onAyahLongPress(ayah.num,ayah.surahIndex)}><Text>{svgLoader.getSurahNumBorder(ayah.num, 26)}</Text></TouchableOpacity>}
         </Fragment>
       );
     });
@@ -174,7 +196,7 @@ const MushafScreen = () => {
   // );
 
   const renderPageContent = () => {
-    return quranReader.getPage(pageNum)?.map((page) => {
+    return quranReader.getPage(pagenum)?.map((page) => {
       switch (page.type) {
         case 'Basmalah':
           return Basmalah();
@@ -183,7 +205,7 @@ const MushafScreen = () => {
           return renderSurahHeader(page.lineTxt);
 
         case 'Ayah':
-          if ([1, 2].includes(pageNum)) {
+          if ([1, 2].includes(pagenum)) {
             return renderSpecialSurah(page.allAyat);
           } else {
             return (
@@ -212,7 +234,7 @@ const MushafScreen = () => {
     <Screen
       style={{
         height: '100%',
-        justifyContent: ![1, 2].includes(pageNum) ? 'space-between' : 'center',
+        justifyContent: ![1, 2].includes(pagenum) ? 'space-between' : 'center',
       }}
     >
       {renderPageContent()}

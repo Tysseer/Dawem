@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -8,30 +8,30 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 
-import RevisionsList from '../subComponents/RevisionsList';
-import RevisionsManager from '../helpers/RevisionsManager';
-import SVGLoader from '../helpers/SVGLoader';
-import BadgesBar from '../subComponents/BadgesBar';
-import ModalBadgeDay from '../modals/ModalBadgeDay.js';
-import ModalBadgeMonth from '../modals/ModalBadgeMonth.js';
-import ModalBadgeWeek from '../modals/ModalBadgeWeek.js';
-import { connect } from 'react-redux';
+import RevisionsList from "../subComponents/RevisionsList";
+import RevisionsManager from "../helpers/RevisionsManager";
+import SVGLoader from "../helpers/SVGLoader";
+import BadgesBar from "../subComponents/BadgesBar";
+import ModalBadgeDay from "../modals/ModalBadgeDay.js";
+import ModalBadgeMonth from "../modals/ModalBadgeMonth.js";
+import ModalBadgeWeek from "../modals/ModalBadgeWeek.js";
+import { connect } from "react-redux";
 import {
   reduxActionSetCurRevision,
   reduxActionDelRevision,
-} from '../redux/reduxActions';
-import * as strings from '../helpers/StringsManager';
-import StringsManager from '../helpers/StringsManager';
-import Center from 'app/components/Center';
-import { getFontFamily } from '../helpers/scripts';
-import ActionBtn from 'app/components/ActionBtn';
+} from "../redux/reduxActions";
+import * as strings from "../helpers/StringsManager";
+import StringsManager from "../helpers/StringsManager";
+import Center from "app/components/Center";
+import { getFontFamily } from "../helpers/scripts";
+import ActionBtn from "app/components/ActionBtn";
 // import bgImage from 'assets/backgroundPNG/green_background.png';
-import bgImage from 'assets/images/mainBg.png';
-import Screen from 'app/components/Screen';
+import bgImage from "assets/images/mainBg.png";
+import Screen from "app/components/Screen";
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get("window");
 
 class ScreenRevisions extends Component {
   constructor(props) {
@@ -80,15 +80,15 @@ class ScreenRevisions extends Component {
               <>
                 <TouchableOpacity
                   onPress={() =>
-                    this.props.navigation.navigate('Mushaf', { strtPage: 165 })
+                    this.props.navigation.navigate("Mushaf", { strtPage: 165 })
                   }
                   style={{
-                    backgroundColor: '#f0f',
+                    backgroundColor: "#f0f",
                     width: 100,
                     height: 55,
                     borderRadius: 8,
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   <Text>Mushaf</Text>
@@ -104,6 +104,7 @@ class ScreenRevisions extends Component {
                 updateRevFn={this.onEditRevision.bind(this)}
                 deleteRevFn={this.onDeleteRevision.bind(this)}
                 onAddRevision={this.onAddRevision.bind(this)}
+                readRevFn={this.onReadRevision.bind(this)}
               />
             )}
           </View>
@@ -122,17 +123,17 @@ class ScreenRevisions extends Component {
 
   getBadgesOnPressHandlers() {
     var pressHandlers = new Map();
-    pressHandlers.set('day', this.onDayBadgePressed.bind(this));
-    pressHandlers.set('month', this.onMonthBadgePressed.bind(this));
-    pressHandlers.set('week', this.onWeekBadgePressed.bind(this));
+    pressHandlers.set("day", this.onDayBadgePressed.bind(this));
+    pressHandlers.set("month", this.onMonthBadgePressed.bind(this));
+    pressHandlers.set("week", this.onWeekBadgePressed.bind(this));
 
     return pressHandlers;
   }
   getBadgesOnLongPressHandlers() {
     var longPressHandlers = new Map();
-    longPressHandlers.set('day', this.onBadgeLongPress.bind(this));
-    longPressHandlers.set('month', this.onBadgeLongPress.bind(this));
-    longPressHandlers.set('week', this.onBadgeLongPress.bind(this));
+    longPressHandlers.set("day", this.onBadgeLongPress.bind(this));
+    longPressHandlers.set("month", this.onBadgeLongPress.bind(this));
+    longPressHandlers.set("week", this.onBadgeLongPress.bind(this));
     return longPressHandlers;
   }
 
@@ -153,18 +154,30 @@ class ScreenRevisions extends Component {
   }
   onAddRevision() {
     this.props.reduxActionSetCurRevision(null);
-    this.props.navigation.navigate('ScrRev');
+    this.props.navigation.navigate("ScrRev");
   }
 
   onSettings() {
-    this.props.navigation.navigate('ScrSettings');
+    this.props.navigation.navigate("ScrSettings");
   }
   onDonate() {}
 
+  onReadRevision(revision) {
+    this.props.reduxActionSetCurRevision(revision);
+    this.props.navigation.navigate("Mushaf", {
+      ayahIndex: revision.strt,
+      longPressHandler: this.onRevProgress.bind(this),
+    });
+  }
+  onRevProgress(iAyah) {
+    this.props.curRevision.updateProgress(iAyah);
+    //this.refresh();
+  }
   onEditRevision(revision) {
     this.props.reduxActionSetCurRevision(revision);
-    this.props.navigation.navigate('ScrRev');
+    this.props.navigation.navigate("ScrRev");
   }
+
   onDeleteRevision(revision) {
     this.props.reduxActionDelRevision(revision);
     this.refresh();
@@ -173,8 +186,8 @@ class ScreenRevisions extends Component {
   getInitialPrompt() {
     return (
       <ImageBackground source={bgImage} style={styles.bgImage}>
-        <Image source={require('assets/icon.png')} style={styles.bgIcon} />
-        <Center style={{ height: '100%' }}>
+        <Image source={require("assets/icon.png")} style={styles.bgIcon} />
+        <Center style={{ height: "100%" }}>
           <View>
             <Text
               style={{
@@ -253,6 +266,7 @@ class ScreenRevisions extends Component {
 }
 const mapStateToProps = (state) => ({
   revisions: state.revisions,
+  curRevision: state.curRevision,
   strLang: state.strLang,
 });
 const mapDispatchToProps = () => {
@@ -265,7 +279,7 @@ export default connect(mapStateToProps, mapDispatchToProps())(ScreenRevisions);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEE',
+    backgroundColor: "#EEE",
     padding: 20,
     // paddingHorizontal: 20,
     // paddingBottom: 20,
@@ -273,15 +287,15 @@ const styles = StyleSheet.create({
   },
 
   toolBar: {
-    width: '100%',
+    width: "100%",
     height: 40,
-    alignSelf: 'flex-end',
-    borderTopColor: 'yellow',
+    alignSelf: "flex-end",
+    borderTopColor: "yellow",
     borderTopWidth: 1,
     paddingHorizontal: 6,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   toolButton: {
     width: 38,
@@ -289,21 +303,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
   },
   listContainer: {
-    width: '100%',
+    width: "100%",
     flex: 1,
   },
   bgImage: {
-    width: '100%',
+    width: "100%",
     height: 0.42 * height,
-    position: 'relative',
-    overflow: 'hidden',
+    position: "relative",
+    overflow: "hidden",
     borderRadius: 12,
   },
   bgIcon: {
-    width: '90%',
-    height: '90%',
-    resizeMode: 'contain',
-    position: 'absolute',
+    width: "90%",
+    height: "90%",
+    resizeMode: "contain",
+    position: "absolute",
     bottom: -120,
     left: -50,
     opacity: 0.1,
@@ -311,6 +325,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     // textAlign: 'center',
-    color: '#fff',
+    color: "#fff",
   },
 });

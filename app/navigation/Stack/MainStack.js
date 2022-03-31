@@ -32,7 +32,11 @@ export default function MainStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="ScrSettings" component={ScreenSettings} />
-      <Stack.Screen name="ScrDayBadge" component={ScreenDayBadge} />
+      <Stack.Screen
+        name="ScrDayBadge"
+        component={ScreenDayBadge}
+        options={{ header: () => <Header title={"Welcome"} /> }}
+      />
       <Stack.Screen name="ScrMonthBadge" component={ScreenMonthBadge} />
       <Stack.Screen name="ScrWeekBadge" component={ScreenWeekBadge} />
     </Stack.Navigator>

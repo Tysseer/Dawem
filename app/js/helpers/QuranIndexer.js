@@ -72,7 +72,10 @@ export default class QuranIndexer {
     iAyah = this.secureIndexRange(iAyah, 6236);
     iSurah = this.getSurahFromAyah(iAyah);
     if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
-    return iAyah + 1 - this.arrSurahAyahStart[iSurah];
+    return {
+      surahIndex: iSurah,
+      ayahIndex: iAyah + 1 - this.arrSurahAyahStart[iSurah],
+    };
   }
   isValidLocalAyahIndex(iSurah, iAyah) {
     iSurah = this.secureIndexRange(iSurah, 114);

@@ -1,15 +1,15 @@
-import { View } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // import ScreenRevisions from 'app/js/screens/ScreenRevisions';
-import ScreenWelcome from 'app/js/screens/ScreenWelcome';
-import ScreenLanguage from 'app/js/screens/ScreenLanguage';
+import ScreenWelcome from "app/js/screens/ScreenWelcome";
+import ScreenLanguage from "app/js/screens/ScreenLanguage";
 // import ScreenQuranBrowser from 'app/js/screens/ScreenQuranBrowser';
 // import ScreenRevisionDetails from 'app/js/screens/ScreenRevisionDetails';
 // import ScreenSettings from 'app/js/screens/ScreenSettings';
-import reduxStore from 'app/js/redux/reduxStore';
-import BottomNav from '../BottomTabs';
-import Header from 'app/components/Header';
+import reduxStore from "app/js/redux/reduxStore";
+import BottomNav from "../BottomTabs";
+import Header from "app/components/Header";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,14 +25,20 @@ export default function RootNavigator() {
         <Stack.Screen
           name="ScrLang"
           component={ScreenLanguage}
-          options={{ headerShown: true, header: () => <Header empty={true} /> }}
+          options={{
+            headerShown: true,
+            header: () => <Header empty={true} />,
+          }}
         />
       ) : null}
       {reduxStore.getState().bSkipWelcome == false ? (
         <Stack.Screen
           name="ScrWelcome"
           component={ScreenWelcome}
-          options={{ headerShown: true, header: () => <Header empty={true} /> }}
+          options={{
+            headerShown: true,
+            header: () => <Header title={"Welcome"} showIcon={false} />,
+          }}
         />
       ) : null}
       <Stack.Screen name="Home" component={BottomNav} />

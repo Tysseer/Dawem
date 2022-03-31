@@ -30,6 +30,17 @@ export default class Revision {
         (1000 * 60 * 60 * 24)
     );
   }
+  updateProgress(iAyahGlobal) {
+    //todo
+    console.log(
+      "updateProgress [id: " +
+        this.id +
+        " , title: " +
+        this.title +
+        "] , update = " +
+        iAyahGlobal
+    );
+  }
   makeRevisionDateNow() {
     this.dateofLastRevision = new Date();
     this.numDays = 0;

@@ -9,9 +9,9 @@ import {
   TouchableWithoutFeedback,
   I18nManager,
 } from "react-native";
-import * as strings from "../helpers/StringsManager";
-import StringsManager from "../helpers/StringsManager";
-import ActionBtn from "../../components/ActionBtn";
+import * as strings from "js/helpers/StringsManager";
+import StringsManager from "js/helpers/StringsManager";
+import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
 
 class ScreenSettings extends Component {
@@ -47,7 +47,7 @@ class ScreenSettings extends Component {
       <View style={styles.mainContainer}>
         <View style={styles.quranLogoContainer}>
           <Image
-            source={require("../../assets/images/Quran_logo.png")}
+            source={require("assets/images/Quran_logo.png")}
             style={{ resizeMode: "contain" }}
           ></Image>
         </View>
@@ -55,7 +55,7 @@ class ScreenSettings extends Component {
           <TouchableWithoutFeedback onPress={this.enLangPressed.bind(this)}>
             <View style={this.getLangContainerStyle("en")}>
               <Image
-                source={require("../../assets/images/lang_en.png")}
+                source={require("assets/images/lang_en.png")}
                 style={styles.langLogo}
               />
               <Text style={this.getlangLabelTextStyle("en")}>English</Text>
@@ -65,7 +65,7 @@ class ScreenSettings extends Component {
           <TouchableWithoutFeedback onPress={this.arLangPressed.bind(this)}>
             <View style={this.getLangContainerStyle("ar")}>
               <Image
-                source={require("../../assets/images/lang_ar.png")}
+                source={require("assets/images/lang_ar.png")}
                 style={styles.langLogo}
               />
               <Text style={this.getlangLabelTextStyle("ar")}>العربية</Text>
