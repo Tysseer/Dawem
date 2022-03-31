@@ -10,10 +10,16 @@ import ScreenLanguage from "app/js/screens/ScreenLanguage";
 import reduxStore from "app/js/redux/reduxStore";
 import BottomNav from "../BottomTabs";
 import Header from "app/components/Header";
+import { useSelector } from "react-redux";
+import StringsManager from "js/helpers/StringsManager";
+import * as strings from "js/helpers/StringsManager";
 
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
+  let stringsManager = new StringsManager();
+  const strLang = useSelector((state) => state.strLang);
+  stringsManager.setLanguage(strLang);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -37,7 +43,12 @@ export default function RootNavigator() {
           component={ScreenWelcome}
           options={{
             headerShown: true,
-            header: () => <Header title={"Welcome"} showIcon={false} />,
+            header: () => (
+              <Header
+                title={stringsManager.getStr(strings.STR_WELCOME)}
+                showIcon={false}
+              />
+            ),
           }}
         />
       ) : null}
