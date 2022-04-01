@@ -9,7 +9,7 @@ export default class QuranReaderByLine {
 
   getPage(iPage) {
     iPage = this.indexer.secureIndexRange(iPage, this.indexer.getNumPages());
-
+    let wordNum;
     [strt, end] = this.indexer.getLinesFromPage(iPage);
     var retPage = [];
     for (var i = strt; i <= end; i++) {
@@ -51,12 +51,16 @@ export default class QuranReaderByLine {
           txt += element + " ";
         }
       });
-      // if (index == allAyat.length - 1) {
-      // }
       ayat.forEach((element) => {
         if (element.num) element.words.splice(element.words.length - 1, 1);
       });
       allLines[i]["allAyat"] = ayat;
+      wordNum = 0;
+      ayat.forEach((element) => {
+        wordNum += element.words.length;
+      });
+      if (wordNum < 6) allLines[i]["smallTxt"] = true;
+      console.log("yyyyy :", allLines[i]);
       retPage.push(allLines[i]);
     }
     return retPage;
