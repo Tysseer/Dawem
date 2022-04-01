@@ -48,19 +48,20 @@ export default class RevisionItem extends Component {
           marginBottom: 15,
         }}
       >
-        <TouchableHighlight
-          onPress={() => this.props.onPresses.get('item')(revision)}
-          onLongPress={() => this.props.onLongPresses.get('item')(revision)}
-          underlayColor="#FFFFFF11"
-        >
+        <View>
           {/* item content */}
           <View style={styles.listItemContainer}>
-            <View style={styles.itemTitleContainer}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => this.props.onPresses.get('item')(revision)}
+              onLongPress={() => this.props.onLongPresses.get('item')(revision)}
+              style={styles.itemTitleContainer}
+            >
               {renderEditDeleteActions}
               <Text numberOfLines={1} style={styles.itemTitle}>
                 {revision.getRevisionTitle()}
               </Text>
-            </View>
+            </TouchableOpacity>
             <View
               style={{
                 flexDirection: 'row',
@@ -88,7 +89,7 @@ export default class RevisionItem extends Component {
               />
             )}
           </View>
-        </TouchableHighlight>
+        </View>
       </View>
     );
   }
@@ -169,6 +170,7 @@ const styles = StyleSheet.create({
   itemTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flexGrow: 1,
   },
   itemTitle: {
     fontSize: 18,

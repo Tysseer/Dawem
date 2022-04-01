@@ -1,15 +1,10 @@
-import { View } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// import ScreenRevisions from 'app/js/screens/ScreenRevisions';
-import ScreenWelcome from "app/js/screens/ScreenWelcome";
-import ScreenLanguage from "app/js/screens/ScreenLanguage";
-// import ScreenQuranBrowser from 'app/js/screens/ScreenQuranBrowser';
-// import ScreenRevisionDetails from 'app/js/screens/ScreenRevisionDetails';
-// import ScreenSettings from 'app/js/screens/ScreenSettings';
-import reduxStore from "app/js/redux/reduxStore";
-import BottomNav from "../BottomTabs";
-import Header from "app/components/Header";
+import ScreenWelcome from 'app/js/screens/ScreenWelcome';
+import ScreenLanguage from 'app/js/screens/ScreenLanguage';
+import reduxStore from 'app/js/redux/reduxStore';
+import BottomNav from '../BottomTabs';
+import Header from 'app/components/Header';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +12,6 @@ export default function RootNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        // header: () => getHeaderComponent(),
         headerShown: false,
       }}
     >
@@ -37,16 +31,11 @@ export default function RootNavigator() {
           component={ScreenWelcome}
           options={{
             headerShown: true,
-            header: () => <Header title={"Welcome"} showIcon={false} />,
+            header: () => <Header title={'Welcome'} showIcon={false} />,
           }}
         />
       ) : null}
       <Stack.Screen name="Home" component={BottomNav} />
-
-      {/* <Stack.Screen name="ScrList" component={ScreenRevisions} />
-      <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
-      <Stack.Screen name="ScrQuran" component={ScreenQuranBrowser} />
-      <Stack.Screen name="ScrSettings" component={ScreenSettings} /> */}
     </Stack.Navigator>
   );
 }
