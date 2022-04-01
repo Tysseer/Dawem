@@ -10,17 +10,46 @@ import MushafScreen from "../../js/screens/MushafScreen";
 import ScreenDayBadge from "../../js/screens/ScreenDayBadge";
 import ScreenMonthBadge from "../../js/screens/ScreenMonthBadge";
 import ScreenWeekBadge from "../../js/screens/ScreenWeekBadge";
+import StringsManager from "js/helpers/StringsManager";
+import * as strings from "js/helpers/StringsManager";
+import { useSelector } from "react-redux";
+
 const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
+  let stringsManager = new StringsManager();
+  const strLang = useSelector((state) => state.strLang);
+  stringsManager.setLanguage(strLang);
   return (
     <Stack.Navigator
       screenOptions={{
         header: () => <Header />,
       }}
     >
-      <Stack.Screen name="ScrList" component={ScreenRevisions} />
-      <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
+      <Stack.Screen
+        name="ScrList"
+        component={ScreenRevisions}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_DAWEM)}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ScrRev"
+        component={ScreenRevisionDetails}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_DAWEM)}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="ScrQuran"
         component={ScreenQuranBrowser}
@@ -35,10 +64,39 @@ export default function MainStack() {
       <Stack.Screen
         name="ScrDayBadge"
         component={ScreenDayBadge}
-        options={{ header: () => <Header title={"Welcome"} /> }}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_DAYBADGE_NAME)}
+            />
+          ),
+        }}
       />
-      <Stack.Screen name="ScrMonthBadge" component={ScreenMonthBadge} />
-      <Stack.Screen name="ScrWeekBadge" component={ScreenWeekBadge} />
+      <Stack.Screen
+        name="ScrMonthBadge"
+        component={ScreenMonthBadge}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_MONTHBADGE_NAME)}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ScrWeekBadge"
+        component={ScreenWeekBadge}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_WEEKBADGE_NAME)}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }

@@ -14,6 +14,7 @@ export default class Revision {
     this.end = end;
     this.dateofLastRevision = dateofLastRevision;
     this.updateNumDays();
+    this.lastAyahRead = -1;
   }
   fillFromSerializedObj(obj) {
     this.id = obj.id;
@@ -31,17 +32,29 @@ export default class Revision {
     );
   }
   updateProgress(iAyahGlobal) {
-    if (iAyahGlobal > this.strt) {
-      if (iAyahGlobal < this.end) {
-        this.progress = Math.floor(
-          (100 * (iAyahGlobal - this.strt)) / (this.end - this.strt)
-        );
+    this.lastAyahRead = iAyahGlobal;
+    if (this.end == this.strt) this.progress = 50;
+    else {
+      if (iAyahGlobal > this.strt) {
+        if (iAyahGlobal < this.end) {
+          this.progress = Math.floor(
+            (100 * (iAyahGlobal - this.strt)) / (this.end - this.strt)
+          );
+        } else {
+          this.progress = 100;
+        }
       } else {
-        this.progress = 100;
+        this.progress = 0;
       }
-    } else {
-      this.progress = 0;
     }
+  }
+  getProgressAyah() {
+    if (this.lastAyahRead != -1) return this.lastAyahRead;
+    if (this.progress <= 0) return this.strt;
+    if (this.progress >= 100) return this.end;
+    if (this.end == this.strt) return this.strt;
+    var shift = (this.progress / 100.0) * (this.end - this.strt);
+    return Math.floor(shift + -this.strt);
   }
   makeRevisionDateNow() {
     this.dateofLastRevision = new Date();

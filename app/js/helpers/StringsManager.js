@@ -35,6 +35,8 @@ export const STR_WEEKBADGE_NAME = 34;
 export const STR_MONTHBADGE_NAME = 35;
 export const STR_MY_GOALS = 36;
 export const STR_WELCOME = 37;
+export const STR_SELECT = 38;
+export const STR_DAWEM = 39;
 
 export default class StringsManager {
   constructor() {
@@ -268,6 +270,16 @@ export default class StringsManager {
     if (nStrID == STR_WELCOME) {
       if (strLang == "ar") return "مرحبا بك";
       if (strLang == "en") return "Welcome";
+      return "unsupported language";
+    }
+    if (nStrID == STR_SELECT) {
+      if (strLang == "ar") return "اختيار";
+      if (strLang == "en") return "Select";
+      return "unsupported language";
+    }
+    if (nStrID == STR_DAWEM) {
+      if (strLang == "ar") return "داوم";
+      if (strLang == "en") return "Dawem";
       return "unsupported language";
     }
     return "unkown string";

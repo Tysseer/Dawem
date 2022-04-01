@@ -88,15 +88,17 @@ export default class ModalAyahSelector {
           </View>
           <View style={styles.toolbar}>
             <ActionBtn
-              text={this.stringsManager.getStr(strings.STR_ADD_REV)}
+              text={this.stringsManager.getStr(strings.STR_SELECT)}
               handler={this.handlePress.bind(this)}
               lang={this.parent.props.strLang}
+              style={{ marginHorizontal: 3 }}
             />
             <ActionBtn
               text={this.stringsManager.getStr(strings.STR_CANCEL)}
               contained={true}
               handler={this.handleCancel.bind(this)}
               lang={this.parent.props.strLang}
+              style={{ marginHorizontal: 3 }}
             />
           </View>
         </View>
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: "80%",
     alignSelf: "center",
-    marginTop: 110,
+    marginTop: 85,
     marginBottom: 20,
     marginHorizontal: 20,
     alignItems: "center",

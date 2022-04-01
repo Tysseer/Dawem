@@ -76,6 +76,7 @@ export default class RevisionsList extends Component {
   }
   onLongPress(revision) {
     revision.progress += 9;
+    revision.lastAyahRead = -1;
     if (revision.progress > 100) {
       revision.makeRevisionDateNow();
       this.props.revisionsManager.sortRevisions();

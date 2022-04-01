@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -12,11 +12,12 @@ import QuranReaderByLine from 'app/js/helpers/QuranReaderByLine';
 import SurahHeader from 'assets/svg/SurahHeader';
 import SVGLoader from '../helpers/SVGLoader';
 import { Fragment } from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 
 import QuranIndexer from '../helpers/QuranIndexer';
 import { convertToArabicNumbers } from '../helpers/scripts';
 import Center from '../../components/Center';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const { width } = Dimensions.get('window');
 const coloredList = [
@@ -32,14 +33,22 @@ const coloredList = [
 
 const MushafScreen = () => {
   const route = useRoute();
+
+  const [localSurahIdx, setLocalSurahIdx] = useState();
+  const [localAyahIdx, setLocalAyahIdx] = useState();
+  const [pageNum, setPageNum] = useState();
+  const [pageContent, setPageContent] = useState();
+  const [markedAyah, setMarkedAyah] = useState();
+
   const { ayahIndex, longPressHandler } = route.params;
+
   var quranIndexer = new QuranIndexer();
   // quranIndexer.f;
 
   const onAyahLongPress = (iAyah /*local */, iSurah) => {
-    console.log('dsfsd');
     var engNum = convertToArabicNumbers(iAyah, 'ltr');
-    console.log('here ' + iAyah + ' ' + engNum + ' ' + iSurah);
+    setMarkedAyah(engNum);
+    // console.log('here ' + iAyah + ' ' + engNum + ' ' + iSurah);
     var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah, +engNum);
     longPressHandler(globalAyah);
   };
@@ -47,16 +56,13 @@ const MushafScreen = () => {
   const quranReader = new QuranReaderByLine(quranIndexer);
   const svgLoader = new SVGLoader();
 
-  var pagenum = quranIndexer.getPageFromAyah(ayahIndex);
-
   // todo: highlight
   //  var curSurah = quranIndexer.getSurahFromAyah(ayahIndex);
-  const { localSurahIdx, localAyahIdx } =
-    quranIndexer.getAyahLocalIndx(ayahIndex);
 
   const getNumBg = (num, idx) => {
     if (
-      convertToArabicNumbers(num, 'ltr') == localAyahIdx &&
+      convertToArabicNumbers(num, 'ltr') == markedAyah &&
+      // convertToArabicNumbers(num, 'ltr') == localAyahIdx &&
       idx == localSurahIdx
     )
       return '#ff0';
@@ -65,7 +71,7 @@ const MushafScreen = () => {
   const renderSurahHeader = (name) => (
     <View
       key={Math.random().toString()}
-      style={{ position: 'relative', marginVertical: 20 }}
+      style={{ position: 'relative', marginVertical: 10 }}
     >
       <View style={styles.surahHeader}>
         <Text style={{ fontFamily: 'Amiri_Bold', fontSize: 20 }}>{name}</Text>
@@ -78,17 +84,17 @@ const MushafScreen = () => {
     <Text
       key={Math.random().toString()}
       style={{
-        fontSize: width * 0.043,
+        fontSize: width * 0.04,
         textAlign: 'center',
         fontFamily: 'UthmanicHafs',
-        fontSize: 20,
+        // fontSize: 20,
       }}
     >
       بسم الله الرحمن الرحيم
     </Text>
   );
 
-  const newRenderAyat = (ayat) =>
+  const newRenderAyat = (ayat, shortTxt) =>
     ayat.map((ayah) => {
       return (
         <Fragment key={Math.random().toString()}>
@@ -100,6 +106,8 @@ const MushafScreen = () => {
                   style={{
                     ...styles.ayah,
                     color: coloredList.includes(word) && 'red',
+                    flexGrow: !shortTxt ? 1 : 0,
+                    paddingHorizontal: shortTxt && 4,
                   }}
                 >
                   {word.trim()}
@@ -138,8 +146,29 @@ const MushafScreen = () => {
     </View>
   );
 
+  const swipeableRef = useRef();
+  const onswipeLeft = () => {
+    swipeableRef.current.close();
+    setPageNum(pageNum + 1);
+  };
+  const onswipeRight = () => {
+    swipeableRef.current.close();
+    setPageNum(pageNum - 1);
+  };
+
+  const renderDummy = () => (
+    <View
+      style={{
+        width: 5,
+        margin: 0,
+        padding: 0,
+        height: '100%',
+      }}
+    />
+  );
+
   const renderPageContent = () => {
-    return quranReader.getPage(pagenum)?.map((page) => {
+    return pageContent?.map((page) => {
       switch (page.type) {
         case 'Basmalah':
           return Basmalah();
@@ -148,7 +177,7 @@ const MushafScreen = () => {
           return renderSurahHeader(page.lineTxt);
 
         case 'Ayah':
-          if ([1, 2].includes(pagenum)) {
+          if ([1, 2].includes(pageNum)) {
             return renderSpecialSurah(page.allAyat);
           } else {
             return (
@@ -157,9 +186,10 @@ const MushafScreen = () => {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
+                  justifyContent: page.shortTxt && 'center',
                 }}
               >
-                {newRenderAyat(page.allAyat)}
+                {newRenderAyat(page.allAyat, page.shortTxt)}
               </View>
             );
           }
@@ -170,13 +200,47 @@ const MushafScreen = () => {
     });
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      const { localSurahIdx, localAyahIdx } =
+        quranIndexer.getAyahLocalIndx(ayahIndex);
+
+      setLocalSurahIdx(localSurahIdx);
+      setLocalAyahIdx(localAyahIdx);
+      setMarkedAyah(localAyahIdx);
+
+      const pageNum = quranIndexer.getPageFromAyah(ayahIndex);
+      setPageNum(pageNum);
+    }, [ayahIndex, route.params])
+  );
+
+  useEffect(() => {
+    const content = quranReader.getPage(pageNum);
+    setPageContent(content);
+  }, [pageNum]);
+
   return (
-    <Screen
-      style={{
-        justifyContent: ![1, 2].includes(pagenum) ? 'space-between' : 'center',
-      }}
-    >
-      {renderPageContent()}
+    <Screen style={{ padding: 10 }}>
+      <Swipeable
+        renderLeftActions={renderDummy}
+        renderRightActions={renderDummy}
+        onSwipeableLeftOpen={onswipeLeft}
+        onSwipeableRightOpen={onswipeRight}
+        leftThreshold={35}
+        rightThreshold={35}
+        ref={swipeableRef}
+      >
+        <View
+          style={{
+            height: '99%',
+            justifyContent: ![1, 2].includes(pageNum)
+              ? 'space-between'
+              : 'center',
+          }}
+        >
+          {renderPageContent()}
+        </View>
+      </Swipeable>
     </Screen>
   );
 };
