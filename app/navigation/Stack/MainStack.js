@@ -26,8 +26,30 @@ export default function MainStack() {
         header: () => <Header />,
       }}
     >
-      <Stack.Screen name="ScrList" component={ScreenRevisions} />
-      <Stack.Screen name="ScrRev" component={ScreenRevisionDetails} />
+      <Stack.Screen
+        name="ScrList"
+        component={ScreenRevisions}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_DAWEM)}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ScrRev"
+        component={ScreenRevisionDetails}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_DAWEM)}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="ScrQuran"
         component={ScreenQuranBrowser}
