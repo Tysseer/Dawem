@@ -32,7 +32,7 @@ export default class RevisionsManager {
     var bIsWeek = maxDays <= 7;
     var bIsMonth = maxDays <= 30;
 
-    bIsToday = bIsToday && this.m_loadedRevisions.length >= 5;
+    bIsToday = bIsToday && this.m_loadedRevisions.length >= 3;
     bIsWeek = bIsWeek && this.m_loadedRevisions.length >= 7;
     bIsMonth = bIsMonth && this.m_loadedRevisions.length >= 10;
     return [bIsToday, bIsMonth, bIsWeek];

@@ -34,7 +34,7 @@ class ScreenMonthBadge extends Component {
 
   render() {
     var strStatus =
-      this.props.revisions.length < 7
+      this.props.revisions.length < 10
         ? this.stringsManager.getStr(strings.STR_MONTH_BADGE_MIN_REV)
         : this.isEnabled == false
         ? this.stringsManager.getStr(strings.STR_MONTH_BADGE_INACTIVE)

@@ -42,24 +42,19 @@ class ScreenRevisions extends Component {
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
 
-    var res = this.getBadgesStates();
+    var res = this.revisionsManager.getBadgesStates();
 
     this.state = {
       isBadgeDay: res[0],
       isBadgeMonth: res[1],
       isBadgeWeek: res[2],
-      bShowModalBadgeDay: false,
-      bShowModalBadgeMonth: false,
-      bShowModalBadgeWeek: false,
     };
   }
-
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
     var pressHandlers = this.getBadgesOnPressHandlers();
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
-    var modalContent = this.getModal();
 
     return (
       <Screen>
@@ -67,15 +62,14 @@ class ScreenRevisions extends Component {
           <View style={styles.listContainer}>
             <BadgesBar
               svgLoader={this.svgLoader}
-              isBadgeDay={this.state.isBadgeDay}
-              isBadgeMonth={this.state.isBadgeMonth}
-              isBadgeWeek={this.state.isBadgeWeek}
+              isBadgeDay={this.state.isBadgeDay == false}
+              isBadgeMonth={this.state.isBadgeMonth == false}
+              isBadgeWeek={this.state.isBadgeWeek == false}
               onPresses={pressHandlers}
               onLongPresses={longPressHandlers}
               strLang={this.props.strLang}
               title={this.stringsManager.getStr(strings.STR_MY_GOALS)}
             />
-            {modalContent}
             {this.revisionsManager.m_loadedRevisions.length == 0 ? (
               <>
                 <TouchableOpacity
@@ -138,16 +132,13 @@ class ScreenRevisions extends Component {
   }
 
   onDayBadgePressed() {
-    let newval = this.state.bShowModalBadgeDay == false;
-    this.setState({ bShowModalBadgeDay: newval });
+    this.props.navigation.navigate("ScrDayBadge");
   }
   onMonthBadgePressed() {
-    let newval = this.state.bShowModalBadgeMonth == false;
-    this.setState({ bShowModalBadgeMonth: newval });
+    this.props.navigation.navigate("ScrMonthBadge");
   }
   onWeekBadgePressed() {
-    let newval = this.state.bShowModalBadgeWeek == false;
-    this.setState({ bShowModalBadgeWeek: newval });
+    this.props.navigation.navigate("ScrWeekBadge");
   }
   onBadgeLongPress() {
     // todo: explain badges
@@ -155,6 +146,7 @@ class ScreenRevisions extends Component {
   onAddRevision() {
     this.props.reduxActionSetCurRevision(null);
     this.props.navigation.navigate("ScrRev");
+    this.refresh();
   }
 
   onSettings() {
@@ -207,56 +199,8 @@ class ScreenRevisions extends Component {
     );
   }
 
-  getModal() {
-    var modal = this.getBadgesModal();
-    if (modal != null) return modal;
-    return null;
-  }
-
-  getBadgesModal() {
-    if (this.state.bShowModalBadgeDay) {
-      var modalDay = new ModalBadgeDay(this).getModal(
-        this.state.isBadgeDay == false
-      );
-      return <View>{modalDay}</View>;
-    }
-    if (this.state.bShowModalBadgeMonth) {
-      var modalMonth = new ModalBadgeMonth(this).getModal(
-        this.state.isBadgeMonth == false
-      );
-      return <View>{modalMonth}</View>;
-    }
-    if (this.state.bShowModalBadgeWeek) {
-      var modalWeek = new ModalBadgeWeek(this).getModal(
-        this.state.isBadgeWeek == false
-      );
-      return <View>{modalWeek}</View>;
-    }
-    return null;
-  }
-  getBadgesStates() {
-    if (this.revisionsManager.m_loadedRevisions.length == 0)
-      return [false, false, false];
-    var bIsToday = false;
-    var maxDays = 0;
-    for (var i = 0; i < this.revisionsManager.m_loadedRevisions.length; i++) {
-      this.revisionsManager.m_loadedRevisions[i].updateNumDays();
-      if (this.revisionsManager.m_loadedRevisions[i].numDays > maxDays)
-        maxDays = this.revisionsManager.m_loadedRevisions[i].numDays;
-      if (this.revisionsManager.m_loadedRevisions[i].numDays == 0)
-        bIsToday = true;
-    }
-
-    var bIsWeek = maxDays <= 7;
-    var bIsMonth = maxDays <= 30;
-
-    bIsToday = bIsToday && this.revisionsManager.m_loadedRevisions.length >= 5;
-    bIsWeek = bIsWeek && this.revisionsManager.m_loadedRevisions.length >= 7;
-    bIsMonth = bIsMonth && this.revisionsManager.m_loadedRevisions.length >= 10;
-    return [bIsToday, bIsMonth, bIsWeek];
-  }
   updateBadgesStates() {
-    var res = this.getBadgesStates();
+    var res = this.revisionsManager.getBadgesStates();
 
     this.setState({
       isBadgeDay: res[0],

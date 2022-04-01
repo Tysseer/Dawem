@@ -45,6 +45,7 @@ export default function RootNavigator() {
             headerShown: true,
             header: () => (
               <Header
+                lang={{ strLang }}
                 title={stringsManager.getStr(strings.STR_WELCOME)}
                 showIcon={false}
               />

@@ -33,7 +33,7 @@ const Header = ({ lang, title, empty, showIcon = true }) => {
           )}
 
           {title && (
-            <Text style={[styles.startTitle, getFontFamily(lang)]}>
+            <Text style={[styles.startTitle, getFontFamily(lang,true)]}>
               {title}
             </Text>
           )}

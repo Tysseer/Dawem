@@ -34,7 +34,7 @@ class ScreenDayBadge extends Component {
 
   render() {
     var strStatus =
-      this.props.revisions.length < 7
+      this.props.revisions.length < 5
         ? this.stringsManager.getStr(strings.STR_DAY_BADGE_MIN_REV)
         : this.isEnabled == false
         ? this.stringsManager.getStr(strings.STR_DAY_BADGE_INACTIVE)

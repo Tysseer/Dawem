@@ -44,7 +44,10 @@ export default function MainStack() {
         component={ScreenDayBadge}
         options={{
           header: () => (
-            <Header title={stringsManager.getStr(strings.STR_DAYBADGE_NAME)} />
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_DAYBADGE_NAME)}
+            />
           ),
         }}
       />
@@ -54,6 +57,7 @@ export default function MainStack() {
         options={{
           header: () => (
             <Header
+              lang={{ strLang }}
               title={stringsManager.getStr(strings.STR_MONTHBADGE_NAME)}
             />
           ),
@@ -64,7 +68,10 @@ export default function MainStack() {
         component={ScreenWeekBadge}
         options={{
           header: () => (
-            <Header title={stringsManager.getStr(strings.STR_WEEKBADGE_NAME)} />
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_WEEKBADGE_NAME)}
+            />
           ),
         }}
       />
