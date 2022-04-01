@@ -59,7 +59,14 @@ export default function MainStack() {
       <Stack.Screen
         name="Mushaf"
         component={MushafScreen}
-        options={{ headerShown: false }}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_QURAN)}
+            />
+          ),
+        }}
       />
       <Stack.Screen name="ScrSettings" component={ScreenSettings} />
       <Stack.Screen
