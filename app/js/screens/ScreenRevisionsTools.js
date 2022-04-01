@@ -29,8 +29,7 @@ class ScreenRevisionsTools extends Component {
       lineHeight: this.props.strLang == "ar" ? 32 : 25,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
-      color: "#FFFFFF",
-      margin: 8,
+      color: "#00711C",
     };
   }
   onPressByJuzuu() {
@@ -54,29 +53,31 @@ class ScreenRevisionsTools extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
+        <View style={[styles.separator, { alignSelf: "center" }]}></View>
         <Text style={this.getToolbarTitleStyle()}>
           {this.stringsManager.getStr(strings.STR_ADD_KHATMAH)}
         </Text>
-        <View style={[styles.separator, { alignSelf: "center" }]}></View>
-        <View style={styles.buttonsContainer}>
+
+        <View style={styles.toolbar}>
           <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_JUZUU)}
+            text={this.stringsManager.getStr(strings.STR_BY_JUZUU)}
             handler={this.onPressByJuzuu.bind(this)}
             lang={this.props.strLang}
             style={{ marginHorizontal: 3 }}
           />
           <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_SURAH)}
+            text={this.stringsManager.getStr(strings.STR_BY_SURAH)}
             handler={this.onPressBySurah.bind(this)}
             lang={this.props.strLang}
             style={{ marginHorizontal: 3 }}
           />
         </View>
+        <View style={[styles.separator, { alignSelf: "center" }]}></View>
         <Text style={this.getToolbarTitleStyle()}>
           {this.stringsManager.getStr(strings.STR_MOD_REV_LIST)}
         </Text>
-        <View style={[styles.separator, { alignSelf: "center" }]}></View>
-        <View style={styles.buttonsContainer}>
+
+        <View style={styles.toolbar}>
           <ActionBtn
             text={this.stringsManager.getStr(strings.STR_RESET_ALL)}
             handler={this.onPressResetAll.bind(this)}
@@ -90,11 +91,12 @@ class ScreenRevisionsTools extends Component {
             style={{ marginHorizontal: 3 }}
           />
         </View>
+        <View style={[styles.separator, { alignSelf: "center" }]}></View>
         <Text style={this.getToolbarTitleStyle()}>
           {this.stringsManager.getStr(strings.STR_BACKUP_RESTORE)}
         </Text>
-        <View style={[styles.separator, { alignSelf: "center" }]}></View>
-        <View style={styles.buttonsContainer}>
+
+        <View style={styles.toolbar}>
           <ActionBtn
             text={this.stringsManager.getStr(strings.STR_BACKUP)}
             handler={this.onPressResetAll.bind(this)}
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
   },
   toolbar: {
     flexDirection: "row",
-    padding: 15,
+    padding: 8,
   },
 
   separator: {
@@ -146,6 +148,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     height: 2,
     width: "93%",
-    marginVertical: 15,
+    marginVertical: 2,
   },
 });

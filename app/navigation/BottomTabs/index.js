@@ -23,7 +23,13 @@ export default function BottomNav() {
         tabBarVisible: false,
         tabBarIcon: ({ focused }) => {
           if (route.name === "Main") {
-            return <Mushaf color={focused ? colors.primary : "#8789A3"} />;
+            return (
+              <Ionicons
+                color={focused ? colors.primary : "#8789A3"}
+                name="home"
+                size={24}
+              />
+            );
           } else if (route.name === "Settings") {
             return (
               <Ionicons
@@ -33,13 +39,13 @@ export default function BottomNav() {
               />
             );
           } else if (route.name === "Tools") {
-            return <Doaa color={focused ? colors.primary : "#8789A3"} />;
+            return <Mushaf color={focused ? colors.primary : "#8789A3"} />;
           }
         },
       })}
     >
-      <BottomTab.Screen name="Main" component={MainStack} />
       <BottomTab.Screen name="Tools" component={ScreenRevisionsTools} />
+      <BottomTab.Screen name="Main" component={MainStack} />
       <BottomTab.Screen name="Settings" component={ScreenSettings} />
     </BottomTab.Navigator>
   );
