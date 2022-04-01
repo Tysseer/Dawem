@@ -42,8 +42,7 @@ export default class QuranReaderByLine {
           });
           txt = "";
         } else if (index == allAyat.length - 1) {
-          txt += element + " ";
-
+          txt += element;
           ayat.push({
             txt: txt,
             words: txt.split(" "),
@@ -51,8 +50,11 @@ export default class QuranReaderByLine {
         } else {
           txt += element + " ";
         }
-        if (index == allAyat.length - 1) {
-        }
+      });
+      // if (index == allAyat.length - 1) {
+      // }
+      ayat.forEach((element) => {
+        if (element.num) element.words.splice(element.words.length - 1, 1);
       });
       allLines[i]["allAyat"] = ayat;
       retPage.push(allLines[i]);

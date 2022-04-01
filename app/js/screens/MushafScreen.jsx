@@ -1,43 +1,49 @@
-import React from 'react';
-import { Dimensions, StyleSheet, Text, View,TouchableOpacity } from 'react-native';
+import React from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
-import Screen from 'app/components/Screen';
-import QuranReaderByLine from 'app/js/helpers/QuranReaderByLine';
-import SurahHeader from 'assets/svg/SurahHeader';
-import allQuranLines from '../helpers/quranLines';
-import SVGLoader from '../helpers/SVGLoader';
-import Center from 'app/components/Center';
-import { Fragment } from 'react';
-import { useRoute } from '@react-navigation/native';
-import { Touchable } from 'react-native-web';
+import Screen from "app/components/Screen";
+import QuranReaderByLine from "app/js/helpers/QuranReaderByLine";
+import SurahHeader from "assets/svg/SurahHeader";
+import allQuranLines from "../helpers/quranLines";
+import SVGLoader from "../helpers/SVGLoader";
+import Center from "app/components/Center";
+import { Fragment } from "react";
+import { useRoute } from "@react-navigation/native";
+import { Touchable } from "react-native-web";
 
-import QuranIndexer from '../helpers/QuranIndexer';
-import { convertToArabicNumbers } from '../helpers/scripts';
+import QuranIndexer from "../helpers/QuranIndexer";
+import { convertToArabicNumbers } from "../helpers/scripts";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 const coloredList = [
   // 'رَبَّكُمُ',
-  'ٱللَّهَ',
-  'لِلَّهِ',
-  'ٱللَّهِ',
-  'ٱللَّهُ',
+  "ٱللَّهَ",
+  "لِلَّهِ",
+  "ٱللَّهِ",
+  "ٱللَّهُ",
   // 'بِٱللَّهِ',
   // 'رَبُّكَ',
-  'ٱللَّهَ',
+  "ٱللَّهَ",
 ];
 
 const pageNum = 5;
 const MushafScreen = () => {
   const route = useRoute();
-  const {ayahIndex,longPressHandler}=route.params;
-var quranIndexer = new QuranIndexer();
-quranIndexer.f
-  const onAyahLongPress=(iAyah/*local */,iSurah) =>{
-    var engNum = convertToArabicNumbers(iAyah,"ltr");
-    console.log("here "+iAyah+" "+engNum+" "+iSurah);
-    var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah,+engNum);
+  const { ayahIndex, longPressHandler } = route.params;
+  var quranIndexer = new QuranIndexer();
+  quranIndexer.f;
+  const onAyahLongPress = (iAyah /*local */, iSurah) => {
+    var engNum = convertToArabicNumbers(iAyah, "ltr");
+    console.log("here " + iAyah + " " + engNum + " " + iSurah);
+    var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah, +engNum);
     longPressHandler(globalAyah);
-  }
+  };
 
   const quranReader = new QuranReaderByLine(quranIndexer);
   const svgLoader = new SVGLoader();
@@ -45,18 +51,19 @@ quranIndexer.f
   var pagenum = quranIndexer.getPageFromAyah(ayahIndex);
 
   // todo: highlight
-//  var curSurah = quranIndexer.getSurahFromAyah(ayahIndex);
-  const {surahIndex : curSurah,ayahIndex:curAyah} = quranIndexer.getAyahLocalIndx(ayahIndex);
- 
+  //  var curSurah = quranIndexer.getSurahFromAyah(ayahIndex);
+  const { surahIndex: curSurah, ayahIndex: curAyah } =
+    quranIndexer.getAyahLocalIndx(ayahIndex);
+
   // {JSON.stringify(QuranReaderByLine)}
 
   const renderSurahHeader = (name) => (
     <View
       key={Math.random().toString()}
-      style={{ position: 'relative', marginVertical: 20 }}
+      style={{ position: "relative", marginVertical: 20 }}
     >
       <View style={styles.surahHeader}>
-        <Text style={{ fontFamily: 'Amiri_Bold', fontSize: 20 }}>{name}</Text>
+        <Text style={{ fontFamily: "Amiri_Bold", fontSize: 20 }}>{name}</Text>
       </View>
       <SurahHeader />
     </View>
@@ -67,8 +74,8 @@ quranIndexer.f
       key={Math.random().toString()}
       style={{
         fontSize: width * 0.043,
-        textAlign: 'center',
-        fontFamily: 'UthmanicHafs',
+        textAlign: "center",
+        fontFamily: "UthmanicHafs",
         fontSize: 20,
       }}
     >
@@ -88,10 +95,10 @@ quranIndexer.f
                   style={{
                     fontSize: width * 0.043,
                     flexGrow: 1,
-                    textAlign: 'center',
-                    color: coloredList.includes(word) && 'red',
-                    fontFamily: 'UthmanicHafs',
-                    borderColor: 'red',
+                    textAlign: "center",
+                    color: coloredList.includes(word) && "red",
+                    fontFamily: "UthmanicHafs",
+                    borderColor: "red",
                     borderWidth: 1,
                     // fontFamily: 'noorehidayat',
                     // fontSize: 'Quraan',
@@ -103,7 +110,13 @@ quranIndexer.f
                 </Text>
               );
             })}
-          {ayah.num && <TouchableOpacity onPress={()=>onAyahLongPress(ayah.num,ayah.surahIndex)}><Text>{svgLoader.getSurahNumBorder(ayah.num, 26)}</Text></TouchableOpacity>}
+          {ayah.num && (
+            <TouchableOpacity
+              onPress={() => onAyahLongPress(ayah.num, ayah.surahIndex)}
+            >
+              <Text>{svgLoader.getSurahNumBorder(ayah.num, 26)}</Text>
+            </TouchableOpacity>
+          )}
         </Fragment>
       );
     });
@@ -111,9 +124,9 @@ quranIndexer.f
   const renderSpecialSurah = (ayat) => (
     <View
       key={Math.random().toString()}
-      style={{ flexDirection: 'row', justifyContent: 'center' }}
+      style={{ flexDirection: "row", justifyContent: "center" }}
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         {newRenderAyat(ayat)}
       </View>
       {/* {ayat.map((ayah) => {
@@ -198,13 +211,13 @@ quranIndexer.f
   const renderPageContent = () => {
     return quranReader.getPage(pagenum)?.map((page) => {
       switch (page.type) {
-        case 'Basmalah':
+        case "Basmalah":
           return Basmalah();
 
-        case 'Surah':
+        case "Surah":
           return renderSurahHeader(page.lineTxt);
 
-        case 'Ayah':
+        case "Ayah":
           if ([1, 2].includes(pagenum)) {
             return renderSpecialSurah(page.allAyat);
           } else {
@@ -212,11 +225,11 @@ quranIndexer.f
               <View
                 key={Math.random().toString()}
                 style={{
-                  flexDirection: 'row',
+                  flexDirection: "row",
                   // justifyContent: ![1, 2].includes(pageNum)
                   //   ? 'space-between'
                   //   : 'center',
-                  alignItems: 'center',
+                  alignItems: "center",
                 }}
               >
                 {newRenderAyat(page.allAyat)}
@@ -233,8 +246,8 @@ quranIndexer.f
   return (
     <Screen
       style={{
-        height: '100%',
-        justifyContent: ![1, 2].includes(pagenum) ? 'space-between' : 'center',
+        height: "100%",
+        justifyContent: ![1, 2].includes(pagenum) ? "space-between" : "center",
       }}
     >
       {renderPageContent()}
@@ -246,13 +259,13 @@ export default MushafScreen;
 
 const styles = StyleSheet.create({
   surahHeader: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
-    width: '100%',
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
