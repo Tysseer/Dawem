@@ -18,36 +18,14 @@ import {
   reduxActionSetLanguage,
   reduxActionSetFirstRunFlag,
 } from "../redux/reduxActions";
-import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-  }),
-});
 
 class ScreenLanguage extends Component {
   constructor(props) {
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-      }),
-    });
     super(props);
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
   }
 
-  schedulePushNotification = async () => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've got mail! 📬",
-        body: "Here is the notification body",
-      },
-      trigger: { seconds: 1 },
-    });
-  };
   arLangPressed() {
     this.props.reduxActionSetLanguage("ar");
     // I18nManager.forceRTL(true);
@@ -59,14 +37,13 @@ class ScreenLanguage extends Component {
     // Updates.reloadAsync();
   }
   okButtonPressed() {
-    this.schedulePushNotification();
-    // this.props.reduxActionSetFirstRunFlag(false);
-    // if (this.props.strLang == "ar") {
-    //   I18nManager.forceRTL(true);
-    // } else {
-    //   I18nManager.forceRTL(false);
-    // }
-    // Updates.reloadAsync();
+    this.props.reduxActionSetFirstRunFlag(false);
+    if (this.props.strLang == "ar") {
+      I18nManager.forceRTL(true);
+    } else {
+      I18nManager.forceRTL(false);
+    }
+    Updates.reloadAsync();
     // if (this.props.isSkipWelcome == false)
     //   this.props.navigation.navigate("ScrWelcome");
     // else this.props.navigation.navigate("ScrList");
