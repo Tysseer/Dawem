@@ -60,7 +60,6 @@ export default class QuranReaderByLine {
         wordNum += element.words.length;
       });
       if (wordNum < 6) allLines[i]["smallTxt"] = true;
-      console.log("yyyyy :", allLines[i]);
       retPage.push(allLines[i]);
     }
     return retPage;
