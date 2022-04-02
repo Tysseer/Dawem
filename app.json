@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "dawem",
     "name": "Dawem",
     "slug": "Dawem",
     "version": "1.0.0",
@@ -13,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -23,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#EEEEEE"
-      }
+      },
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./app/assets/favicon.png"

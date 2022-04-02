@@ -24,6 +24,9 @@ export default class Revision {
     this.end = obj.end;
     this.dateofLastRevision = new Date(obj.dateofLastRevision);
     this.updateNumDays();
+    if (obj.hasOwnProperty("lastAyahRead"))
+      this.lastAyahRead = obj.lastAyahRead;
+    else this.lastAyahRead = -1;
   }
   updateNumDays() {
     this.numDays = Math.round(

@@ -101,12 +101,16 @@ class ScreenRevisionDetails extends Component {
           </View>
 
           <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_ADD_REV)}
+            text={
+              this.bIsNewRev
+                ? this.stringsManager.getStr(strings.STR_ADD_REV)
+                : this.stringsManager.getStr(strings.STR_AGREE)
+            }
             fullWidth={true}
             handler={this.okButtonPressed.bind(this)}
             disabled={!this.title.length}
             lang={this.props.strLang}
-            icon={true}
+            icon={this.bIsNewRev}
           />
         </View>
       </View>

@@ -5,6 +5,9 @@ export const ADD_REVISION = "ADD_REVISION";
 export const UPDATE_REVISION = "UPDATE_REVISION";
 export const DEL_REVISION = "DEL_REVISION";
 export const SET_CUR_REVISION = "SET_CUR_REVISION";
+export const DEL_ِِALL_REVISIONS = "DEL_ِِALL_REVISIONS";
+export const RESET_ِِALL_REVISIONS = "RESET_ِِALL_REVISIONS";
+export const ADD_MULTIPLE_REVISIONS = "ADD_MULTIPLE_REVISIONS";
 
 export const reduxActionSetFirstRunFlag = (bIsFirstRun) => ({
   type: APP_FIRST_RUN_FLAG,
@@ -33,4 +36,16 @@ export const reduxActionDelRevision = (revision) => ({
 export const reduxActionSetCurRevision = (revision) => ({
   type: SET_CUR_REVISION,
   payload: revision,
+});
+export const reduxActionDelAllRevisions = () => ({
+  type: DEL_ِِALL_REVISIONS,
+  payload: null,
+});
+export const reduxActionResetAllRevisions = () => ({
+  type: RESET_ِِALL_REVISIONS,
+  payload: null,
+});
+export const reduxActionAddMultipleRevisions = (revisions) => ({
+  type: ADD_MULTIPLE_REVISIONS,
+  payload: revisions,
 });
