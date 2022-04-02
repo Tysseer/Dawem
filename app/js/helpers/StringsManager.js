@@ -37,7 +37,18 @@ export const STR_MY_GOALS = 36;
 export const STR_WELCOME = 37;
 export const STR_SELECT = 38;
 export const STR_DAWEM = 39;
-
+export const STR_AGREE = 40;
+export const STR_ADD_KHATMAH = 41;
+export const STR_BY_JUZUU = 42;
+export const STR_BY_SURAH = 43;
+export const STR_MOD_REV_LIST = 44;
+export const STR_RESET_ALL = 45;
+export const STR_DEL_ALL = 46;
+export const STR_BACKUP_RESTORE = 47;
+export const STR_BACKUP = 48;
+export const STR_RESTORE = 49;
+export const STR_REV_TOOLS = 50;
+export const STR_QURAN = 51;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -280,6 +291,66 @@ export default class StringsManager {
     if (nStrID == STR_DAWEM) {
       if (strLang == "ar") return "داوم";
       if (strLang == "en") return "Dawem";
+      return "unsupported language";
+    }
+    if (nStrID == STR_DAWEM) {
+      if (strLang == "ar") return "موافقة";
+      if (strLang == "en") return "Accept";
+      return "unsupported language";
+    }
+    if (nStrID == STR_ADD_KHATMAH) {
+      if (strLang == "ar") return "أضف ختمة";
+      if (strLang == "en") return "Add Khatam";
+      return "unsupported language";
+    }
+    if (nStrID == STR_BY_JUZUU) {
+      if (strLang == "ar") return "إضافة ختمة (بالجزء)";
+      if (strLang == "en") return "Add Khatam (by Suras)";
+      return "unsupported language";
+    }
+    if (nStrID == STR_BY_SURAH) {
+      if (strLang == "ar") return "إضافة ختمة (بالسورة)";
+      if (strLang == "en") return "Add Khatam (by Juzuu)";
+      return "unsupported language";
+    }
+    if (nStrID == STR_MOD_REV_LIST) {
+      if (strLang == "ar") return "تعديل كل الأوراد";
+      if (strLang == "en") return "Modify All Revisions";
+      return "unsupported language";
+    }
+    if (nStrID == STR_RESET_ALL) {
+      if (strLang == "ar") return "تحديث كل الأوراد";
+      if (strLang == "en") return "Refresh All Revisions";
+      return "unsupported language";
+    }
+    if (nStrID == STR_DEL_ALL) {
+      if (strLang == "ar") return "حذف كل الأوراد";
+      if (strLang == "en") return "Delete All Revisions";
+      return "unsupported language";
+    }
+    if (nStrID == STR_BACKUP_RESTORE) {
+      if (strLang == "ar") return "حفظ البيانات احتياطيا";
+      if (strLang == "en") return "Data Backup";
+      return "unsupported language";
+    }
+    if (nStrID == STR_BACKUP) {
+      if (strLang == "ar") return "تخزين جميع الأوراد";
+      if (strLang == "en") return "Save Revisions";
+      return "unsupported language";
+    }
+    if (nStrID == STR_RESTORE) {
+      if (strLang == "ar") return "استعادةالأوراد المخزنة";
+      if (strLang == "en") return "Restore Revisions";
+      return "unsupported language";
+    }
+    if (nStrID == STR_REV_TOOLS) {
+      if (strLang == "ar") return "إدارة الأوراد";
+      if (strLang == "en") return "Revisions Manager";
+      return "unsupported language";
+    }
+    if (nStrID == STR_QURAN) {
+      if (strLang == "ar") return "القرآن الكريم";
+      if (strLang == "en") return "Holy Quran";
       return "unsupported language";
     }
     return "unkown string";

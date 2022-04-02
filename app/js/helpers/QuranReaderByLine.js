@@ -59,7 +59,7 @@ export default class QuranReaderByLine {
       ayat.forEach((element) => {
         wordNum += element.words.length;
       });
-      if (wordNum < 6) allLines[i]["smallTxt"] = true;
+      if (wordNum < 6) allLines[i]["shortTxt"] = true;
       retPage.push(allLines[i]);
     }
     return retPage;

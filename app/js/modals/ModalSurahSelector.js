@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -7,10 +7,7 @@ import {
   TouchableHighlight,
   ScrollView,
   Dimensions,
-  TouchableWithoutFeedback,
-  Image,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
 import Center from '../../components/Center';
 import { colors } from '../../constants';
 import QuranIndexer from '../helpers/QuranIndexer';
