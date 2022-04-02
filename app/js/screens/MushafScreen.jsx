@@ -5,7 +5,10 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ImageBackground,
+  Image,
 } from 'react-native';
+import { useKeepAwake } from 'expo-keep-awake';
 
 import Screen from 'app/components/Screen';
 import QuranReaderByLine from 'app/js/helpers/QuranReaderByLine';
@@ -18,8 +21,9 @@ import QuranIndexer from '../helpers/QuranIndexer';
 import { convertToArabicNumbers } from '../helpers/scripts';
 import Center from '../../components/Center';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Swiper from '../../components/Swiper';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const coloredList = [
   // 'رَبَّكُمُ',
   'ٱللَّهَ',
@@ -32,6 +36,9 @@ const coloredList = [
 ];
 
 const MushafScreen = () => {
+  // prevent screen form sleeping
+  useKeepAwake();
+
   const route = useRoute();
 
   const [localSurahIdx, setLocalSurahIdx] = useState();
@@ -70,13 +77,29 @@ const MushafScreen = () => {
 
   const renderSurahHeader = (name) => (
     <View
+      // source={require('assets/images/SurahHeader.png')}
       key={Math.random().toString()}
-      style={{ position: 'relative', marginVertical: 10 }}
+      style={{
+        position: 'relative',
+        marginVertical: 10,
+        width: '100%',
+        height: height * 0.05,
+        // resizeMode: 'cover',
+      }}
     >
       <View style={styles.surahHeader}>
         <Text style={{ fontFamily: 'Amiri_Bold', fontSize: 20 }}>{name}</Text>
       </View>
-      <SurahHeader />
+      <Image
+        source={require('assets/images/SurahHeader.png')}
+        style={{
+          width: '100%',
+          height: '100%',
+          resizeMode: 'cover',
+        }}
+      />
+
+      {/* <SurahHeader /> */}
     </View>
   );
 
@@ -221,6 +244,7 @@ const MushafScreen = () => {
 
   return (
     <Screen style={{ padding: 10 }}>
+      {/* <Swiper /> */}
       <Swipeable
         renderLeftActions={renderDummy}
         renderRightActions={renderDummy}

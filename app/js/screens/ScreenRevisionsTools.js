@@ -15,7 +15,7 @@ import StringsManager from "js/helpers/StringsManager";
 import RevisionsManager from "js/helpers/RevisionsManager";
 import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
-
+import Screen from "app/components/Screen";
 class ScreenRevisionsTools extends Component {
   constructor(props) {
     super(props);
@@ -50,13 +50,13 @@ class ScreenRevisionsTools extends Component {
       },
       {
         id: 5,
-        title: this.stringsManager.getStr(strings.STR_RESET_ALL),
+        title: this.stringsManager.getStr(strings.STR_BACKUP),
         onPress: this.onPressBackup.bind(this),
         icon: "sd_storage",
       },
       {
         id: 6,
-        title: this.stringsManager.getStr(strings.STR_DEL_ALL),
+        title: this.stringsManager.getStr(strings.STR_RESTORE),
         onPress: this.onPressRestore.bind(this),
         icon: "restore",
       },
@@ -91,8 +91,6 @@ class ScreenRevisionsTools extends Component {
     };
   }
   renderItem(item) {
-    console.log(item.item.title);
-
     return (
       <TouchableWithoutFeedback onPress={item.item.onPress}>
         <View style={styles.item}>

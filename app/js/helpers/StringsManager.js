@@ -257,7 +257,11 @@ export default class StringsManager {
       if (strLang == "en") return "Start Now";
       return "unsupported language";
     }
-
+    if (nStrID == STR_AGREE) {
+      if (strLang == "ar") return "حسنا";
+      if (strLang == "en") return "OK";
+      return "unsupported language";
+    }
     if (nStrID == STR_DAYBADGE_NAME) {
       if (strLang == "ar") return "وسام المبادرة";
       if (strLang == "en") return "Initiative Badge";
