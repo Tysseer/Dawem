@@ -50,13 +50,13 @@ class ScreenRevisionsTools extends Component {
       },
       {
         id: 5,
-        title: this.stringsManager.getStr(strings.STR_RESET_ALL),
+        title: this.stringsManager.getStr(strings.STR_BACKUP),
         onPress: this.onPressBackup.bind(this),
         icon: "sd_storage",
       },
       {
         id: 6,
-        title: this.stringsManager.getStr(strings.STR_DEL_ALL),
+        title: this.stringsManager.getStr(strings.STR_RESTORE),
         onPress: this.onPressRestore.bind(this),
         icon: "restore",
       },
@@ -101,15 +101,13 @@ class ScreenRevisionsTools extends Component {
   }
   render() {
     return (
-      <Screen>
-        <View style={styles.container}>
-          <FlatList
-            data={this.commands}
-            renderItem={this.renderItem.bind(this)}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-      </Screen>
+      <View style={styles.container}>
+        <FlatList
+          data={this.commands}
+          renderItem={this.renderItem.bind(this)}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
     );
   }
 }
