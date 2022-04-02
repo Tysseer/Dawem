@@ -15,7 +15,7 @@ import StringsManager from "js/helpers/StringsManager";
 import RevisionsManager from "js/helpers/RevisionsManager";
 import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
-
+import Screen from "app/components/Screen";
 class ScreenRevisionsTools extends Component {
   constructor(props) {
     super(props);
@@ -91,8 +91,6 @@ class ScreenRevisionsTools extends Component {
     };
   }
   renderItem(item) {
-    console.log(item.item.title);
-
     return (
       <TouchableWithoutFeedback onPress={item.item.onPress}>
         <View style={styles.item}>
@@ -103,13 +101,15 @@ class ScreenRevisionsTools extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={this.commands}
-          renderItem={this.renderItem.bind(this)}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      <Screen>
+        <View style={styles.container}>
+          <FlatList
+            data={this.commands}
+            renderItem={this.renderItem.bind(this)}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
+      </Screen>
     );
   }
 }
