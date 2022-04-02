@@ -8,6 +8,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   I18nManager,
+  FlatList,
 } from "react-native";
 import * as strings from "js/helpers/StringsManager";
 import StringsManager from "js/helpers/StringsManager";
@@ -22,16 +23,46 @@ class ScreenRevisionsTools extends Component {
     this.stringsManager.setLanguage(this.props.strLang);
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
+    this.commands = [
+      {
+        id: 1,
+        title: this.stringsManager.getStr(strings.STR_BY_JUZUU),
+        onPress: this.onPressByJuzuu.bind(this),
+        icon: "add",
+      },
+      {
+        id: 2,
+        title: this.stringsManager.getStr(strings.STR_BY_SURAH),
+        onPress: this.onPressBySurah.bind(this),
+        icon: "add",
+      },
+      {
+        id: 3,
+        title: this.stringsManager.getStr(strings.STR_RESET_ALL),
+        onPress: this.onPressResetAll.bind(this),
+        icon: "check",
+      },
+      {
+        id: 4,
+        title: this.stringsManager.getStr(strings.STR_DEL_ALL),
+        onPress: this.onPressDeleteAll.bind(this),
+        icon: "delete_forever",
+      },
+      {
+        id: 5,
+        title: this.stringsManager.getStr(strings.STR_RESET_ALL),
+        onPress: this.onPressBackup.bind(this),
+        icon: "sd_storage",
+      },
+      {
+        id: 6,
+        title: this.stringsManager.getStr(strings.STR_DEL_ALL),
+        onPress: this.onPressRestore.bind(this),
+        icon: "restore",
+      },
+    ];
   }
-  getToolbarTitleStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? 18 : 16,
-      lineHeight: this.props.strLang == "ar" ? 32 : 25,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-      textAlign: "center",
-      color: "#00711C",
-    };
-  }
+
   onPressByJuzuu() {
     console.log("add by Juzu");
   }
@@ -50,66 +81,34 @@ class ScreenRevisionsTools extends Component {
   onPressRestore() {
     console.log("restore");
   }
+  getItemTextStyle() {
+    return {
+      fontSize: this.props.strLang == "ar" ? 20 : 16,
+      lineHeight: this.props.strLang == "ar" ? 28 : 22,
+      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
+      marginHorizontal: 5,
+      color: "#0B721E",
+    };
+  }
+  renderItem(item) {
+    console.log(item.item.title);
+
+    return (
+      <TouchableWithoutFeedback onPress={item.item.onPress}>
+        <View style={styles.item}>
+          <Text style={this.getItemTextStyle()}>{item.item.title}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
   render() {
     return (
-      <View style={styles.mainContainer}>
-        <View style={[styles.separator, { alignSelf: "center" }]}></View>
-        <Text style={this.getToolbarTitleStyle()}>
-          {this.stringsManager.getStr(strings.STR_ADD_KHATMAH)}
-        </Text>
-
-        <View style={styles.toolbar}>
-          <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_BY_JUZUU)}
-            handler={this.onPressByJuzuu.bind(this)}
-            lang={this.props.strLang}
-            style={{ marginHorizontal: 3 }}
-          />
-          <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_BY_SURAH)}
-            handler={this.onPressBySurah.bind(this)}
-            lang={this.props.strLang}
-            style={{ marginHorizontal: 3 }}
-          />
-        </View>
-        <View style={[styles.separator, { alignSelf: "center" }]}></View>
-        <Text style={this.getToolbarTitleStyle()}>
-          {this.stringsManager.getStr(strings.STR_MOD_REV_LIST)}
-        </Text>
-
-        <View style={styles.toolbar}>
-          <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_RESET_ALL)}
-            handler={this.onPressResetAll.bind(this)}
-            lang={this.props.strLang}
-            style={{ marginHorizontal: 3 }}
-          />
-          <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_DEL_ALL)}
-            handler={this.onPressDeleteAll.bind(this)}
-            lang={this.props.strLang}
-            style={{ marginHorizontal: 3 }}
-          />
-        </View>
-        <View style={[styles.separator, { alignSelf: "center" }]}></View>
-        <Text style={this.getToolbarTitleStyle()}>
-          {this.stringsManager.getStr(strings.STR_BACKUP_RESTORE)}
-        </Text>
-
-        <View style={styles.toolbar}>
-          <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_BACKUP)}
-            handler={this.onPressResetAll.bind(this)}
-            lang={this.props.strLang}
-            style={{ marginHorizontal: 3 }}
-          />
-          <ActionBtn
-            text={this.stringsManager.getStr(strings.STR_RESTORE)}
-            handler={this.onPressDeleteAll.bind(this)}
-            lang={this.props.strLang}
-            style={{ marginHorizontal: 3 }}
-          />
-        </View>
+      <View style={styles.container}>
+        <FlatList
+          data={this.commands}
+          renderItem={this.renderItem.bind(this)}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     );
   }
@@ -128,26 +127,18 @@ export default connect(
   mapDispatchToProps()
 )(ScreenRevisionsTools);
 const styles = StyleSheet.create({
-  mainContainer: {
+  container: {
     flex: 1,
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    backgroundColor: "#EEEEEE",
   },
-  toolbar: {
-    flexDirection: "row",
-    padding: 8,
+  item: {
+    backgroundColor: "#0B721E0D",
+    height: 55,
+    marginVertical: 16,
+    marginHorizontal: 16,
+    justifyContent: "center",
   },
-
-  separator: {
-    borderColor: "#88888859",
-    borderWidth: 1,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    height: 2,
-    width: "93%",
-    marginVertical: 2,
+  title: {
+    fontSize: 32,
+    color: "red",
   },
 });

@@ -304,13 +304,13 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_BY_JUZUU) {
-      if (strLang == "ar") return "بالجزء";
-      if (strLang == "en") return "By Juzuu";
+      if (strLang == "ar") return "إضافة ختمة (بالجزء)";
+      if (strLang == "en") return "Add Khatam (by Suras)";
       return "unsupported language";
     }
     if (nStrID == STR_BY_SURAH) {
-      if (strLang == "ar") return "بالسورة";
-      if (strLang == "en") return "By Suras";
+      if (strLang == "ar") return "إضافة ختمة (بالسورة)";
+      if (strLang == "en") return "Add Khatam (by Juzuu)";
       return "unsupported language";
     }
     if (nStrID == STR_MOD_REV_LIST) {
@@ -319,13 +319,13 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_RESET_ALL) {
-      if (strLang == "ar") return "تحديث الكل";
-      if (strLang == "en") return "Refresh All";
+      if (strLang == "ar") return "تحديث كل الأوراد";
+      if (strLang == "en") return "Refresh All Revisions";
       return "unsupported language";
     }
     if (nStrID == STR_DEL_ALL) {
-      if (strLang == "ar") return "حذف الكل";
-      if (strLang == "en") return "Clear All";
+      if (strLang == "ar") return "حذف كل الأوراد";
+      if (strLang == "en") return "Delete All Revisions";
       return "unsupported language";
     }
     if (nStrID == STR_BACKUP_RESTORE) {
@@ -334,18 +334,18 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_BACKUP) {
-      if (strLang == "ar") return "حفظ";
-      if (strLang == "en") return "Save";
+      if (strLang == "ar") return "تخزين جميع الأوراد";
+      if (strLang == "en") return "Save Revisions";
       return "unsupported language";
     }
     if (nStrID == STR_RESTORE) {
-      if (strLang == "ar") return "استعادة";
-      if (strLang == "en") return "Restore";
+      if (strLang == "ar") return "استعادةالأوراد المخزنة";
+      if (strLang == "en") return "Restore Revisions";
       return "unsupported language";
     }
     if (nStrID == STR_REV_TOOLS) {
-      if (strLang == "ar") return "أدوات";
-      if (strLang == "en") return "Tools";
+      if (strLang == "ar") return "إدارة الأوراد";
+      if (strLang == "en") return "Revisions Manager";
       return "unsupported language";
     }
     if (nStrID == STR_QURAN) {
