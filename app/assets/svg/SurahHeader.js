@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import Svg, {
   Path,
   Defs,
@@ -10,16 +10,18 @@ import Svg, {
   G,
 } from 'react-native-svg';
 
+const { height, width } = Dimensions.get('window');
 function SurahHeader(props) {
   return (
     <Svg
       width="100%"
-      height={80}
+      height={height * 0.05}
       viewBox="0 0 865 206"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      {...props}
+      style={{ backgroundColor: '#ff0' }}
+      // {...props}
     >
       <Path fill="url(#pattern0)" d="M0 0H865V206H0z" />
       <Defs>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,13 +6,12 @@ import {
   I18nManager,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-
 import { getFontFamily } from '../js/helpers/scripts';
 import { colors } from '../constants';
+import { useSelector } from 'react-redux';
 
-const Header = ({ lang, title, empty, showIcon = true }) => {
-  const navigation = useNavigation();
+const Header = ({ title, empty, showIcon = true }) => {
+  const reducer = useSelector((state) => state);
 
   return (
     <View style={styles.container}>
@@ -33,7 +31,9 @@ const Header = ({ lang, title, empty, showIcon = true }) => {
           )}
 
           {title && (
-            <Text style={[styles.startTitle, getFontFamily(lang,true)]}>
+            <Text
+              style={[styles.startTitle, getFontFamily(reducer.strLang, true)]}
+            >
               {title}
             </Text>
           )}
