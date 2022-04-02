@@ -13,59 +13,43 @@ import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import ActionBtn from "app/components/ActionBtn";
 import Screen from "app/components/Screen";
-import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
+// import * as Notifications from "expo-notifications";
+// import Constants from "expo-constants";
 
 class ScreenWelcome extends Component {
   constructor(props) {
     super(props);
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-      }),
-    });
-    this.registerForPushNotificationsAsync();
+    // this.registerForPushNotificationsAsync();
     //console.log(Dimensions.get("window"));
   }
 
   async okButtonPressed() {
-    await this.schedulePushNotification();
     this.props.navigation.navigate("Home", { screen: "ScrList" });
   }
 
-  schedulePushNotification = async () => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've got mail! 📬",
-        body: "Here is the notification body",
-      },
-      trigger: { seconds: 1 },
-    });
-  };
-
-  registerForPushNotificationsAsync = async () => {
-    let token;
-    if (Constants.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-    } else {
-      // alert('Must use physical device for Push Notifications');
-    }
-    return token;
-  };
+  // registerForPushNotificationsAsync = async () => {
+  //   let token;
+  //   if (Constants.isDevice) {
+  //     const { status: existingStatus } =
+  //       await Notifications.getPermissionsAsync();
+  //     let finalStatus = existingStatus;
+  //     if (existingStatus !== "granted") {
+  //       const { status } = await Notifications.requestPermissionsAsync();
+  //       finalStatus = status;
+  //     }
+  //     if (finalStatus !== "granted") {
+  //       alert("Failed to get push token for push notification!");
+  //       return;
+  //     }
+  //     token = (await Notifications.getExpoPushTokenAsync()).data;
+  //     console.log(token);
+  //   } else {
+  //     // alert('Must use physical device for Push Notifications');
+  //   }
+  //   return token;
+  // };
 
   render() {
     return (
