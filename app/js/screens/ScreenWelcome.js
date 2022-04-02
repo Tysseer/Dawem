@@ -32,7 +32,7 @@ class ScreenWelcome extends Component {
 
   async okButtonPressed() {
     await this.schedulePushNotification();
-    // this.props.navigation.navigate("Home", { screen: "ScrList" });
+    this.props.navigation.navigate("Home", { screen: "ScrList" });
   }
 
   schedulePushNotification = async () => {
