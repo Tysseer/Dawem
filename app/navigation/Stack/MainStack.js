@@ -10,7 +10,7 @@ import MushafScreen from "../../js/screens/MushafScreen";
 import ScreenDayBadge from "../../js/screens/ScreenDayBadge";
 import ScreenMonthBadge from "../../js/screens/ScreenMonthBadge";
 import ScreenWeekBadge from "../../js/screens/ScreenWeekBadge";
-import ScreenRevisionsTools from "../../js/screens/ScreenRevisionsTools";
+// import ScreenRevisionsTools from "../../js/screens/ScreenRevisionsTools";
 import StringsManager from "js/helpers/StringsManager";
 import * as strings from "js/helpers/StringsManager";
 import { useSelector } from "react-redux";
@@ -105,7 +105,7 @@ export default function MainStack() {
           ),
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ScrRevTools"
         component={ScreenRevisionsTools}
         options={{
@@ -116,7 +116,7 @@ export default function MainStack() {
             />
           ),
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }

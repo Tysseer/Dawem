@@ -26,7 +26,7 @@ class ScreenWelcome extends Component {
   }
 
   async okButtonPressed() {
-    this.props.navigation.navigate("Home", { screen: "ScrList" });
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
 
   // registerForPushNotificationsAsync = async () => {

@@ -9,16 +9,23 @@ import Doaa from "assets/svg/Doaa.js";
 import Mushaf from "assets/svg/Mushaf";
 import MainStack from "../Stack/MainStack";
 import ScreenRevisionsTools from "../../js/screens/ScreenRevisionsTools";
+import Header from "app/components/Header";
+import StringsManager from "../../js/helpers/StringsManager";
+import * as strings from "js/helpers/StringsManager";
+import { useSelector } from "react-redux";
 
 const BottomTab = createBottomTabNavigator();
 
 export default function BottomNav() {
+  let stringsManager = new StringsManager();
+  const strLang = useSelector((state) => state.strLang);
+  stringsManager.setLanguage(strLang);
   return (
     <BottomTab.Navigator
       initialRouteName="Main"
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: colors.primary,
-        headerShown: false,
+        headerShown: true,
         tabBarShowLabel: false,
         tabBarVisible: false,
         tabBarIcon: ({ focused }) => {
@@ -44,9 +51,33 @@ export default function BottomNav() {
         },
       })}
     >
-      <BottomTab.Screen name="Tools" component={ScreenRevisionsTools} />
-      <BottomTab.Screen name="Main" component={MainStack} />
-      <BottomTab.Screen name="Settings" component={ScreenSettings} />
+      <BottomTab.Screen
+        name="Tools"
+        component={ScreenRevisionsTools}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_REV_TOOLS)}
+              showIcon={false}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Main"
+        component={MainStack}
+        options={{
+          header: () => null,
+        }}
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={ScreenSettings}
+        options={{
+          header: () => null,
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
