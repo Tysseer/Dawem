@@ -13,9 +13,11 @@ import {
 import * as strings from "js/helpers/StringsManager";
 import StringsManager from "js/helpers/StringsManager";
 import RevisionsManager from "js/helpers/RevisionsManager";
+import Revision from "js/helpers/Revision";
 import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
 import Screen from "app/components/Screen";
+import QuranIndexer from "../helpers/QuranIndexer";
 class ScreenRevisionsTools extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +25,7 @@ class ScreenRevisionsTools extends Component {
     this.stringsManager.setLanguage(this.props.strLang);
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
+    this.quranIndexer = new QuranIndexer();
     this.commands = [
       {
         id: 1,
@@ -64,16 +67,40 @@ class ScreenRevisionsTools extends Component {
   }
 
   onPressByJuzuu() {
-    console.log("add by Juzu");
+    var revs = [];
+    for (var i = 1; i <= 30; i++)
+      revs.push(
+        new Revision(
+          this.revisionsManager.getNewRevisionId(),
+          0,
+          this.quranIndexer.getJuzuuStartAyah(i),
+          this.quranIndexer.getJuzuuStartAyah(i + 1) - 1,
+          this.getPastDate(1000)
+        )
+      );
+    revs[29].end = this.quranIndexer.getnumAyas();
+    this.props.reduxActionAddMultipleRevisions(revs);
   }
   onPressBySurah() {
-    console.log("add by Surah");
+    var revs = [];
+    for (var i = 1; i <= 114; i++)
+      revs.push(
+        new Revision(
+          this.revisionsManager.getNewRevisionId(),
+          0,
+          this.quranIndexer.getArrSurahAyahStart(i),
+          this.quranIndexer.getArrSurahAyahStart(i + 1) - 1,
+          this.getPastDate(1000)
+        )
+      );
+    revs[29].end = this.quranIndexer.getnumAyas();
+    this.props.reduxActionAddMultipleRevisions(revs);
   }
   onPressResetAll() {
-    console.log("reset all");
+    this.props.reduxActionResetAllRevisions();
   }
   onPressDeleteAll() {
-    console.log("delete all");
+    this.props.reduxActionDelAllRevisions();
   }
   onPressBackup() {
     console.log("backup");
@@ -117,7 +144,9 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = () => {
   return {
-    reduxActionSetLanguage,
+    reduxActionDelAllRevisions,
+    reduxActionResetAllRevisions,
+    reduxActionAddMultipleRevisions,
   };
 };
 export default connect(

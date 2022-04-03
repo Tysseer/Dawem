@@ -13,8 +13,8 @@ import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import ActionBtn from "app/components/ActionBtn";
 import Screen from "app/components/Screen";
-// import * as Notifications from "expo-notifications";
-// import Constants from "expo-constants";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
 class ScreenWelcome extends Component {
   constructor(props) {

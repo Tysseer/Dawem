@@ -1,3 +1,5 @@
+import TouchHistoryMath from "react-native/Libraries/Interaction/TouchHistoryMath";
+
 export default class QuranIndexer {
   constructor() {
     this.arrPageFirstAyah = []; // the global index of first ayah in each page
@@ -7,6 +9,7 @@ export default class QuranIndexer {
     this.arrSurahNamesTrns = []; // the names in transliration
     this.arrSurahNumAyah = []; // number of ayat for each surah
     this.arrSurahAyahStart = []; // the global index of first ayah in each surah
+    this.arrJuzuuAyahStart = []; // the global index of first ayah in each Juzuu
   }
   getSurahNameAr(iSurah /*one-based */) {
     iSurah = this.secureIndexRange(iSurah, 114);
@@ -38,6 +41,11 @@ export default class QuranIndexer {
       }
     }
     return 114;
+  }
+  getArrSurahAyahStart(iSurah) {
+    iSurah = this.secureIndexRange(iSurah, 114);
+    if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
+    return this.arrSurahAyahStart[i];
   }
   getPageFromAyah(iAyah /*global index */) {
     iAyah = this.secureIndexRange(iAyah, 6236);
@@ -110,6 +118,11 @@ export default class QuranIndexer {
     if (iPage >= 582) return 30;
     return Math.floor((iPage - 2) / 20) + 1;
   }
+  getJuzuuStartAyah(iJuzu) {
+    iJuzu = this.secureIndexRange(iJuzu, 30);
+    return this.arrJuzuuAyahStart[iJuzu];
+  }
+
   getPageFromJuzu(iJuzu) {
     iJuzu = this.secureIndexRange(iJuzu, 30);
     if (iJuzu == 1) return 1;
@@ -117,6 +130,15 @@ export default class QuranIndexer {
   }
   getNumPages() {
     return 604; // todo: read from db
+  }
+  getNumAyas() {
+    return 6236; // todo: read from db
+  }
+  getNumJuzuu() {
+    return 30; // todo: read from db
+  }
+  getNumSuras() {
+    return 114; // todo: read from db
   }
   secureIndexRange(iIndx, iRange) {
     while (iIndx < 1) iIndx += iRange;
@@ -1218,6 +1240,32 @@ export default class QuranIndexer {
       19, 26, 30, 20, 15, 21, 11, 8, 8, 19, 5, 8, 8, 11, 11, 8, 3, 9, 5, 4, 7,
       3, 6, 3, 5, 4, 5, 6,
     ];
+  }
+  fillArrJuzuuAyahStart() {
+    this.arrJuzuuAyahStart = [
+      0, 1, 149, 260, 385, 517, 641, 751, 900, 1042, 1201, 1328, 1479, 1649,
+      1803, 2030, 2215, 2484, 2674, 2876, 3215, 3386, 3564, 3733, 4090, 4265,
+      4511, 4706, 5105, 5242, 5673,
+    ];
+    /* to calculate:
+     this.arrJuzuuAyahStart = [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      21, 22, 23, 24, 25,
+    ];
+    var strtAyahlocal = [
+      0, 1, 142, 253, 92, 24, 148, 82, 111, 88, 41, 93, 6, 53, 1, 1, 75, 1, 1,
+      21, 56, 46, 31, 28, 32, 47, 1, 31, 1, 1, 1,
+    ];
+    var strtSurah = [
+      0, 1, 2, 2, 3, 4, 4, 5, 6, 7, 8, 9, 11, 12, 15, 17, 18, 21, 23, 25, 27,
+      29, 33, 36, 39, 41, 46, 51, 58, 67, 78,
+    ];
+    for (var i = 1; i <= 30; i++) {
+      this.arrJuzuuAyahStart[i] = this.getAyahGlobalIndx(
+        strtSurah[i],
+        strtAyahlocal[i]
+      );
+    } */
   }
   fillArrSurahAyahStart() {
     this.arrSurahAyahStart = [

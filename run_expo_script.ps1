@@ -1,1 +1,1 @@
-react-native --v
+expo r - c
