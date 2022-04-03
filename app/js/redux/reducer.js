@@ -85,6 +85,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       revisionsManager.m_loadedRevisions = newRevArr;
       revisionsManager.sortRevisions();
       newRevArr = revisionsManager.m_loadedRevisions;
+      console.log(newRevArr);
       const newState = {
         bIsFirstRun: bIsFirstRun,
         bSkipWelcome: bSkipWelcome,
@@ -134,7 +135,6 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       return newState;
     }
     case allActions.RESET_ِِALL_REVISIONS: {
-      const addedRed = payload;
       var newRevArr = [];
       for (var i = 0; i < revisions.length; i++) {
         newRevArr.push(revisions[i]); //currev[i].clone()

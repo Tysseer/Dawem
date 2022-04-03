@@ -45,7 +45,7 @@ export default class QuranIndexer {
   getArrSurahAyahStart(iSurah) {
     iSurah = this.secureIndexRange(iSurah, 114);
     if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
-    return this.arrSurahAyahStart[i];
+    return this.arrSurahAyahStart[iSurah];
   }
   getPageFromAyah(iAyah /*global index */) {
     iAyah = this.secureIndexRange(iAyah, 6236);

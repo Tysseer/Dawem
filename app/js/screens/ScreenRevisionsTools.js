@@ -80,44 +80,56 @@ class ScreenRevisionsTools extends Component {
       rev.progress = 0;
       rev.strt = this.quranIndexer.getJuzuuStartAyah(i);
       rev.end = this.quranIndexer.getJuzuuStartAyah(i + 1) - 1;
+      rev.dateofLastRevision = this.revisionsManager.getPastDate(31 - i);
+      rev.updateNumDays();
       revs.push(rev);
     }
 
     revs[29].end = this.quranIndexer.getNumAyas();
-    console.log(revs);
+
     this.props.reduxActionAddMultipleRevisions(revs);
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressBySurah() {
     var revs = [];
-    for (var i = 1; i <= 114; i++)
-      revs.push(
-        new Revision(
-          this.revisionsManager.getNewRevisionId(),
-          this.props.strLang == "ar"
-            ? this.quranIndexer.getSurahNameAr(i)
-            : this.quranIndexer.getSurahNameEn(i) +
-              " (" +
-              this.quranIndexer.getSurahNameTrnsTrns(i) +
-              ")",
-          this.quranIndexer.getArrSurahAyahStart(i),
-          this.quranIndexer.getArrSurahAyahStart(i + 1) - 1,
-          new Date()
-        )
+    for (var i = 1; i <= 114; i++) {
+      let rev = new Revision();
+      rev.id = this.revisionsManager.getNewRevisionId();
+      rev.title =
+        this.props.strLang == "ar"
+          ? this.quranIndexer.getSurahNameAr(i)
+          : this.quranIndexer.getSurahNameEn(i) +
+            " (" +
+            this.quranIndexer.getSurahNameTrnsTrns(i) +
+            ")";
+      rev.progress = 0;
+      rev.strt = this.quranIndexer.getArrSurahAyahStart(i);
+      rev.end = this.quranIndexer.getArrSurahAyahStart(i + 1) - 1;
+      rev.dateofLastRevision = this.revisionsManager.getPastDate(
+        31 - i / 30 + 1
       );
+      rev.updateNumDays();
+      revs.push(rev);
+    }
+
     revs[29].end = this.quranIndexer.getNumAyas();
     this.props.reduxActionAddMultipleRevisions(revs);
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressResetAll() {
     this.props.reduxActionResetAllRevisions();
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressDeleteAll() {
     this.props.reduxActionDelAllRevisions();
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressBackup() {
     console.log("backup");
   }
   onPressRestore() {
     console.log("restore");
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
   getItemTextStyle() {
     return {
