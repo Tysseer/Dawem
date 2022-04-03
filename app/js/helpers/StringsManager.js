@@ -49,6 +49,7 @@ export const STR_BACKUP = 48;
 export const STR_RESTORE = 49;
 export const STR_REV_TOOLS = 50;
 export const STR_QURAN = 51;
+export const STR_JUZUU = 52;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -355,6 +356,11 @@ export default class StringsManager {
     if (nStrID == STR_QURAN) {
       if (strLang == "ar") return "القرآن الكريم";
       if (strLang == "en") return "Holy Quran";
+      return "unsupported language";
+    }
+    if (nStrID == STR_JUZUU) {
+      if (strLang == "ar") return "الجزء";
+      if (strLang == "en") return "Juzuu";
       return "unsupported language";
     }
     return "unkown string";

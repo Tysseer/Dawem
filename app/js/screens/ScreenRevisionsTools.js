@@ -71,18 +71,20 @@ class ScreenRevisionsTools extends Component {
   }
 
   onPressByJuzuu() {
+    var strJuzuu = this.stringsManager.getStr(strings.STR_JUZUU) + " [";
     var revs = [];
-    for (var i = 1; i <= 30; i++)
-      revs.push(
-        new Revision(
-          this.revisionsManager.getNewRevisionId(),
-          0,
-          this.quranIndexer.getJuzuuStartAyah(i),
-          this.quranIndexer.getJuzuuStartAyah(i + 1) - 1,
-          this.getPastDate(1000)
-        )
-      );
-    revs[29].end = this.quranIndexer.getnumAyas();
+    for (var i = 1; i <= 30; i++) {
+      let rev = new Revision();
+      rev.id = this.revisionsManager.getNewRevisionId();
+      rev.title = strJuzuu + i + "]";
+      rev.progress = 0;
+      rev.strt = this.quranIndexer.getJuzuuStartAyah(i);
+      rev.end = this.quranIndexer.getJuzuuStartAyah(i + 1) - 1;
+      revs.push(rev);
+    }
+
+    revs[29].end = this.quranIndexer.getNumAyas();
+    console.log(revs);
     this.props.reduxActionAddMultipleRevisions(revs);
   }
   onPressBySurah() {
@@ -91,13 +93,18 @@ class ScreenRevisionsTools extends Component {
       revs.push(
         new Revision(
           this.revisionsManager.getNewRevisionId(),
-          0,
+          this.props.strLang == "ar"
+            ? this.quranIndexer.getSurahNameAr(i)
+            : this.quranIndexer.getSurahNameEn(i) +
+              " (" +
+              this.quranIndexer.getSurahNameTrnsTrns(i) +
+              ")",
           this.quranIndexer.getArrSurahAyahStart(i),
           this.quranIndexer.getArrSurahAyahStart(i + 1) - 1,
-          this.getPastDate(1000)
+          new Date()
         )
       );
-    revs[29].end = this.quranIndexer.getnumAyas();
+    revs[29].end = this.quranIndexer.getNumAyas();
     this.props.reduxActionAddMultipleRevisions(revs);
   }
   onPressResetAll() {

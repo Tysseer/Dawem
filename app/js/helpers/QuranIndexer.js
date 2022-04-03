@@ -120,6 +120,7 @@ export default class QuranIndexer {
   }
   getJuzuuStartAyah(iJuzu) {
     iJuzu = this.secureIndexRange(iJuzu, 30);
+    if (this.arrJuzuuAyahStart.length == 0) this.fillArrJuzuuAyahStart();
     return this.arrJuzuuAyahStart[iJuzu];
   }
 

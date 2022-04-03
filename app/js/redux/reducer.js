@@ -77,9 +77,10 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
 
       return newState;
     }
-    case allActions.ADD_MULTIPLE_REVISION: {
+    case allActions.ADD_MULTIPLE_REVISIONS: {
       const revs = action.payload;
       var newRevArr = revisions.concat(revs);
+
       var revisionsManager = new RevisionsManager();
       revisionsManager.m_loadedRevisions = newRevArr;
       revisionsManager.sortRevisions();
