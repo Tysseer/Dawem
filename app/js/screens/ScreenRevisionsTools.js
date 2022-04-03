@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { reduxActionSetLanguage } from "../redux/reduxActions";
+import {
+  reduxActionDelAllRevisions,
+  reduxActionResetAllRevisions,
+  reduxActionAddMultipleRevisions,
+} from "../redux/reduxActions";
 import {
   Text,
   StyleSheet,
