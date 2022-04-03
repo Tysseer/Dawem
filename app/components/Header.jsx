@@ -4,15 +4,16 @@ import {
   TouchableOpacity,
   View,
   I18nManager,
-} from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getFontFamily } from '../js/helpers/scripts';
-import { colors } from '../constants';
-import { useSelector } from 'react-redux';
+} from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { getFontFamily } from "../js/helpers/scripts";
+import { colors } from "../constants";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 const Header = ({ title, empty, showIcon = true }) => {
   const reducer = useSelector((state) => state);
-
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {!empty && (
@@ -23,7 +24,7 @@ const Header = ({ title, empty, showIcon = true }) => {
               onPress={() => navigation.goBack()}
             >
               <MaterialCommunityIcons
-                name={`arrow-${I18nManager.isRTL ? 'right' : 'left'}`}
+                name={`arrow-${I18nManager.isRTL ? "right" : "left"}`}
                 size={24}
                 color={colors.arrow}
               />
@@ -47,11 +48,11 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     height: 60,
     paddingHorizontal: 20,
-    backgroundColor: '#EEE',
+    backgroundColor: "#EEE",
   },
   startTitle: {
     paddingHorizontal: 6,

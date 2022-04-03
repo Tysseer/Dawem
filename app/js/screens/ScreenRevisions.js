@@ -58,18 +58,18 @@ class ScreenRevisions extends Component {
 
     return (
       <Screen>
+        <BadgesBar
+          svgLoader={this.svgLoader}
+          isBadgeDay={this.state.isBadgeDay == false}
+          isBadgeMonth={this.state.isBadgeMonth == false}
+          isBadgeWeek={this.state.isBadgeWeek == false}
+          onPresses={pressHandlers}
+          onLongPresses={longPressHandlers}
+          strLang={this.props.strLang}
+          title={this.stringsManager.getStr(strings.STR_MY_GOALS)}
+        />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.listContainer}>
-            <BadgesBar
-              svgLoader={this.svgLoader}
-              isBadgeDay={this.state.isBadgeDay == false}
-              isBadgeMonth={this.state.isBadgeMonth == false}
-              isBadgeWeek={this.state.isBadgeWeek == false}
-              onPresses={pressHandlers}
-              onLongPresses={longPressHandlers}
-              strLang={this.props.strLang}
-              title={this.stringsManager.getStr(strings.STR_MY_GOALS)}
-            />
             {this.revisionsManager.m_loadedRevisions.length == 0 ? (
               <>
                 <TouchableOpacity
