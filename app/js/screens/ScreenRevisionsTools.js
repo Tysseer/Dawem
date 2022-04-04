@@ -22,6 +22,7 @@ import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
 import Screen from "app/components/Screen";
 import QuranIndexer from "../helpers/QuranIndexer";
+import { TouchableOpacity } from "react-native-gesture-handler";
 class ScreenRevisionsTools extends Component {
   constructor(props) {
     super(props);
@@ -125,10 +126,28 @@ class ScreenRevisionsTools extends Component {
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressBackup() {
-    console.log("backup");
+    var strArr = this.revisionsManager.getAsStringArr();
+    var writeStr = strArr.join("#$#");
+    // todo: ask for path here
+    // todo: write here
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressRestore() {
-    console.log("restore");
+    // todo: ask for path here
+    // todo: read here
+    var readStr = "test#$#test1#$#test2";
+    var strArr = readStr.split("#$#");
+    console.log(strArr);
+    var tempRevisionsManager = new RevisionsManager();
+    tempRevisionsManager.fillFromStrArr(strArr);
+    tempRevisionsManager.sortRevisions();
+    for (var i = 0; i < tempRevisionsManager.m_loadedRevisions; i++) {
+      tempRevisionsManager.m_loadedRevisions[i].id =
+        this.revisionsManager.getNewRevisionId();
+    }
+    this.props.reduxActionAddMultipleRevisions(
+      tempRevisionsManager.m_loadedRevisions
+    );
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   getItemTextStyle() {
@@ -142,11 +161,11 @@ class ScreenRevisionsTools extends Component {
   }
   renderItem(item) {
     return (
-      <TouchableWithoutFeedback onPress={item.item.onPress}>
+      <TouchableOpacity onPress={item.item.onPress}>
         <View style={styles.item}>
           <Text style={this.getItemTextStyle()}>{item.item.title}</Text>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     );
   }
   render() {

@@ -18,6 +18,11 @@ export default class RevisionsManager {
     }
     return iMaxId + 1;
   }
+  updateAllRevisions() {
+    for (var i = 0; i < this.m_loadedRevisions.length; i++) {
+      this.m_loadedRevisions[i].updateNumDays();
+    }
+  }
   getBadgesStates() {
     if (this.m_loadedRevisions.length == 0) return [false, false, false];
     var bIsToday = false;
@@ -224,8 +229,13 @@ export default class RevisionsManager {
     );
   }
   sortRevisions() {
+    this.updateAllRevisions();
     this.m_loadedRevisions.sort(function (a, b) {
       return b.numDays - a.numDays;
     });
   }
+  getAsStringArr() {
+    return ["test", "test1", "test2"];
+  }
+  fillFromStrArr(strArr) {}
 }
