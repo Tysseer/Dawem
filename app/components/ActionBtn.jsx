@@ -51,6 +51,7 @@ const ActionBtn = ({
           style={{
             ...styles.text,
             ...getFontFamily(lang, bold),
+
             ...extraTextStyle,
           }}
         >
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#fff",
     fontSize: 18,
+    lineHeight: 32,
     marginHorizontal: 7,
     // width: '100%',
   },
