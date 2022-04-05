@@ -73,7 +73,7 @@ class ScreenRevisionsTools extends Component {
   }
 
   onPressByJuzuu() {
-    console.log("here");
+    // console.log("here");
     var strJuzuu = this.stringsManager.getStr(strings.STR_JUZUU) + " [";
     var revs = [];
     for (var i = 1; i <= 30; i++) {
@@ -130,7 +130,7 @@ class ScreenRevisionsTools extends Component {
   onPressBackup() {
     var strArr = this.revisionsManager.getAsStringArr();
     var writeStr = strArr.join("#$#");
-    console.log(strArr);
+    // console.log(strArr);
     // todo: ask for path here
     // todo: write here
     this.props.navigation.navigate("Home", { screen: "Main" });
@@ -138,14 +138,14 @@ class ScreenRevisionsTools extends Component {
   onPressRestore() {
     // todo: ask for path here
     // todo: read here
-    console.log("backup");
+    //  console.log("backup");
     var readStr = "test#$#test1#$#test2";
-    {
-      // code for testing only
-      let tmpArr = this.revisionsManager.getAsStringArr();
-      let writeStr = tmpArr.join("#$#");
-      readStr = writeStr;
-    }
+    // {
+    //   // code for testing only
+    //   let tmpArr = this.revisionsManager.getAsStringArr();
+    //   let writeStr = tmpArr.join("#$#");
+    //   readStr = writeStr;
+    // }
     var strArr = readStr.split("#$#");
     var tempRevisionsManager = new RevisionsManager();
     tempRevisionsManager.fillFromStrArr(strArr);

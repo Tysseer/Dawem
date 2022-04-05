@@ -103,7 +103,7 @@ export default class RevisionsList extends Component {
           " " +
           this.props.stringsManager.getStr(strings.STR_DAYS_SINCE_REV);
     // Toast.showWithGravity(strMsg, Toast.SHORT, Toast.CENTER);
-    console.log(strMsg);
+    // console.log(strMsg);
   }
 
   onItemIconRevisedPress(revision) {
