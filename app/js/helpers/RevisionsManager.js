@@ -66,7 +66,7 @@ export default class RevisionsManager {
     if (version == 1) {
       let numRev = parseInt(strArr[iStrt++].split("===")[1]);
       var newRevs = [];
-      console.log(numRev);
+
       for (var i = 0; i < numRev; i++) {
         var rev = new Revision();
         let iRet = rev.fillFromStringArr(strArr, iStrt);
