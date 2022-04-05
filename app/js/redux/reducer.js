@@ -85,7 +85,6 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       revisionsManager.m_loadedRevisions = newRevArr;
       revisionsManager.sortRevisions();
       newRevArr = revisionsManager.m_loadedRevisions;
-      console.log(newRevArr);
       const newState = {
         bIsFirstRun: bIsFirstRun,
         bSkipWelcome: bSkipWelcome,

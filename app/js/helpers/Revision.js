@@ -1,19 +1,12 @@
 export default class Revision {
-  constructor(
-    id = 0,
-    title = "",
-    progress = 0,
-    strt = 0,
-    end = 0,
-    dateofLastRevision = new Date()
-  ) {
+  constructor() {
     this.id = id;
-    this.title = title;
-    this.progress = progress;
-    this.strt = strt;
-    this.end = end;
-    this.dateofLastRevision = dateofLastRevision;
-    this.updateNumDays();
+    this.title = "";
+    this.progress = 0;
+    this.strt = 0;
+    this.end = 0;
+    this.dateofLastRevision = new Date();
+    (this.numDays = 0), this.updateNumDays();
     this.lastAyahRead = -1;
   }
   fillFromSerializedObj(obj) {
@@ -80,5 +73,55 @@ export default class Revision {
     else if (this.numDays < 100) strNumDays = " " + this.numDays + ""; //two digits
     if (this.numDays < 1) strNumDays = "";
     return strNumDays;
+  }
+  getAsStringArr() {
+    var ret = [];
+    ret.push("ver === 1");
+    ret.push("lines === 10");
+    ret.push("id === " + this.id);
+    ret.push("title === " + this.title);
+    ret.push("progress === " + this.progress);
+    ret.push("strt === " + this.strt);
+    ret.push("end === " + this.end);
+    ret.push("dateofLastRevision === " + this.dateofLastRevision.toString());
+    ret.push("numDays === " + this.numDays);
+    ret.push("lastAyahRead === " + this.lastAyahRead);
+    return ret;
+  }
+  fillFromStringArr(strArr, iStrt) {
+    /* ver1 revision structure as of 4/4/2022:
+    ver = 1
+    numLines=10
+    rev.id, // int
+    rev.title,// str
+    rev.progress,//real
+    rev.strt,//int
+    rev.end,//int
+    rev.dateofLastRevision,// Date() object
+    rev.numDays,//int
+    rev.lastAyahRead,//int
+    */
+    try {
+      let version = parseInt(strArr[iStrt++].split("===")[1]);
+      if (version == 1) {
+        let numLines = parseInt(strArr[iStrt++].split("===")[1]);
+        var iConsumed = 10; // expected
+        if (numLines != iConsumed) return -3;
+        this.id = parseInt(strArr[iStrt++].split("===")[1]);
+        this.title = strArr[iStrt++].split("===")[1];
+        this.progress = parseFloat(strArr[iStrt++].split("===")[1]);
+        this.strt = parseInt(strArr[iStrt++].split("===")[1]);
+        this.end = parseInt(strArr[iStrt++].split("===")[1]);
+        this.dateofLastRevision = new Date(strArr[iStrt++].split("===")[1]);
+        this.numDays = parseInt(strArr[iStrt++].split("===")[1]);
+        this.lastAyahRead = parseInt(strArr[iStrt++].split("===")[1]);
+        return iConsumed;
+      } else {
+        return -2; //unkown version
+      }
+    } catch (error) {
+      console.log("error : " + error);
+      return -1;
+    }
   }
 }

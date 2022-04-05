@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   I18nManager,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import * as strings from "js/helpers/StringsManager";
 import StringsManager from "js/helpers/StringsManager";
@@ -22,6 +23,7 @@ import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
 import Screen from "app/components/Screen";
 import QuranIndexer from "../helpers/QuranIndexer";
+
 class ScreenRevisionsTools extends Component {
   constructor(props) {
     super(props);
@@ -71,6 +73,7 @@ class ScreenRevisionsTools extends Component {
   }
 
   onPressByJuzuu() {
+    console.log("here");
     var strJuzuu = this.stringsManager.getStr(strings.STR_JUZUU) + " [";
     var revs = [];
     for (var i = 1; i <= 30; i++) {
@@ -125,10 +128,35 @@ class ScreenRevisionsTools extends Component {
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressBackup() {
-    console.log("backup");
+    var strArr = this.revisionsManager.getAsStringArr();
+    var writeStr = strArr.join("#$#");
+    console.log(strArr);
+    // todo: ask for path here
+    // todo: write here
+    this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressRestore() {
-    console.log("restore");
+    // todo: ask for path here
+    // todo: read here
+    console.log("backup");
+    var readStr = "test#$#test1#$#test2";
+    {
+      // code for testing only
+      let tmpArr = this.revisionsManager.getAsStringArr();
+      let writeStr = tmpArr.join("#$#");
+      readStr = writeStr;
+    }
+    var strArr = readStr.split("#$#");
+    var tempRevisionsManager = new RevisionsManager();
+    tempRevisionsManager.fillFromStrArr(strArr);
+    tempRevisionsManager.sortRevisions();
+    for (var i = 0; i < tempRevisionsManager.m_loadedRevisions; i++) {
+      tempRevisionsManager.m_loadedRevisions[i].id =
+        this.revisionsManager.getNewRevisionId();
+    }
+    this.props.reduxActionAddMultipleRevisions(
+      tempRevisionsManager.m_loadedRevisions
+    );
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   getItemTextStyle() {
@@ -142,11 +170,11 @@ class ScreenRevisionsTools extends Component {
   }
   renderItem(item) {
     return (
-      <TouchableWithoutFeedback onPress={item.item.onPress}>
+      <TouchableOpacity onPress={item.item.onPress}>
         <View style={styles.item}>
           <Text style={this.getItemTextStyle()}>{item.item.title}</Text>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     );
   }
   render() {

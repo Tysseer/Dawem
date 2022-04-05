@@ -30,7 +30,7 @@ class ScreenRevisionDetails extends Component {
     this.revision = this.props.curRevision;
     if (this.revision == null) {
       this.bIsNewRev = true;
-      this.revision = new Revision(0, "", 0, 1, 1, new Date());
+      this.revision = new Revision();
 
       this.bShowSurahSelector = false;
       this.bShowAyahSelector = false;
