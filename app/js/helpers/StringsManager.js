@@ -344,7 +344,7 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_RESTORE) {
-      if (strLang == "ar") return "استعادةالأوراد المخزنة";
+      if (strLang == "ar") return "استعادة الأوراد المخزنة";
       if (strLang == "en") return "Restore Revisions";
       return "unsupported language";
     }
