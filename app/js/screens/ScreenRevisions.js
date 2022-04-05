@@ -87,6 +87,19 @@ class ScreenRevisions extends Component {
                 >
                   <Text>Mushaf</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate("CreateFile")}
+                  style={{
+                    backgroundColor: "#f0f",
+                    width: 100,
+                    height: 55,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text>file</Text>
+                </TouchableOpacity>
                 {this.getInitialPrompt()}
               </>
             ) : (

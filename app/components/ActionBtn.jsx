@@ -45,7 +45,7 @@ const ActionBtn = ({
       {...rest}
     >
       <Center style={{ flexDirection: "row" }}>
-        {icon && <Feather name="plus" size={18} color="#fff" />}
+        {icon && <Feather name="plus" size={24} color="#fff" />}
 
         <Text
           style={{
