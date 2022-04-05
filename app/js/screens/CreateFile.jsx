@@ -1,7 +1,7 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 
 const CreateFile = () => {
   const Create = async () => {
@@ -18,6 +18,7 @@ const CreateFile = () => {
       }
     );
     console.log("asset", asset);
+    Sharing.shareAsync(fileUri, {});
   };
 
   useEffect(() => {

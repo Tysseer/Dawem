@@ -38,11 +38,7 @@
         "backgroundColor": "#EEEEEE"
       },
       "useNextNotificationsApi": true,
-      "permissions": [
-        "ACCESS_FINE_LOCATION",
-        "WRITE_EXTERNAL_STORAGE",
-        "ACCESS_COARSE_LOCATION"
-      ]
+      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
