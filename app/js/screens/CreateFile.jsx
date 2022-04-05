@@ -5,7 +5,7 @@ import * as Sharing from "expo-sharing";
 
 const CreateFile = () => {
   const Create = async () => {
-    console.log("lllll");
+    console.log(FileSystem);
     let fileUri = FileSystem.documentDirectory + "test.txt";
     await FileSystem.writeAsStringAsync(fileUri, "Dawem World", {
       encoding: FileSystem.EncodingType.UTF8,

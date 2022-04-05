@@ -1,6 +1,6 @@
 export default class Revision {
   constructor() {
-    this.id = id;
+    this.id = -1;
     this.title = "";
     this.progress = 0;
     this.strt = 0;

@@ -20,10 +20,25 @@ import StringsManager from "js/helpers/StringsManager";
 import RevisionsManager from "js/helpers/RevisionsManager";
 import Revision from "js/helpers/Revision";
 import ActionBtn from "app/components/ActionBtn";
-import * as Updates from "expo-updates";
-import Screen from "app/components/Screen";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 import QuranIndexer from "../helpers/QuranIndexer";
 
+const Write = async (strWrite) => {
+  let fileUri = FileSystem.documentDirectory + "Dawem.txt";
+  await FileSystem.writeAsStringAsync(fileUri, strWrite, {
+    encoding: FileSystem.EncodingType.UTF8,
+  });
+  Sharing.shareAsync(fileUri, {});
+};
+const Read = async () => {
+  let fileUri = FileSystem.documentDirectory + "Dawem.txt";
+  // const asset = await MediaLibrary.createAssetAsync(fileUri);
+  const asset = await FileSystem.readAsStringAsync(fileUri, {
+    encoding: FileSystem.EncodingType.UTF8,
+  });
+  return asset + "";
+};
 class ScreenRevisionsTools extends Component {
   constructor(props) {
     super(props);
@@ -76,9 +91,10 @@ class ScreenRevisionsTools extends Component {
     // console.log("here");
     var strJuzuu = this.stringsManager.getStr(strings.STR_JUZUU) + " [";
     var revs = [];
+    var id = this.revisionsManager.getNewRevisionId();
     for (var i = 1; i <= 30; i++) {
       let rev = new Revision();
-      rev.id = this.revisionsManager.getNewRevisionId();
+      rev.id = id++;
       rev.title = strJuzuu + i + "]";
       rev.progress = 0;
       rev.strt = this.quranIndexer.getJuzuuStartAyah(i);
@@ -95,9 +111,10 @@ class ScreenRevisionsTools extends Component {
   }
   onPressBySurah() {
     var revs = [];
+    var id = this.revisionsManager.getNewRevisionId();
     for (var i = 1; i <= 114; i++) {
       let rev = new Revision();
-      rev.id = this.revisionsManager.getNewRevisionId();
+      rev.id = id++;
       rev.title =
         this.props.strLang == "ar"
           ? this.quranIndexer.getSurahNameAr(i)
@@ -133,13 +150,15 @@ class ScreenRevisionsTools extends Component {
     // console.log(strArr);
     // todo: ask for path here
     // todo: write here
+    Write(writeStr);
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressRestore() {
     // todo: ask for path here
     // todo: read here
     //  console.log("backup");
-    var readStr = "test#$#test1#$#test2";
+    var readStr = Read();
+    console.log(readStr);
     // {
     //   // code for testing only
     //   let tmpArr = this.revisionsManager.getAsStringArr();
@@ -150,9 +169,10 @@ class ScreenRevisionsTools extends Component {
     var tempRevisionsManager = new RevisionsManager();
     tempRevisionsManager.fillFromStrArr(strArr);
     tempRevisionsManager.sortRevisions();
+    var id = this.revisionsManager.getNewRevisionId();
+
     for (var i = 0; i < tempRevisionsManager.m_loadedRevisions; i++) {
-      tempRevisionsManager.m_loadedRevisions[i].id =
-        this.revisionsManager.getNewRevisionId();
+      tempRevisionsManager.m_loadedRevisions[i].id = id++;
     }
     this.props.reduxActionAddMultipleRevisions(
       tempRevisionsManager.m_loadedRevisions
