@@ -75,7 +75,7 @@ class ScreenRevisionsTools extends Component {
         id: 4,
         title: this.stringsManager.getStr(strings.STR_DEL_ALL),
         onPress: this.onPressDeleteAll.bind(this),
-        icon: "delete",
+        icon: "close",
       },
       {
         id: 5,
@@ -238,6 +238,7 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#EEEEEE",
   },
   item: {
     backgroundColor: "#0B721E0D",
@@ -246,6 +247,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
+    borderRadius: 10,
   },
   title: {
     fontSize: 32,
