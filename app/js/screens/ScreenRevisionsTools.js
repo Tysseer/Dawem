@@ -158,7 +158,7 @@ class ScreenRevisionsTools extends Component {
     // todo: read here
     //  console.log("backup");
     var readStr = await Read();
-    console.log("readStr", readStr);
+
     // {
     //   // code for testing only
     //   let tmpArr = this.revisionsManager.getAsStringArr();

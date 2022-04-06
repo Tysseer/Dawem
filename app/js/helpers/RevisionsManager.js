@@ -23,6 +23,12 @@ export default class RevisionsManager {
       this.m_loadedRevisions[i].updateNumDays();
     }
   }
+  ensureUniqueIds() {
+    let id = 1;
+    for (var i = 0; i < this.m_loadedRevisions.length; i++) {
+      this.m_loadedRevisions[i].id = id++;
+    }
+  }
   getBadgesStates() {
     if (this.m_loadedRevisions.length == 0) return [false, false, false];
     var bIsToday = false;
@@ -45,6 +51,7 @@ export default class RevisionsManager {
 
   sortRevisions() {
     this.updateAllRevisions();
+    this.ensureUniqueIds();
     this.m_loadedRevisions.sort(function (a, b) {
       return b.numDays - a.numDays;
     });
