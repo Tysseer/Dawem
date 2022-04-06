@@ -312,12 +312,12 @@ export default class StringsManager {
     }
     if (nStrID == STR_BY_JUZUU) {
       if (strLang == "ar") return "إضافة ختمة (بالجزء)";
-      if (strLang == "en") return "Add Khatam (by Suras)";
+      if (strLang == "en") return "Add Khatam (by Juzuu)";
       return "unsupported language";
     }
     if (nStrID == STR_BY_SURAH) {
       if (strLang == "ar") return "إضافة ختمة (بالسورة)";
-      if (strLang == "en") return "Add Khatam (by Juzuu)";
+      if (strLang == "en") return "Add Khatam (by Suras)";
       return "unsupported language";
     }
     if (nStrID == STR_MOD_REV_LIST) {
