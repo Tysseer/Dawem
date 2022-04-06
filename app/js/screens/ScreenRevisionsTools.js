@@ -29,7 +29,7 @@ const Write = async (strWrite) => {
   await FileSystem.writeAsStringAsync(fileUri, strWrite, {
     encoding: FileSystem.EncodingType.UTF8,
   });
-  Sharing.shareAsync(fileUri, {});
+  // Sharing.shareAsync(fileUri, {});
 };
 const Read = async () => {
   let fileUri = FileSystem.documentDirectory + "Dawem.txt";
@@ -144,21 +144,21 @@ class ScreenRevisionsTools extends Component {
     this.props.reduxActionDelAllRevisions();
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
-  onPressBackup() {
+  async onPressBackup() {
     var strArr = this.revisionsManager.getAsStringArr();
     var writeStr = strArr.join("#$#");
     // console.log(strArr);
     // todo: ask for path here
     // todo: write here
-    Write(writeStr);
+    await Write(writeStr);
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
-  onPressRestore() {
+  async onPressRestore() {
     // todo: ask for path here
     // todo: read here
     //  console.log("backup");
-    var readStr = Read();
-    console.log(readStr);
+    var readStr = await Read();
+    console.log("readStr", readStr);
     // {
     //   // code for testing only
     //   let tmpArr = this.revisionsManager.getAsStringArr();
