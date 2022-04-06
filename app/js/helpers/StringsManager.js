@@ -134,15 +134,16 @@ export default class StringsManager {
     }
     if (nStrID == STR_DAY_BADGE_MIN_REV) {
       if (strLang == "ar")
-        return "لا ينفتح هذا الوسام إلا بعد إضافة 5 مراجعات!";
+        return "لا ينفتح هذا الوسام إلا بعد إضافة 3 مراجعات!";
       if (strLang == "en")
-        return "This badge will be active after adding at least 5 revisions!";
+        return "This badge will be active after adding at least 3 revisions!";
       return "unsupported language";
     }
     if (nStrID == STR_DAY_BADGE_ACTIVE) {
       if (strLang == "ar")
         return "بارك الله فيك! لقد قمت بتفعيل وسام المبادرة.";
-      if (strLang == "en") return "Great Job! You activated your Dawem Badge.";
+      if (strLang == "en")
+        return "Great Job! You activated your Initiative Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_DAY_BADGE_INACTIVE) {
@@ -169,7 +170,8 @@ export default class StringsManager {
     if (nStrID == STR_MONTH_BADGE_ACTIVE) {
       if (strLang == "ar")
         return " فتح الله عليك أبواب الخير! لقد قمت بتفعيل وسام المصاحبة, وصرت صاحبا للقرآن.";
-      if (strLang == "en") return "Great Job! You activated your Dawem Badge.";
+      if (strLang == "en")
+        return "Great Job! You activated your Companionship Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_MONTH_BADGE_INACTIVE) {
@@ -197,7 +199,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "زادك الله فضلا! لقد قمت بتفعيل وسام المثابرة, وصرت من أهل القرآن.";
       if (strLang == "en")
-        return "Great Job! You activated your Ultimate Dawem Badge.";
+        return "Great Job! You activated your Perseverance Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_WEEK_BADGE_INACTIVE) {
