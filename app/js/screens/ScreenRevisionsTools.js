@@ -30,8 +30,6 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 const Write = async (strWrite) => {
-  console.log("strWrite", strWrite);
-
   let fileUri = FileSystem.documentDirectory + "Dawem.txt";
   await FileSystem.writeAsStringAsync(fileUri, strWrite, {
     encoding: FileSystem.EncodingType.UTF8,
@@ -44,7 +42,7 @@ const Read = async () => {
   const asset = await FileSystem.readAsStringAsync(fileUri, {
     encoding: FileSystem.EncodingType.UTF8,
   });
-  console.log("asset", asset);
+
   return asset + "";
 };
 class ScreenRevisionsTools extends Component {
@@ -97,6 +95,7 @@ class ScreenRevisionsTools extends Component {
 
   onPressByJuzuu() {
     // console.log("here");
+    this.revisionsManager.m_loadedRevisions = this.props.revisions;
     var strJuzuu = this.stringsManager.getStr(strings.STR_JUZUU) + " [";
     var revs = [];
     var id = this.revisionsManager.getNewRevisionId();
@@ -115,9 +114,11 @@ class ScreenRevisionsTools extends Component {
     revs[29].end = this.quranIndexer.getNumAyas();
 
     this.props.reduxActionAddMultipleRevisions(revs);
+
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressBySurah() {
+    this.revisionsManager.m_loadedRevisions = this.props.revisions;
     var revs = [];
     var id = this.revisionsManager.getNewRevisionId();
     for (var i = 1; i <= 114; i++) {
@@ -142,17 +143,22 @@ class ScreenRevisionsTools extends Component {
 
     revs[29].end = this.quranIndexer.getNumAyas();
     this.props.reduxActionAddMultipleRevisions(revs);
+
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressResetAll() {
+    this.revisionsManager.m_loadedRevisions = this.props.revisions;
     this.props.reduxActionResetAllRevisions();
+
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   onPressDeleteAll() {
     this.props.reduxActionDelAllRevisions();
+    this.revisionsManager.m_loadedRevisions = [];
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   async onPressBackup() {
+    this.revisionsManager.m_loadedRevisions = this.props.revisions;
     var strArr = this.revisionsManager.getAsStringArr();
     var writeStr = strArr.join("#$#");
     // console.log(strArr);
@@ -185,6 +191,8 @@ class ScreenRevisionsTools extends Component {
     this.props.reduxActionAddMultipleRevisions(
       tempRevisionsManager.m_loadedRevisions
     );
+    this.revisionsManager.m_loadedRevisions = this.props.revisions;
+
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   getItemTextStyle() {
