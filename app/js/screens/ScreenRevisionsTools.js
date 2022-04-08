@@ -30,6 +30,8 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 const Write = async (strWrite) => {
+  console.log("strWrite", strWrite);
+
   let fileUri = FileSystem.documentDirectory + "Dawem.txt";
   await FileSystem.writeAsStringAsync(fileUri, strWrite, {
     encoding: FileSystem.EncodingType.UTF8,
@@ -42,6 +44,7 @@ const Read = async () => {
   const asset = await FileSystem.readAsStringAsync(fileUri, {
     encoding: FileSystem.EncodingType.UTF8,
   });
+  console.log("asset", asset);
   return asset + "";
 };
 class ScreenRevisionsTools extends Component {
