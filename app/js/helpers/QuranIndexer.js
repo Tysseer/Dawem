@@ -6,7 +6,8 @@ export default class QuranIndexer {
     this.arrSurahPage = []; // the page index for surah starting ayah
     this.arrSurahNamesAr = []; // the names in arabic
     this.arrSurahNamesEn = []; // the names in english
-    this.arrSurahNamesTrns = []; // the names in transliration
+    this.arrSurahNamesTrns = []; // the names in transliteration
+    this.arrSurahNamesEnTrns = []; // names in format:  english (trans)
     this.arrSurahNumAyah = []; // number of ayat for each surah
     this.arrSurahAyahStart = []; // the global index of first ayah in each surah
     this.arrJuzuuAyahStart = []; // the global index of first ayah in each Juzuu
@@ -20,6 +21,11 @@ export default class QuranIndexer {
     iSurah = this.secureIndexRange(iSurah, 114);
     if (this.arrSurahNamesEn.length == 0) this.fillArrSurahNamesEn();
     return this.arrSurahNamesEn[iSurah];
+  }
+  getSurahNameEnTrns(iSurah /*one-based */) {
+    iSurah = this.secureIndexRange(iSurah, 114);
+    if (this.arrSurahNamesEnTrns.length == 0) this.fillArrSurahNamesEnTrns();
+    return this.arrSurahNamesEnTrns[iSurah];
   }
   getSurahNameTrns(iSurah /*one-based */) {
     iSurah = this.secureIndexRange(iSurah, 114);
@@ -1229,6 +1235,125 @@ export default class QuranIndexer {
       "Al-Ikhlaas",
       "Al-Falaq",
       "An-Naas",
+    ];
+  }
+  fillArrSurahNamesEnTrns() {
+    this.arrSurahNamesEnTrns = [
+      "",
+      "The Opening (Al-Faatiha) ",
+      "The Cow (Al-Baqara) ",
+      "The Family of Imraan (Aal-i-Imraan) ",
+      "The Women (An-Nisaa) ",
+      "The Table (Al-Maaida) ",
+      "The Cattle (Al-An'aam) ",
+      "The Heights (Al-A'raaf) ",
+      "The Spoils of War (Al-Anfaal) ",
+      "The Repentance (At-Tawba) ",
+      "Jonas (Yunus) ",
+      "Hud (Hud) ",
+      "Joseph (Yusuf) ",
+      "The Thunder (Ar-Ra'd) ",
+      "Abraham (Ibrahim) ",
+      "The Rock (Al-Hijr) ",
+      "The Bee (An-Nahl) ",
+      "The Night Journey (Al-Israa) ",
+      "The Cave (Al-Kahf) ",
+      "Mary (Maryam) ",
+      "Taa-Haa (Taa-Haa) ",
+      "The Prophets (Al-Anbiyaa) ",
+      "The Pilgrimage (Al-Hajj) ",
+      "The Believers (Al-Muminoon) ",
+      "The Light (An-Noor) ",
+      "The Criterion (Al-Furqaan) ",
+      "The Poets (Ash-Shu'araa) ",
+      "The Ant (An-Naml) ",
+      "The Stories (Al-Qasas) ",
+      "The Spider (Al-Ankaboot) ",
+      "The Romans (Ar-Room) ",
+      "Luqman (Luqman) ",
+      "The Prostration (As-Sajda) ",
+      "The Clans (Al-Ahzaab) ",
+      "Sheba (Saba) ",
+      "The Originator (Faatir) ",
+      "Yaseen (Yaseen) ",
+      "Those drawn up in Ranks (As-Saaffaat) ",
+      "The letter Saad (Saad) ",
+      "The Groups (Az-Zumar) ",
+      "The Forgiver (Ghaafir) ",
+      "Explained in detail (Fussilat) ",
+      "Consultation (Ash-Shura) ",
+      "Ornaments of gold (Az-Zukhruf) ",
+      "The Smoke (Ad-Dukhaan) ",
+      "Crouching (Al-Jaathiya) ",
+      "The Dunes (Al-Ahqaf) ",
+      "Muhammad (Muhammad) ",
+      "The Victory (Al-Fath) ",
+      "The Inner Apartments (Al-Hujuraat) ",
+      "The letter Qaaf (Qaaf) ",
+      "The Winnowing Winds (Adh-Dhaariyat) ",
+      "The Mount (At-Tur) ",
+      "The Star (An-Najm) ",
+      "The Moon (Al-Qamar) ",
+      "The Beneficent (Ar-Rahmaan) ",
+      "The Inevitable (Al-Waaqia) ",
+      "The Iron (Al-Hadid) ",
+      "The Pleading Woman (Al-Mujaadila) ",
+      "The Exile (Al-Hashr) ",
+      "She that is to be examined (Al-Mumtahana) ",
+      "The Ranks (As-Saff) ",
+      "Friday (Al-Jumu'a) ",
+      "The Hypocrites (Al-Munaafiqoon) ",
+      "Mutual Disillusion (At-Taghaabun) ",
+      "Divorce (At-Talaaq) ",
+      "The Prohibition (At-Tahrim) ",
+      "The Sovereignty (Al-Mulk) ",
+      "The Pen (Al-Qalam) ",
+      "The Reality (Al-Haaqqa) ",
+      "The Ascending Stairways (Al-Ma'aarij) ",
+      "Noah (Nooh) ",
+      "The Jinn (Al-Jinn) ",
+      "The Enshrouded One (Al-Muzzammil) ",
+      "The Cloaked One (Al-Muddaththir) ",
+      "The Resurrection (Al-Qiyaama) ",
+      "Man (Al-Insaan) ",
+      "The Emissaries (Al-Mursalaat) ",
+      "The Announcement (An-Naba) ",
+      "Those who drag forth (An-Naazi'aat) ",
+      "He frowned (Abasa) ",
+      "The Overthrowing (At-Takwir) ",
+      "The Cleaving (Al-Infitaar) ",
+      "Defrauding (Al-Mutaffifin) ",
+      "The Splitting Open (Al-Inshiqaaq) ",
+      "The Constellations (Al-Burooj) ",
+      "The Morning Star (At-Taariq) ",
+      "The Most High (Al-A'laa) ",
+      "The Overwhelming (Al-Ghaashiya) ",
+      "The Dawn (Al-Fajr) ",
+      "The City (Al-Balad) ",
+      "The Sun (Ash-Shams) ",
+      "The Night (Al-Lail) ",
+      "The Morning Hours (Ad-Dhuhaa) ",
+      "The Consolation (Ash-Sharh) ",
+      "The Fig (At-Tin) ",
+      "The Clot (Al-Alaq) ",
+      "The Power (Al-Qadr) ",
+      "The Evidence (Al-Bayyina) ",
+      "The Earthquake (Az-Zalzala) ",
+      "The Chargers (Al-Aadiyaat) ",
+      "The Calamity (Al-Qaari'a) ",
+      "Competition (At-Takaathur) ",
+      "The Declining Day (Al-Asr) ",
+      "The Traducer (Al-Humaza) ",
+      "The Elephant (Al-Fil) ",
+      "Quraysh (Quraish) ",
+      "Almsgiving (Al-Maa'un) ",
+      "Abundance (Al-Kawthar) ",
+      "The Disbelievers (Al-Kaafiroon) ",
+      "Divine Support (An-Nasr) ",
+      "The Palm Fibre (Al-Masad) ",
+      "Sincerity (Al-Ikhlaas) ",
+      "The Dawn (Al-Falaq) ",
+      "Mankind (An-Naas)",
     ];
   }
   fillArrSurahNumAyah() {

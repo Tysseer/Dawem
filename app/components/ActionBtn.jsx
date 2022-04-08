@@ -48,10 +48,11 @@ const ActionBtn = ({
         {icon && <Feather name="plus" size={24} color="#fff" />}
 
         <Text
+            numberOfLines={1}
+
           style={{
             ...styles.text,
             ...getFontFamily(lang, bold),
-
             ...extraTextStyle,
           }}
         >
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 32,
     marginHorizontal: 7,
+    
     // width: '100%',
   },
 });

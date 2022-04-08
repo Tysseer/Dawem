@@ -23,6 +23,7 @@ class ScreenRevisionDetails extends Component {
       bRefresh: true,
       addBtnDisabled: true,
     };
+    this.bIsAr = this.props.strLang == "ar";
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
     this.modalSurah = new ModalSurahSelector(this);
@@ -226,7 +227,9 @@ class ScreenRevisionDetails extends Component {
   getSurahTxt(bIsStart) {
     var nSurah = bIsStart ? this.strtSurah : this.endSurah;
     if (nSurah == 0) return this.stringsManager.getStr(strings.STR_SEL_SURAH);
-    return this.modalSurah.surahInfo.getSurahNameAr(nSurah);
+    return this.bIsAr
+      ? this.modalSurah.surahInfo.getSurahNameAr(nSurah)
+      : this.modalSurah.surahInfo.getSurahNameEnTrns(nSurah);
   }
   getAyahTxt(bIsStart) {
     var nSurah = bIsStart ? this.strtSurah : this.endSurah;
@@ -287,7 +290,9 @@ class ScreenRevisionDetails extends Component {
         this.endAyah ==
           this.modalSurah.surahInfo.getSurahNumAyah(this.strtSurah)
       ) {
-        return this.modalSurah.surahInfo.getSurahNameAr(this.strtSurah);
+        return this.bIsAr
+          ? this.modalSurah.surahInfo.getSurahNameAr(this.strtSurah)
+          : this.modalSurah.surahInfo.getSurahNameEnTrns(this.strtSurah);
       }
       // same surah
       var strtAyah = this.getAyahTxt(true);

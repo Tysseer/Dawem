@@ -17,7 +17,12 @@ export default class ModalSurahSelector {
   constructor(parent /* should have .bShowSurahSelector and .refresh()*/) {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
-    this.surahInfo.fillArrSurahNamesAr();
+    this.bIsAr = this.parent.stringsManager.getLanguage() == "ar";
+    if (this.bIsAr) {
+      this.surahInfo.fillArrSurahNamesAr();
+    } else {
+      this.surahInfo.fillArrSurahNamesEnTrns();
+    }
     this.indexes = Array(114)
       .fill(0)
       .map((e, i) => i + 1);
@@ -40,7 +45,6 @@ export default class ModalSurahSelector {
   }
   getModal() {
     if (this.parent.bShowSurahSelector == false) return null;
-
     return (
       <Modal
         animationType="slide"
@@ -56,9 +60,10 @@ export default class ModalSurahSelector {
           >
             <View style={styles.selectorsContainer}>
               {/* {this.indexes.map((iS, index) => this.getSurahBtn(iS, index))} */}
-              {this.surahInfo.arrSurahNamesAr.map((iS, index) =>
-                this.getSurahBtn(iS, index)
-              )}
+              {(this.bIsAr
+                ? this.surahInfo.arrSurahNamesAr
+                : this.surahInfo.arrSurahNamesEnTrns
+              ).map((iS, index) => this.getSurahBtn(iS, index))}
             </View>
           </ScrollView>
         </Center>
@@ -98,7 +103,12 @@ export default class ModalSurahSelector {
                 }}
               >
                 {numBorder}
-                <Text style={{ paddingHorizontal: 5 }}>{item}</Text>
+                <Text
+                  numberOfLines={1}
+                  style={{ paddingHorizontal: 5, flex: 1 }}
+                >
+                  {item}
+                </Text>
               </View>
 
               {/* icon */}
@@ -136,7 +146,10 @@ export default class ModalSurahSelector {
   }
   getSelSurahName() {
     if (this.selSurah == 0) return "Select Surah";
-    else return this.surahInfo.getSurahNameAr(this.selSurah);
+    else
+      return this.bIsAr
+        ? this.surahInfo.getSurahNameAr(this.selSurah)
+        : this.surahInfo.getSurahNameEnTrns(this.selSurah);
   }
 }
 const styles = StyleSheet.create({

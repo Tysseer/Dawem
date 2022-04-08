@@ -23,7 +23,12 @@ import ActionBtn from "app/components/ActionBtn";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import QuranIndexer from "../helpers/QuranIndexer";
-
+import { colors } from "../../constants";
+import {
+  Feather,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 const Write = async (strWrite) => {
   let fileUri = FileSystem.documentDirectory + "Dawem.txt";
   await FileSystem.writeAsStringAsync(fileUri, strWrite, {
@@ -70,13 +75,13 @@ class ScreenRevisionsTools extends Component {
         id: 4,
         title: this.stringsManager.getStr(strings.STR_DEL_ALL),
         onPress: this.onPressDeleteAll.bind(this),
-        icon: "delete_forever",
+        icon: "close",
       },
       {
         id: 5,
         title: this.stringsManager.getStr(strings.STR_BACKUP),
         onPress: this.onPressBackup.bind(this),
-        icon: "sd_storage",
+        icon: "sd-card",
       },
       {
         id: 6,
@@ -158,7 +163,7 @@ class ScreenRevisionsTools extends Component {
     // todo: read here
     //  console.log("backup");
     var readStr = await Read();
-    console.log("readStr", readStr);
+
     // {
     //   // code for testing only
     //   let tmpArr = this.revisionsManager.getAsStringArr();
@@ -182,9 +187,9 @@ class ScreenRevisionsTools extends Component {
   getItemTextStyle() {
     return {
       fontSize: this.props.strLang == "ar" ? 20 : 16,
-      lineHeight: this.props.strLang == "ar" ? 28 : 22,
+      lineHeight: this.props.strLang == "ar" ? 36 : 22,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      marginHorizontal: 5,
+      marginHorizontal: 1,
       color: "#0B721E",
     };
   }
@@ -192,6 +197,12 @@ class ScreenRevisionsTools extends Component {
     return (
       <TouchableOpacity onPress={item.item.onPress}>
         <View style={styles.item}>
+          <MaterialIcons
+            name={item.item.icon}
+            size={24}
+            color={colors.primary}
+            style={{ marginHorizontal: 5 }}
+          />
           <Text style={this.getItemTextStyle()}>{item.item.title}</Text>
         </View>
       </TouchableOpacity>
@@ -227,13 +238,16 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#EEEEEE",
   },
   item: {
     backgroundColor: "#0B721E0D",
     height: 55,
     marginVertical: 16,
     marginHorizontal: 16,
-    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
   },
   title: {
     fontSize: 32,
