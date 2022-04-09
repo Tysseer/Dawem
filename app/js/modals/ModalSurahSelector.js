@@ -70,6 +70,17 @@ export default class ModalSurahSelector {
       </Modal>
     );
   }
+  renderSurahName(item) {
+    if (this.bIsAr) {
+      return <Text style={{ paddingHorizontal: 5 }}>{item}</Text>;
+    } else {
+      return (
+        <Text numberOfLines={1} style={{ paddingHorizontal: 5, flex: 1 }}>
+          {item}
+        </Text>
+      );
+    }
+  }
   getSurahBtn(item, index) {
     // var bordercol =
     //   item == this.selSurah
@@ -78,6 +89,7 @@ export default class ModalSurahSelector {
 
     var svgLoader = new SVGLoader();
     var numBorder = svgLoader.getSurahNumBorder(index);
+
     if (index != 0)
       return (
         <View key={Math.random().toString()}>
@@ -103,12 +115,8 @@ export default class ModalSurahSelector {
                 }}
               >
                 {numBorder}
-                <Text
-                  numberOfLines={1}
-                  style={{ paddingHorizontal: 5, flex: 1 }}
-                >
-                  {item}
-                </Text>
+
+                {this.renderSurahName(item)}
               </View>
 
               {/* icon */}
@@ -148,8 +156,8 @@ export default class ModalSurahSelector {
     if (this.selSurah == 0) return "Select Surah";
     else
       return this.bIsAr
-        ? this.surahInfo.getSurahNameAr(this.selSurah)
-        : this.surahInfo.getSurahNameEnTrns(this.selSurah);
+        ? this.surahInfo.arrSurahNamesAr[this.selSurah]
+        : this.surahInfo.arrSurahNamesEnTrns[this.selSurah];
   }
 }
 const styles = StyleSheet.create({

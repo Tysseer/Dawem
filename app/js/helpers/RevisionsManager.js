@@ -29,6 +29,16 @@ export default class RevisionsManager {
       this.m_loadedRevisions[i].id = id++;
     }
   }
+  removeByID(id) {
+    var newRevArr = [];
+    for (var i = 0; i < this.m_loadedRevisions.length; i++) {
+      if (this.m_loadedRevisions[i].id != id) {
+        newRevArr.push(this.m_loadedRevisions[i]); //currev[i].clone()
+        continue;
+      }
+    }
+    this.m_loadedRevisions = newRevArr;
+  }
   getBadgesStates() {
     if (this.m_loadedRevisions.length == 0) return [false, false, false];
     var bIsToday = false;
