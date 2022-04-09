@@ -1,19 +1,19 @@
-import { View } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ScreenRevisions from "app/js/screens/ScreenRevisions";
-import ScreenQuranBrowser from "app/js/screens/ScreenQuranBrowser";
-import ScreenRevisionDetails from "app/js/screens/ScreenRevisionDetails";
-import ScreenSettings from "app/js/screens/ScreenSettings";
-import Header from "app/components/Header";
-import MushafScreen from "../../js/screens/MushafScreen";
-import ScreenDayBadge from "../../js/screens/ScreenDayBadge";
-import ScreenMonthBadge from "../../js/screens/ScreenMonthBadge";
-import ScreenWeekBadge from "../../js/screens/ScreenWeekBadge";
-import ScreenRevisionsTools from "../../js/screens/ScreenRevisionsTools";
-import StringsManager from "js/helpers/StringsManager";
-import * as strings from "js/helpers/StringsManager";
-import { useSelector } from "react-redux";
+import ScreenRevisions from 'app/js/screens/ScreenRevisions';
+import ScreenQuranBrowser from 'app/js/screens/ScreenQuranBrowser';
+import ScreenRevisionDetails from 'app/js/screens/ScreenRevisionDetails';
+import ScreenSettings from 'app/js/screens/ScreenSettings';
+import Header from 'app/components/Header';
+import MushafScreen from 'app/js/screens/MushafScreen';
+import ScreenDayBadge from 'app/js/screens/ScreenDayBadge';
+import ScreenMonthBadge from 'app/js/screens/ScreenMonthBadge';
+import ScreenWeekBadge from 'app/js/screens/ScreenWeekBadge';
+import ScreenRevisionsTools from 'app/js/screens/ScreenRevisionsTools';
+import StringsManager from 'js/helpers/StringsManager';
+import * as strings from 'js/helpers/StringsManager';
+import { useSelector } from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 

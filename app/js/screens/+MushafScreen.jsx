@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import { useKeepAwake } from 'expo-keep-awake';
+import MyPager from 'app/components/MyPager';
 
 import Screen from 'app/components/Screen';
 import QuranReaderByLine from 'app/js/helpers/QuranReaderByLine';
@@ -16,12 +17,14 @@ import SurahHeader from 'assets/svg/SurahHeader';
 import SVGLoader from '../helpers/SVGLoader';
 import { Fragment } from 'react';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import QuranIndexer from '../helpers/QuranIndexer';
 import { convertToArabicNumbers } from '../helpers/scripts';
 import Center from '../../components/Center';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Swiper from '../../components/Swiper';
+import { useSelector } from 'react-redux';
+import Sandbox from '../../components/Sandbox';
 
 const { width, height } = Dimensions.get('window');
 const coloredList = [
@@ -47,17 +50,22 @@ const MushafScreen = () => {
   const [pageContent, setPageContent] = useState();
   const [markedAyah, setMarkedAyah] = useState();
 
-  const { ayahIndex, longPressHandler } = route.params;
+  const { ayahIndex } = route.params;
 
   var quranIndexer = new QuranIndexer();
   // quranIndexer.f;
+  const reduxState = useSelector((state) => state);
 
   const onAyahLongPress = (iAyah /*local */, iSurah) => {
-    var engNum = convertToArabicNumbers(iAyah, 'ltr');
-    setMarkedAyah(engNum);
-    // console.log('here ' + iAyah + ' ' + engNum + ' ' + iSurah);
-    var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah, +engNum);
-    longPressHandler(globalAyah);
+    if (iSurah == localSurahIdx) {
+      var engNum = convertToArabicNumbers(iAyah, 'ltr');
+      setMarkedAyah(engNum);
+      // console.log('here ' + iAyah + ' ' + engNum + ' ' + iSurah.surahIndex);
+      // console.log('localSurahIdx', localSurahIdx);
+      var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah, +engNum);
+      handleRevProgress(globalAyah);
+      // longPressHandler(globalAyah);
+    }
   };
 
   const quranReader = new QuranReaderByLine(quranIndexer);
@@ -75,6 +83,14 @@ const MushafScreen = () => {
       return '#ff0';
   };
 
+  const handleRevProgress = (iAyah) => {
+    reduxState.curRevision.updateProgress(iAyah);
+    if (reduxState.curRevision.progress > 100) {
+      reduxState.curRevision.makeRevisionDateNow();
+      reduxState.revisionsManager.sortRevisions();
+    }
+  };
+
   const renderSurahHeader = (name) => (
     <View
       // source={require('assets/images/SurahHeader.png')}
@@ -84,11 +100,12 @@ const MushafScreen = () => {
         marginVertical: 10,
         width: '100%',
         height: height * 0.05,
-        // resizeMode: 'cover',
       }}
     >
       <View style={styles.surahHeader}>
-        <Text style={{ fontFamily: 'Amiri_Bold', fontSize: 20 }}>{name}</Text>
+        <Text style={{ fontFamily: 'Amiri_Bold', fontSize: width * 0.04 }}>
+          {name}
+        </Text>
       </View>
       <Image
         source={require('assets/images/SurahHeader.png')}
@@ -146,6 +163,7 @@ const MushafScreen = () => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 onLongPress={() => onAyahLongPress(ayah.num, ayah.surahIndex)}
+                disabled={ayah.surahIndex !== localSurahIdx}
                 style={{
                   backgroundColor: getNumBg(ayah.num, ayah.surahIndex),
                 }}
@@ -223,6 +241,25 @@ const MushafScreen = () => {
     });
   };
 
+  const RightActions = (progress, dragX, children) => {
+    const scale = dragX.interpolate({
+      inputRange: [-100, 0],
+      outputRange: [0.7, 0],
+    });
+
+    return <Animated.View>{children}</Animated.View>;
+  };
+
+  const LeftActions = (progress, dragX, children) => {
+    const scale = dragX.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    });
+
+    return <Animated.View>{children}</Animated.View>;
+  };
+
   useFocusEffect(
     useCallback(() => {
       const { localSurahIdx, localAyahIdx } =
@@ -245,14 +282,17 @@ const MushafScreen = () => {
   return (
     <Screen style={{ padding: 10 }}>
       {/* <Swiper /> */}
-      <Swipeable
-        renderLeftActions={renderDummy}
-        renderRightActions={renderDummy}
-        onSwipeableLeftOpen={onswipeLeft}
-        onSwipeableRightOpen={onswipeRight}
-        leftThreshold={35}
-        rightThreshold={35}
-        ref={swipeableRef}
+      {/* <Sandbox /> */}
+      <MyPager />
+      {/* <Swipeable
+      renderLeftActions={LeftActions} renderRightActions={RightActions}
+        // renderLeftActions={renderDummy}
+        // renderRightActions={renderDummy}
+        // onSwipeableLeftOpen={onswipeLeft}
+        // onSwipeableRightOpen={onswipeRight}
+        // leftThreshold={35}
+        // rightThreshold={35}
+        // ref={swipeableRef}
       >
         <View
           style={{
@@ -264,7 +304,7 @@ const MushafScreen = () => {
         >
           {renderPageContent()}
         </View>
-      </Swipeable>
+      </Swipeable> */}
     </Screen>
   );
 };

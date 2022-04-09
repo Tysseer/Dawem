@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  TouchableHighlight,
-  Text,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import {
   Feather,
   MaterialIcons,
