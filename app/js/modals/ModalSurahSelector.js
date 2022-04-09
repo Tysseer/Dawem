@@ -17,7 +17,12 @@ export default class ModalSurahSelector {
   constructor(parent /* should have .bShowSurahSelector and .refresh()*/) {
     this.parent = parent;
     this.surahInfo = new QuranIndexer();
-    this.surahInfo.fillArrSurahNamesAr();
+    this.bIsAr = this.parent.stringsManager.getLanguage() == "ar";
+    if (this.bIsAr) {
+      this.surahInfo.fillArrSurahNamesAr();
+    } else {
+      this.surahInfo.fillArrSurahNamesEnTrns();
+    }
     this.indexes = Array(114)
       .fill(0)
       .map((e, i) => i + 1);
@@ -54,64 +59,82 @@ export default class ModalSurahSelector {
             style={styles.modalView}
           >
             <View style={styles.selectorsContainer}>
-              {this.indexes.map((iS, index) => this.getSurahBtn(iS, index))}
+              {/* {this.indexes.map((iS, index) => this.getSurahBtn(iS, index))} */}
+              {(this.bIsAr
+                ? this.surahInfo.arrSurahNamesAr
+                : this.surahInfo.arrSurahNamesEnTrns
+              ).map((iS, index) => this.getSurahBtn(iS, index))}
             </View>
           </ScrollView>
         </Center>
       </Modal>
     );
   }
+  renderSurahName(item) {
+    if (this.bIsAr) {
+      return <Text style={{ paddingHorizontal: 5 }}>{item}</Text>;
+    } else {
+      return (
+        <Text numberOfLines={1} style={{ paddingHorizontal: 5, flex: 1 }}>
+          {item}
+        </Text>
+      );
+    }
+  }
   getSurahBtn(item, index) {
     // var bordercol =
     //   item == this.selSurah
     //     ? { borderColor: '#540000' }
     //     : { borderColor: '#545454' };
-    // var svgLoader = new SVGLoader();
-    // var numBorder = svgLoader.getSurahNumBorder(index + 1);
-    return (
-      <View key={Math.random().toString()}>
-        <TouchableHighlight
-          onPress={() => this.selectSurah.bind(this)(item)}
-          underlayColor="#FFFFFF11"
-          style={{ width: "100%" }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-            }}
+
+    var svgLoader = new SVGLoader();
+    var numBorder = svgLoader.getSurahNumBorder(index);
+
+    if (index != 0)
+      return (
+        <View key={Math.random().toString()}>
+          <TouchableHighlight
+            onPress={() => this.selectSurah.bind(this)(index)}
+            underlayColor="#FFFFFF11"
+            style={{ width: "100%" }}
           >
             <View
               style={{
                 flexDirection: "row",
-                alignSelf: "flex-start",
+                justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
               }}
             >
-              {/* {numBorder} */}
-              <Text style={{ paddingHorizontal: 5 }}>
-                {this.surahInfo.getSurahNameAr(item)}
-              </Text>
-            </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "flex-start",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                {numBorder}
 
-            {/* icon */}
-            <View
-              style={{
-                height: 14,
-                width: 14,
-                borderRadius: 7,
-                borderStyle: "solid",
-                borderWidth: 1,
-                borderColor: "#818181",
-                backgroundColor: this.selSurah == item ? colors.primary : null,
-              }}
-            />
-          </View>
-        </TouchableHighlight>
-        {index + 1 < this.indexes.length && (
+                {this.renderSurahName(item)}
+              </View>
+
+              {/* icon */}
+              <View
+                style={{
+                  height: 14,
+                  width: 14,
+                  borderRadius: 7,
+                  borderStyle: "solid",
+                  borderWidth: 1,
+                  borderColor: "#818181",
+                  backgroundColor:
+                    this.selSurah == index ? colors.primary : null,
+                }}
+              />
+            </View>
+          </TouchableHighlight>
+          {/* {index + 1 < this.indexes.length && ( */}
           <View
             style={{
               height: 1,
@@ -120,9 +143,9 @@ export default class ModalSurahSelector {
               marginVertical: 15,
             }}
           />
-        )}
-      </View>
-    );
+          {/* )} */}
+        </View>
+      );
   }
   selectSurah(iSurah) {
     this.selSurah = iSurah;
@@ -131,7 +154,10 @@ export default class ModalSurahSelector {
   }
   getSelSurahName() {
     if (this.selSurah == 0) return "Select Surah";
-    else return this.surahInfo.getSurahNameAr(this.selSurah);
+    else
+      return this.bIsAr
+        ? this.surahInfo.arrSurahNamesAr[this.selSurah]
+        : this.surahInfo.arrSurahNamesEnTrns[this.selSurah];
   }
 }
 const styles = StyleSheet.create({

@@ -6,11 +6,12 @@ import ScreenQuranBrowser from 'app/js/screens/ScreenQuranBrowser';
 import ScreenRevisionDetails from 'app/js/screens/ScreenRevisionDetails';
 import ScreenSettings from 'app/js/screens/ScreenSettings';
 import Header from 'app/components/Header';
-import MushafScreen from 'app/js/screens/MushafScreen';
-import ScreenDayBadge from 'app/js/screens/ScreenDayBadge';
-import ScreenMonthBadge from 'app/js/screens/ScreenMonthBadge';
-import ScreenWeekBadge from 'app/js/screens/ScreenWeekBadge';
-import ScreenRevisionsTools from 'app/js/screens/ScreenRevisionsTools';
+import MushafScreen from '../../js/screens/MushafScreen';
+import ScreenDayBadge from '../../js/screens/ScreenDayBadge';
+import ScreenMonthBadge from '../../js/screens/ScreenMonthBadge';
+import ScreenWeekBadge from '../../js/screens/ScreenWeekBadge';
+// import ScreenRevisionsTools from "../../js/screens/ScreenRevisionsTools";
+import CreateFile from '../../js/screens/CreateFile';
 import StringsManager from 'js/helpers/StringsManager';
 import * as strings from 'js/helpers/StringsManager';
 import { useSelector } from 'react-redux';
@@ -105,7 +106,7 @@ export default function MainStack() {
           ),
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ScrRevTools"
         component={ScreenRevisionsTools}
         options={{
@@ -113,6 +114,18 @@ export default function MainStack() {
             <Header
               lang={{ strLang }}
               title={stringsManager.getStr(strings.STR_REV_TOOLS)}
+            />
+          ),
+        }}
+      /> */}
+      <Stack.Screen
+        name="CreateFile"
+        component={CreateFile}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr('create File')}
             />
           ),
         }}

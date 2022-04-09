@@ -49,6 +49,7 @@ export const STR_BACKUP = 48;
 export const STR_RESTORE = 49;
 export const STR_REV_TOOLS = 50;
 export const STR_QURAN = 51;
+export const STR_JUZUU = 52;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -88,7 +89,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_CANCEL) {
       if (strLang == "ar") return "إلغاء";
-      if (strLang == "en") return "+ Cancel";
+      if (strLang == "en") return "Cancel";
       return "unsupported language";
     }
     if (nStrID == STR_SEL_AYAH) {
@@ -133,15 +134,16 @@ export default class StringsManager {
     }
     if (nStrID == STR_DAY_BADGE_MIN_REV) {
       if (strLang == "ar")
-        return "لا ينفتح هذا الوسام إلا بعد إضافة 5 مراجعات!";
+        return "لا ينفتح هذا الوسام إلا بعد إضافة 3 مراجعات!";
       if (strLang == "en")
-        return "This badge will be active after adding at least 5 revisions!";
+        return "This badge will be active after adding at least 3 revisions!";
       return "unsupported language";
     }
     if (nStrID == STR_DAY_BADGE_ACTIVE) {
       if (strLang == "ar")
         return "بارك الله فيك! لقد قمت بتفعيل وسام المبادرة.";
-      if (strLang == "en") return "Great Job! You activated your Dawem Badge.";
+      if (strLang == "en")
+        return "Great Job! You activated your Initiative Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_DAY_BADGE_INACTIVE) {
@@ -168,7 +170,8 @@ export default class StringsManager {
     if (nStrID == STR_MONTH_BADGE_ACTIVE) {
       if (strLang == "ar")
         return " فتح الله عليك أبواب الخير! لقد قمت بتفعيل وسام المصاحبة, وصرت صاحبا للقرآن.";
-      if (strLang == "en") return "Great Job! You activated your Dawem Badge.";
+      if (strLang == "en")
+        return "Great Job! You activated your Companionship Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_MONTH_BADGE_INACTIVE) {
@@ -196,7 +199,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "زادك الله فضلا! لقد قمت بتفعيل وسام المثابرة, وصرت من أهل القرآن.";
       if (strLang == "en")
-        return "Great Job! You activated your Ultimate Dawem Badge.";
+        return "Great Job! You activated your Perseverance Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_WEEK_BADGE_INACTIVE) {
@@ -309,12 +312,12 @@ export default class StringsManager {
     }
     if (nStrID == STR_BY_JUZUU) {
       if (strLang == "ar") return "إضافة ختمة (بالجزء)";
-      if (strLang == "en") return "Add Khatam (by Suras)";
+      if (strLang == "en") return "Add Khatam (by Juzuu)";
       return "unsupported language";
     }
     if (nStrID == STR_BY_SURAH) {
       if (strLang == "ar") return "إضافة ختمة (بالسورة)";
-      if (strLang == "en") return "Add Khatam (by Juzuu)";
+      if (strLang == "en") return "Add Khatam (by Suras)";
       return "unsupported language";
     }
     if (nStrID == STR_MOD_REV_LIST) {
@@ -343,7 +346,7 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_RESTORE) {
-      if (strLang == "ar") return "استعادةالأوراد المخزنة";
+      if (strLang == "ar") return "استعادة الأوراد المخزنة";
       if (strLang == "en") return "Restore Revisions";
       return "unsupported language";
     }
@@ -355,6 +358,11 @@ export default class StringsManager {
     if (nStrID == STR_QURAN) {
       if (strLang == "ar") return "القرآن الكريم";
       if (strLang == "en") return "Holy Quran";
+      return "unsupported language";
+    }
+    if (nStrID == STR_JUZUU) {
+      if (strLang == "ar") return "الجزء";
+      if (strLang == "en") return "Juzuu";
       return "unsupported language";
     }
     return "unkown string";

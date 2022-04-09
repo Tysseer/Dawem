@@ -1,10 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-import { colors } from '../constants';
-import { getFontFamily } from '../js/helpers/scripts';
-import Center from './Center';
+import { colors } from "../constants";
+import { getFontFamily } from "../js/helpers/scripts";
+import Center from "./Center";
 
 const ActionBtn = ({
   text,
@@ -14,7 +14,7 @@ const ActionBtn = ({
   contained = false,
   disabled = false,
   fullWidth = false,
-  bold=true,
+  bold = true,
   style,
   ...rest
 }) => {
@@ -26,13 +26,12 @@ const ActionBtn = ({
       : contained
       ? colors.light_bg
       : colors.primary,
-    width: fullWidth ? '100%' : '48%',
-    
+    width: fullWidth ? "100%" : "48%",
   };
 
   const extraTextStyle = {
-    color: contained ? '#B0B0B0' : '#fff',
-    alignSelf: fullWidth ? 'center' : 'flex-start',
+    color: contained ? "#B0B0B0" : "#fff",
+    alignSelf: fullWidth ? "center" : "flex-start",
     // flexDirection: 'row',
     // alignSelf: fullWidth ? 'center' : 'flex-start',
     // textAlign: fullWidth ? 'center' : 'left',
@@ -45,13 +44,15 @@ const ActionBtn = ({
       style={{ ...styles.btn, ...extraStyle, ...style }}
       {...rest}
     >
-      <Center style={{ flexDirection: 'row' }}>
+      <Center style={{ flexDirection: "row" }}>
         {icon && <Feather name="plus" size={24} color="#fff" />}
 
         <Text
+            numberOfLines={1}
+
           style={{
             ...styles.text,
-            ...getFontFamily(lang,bold),
+            ...getFontFamily(lang, bold),
             ...extraTextStyle,
           }}
         >
@@ -66,18 +67,20 @@ export default ActionBtn;
 
 const styles = StyleSheet.create({
   btn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     height: 55,
     backgroundColor: colors.primary,
     borderRadius: 10,
     borderColor: colors.primary,
   },
   text: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
+    lineHeight: 32,
     marginHorizontal: 7,
+    
     // width: '100%',
   },
 });

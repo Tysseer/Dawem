@@ -77,6 +77,24 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
 
       return newState;
     }
+    case allActions.ADD_MULTIPLE_REVISIONS: {
+      const revs = action.payload;
+      var newRevArr = revisions.concat(revs);
+
+      var revisionsManager = new RevisionsManager();
+      revisionsManager.m_loadedRevisions = newRevArr;
+      revisionsManager.sortRevisions();
+      newRevArr = revisionsManager.m_loadedRevisions;
+      const newState = {
+        bIsFirstRun: bIsFirstRun,
+        bSkipWelcome: bSkipWelcome,
+        strLang: strLang,
+        revisions: newRevArr,
+        curRevision: null,
+      };
+
+      return newState;
+    }
     case allActions.UPDATE_REVISION:
     case allActions.DEL_REVISION: {
       // todo: replace push with splice or more efficient way
@@ -102,9 +120,35 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         revisions: newRevArr,
         curRevision: null,
       };
-
       return newState;
     }
+    case allActions.DEL_ِِALL_REVISIONS: {
+      var newRevArr = [];
+      const newState = {
+        bIsFirstRun: bIsFirstRun,
+        bSkipWelcome: bSkipWelcome,
+        strLang: strLang,
+        revisions: newRevArr,
+        curRevision: null,
+      };
+      return newState;
+    }
+    case allActions.RESET_ِِALL_REVISIONS: {
+      var newRevArr = [];
+      for (var i = 0; i < revisions.length; i++) {
+        newRevArr.push(revisions[i]); //currev[i].clone()
+        newRevArr[i].makeRevisionDateNow();
+      }
+      const newState = {
+        bIsFirstRun: bIsFirstRun,
+        bSkipWelcome: bSkipWelcome,
+        strLang: strLang,
+        revisions: newRevArr,
+        curRevision: null,
+      };
+      return newState;
+    }
+
     default:
       return state;
   }

@@ -103,7 +103,7 @@ export default class RevisionItem extends Component {
         <TouchableOpacity
           onPress={() => this.props.onPresses.get('deleteIcon')(revision)}
         >
-          <MaterialIcons name="delete-forever" size={24} color="#fff" />
+          <MaterialIcons name="close" size={24} color="#fff" />
         </TouchableOpacity>
 
         <View style={{ width: 10 }} />

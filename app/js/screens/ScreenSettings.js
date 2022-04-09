@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxActionSetLanguage } from '../redux/reduxActions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { reduxActionSetLanguage } from "../redux/reduxActions";
 import {
   Text,
   StyleSheet,
@@ -9,24 +9,24 @@ import {
   TouchableWithoutFeedback,
   I18nManager,
   TouchableOpacity,
-} from 'react-native';
-import * as strings from 'js/helpers/StringsManager';
-import StringsManager from 'js/helpers/StringsManager';
-import ActionBtn from 'app/components/ActionBtn';
-import * as Updates from 'expo-updates';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { colors } from '../../constants';
-import EnFlag from 'assets/images/lang_en.png';
-import ArFlag from 'assets/images/lang_ar.png';
+} from "react-native";
+import * as strings from "js/helpers/StringsManager";
+import StringsManager from "js/helpers/StringsManager";
+import ActionBtn from "app/components/ActionBtn";
+import * as Updates from "expo-updates";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { colors } from "../../constants";
+import EnFlag from "assets/images/lang_en.png";
+import ArFlag from "assets/images/lang_ar.png";
 
 const langs = [
   {
-    key: 'en',
-    title: 'English',
+    key: "en",
+    title: "English",
   },
   {
-    key: 'ar',
-    title: 'العربية',
+    key: "ar",
+    title: "العربية",
   },
 ];
 
@@ -42,17 +42,17 @@ class ScreenSettings extends Component {
   }
 
   arLangPressed() {
-    this.props.reduxActionSetLanguage('ar');
+    this.props.reduxActionSetLanguage("ar");
   }
   enLangPressed() {
-    this.props.reduxActionSetLanguage('en');
+    this.props.reduxActionSetLanguage("en");
   }
   languageHandler(lang) {
     this.setState({ selectedLang: lang });
     this.props.reduxActionSetLanguage(lang);
   }
   okButtonPressed() {
-    if (this.props.strLang == 'ar') {
+    if (this.props.strLang == "ar") {
       I18nManager.forceRTL(true);
     } else {
       I18nManager.forceRTL(false);
@@ -65,8 +65,8 @@ class ScreenSettings extends Component {
       <View style={styles.mainContainer}>
         <View style={styles.quranLogoContainer}>
           <Image
-            source={require('assets/images/Quran_logo.png')}
-            style={{ resizeMode: 'contain' }}
+            source={require("assets/images/Quran_logo.png")}
+            style={{ resizeMode: "contain" }}
           />
         </View>
         <View style={styles.allLangsContainer}>
@@ -78,12 +78,12 @@ class ScreenSettings extends Component {
               onPress={() => this.languageHandler(lang.key)}
               style={styles.langContainer}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: "row" }}>
                 <Image
-                  source={lang.key == 'en' ? EnFlag : ArFlag}
+                  source={lang.key == "en" ? EnFlag : ArFlag}
                   style={styles.langLogo}
                 />
-                <Text style={this.getlangLabelTextStyle('ar')}>
+                <Text style={this.getlangLabelTextStyle(lang.key)}>
                   {lang.title}
                 </Text>
               </View>
@@ -105,78 +105,19 @@ class ScreenSettings extends Component {
           text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
           handler={this.okButtonPressed.bind(this)}
           lang={this.props.strLang}
-          style={{ height: 60, width: '93%' }}
+          style={{ height: 60, width: "93%" }}
         />
       </View>
     );
   }
-
-  renderOKButton(nStrID) {
-    var styleOKButton = {
-      backgroundColor: '#0B721E',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '93%',
-      height: 70,
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-      marginTop: 50,
-      marginBottom: 25,
-    };
-    var styleOkButtonTxt = {
-      textAlign: 'center',
-      color: '#FFFFFF',
-      fontFamily: this.props.strLang == 'ar' ? 'Amiri' : 'Poppins',
-      justifyContent: 'center',
-      fontSize: this.props.strLang == 'ar' ? 22 : 20,
-      lineHeight: 35,
-      fontWeight: '600',
-    };
-    return (
-      <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
-        <View style={styleContainer}>
-          <View style={styleOKButton}>
-            <View>
-              <Text style={styleOkButtonTxt}>
-                {this.stringsManager.getStr(nStrID)}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-
-  getLangContainerStyle(strLang) {
-    return [
-      styles.langContainer,
-      this.props.strLang == strLang
-        ? { borderColor: '#00AB14' }
-        : { borderColor: '#00AB1400' },
-    ];
-  }
-
-  getlangButtonTextStyle() {
-    return {
-      textAlign: 'center',
-      color: '#FFFFFF',
-      fontFamily: this.props.strLang == 'ar' ? 'Amiri' : 'Poppins',
-      justifyContent: 'center',
-      fontSize: this.props.strLang == 'ar' ? 22 : 20,
-      lineHeight: 35,
-      fontWeight: '600',
-    };
-  }
   getlangLabelTextStyle(strLang) {
     return {
-      fontSize: strLang == 'ar' ? 22 : 18,
+      fontSize: strLang == "ar" ? 22 : 18,
       lineHeight: 35,
 
-      fontFamily: strLang == 'ar' ? 'Amiri' : 'Poppins',
-      textAlign: 'left',
-      color: '#0C3D11',
+      fontFamily: strLang == "ar" ? "Amiri" : "Poppins",
+      textAlign: "left",
+      color: "#0C3D11",
     };
   }
 }
@@ -192,28 +133,28 @@ export default connect(mapStateToProps, mapDispatchToProps())(ScreenSettings);
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    backgroundColor: '#EEEEEE',
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    backgroundColor: "#EEEEEE",
   },
   quranLogoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
 
-    height: '42%',
-    width: '100%',
+    height: "42%",
+    width: "100%",
   },
   allLangsContainer: {
-    width: '100%',
+    width: "100%",
     height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   langContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '93%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "93%",
     height: 70,
     // borderTopLeftRadius: 10,
     // borderTopRightRadius: 10,
@@ -221,7 +162,7 @@ const styles = StyleSheet.create({
     // borderBottomRightRadius: 10,
     // borderWidth: 2,
 
-    borderColor: '#0B721EFF',
+    borderColor: "#0B721EFF",
   },
   langLogo: {
     width: 40,
@@ -230,21 +171,21 @@ const styles = StyleSheet.create({
   },
 
   separator: {
-    borderColor: '#88888859',
+    borderColor: "#88888859",
     borderWidth: 1,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     height: 2,
-    width: '93%',
+    width: "93%",
     marginVertical: 15,
   },
   okButton: {
-    backgroundColor: '#0B721E',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '93%',
+    backgroundColor: "#0B721E",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "93%",
     height: 70,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

@@ -13,6 +13,7 @@ import RevisionsList from '../subComponents/RevisionsList';
 import RevisionsManager from '../helpers/RevisionsManager';
 import SVGLoader from '../helpers/SVGLoader';
 import BadgesBar from '../subComponents/BadgesBar';
+import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import {
   reduxActionSetCurRevision,
@@ -28,6 +29,20 @@ import bgImage from 'assets/images/mainBg.png';
 import Screen from 'app/components/Screen';
 
 const { height } = Dimensions.get('window');
+
+function RefreshBadgesOnFocus({ onUpdate }) {
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      onUpdate();
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+  return null;
+}
 
 class ScreenRevisions extends Component {
   constructor(props) {
@@ -46,6 +61,9 @@ class ScreenRevisions extends Component {
       isBadgeWeek: res[2],
     };
   }
+  onFocus() {
+    this.refresh();
+  }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
@@ -54,20 +72,21 @@ class ScreenRevisions extends Component {
 
     return (
       <Screen>
+        <RefreshBadgesOnFocus onUpdate={this.onFocus.bind(this)} />
+        <BadgesBar
+          svgLoader={this.svgLoader}
+          isBadgeDay={this.state.isBadgeDay == false}
+          isBadgeMonth={this.state.isBadgeMonth == false}
+          isBadgeWeek={this.state.isBadgeWeek == false}
+          onPresses={pressHandlers}
+          onLongPresses={longPressHandlers}
+          strLang={this.props.strLang}
+          title={this.stringsManager.getStr(strings.STR_MY_GOALS)}
+        />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.listContainer}>
-            <BadgesBar
-              svgLoader={this.svgLoader}
-              isBadgeDay={this.state.isBadgeDay == false}
-              isBadgeMonth={this.state.isBadgeMonth == false}
-              isBadgeWeek={this.state.isBadgeWeek == false}
-              onPresses={pressHandlers}
-              onLongPresses={longPressHandlers}
-              strLang={this.props.strLang}
-              title={this.stringsManager.getStr(strings.STR_MY_GOALS)}
-            />
             {this.revisionsManager.m_loadedRevisions.length == 0 ? (
-              this.getInitialPrompt()
+              <>{this.getInitialPrompt()}</>
             ) : (
               <RevisionsList
                 revisionsManager={this.revisionsManager}
@@ -125,7 +144,6 @@ class ScreenRevisions extends Component {
   onAddRevision() {
     this.props.reduxActionSetCurRevision(null);
     this.props.navigation.navigate('ScrRev');
-    this.refresh();
   }
 
   onSettings() {
@@ -156,6 +174,9 @@ class ScreenRevisions extends Component {
 
   onDeleteRevision(revision) {
     this.props.reduxActionDelRevision(revision);
+
+    this.revisionsManager.removeByID(revision.id);
+
     this.refresh();
   }
 
