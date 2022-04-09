@@ -5,6 +5,7 @@ import {
   View,
   TouchableHighlight,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { connect } from "react-redux";
@@ -19,6 +20,8 @@ import Constants from "expo-constants";
 class ScreenWelcome extends Component {
   constructor(props) {
     super(props);
+    this.height = Dimensions.get("window").height;
+    this.width = Dimensions.get("window").width;
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
     // this.registerForPushNotificationsAsync();
@@ -107,7 +110,11 @@ class ScreenWelcome extends Component {
             text={this.stringsManager.getStr(strings.STR_START_NOW)}
             handler={this.okButtonPressed.bind(this)}
             lang={this.props.strLang}
-            style={{ height: 60, width: "100%", marginBottom: "2%" }}
+            style={{
+              height: this.height / 15.6,
+              width: "100%",
+              marginBottom: "2%",
+            }}
           />
         </View>
       </Screen>
@@ -115,18 +122,18 @@ class ScreenWelcome extends Component {
   }
   getTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 36 : 32,
-      lineHeight: this.props.strLang == "ar" ? 63 : 50,
+      fontSize: this.props.strLang == "ar" ? this.width / 12 : 32,
+      // lineHeight: this.props.strLang == "ar" ? 63 : 50,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
       color: "#FFFFFF",
-      margin: 15,
+      margin: this.width / 25,
     };
   }
   getSubTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 16,
-      lineHeight: this.props.strLang == "ar" ? 36 : 28,
+      fontSize: this.props.strLang == "ar" ? this.width / 20.3 : 16,
+      // lineHeight: this.props.strLang == "ar" ? 36 : 28,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       textAlign: "center",
       color: "#FFFFFF",
@@ -134,8 +141,8 @@ class ScreenWelcome extends Component {
   }
   getInstructionsTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 24 : 18,
-      lineHeight: this.props.strLang == "ar" ? 36 : 30,
+      fontSize: this.props.strLang == "ar" ? this.width / 18 : 18,
+      // lineHeight: this.props.strLang == "ar" ? 36 : 30,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textDecorationLine: "underline",
       color: "#FFFFFF",
@@ -146,8 +153,8 @@ class ScreenWelcome extends Component {
   }
   getInstructionsStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 22 : 16,
-      lineHeight: this.props.strLang == "ar" ? 36 : 30,
+      fontSize: this.props.strLang == "ar" ? this.width / 20.3 : 16,
+      // lineHeight: this.props.strLang == "ar" ? 36 : 30,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       alignSelf: "flex-start",
       color: "#FFFFFF",
@@ -162,12 +169,12 @@ class ScreenWelcome extends Component {
   }
   getCheckBoxTextStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 15 : 13,
+      fontSize: this.props.strLang == "ar" ? this.width / 29 : 13,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
       color: "#0C3D11",
-      lineHeight: this.props.strLang == "ar" ? 30 : 28,
-      marginHorizontal: 4,
+      // lineHeight: this.props.strLang == "ar" ? 30 : 28,
+      marginHorizontal: this.width / 70,
     };
   }
 }
@@ -207,8 +214,8 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF59",
     borderWidth: 1,
     borderRadius: 10,
-    width: 280,
+    width: "80%",
     height: 1,
-    marginVertical: 15,
+    marginVertical: "5%",
   },
 });
