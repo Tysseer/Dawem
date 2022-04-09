@@ -483,7 +483,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.primary,
     borderRadius: 10,
-    textAlign: "right",
     fontSize: 18,
     color: colors.primary,
     backgroundColor: colors.light_bg,

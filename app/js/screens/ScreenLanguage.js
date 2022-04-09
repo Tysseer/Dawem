@@ -1,40 +1,57 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
+  reduxActionSetLanguage,
+  reduxActionSetFirstRunFlag,
+} from "../redux/reduxActions";
+import {
   Text,
   StyleSheet,
   View,
   Image,
   TouchableWithoutFeedback,
   I18nManager,
+  TouchableOpacity,
 } from "react-native";
-import * as strings from "../helpers/StringsManager";
-import StringsManager from "../helpers/StringsManager";
+import * as strings from "js/helpers/StringsManager";
+import StringsManager from "js/helpers/StringsManager";
+import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
-import ActionBtn from "../../components/ActionBtn";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { colors } from "../../constants";
+import EnFlag from "assets/images/lang_en.png";
+import ArFlag from "assets/images/lang_ar.png";
 
-import {
-  reduxActionSetLanguage,
-  reduxActionSetFirstRunFlag,
-} from "../redux/reduxActions";
+const langs = [
+  {
+    key: "en",
+    title: "English",
+  },
+  {
+    key: "ar",
+    title: "العربية",
+  },
+];
 
 class ScreenLanguage extends Component {
   constructor(props) {
     super(props);
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
+    this.state = {
+      selectedLang: this.props.strLang,
+    };
   }
 
   arLangPressed() {
     this.props.reduxActionSetLanguage("ar");
-    // I18nManager.forceRTL(true);
-    // Updates.reloadAsync();
   }
   enLangPressed() {
     this.props.reduxActionSetLanguage("en");
-    // I18nManager.forceRTL(false);
-    // Updates.reloadAsync();
+  }
+  languageHandler(lang) {
+    this.setState({ selectedLang: lang });
+    this.props.reduxActionSetLanguage(lang);
   }
   okButtonPressed() {
     this.props.reduxActionSetFirstRunFlag(false);
@@ -44,9 +61,6 @@ class ScreenLanguage extends Component {
       I18nManager.forceRTL(false);
     }
     Updates.reloadAsync();
-    // if (this.props.isSkipWelcome == false)
-    //   this.props.navigation.navigate("ScrWelcome");
-    // else this.props.navigation.navigate("ScrList");
   }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
@@ -59,26 +73,37 @@ class ScreenLanguage extends Component {
           />
         </View>
         <View style={styles.allLangsContainer}>
-          <TouchableWithoutFeedback onPress={this.enLangPressed.bind(this)}>
-            <View style={this.getLangContainerStyle("en")}>
-              <Image
-                source={require("assets/images/lang_en.png")}
-                style={styles.langLogo}
-              />
-              <Text style={this.getlangLabelTextStyle("en")}>English</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <View style={styles.separator}></View>
-          <TouchableWithoutFeedback onPress={this.arLangPressed.bind(this)}>
-            <View style={this.getLangContainerStyle("ar")}>
-              <Image
-                source={require("../../assets/images/lang_ar.png")}
-                style={styles.langLogo}
-              />
-              <Text style={this.getlangLabelTextStyle("ar")}>العربية</Text>
-            </View>
-          </TouchableWithoutFeedback>
+          <View style={styles.separator} />
+          {langs.map((lang) => (
+            <TouchableOpacity
+              key={lang.key}
+              activeOpacity={0.7}
+              onPress={() => this.languageHandler(lang.key)}
+              style={styles.langContainer}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  source={lang.key == "en" ? EnFlag : ArFlag}
+                  style={styles.langLogo}
+                />
+                <Text style={this.getlangLabelTextStyle(lang.key)}>
+                  {lang.title}
+                </Text>
+              </View>
+              {/* this.props.strLang */}
+              {this.state.selectedLang == lang.key ? (
+                <MaterialCommunityIcons
+                  name="check"
+                  size={24}
+                  color={colors.primary}
+                />
+              ) : (
+                <View />
+              )}
+            </TouchableOpacity>
+          ))}
         </View>
+
         <ActionBtn
           text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
           handler={this.okButtonPressed.bind(this)}
@@ -87,72 +112,6 @@ class ScreenLanguage extends Component {
         />
       </View>
     );
-  }
-
-  renderOKButton(nStrID, pressHandler) {
-    var styleContainer = {
-      flex: 1,
-      justifyContent: "flex-end",
-      marginBottom: 5,
-      width: "100%",
-      alignItems: "center",
-    };
-    var styleOKButton = {
-      backgroundColor: "#0B721E",
-      alignItems: "center",
-      justifyContent: "center",
-      width: "93%",
-      height: 70,
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-      marginTop: 50,
-      marginBottom: 25,
-    };
-    var styleOkButtonTxt = {
-      textAlign: "center",
-      color: "#FFFFFF",
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      justifyContent: "center",
-      fontSize: this.props.strLang == "ar" ? 22 : 20,
-      lineHeight: 35,
-      fontWeight: "600",
-    };
-    return (
-      <TouchableWithoutFeedback onPress={this.okButtonPressed.bind(this)}>
-        <View style={styleContainer}>
-          <View style={styleOKButton}>
-            <View>
-              <Text style={styleOkButtonTxt}>
-                {this.stringsManager.getStr(nStrID)}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-
-  getLangContainerStyle(strLang) {
-    return [
-      styles.langContainer,
-      this.props.strLang == strLang
-        ? { borderColor: "#00AB14" }
-        : { borderColor: "#00AB1400" },
-    ];
-  }
-
-  getlangButtonTextStyle() {
-    return {
-      textAlign: "center",
-      color: "#FFFFFF",
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      justifyContent: "center",
-      fontSize: this.props.strLang == "ar" ? 22 : 20,
-      lineHeight: 35,
-      fontWeight: "600",
-    };
   }
   getlangLabelTextStyle(strLang) {
     return {
@@ -199,14 +158,14 @@ const styles = StyleSheet.create({
   langContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     width: "93%",
     height: 70,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderWidth: 2,
+    // borderTopLeftRadius: 10,
+    // borderTopRightRadius: 10,
+    // borderBottomLeftRadius: 10,
+    // borderBottomRightRadius: 10,
+    // borderWidth: 2,
 
     borderColor: "#0B721EFF",
   },
