@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   I18nManager,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import * as strings from "js/helpers/StringsManager";
 import StringsManager from "js/helpers/StringsManager";
@@ -36,6 +37,9 @@ const langs = [
 class ScreenLanguage extends Component {
   constructor(props) {
     super(props);
+    // const { height, width } = Dimensions.get("window");
+    this.height = Dimensions.get("window").height;
+    this.width = Dimensions.get("window").width;
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
     this.state = {
@@ -84,7 +88,11 @@ class ScreenLanguage extends Component {
               <View style={{ flexDirection: "row" }}>
                 <Image
                   source={lang.key == "en" ? EnFlag : ArFlag}
-                  style={styles.langLogo}
+                  style={{
+                    width: this.width / 10,
+                    height: this.width / 10,
+                    marginRight: this.width / 14,
+                  }}
                 />
                 <Text style={this.getlangLabelTextStyle(lang.key)}>
                   {lang.title}
@@ -108,15 +116,15 @@ class ScreenLanguage extends Component {
           text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
           handler={this.okButtonPressed.bind(this)}
           lang={this.props.strLang}
-          style={{ height: 60, width: "93%" }}
+          style={{ height: this.height / 15.6, width: "93%" }}
         />
       </View>
     );
   }
   getlangLabelTextStyle(strLang) {
     return {
-      fontSize: strLang == "ar" ? 22 : 18,
-      lineHeight: 35,
+      fontSize: strLang == "ar" ? this.width / 19.58 : this.width / 23.8,
+      lineHeight: this.width / 12,
 
       fontFamily: strLang == "ar" ? "Amiri" : "Poppins",
       textAlign: "left",
@@ -151,7 +159,7 @@ const styles = StyleSheet.create({
   },
   allLangsContainer: {
     width: "100%",
-    height: 200,
+    height: "25%",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -160,7 +168,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "93%",
-    height: 70,
+    // height: 70,
+    height: "35%",
+
     // borderTopLeftRadius: 10,
     // borderTopRightRadius: 10,
     // borderBottomLeftRadius: 10,
@@ -169,11 +179,11 @@ const styles = StyleSheet.create({
 
     borderColor: "#0B721EFF",
   },
-  langLogo: {
-    width: 40,
-    height: 40,
-    marginRight: 30,
-  },
+  // langLogo: {
+  //   width: 40,
+  //   height: 40,
+  //   marginRight: 30,
+  // },
 
   separator: {
     borderColor: "#88888859",
@@ -186,17 +196,17 @@ const styles = StyleSheet.create({
     width: "93%",
     marginVertical: 15,
   },
-  okButton: {
-    backgroundColor: "#0B721E",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "93%",
-    height: 70,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    marginTop: 50,
-    marginBottom: 25,
-  },
+  // okButton: {
+  //   backgroundColor: "#0B721E",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   width: "93%",
+  //   height: 70,
+  //   borderTopLeftRadius: 10,
+  //   borderTopRightRadius: 10,
+  //   borderBottomLeftRadius: 10,
+  //   borderBottomRightRadius: 10,
+  //   marginTop: 50,
+  //   marginBottom: 25,
+  // },
 });
