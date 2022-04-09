@@ -89,7 +89,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_CANCEL) {
       if (strLang == "ar") return "إلغاء";
-      if (strLang == "en") return "+ Cancel";
+      if (strLang == "en") return "Cancel";
       return "unsupported language";
     }
     if (nStrID == STR_SEL_AYAH) {

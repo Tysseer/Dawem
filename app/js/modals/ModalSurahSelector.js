@@ -156,8 +156,8 @@ export default class ModalSurahSelector {
     if (this.selSurah == 0) return "Select Surah";
     else
       return this.bIsAr
-        ? this.surahInfo.getSurahNameAr(this.selSurah)
-        : this.surahInfo.getSurahNameEnTrns(this.selSurah);
+        ? this.surahInfo.arrSurahNamesAr[this.selSurah]
+        : this.surahInfo.arrSurahNamesEnTrns[this.selSurah];
   }
 }
 const styles = StyleSheet.create({
