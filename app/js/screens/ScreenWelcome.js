@@ -122,7 +122,7 @@ class ScreenWelcome extends Component {
   }
   getTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? this.width / 12 : 32,
+      fontSize: this.props.strLang == "ar" ? this.height / 27 : 32,
       // lineHeight: this.props.strLang == "ar" ? 63 : 50,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
@@ -132,7 +132,7 @@ class ScreenWelcome extends Component {
   }
   getSubTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? this.width / 20.3 : 16,
+      fontSize: this.props.strLang == "ar" ? this.height / 42 : 16,
       // lineHeight: this.props.strLang == "ar" ? 36 : 28,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       textAlign: "center",
@@ -141,7 +141,7 @@ class ScreenWelcome extends Component {
   }
   getInstructionsTitleStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? this.width / 18 : 18,
+      fontSize: this.props.strLang == "ar" ? this.height / 40 : 18,
       // lineHeight: this.props.strLang == "ar" ? 36 : 30,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textDecorationLine: "underline",
@@ -153,7 +153,7 @@ class ScreenWelcome extends Component {
   }
   getInstructionsStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? this.width / 20.3 : 16,
+      fontSize: this.props.strLang == "ar" ? this.height / 40 : 16,
       // lineHeight: this.props.strLang == "ar" ? 36 : 30,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       alignSelf: "flex-start",
@@ -169,7 +169,7 @@ class ScreenWelcome extends Component {
   }
   getCheckBoxTextStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? this.width / 29 : 13,
+      fontSize: this.props.strLang == "ar" ? this.height / 62 : 13,
       fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
       textAlign: "center",
       color: "#0C3D11",

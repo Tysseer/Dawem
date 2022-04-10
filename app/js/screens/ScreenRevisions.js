@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -7,28 +7,29 @@ import {
   Text,
   Dimensions,
   ScrollView,
-} from 'react-native';
+  TouchableOpacity,
+} from "react-native";
 
-import RevisionsList from '../subComponents/RevisionsList';
-import RevisionsManager from '../helpers/RevisionsManager';
-import SVGLoader from '../helpers/SVGLoader';
-import BadgesBar from '../subComponents/BadgesBar';
-import { useFocusEffect } from '@react-navigation/native';
-import { connect } from 'react-redux';
+import RevisionsList from "../subComponents/RevisionsList";
+import RevisionsManager from "../helpers/RevisionsManager";
+import SVGLoader from "../helpers/SVGLoader";
+import BadgesBar from "../subComponents/BadgesBar";
+import { useFocusEffect } from "@react-navigation/native";
+import { connect } from "react-redux";
 import {
   reduxActionSetCurRevision,
   reduxActionDelRevision,
-} from '../redux/reduxActions';
-import * as strings from '../helpers/StringsManager';
-import StringsManager from '../helpers/StringsManager';
-import Center from 'app/components/Center';
-import { getFontFamily } from '../helpers/scripts';
-import ActionBtn from 'app/components/ActionBtn';
+} from "../redux/reduxActions";
+import * as strings from "../helpers/StringsManager";
+import StringsManager from "../helpers/StringsManager";
+import Center from "app/components/Center";
+import { getFontFamily } from "../helpers/scripts";
+import ActionBtn from "app/components/ActionBtn";
 // import bgImage from 'assets/backgroundPNG/green_background.png';
-import bgImage from 'assets/images/mainBg.png';
-import Screen from 'app/components/Screen';
+import bgImage from "assets/images/mainBg.png";
+import Screen from "app/components/Screen";
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 function RefreshBadgesOnFocus({ onUpdate }) {
   useFocusEffect(
@@ -107,7 +108,7 @@ class ScreenRevisions extends Component {
           icon={true}
           lang={this.props.strLang}
           fullWidth={true}
-          style={{ height: 60, marginTop: 20 }}
+          style={{ height: height / 15.6, marginTop: height / 46 }}
         />
       </Screen>
     );
@@ -115,61 +116,60 @@ class ScreenRevisions extends Component {
 
   getBadgesOnPressHandlers() {
     var pressHandlers = new Map();
-    pressHandlers.set('day', this.onDayBadgePressed.bind(this));
-    pressHandlers.set('month', this.onMonthBadgePressed.bind(this));
-    pressHandlers.set('week', this.onWeekBadgePressed.bind(this));
+    pressHandlers.set("day", this.onDayBadgePressed.bind(this));
+    pressHandlers.set("month", this.onMonthBadgePressed.bind(this));
+    pressHandlers.set("week", this.onWeekBadgePressed.bind(this));
 
     return pressHandlers;
   }
   getBadgesOnLongPressHandlers() {
     var longPressHandlers = new Map();
-    longPressHandlers.set('day', this.onBadgeLongPress.bind(this));
-    longPressHandlers.set('month', this.onBadgeLongPress.bind(this));
-    longPressHandlers.set('week', this.onBadgeLongPress.bind(this));
+    longPressHandlers.set("day", this.onBadgeLongPress.bind(this));
+    longPressHandlers.set("month", this.onBadgeLongPress.bind(this));
+    longPressHandlers.set("week", this.onBadgeLongPress.bind(this));
     return longPressHandlers;
   }
 
   onDayBadgePressed() {
-    this.props.navigation.navigate('ScrDayBadge');
+    this.props.navigation.navigate("ScrDayBadge");
   }
   onMonthBadgePressed() {
-    this.props.navigation.navigate('ScrMonthBadge');
+    this.props.navigation.navigate("ScrMonthBadge");
   }
   onWeekBadgePressed() {
-    this.props.navigation.navigate('ScrWeekBadge');
+    this.props.navigation.navigate("ScrWeekBadge");
   }
   onBadgeLongPress() {
     // todo: explain badges
   }
   onAddRevision() {
     this.props.reduxActionSetCurRevision(null);
-    this.props.navigation.navigate('ScrRev');
+    this.props.navigation.navigate("ScrRev");
   }
 
   onSettings() {
-    this.props.navigation.navigate('ScrSettings');
+    this.props.navigation.navigate("ScrSettings");
   }
+  onDonate() {}
 
   onReadRevision(revision) {
     this.props.reduxActionSetCurRevision(revision);
-    this.props.navigation.navigate('Mushaf', {
+    this.props.navigation.navigate("Mushaf", {
       ayahIndex: revision.getProgressAyah(),
-      // longPressHandler: this.onRevProgress.bind(this), // should be removed
+      longPressHandler: this.onRevProgress.bind(this),
     });
   }
-
-  // onRevProgress(iAyah) {
-  //   this.props.curRevision.updateProgress(iAyah);
-  //   if (this.props.curRevision.progress > 100) {
-  //     this.props.curRevision.makeRevisionDateNow();
-  //     this.props.revisionsManager.sortRevisions();
-  //   }
-  //   //this.refresh();
-  // }
-
+  onRevProgress(iAyah) {
+    this.props.curRevision.updateProgress(iAyah);
+    if (this.props.curRevision.progress > 100) {
+      this.props.curRevision.makeRevisionDateNow();
+      this.props.revisionsManager.sortRevisions();
+    }
+    //this.refresh();
+  }
   onEditRevision(revision) {
     this.props.reduxActionSetCurRevision(revision);
-    this.props.navigation.navigate('ScrRev');
+    this.props.navigation.navigate("ScrRev");
   }
 
   onDeleteRevision(revision) {
@@ -183,8 +183,8 @@ class ScreenRevisions extends Component {
   getInitialPrompt() {
     return (
       <ImageBackground source={bgImage} style={styles.bgImage}>
-        <Image source={require('assets/icon.png')} style={styles.bgIcon} />
-        <Center style={{ height: '100%' }}>
+        <Image source={require("assets/icon.png")} style={styles.bgIcon} />
+        <Center style={{ height: "100%" }}>
           <View>
             <Text
               style={{
@@ -218,7 +218,6 @@ const mapStateToProps = (state) => ({
   curRevision: state.curRevision,
   strLang: state.strLang,
 });
-
 const mapDispatchToProps = () => {
   return {
     reduxActionSetCurRevision,
@@ -227,54 +226,58 @@ const mapDispatchToProps = () => {
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenRevisions);
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#EEE',
-    padding: 20,
-    // paddingHorizontal: 20,
-    // paddingBottom: 20,
-    // justifyContent: 'center',
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: "#EEE",
+  //   padding: 20,
+  //   // paddingHorizontal: 20,
+  //   // paddingBottom: 20,
+  //   // justifyContent: 'center',
+  // },
 
-  toolBar: {
-    width: '100%',
-    height: 40,
-    alignSelf: 'flex-end',
-    borderTopColor: 'yellow',
-    borderTopWidth: 1,
-    paddingHorizontal: 6,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  toolButton: {
-    width: 38,
-    height: 38,
-    marginHorizontal: 2,
-  },
+  // toolBar: {
+  //   width: "100%",
+  //   height: 40,
+  //   alignSelf: "flex-end",
+  //   borderTopColor: "yellow",
+  //   borderTopWidth: 1,
+  //   paddingHorizontal: 6,
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   justifyContent: "space-around",
+  // },
+  // toolButton: {
+  //   width: 38,
+  //   height: 38,
+  //   marginHorizontal: 2,
+  // },
   listContainer: {
-    width: '100%',
+    width: "100%",
     flex: 1,
   },
   bgImage: {
-    width: '100%',
+    width: "100%",
     height: 0.42 * height,
-    position: 'relative',
-    overflow: 'hidden',
+    position: "relative",
+    overflow: "hidden",
     borderRadius: 12,
   },
   bgIcon: {
-    width: '90%',
-    height: '90%',
-    resizeMode: 'contain',
-    position: 'absolute',
-    bottom: -120,
-    left: -50,
+    width: "90%",
+    height: "90%",
+    resizeMode: "contain",
+    position: "absolute",
+    // bottom: -120,
+    bottom: -(height / 7),
+    // left: -50,
+    left: -(height / 19),
     opacity: 0.1,
   },
   text: {
-    fontSize: 18,
+    // fontSize: 18,
+    fontSize: height / 51,
+
     // textAlign: 'center',
-    color: '#fff',
+    color: "#fff",
   },
 });
