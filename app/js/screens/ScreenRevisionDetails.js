@@ -437,8 +437,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: "flex-start",
     // fontSize: 18,
-    fontSize: height / 50,
-    fontFamily: "sans-serif",
     color: "#323223",
   },
   // buttonText: {
