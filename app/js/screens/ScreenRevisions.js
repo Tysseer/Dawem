@@ -23,7 +23,7 @@ import {
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import Center from "app/components/Center";
-import { getFontFamily } from "../helpers/scripts";
+import { getSubTitleFontBasicStyle } from "../helpers/scripts";
 import ActionBtn from "app/components/ActionBtn";
 // import bgImage from 'assets/backgroundPNG/green_background.png';
 import bgImage from "assets/images/mainBg.png";
@@ -189,7 +189,7 @@ class ScreenRevisions extends Component {
             <Text
               style={{
                 ...styles.text,
-                ...getFontFamily(this.props.strLang),
+                ...getSubTitleFontBasicStyle(this.props.strLang),
               }}
             >
               {this.stringsManager.getStr(strings.STR_REVS_PROMPT)}
@@ -274,10 +274,7 @@ const styles = StyleSheet.create({
     opacity: 0.1,
   },
   text: {
-    // fontSize: 18,
-    fontSize: height / 51,
-
-    // textAlign: 'center',
+    textAlign: "center",
     color: "#fff",
   },
 });

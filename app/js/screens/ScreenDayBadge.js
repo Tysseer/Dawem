@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  Dimensions,
   ImageBackground,
   Image,
 } from "react-native";
@@ -13,6 +13,11 @@ import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import RevisionsManager from "../helpers/RevisionsManager";
 import Screen from "app/components/Screen";
+import {
+  getTitleFontBasicStyle,
+  getLargeContentFontBasicStyle,
+} from "../helpers/scripts";
+const { height, width } = Dimensions.get("window");
 
 class ScreenDayBadge extends Component {
   constructor(props) {
@@ -68,23 +73,24 @@ class ScreenDayBadge extends Component {
     );
   }
   getTitleStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? 36 : 32,
-      lineHeight: this.props.strLang == "ar" ? 63 : 50,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-      textAlign: "center",
-      color: "#FFFFFF",
-      margin: 15,
-    };
+    return [
+      {
+        textAlign: "center",
+        color: "#FFFFFF",
+        marginVertical: height / 100,
+      },
+      getTitleFontBasicStyle(this.props.strLang),
+    ];
   }
   getSubTitleStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? 22 : 16,
-      lineHeight: this.props.strLang == "ar" ? 36 : 28,
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      textAlign: "center",
-      color: "#FFFFFF",
-    };
+    return [
+      {
+        textAlign: "center",
+        color: "#FFFFFF",
+        marginVertical: height / 200,
+      },
+      getLargeContentFontBasicStyle(this.props.strLang),
+    ];
   }
 }
 const mapStateToProps = (state) => ({

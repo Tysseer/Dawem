@@ -72,3 +72,10 @@ export const getFootNoteFontBasicStyle = (lang) => {
     lineHeight: lang == "ar" ? height / 26 : 13,
   };
 };
+export const getLargeContentFontBasicStyle = (lang) => {
+  return {
+    fontFamily: lang == "ar" ? "Amiri" : "Poppins",
+    fontSize: lang == "ar" ? height / 34 : height / 40,
+    lineHeight: lang == "ar" ? height / 18 : height / 20,
+  };
+};
