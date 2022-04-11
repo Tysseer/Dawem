@@ -231,7 +231,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "1- قم بملء قائمة أورادك.\n2- قم بتحديث القائمة كلما راجعت وردا منها.\n3- داوم على المراجعة وقم بتفعيل أوسمتك.";
       if (strLang == "en")
-        return "1- Setup your list of revisions.             \n2- Update the list as you revise.          \n3- Light up badges and stay on track.";
+        return "1- Setup your list of revisions.\n2- Update the list as you revise.\n3- Light up badges and stay on track.";
       return "unsupported language";
     }
     if (nStrID == STR_SKIP_SCREEN) {

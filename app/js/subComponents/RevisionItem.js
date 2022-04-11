@@ -18,6 +18,7 @@ import SVGLoader from "../helpers/SVGLoader";
 import { colors } from "../../constants";
 import { convertToArabicNumbers } from "../helpers/convertToArabicNumbers";
 const { height, width } = Dimensions.get("window");
+import { getSideTitleFontBasicStyle } from "../helpers/scripts";
 
 const ITEM_HEIGHT = height / 15;
 
@@ -59,7 +60,13 @@ export default class RevisionItem extends Component {
               style={styles.itemTitleContainer}
             >
               {renderEditDeleteActions}
-              <Text numberOfLines={1} style={styles.itemTitle}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.itemTitle,
+                  getSideTitleFontBasicStyle("ar", true),
+                ]}
+              >
                 {revision.getRevisionTitle()}
               </Text>
             </TouchableOpacity>
@@ -179,9 +186,6 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     // fontSize: 18,
-    fontSize: height / 51,
-
-    fontFamily: "Amiri_Bold",
     color: colors.primary,
     marginHorizontal: width / 30,
   },

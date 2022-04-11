@@ -161,7 +161,6 @@ class ScreenWelcome extends Component {
   getInstructionsStyle() {
     return [
       {
-        alignSelf: "flex-start",
         color: "#FFFFFF",
       },
       getContentFontBasicStyle(this.props.strLang),

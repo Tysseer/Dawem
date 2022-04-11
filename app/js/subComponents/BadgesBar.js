@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import SVGLoader from "../helpers/SVGLoader";
-import { getFontFamily } from "../helpers/scripts";
+import { getSideTitleFontBasicStyle } from "../helpers/scripts";
 import BgImage from "../../assets/backgroundPNG/green_background.png";
 import BgBadge from "../../assets/images/trophy_transparent.png";
 import RenderBadgeImg from "./RenderBadgeImg";
@@ -64,7 +64,7 @@ export default class BadgesBar extends Component {
             <Text
               style={{
                 ...styles.text,
-                ...getFontFamily(this.props.strLang),
+                ...getSideTitleFontBasicStyle(this.props.strLang),
               }}
             >
               {this.props.title}
@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   text: {
-    fontSize: 18,
     color: "#fff",
     alignSelf: "flex-start",
+    marginTop: 6,
   },
 });
