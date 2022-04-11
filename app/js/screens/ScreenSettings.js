@@ -18,7 +18,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../constants";
 import EnFlag from "assets/images/lang_en.png";
 import ArFlag from "assets/images/lang_ar.png";
-
+import { getFontBasicStyle } from "../helpers/scripts";
 const langs = [
   {
     key: "en",
@@ -111,14 +111,14 @@ class ScreenSettings extends Component {
     );
   }
   getlangLabelTextStyle(strLang) {
-    return {
-      fontSize: strLang == "ar" ? 22 : 18,
-      lineHeight: 35,
-
-      fontFamily: strLang == "ar" ? "Amiri" : "Poppins",
-      textAlign: "left",
-      color: "#0C3D11",
-    };
+    return [
+      {
+        lineHeight: 35,
+        alignSelf: "center",
+        color: "#0C3D11",
+      },
+      getFontBasicStyle(strLang, false),
+    ];
   }
 }
 const mapStateToProps = (state) => ({

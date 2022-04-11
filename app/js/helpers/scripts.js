@@ -1,3 +1,5 @@
+import { Dimensions } from "react-native";
+const { height } = Dimensions.get("window");
 export const convertToArabicNumbers = (num, dir) => {
   if (dir == "rtl") {
     let indianNumbers = ["۰", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
@@ -20,4 +22,18 @@ export const convertToArabicNumbers = (num, dir) => {
 export const getFontFamily = (lang, bold = false) => {
   if (bold) return { fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold" };
   else return { fontFamily: lang == "ar" ? "Amiri" : "Poppins" };
+};
+export const getFontBasicStyle = (lang, bold = false) => {
+  if (bold)
+    return {
+      fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
+      fontSize: lang == "ar" ? height / 37 : height / 40,
+      lineHeight: lang == "ar" ? height / 18 : height / 20,
+    };
+  else
+    return {
+      fontFamily: lang == "ar" ? "Amiri" : "Poppins",
+      fontSize: lang == "ar" ? height / 38 : height / 40,
+      lineHeight: lang == "ar" ? height / 18 : height / 20,
+    };
 };

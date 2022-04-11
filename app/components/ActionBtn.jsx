@@ -9,7 +9,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 
 import { colors } from "../constants";
-import { getFontFamily } from "../js/helpers/scripts";
+import { getFontBasicStyle } from "../js/helpers/scripts";
 import Center from "./Center";
 const { height, width } = Dimensions.get("window");
 
@@ -58,7 +58,7 @@ const ActionBtn = ({
           numberOfLines={1}
           style={{
             ...styles.text,
-            ...getFontFamily(lang, bold),
+            ...getFontBasicStyle(lang, bold),
             ...extraTextStyle,
           }}
         >
@@ -83,10 +83,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
-    fontSize: height / 50,
-    // lineHeight: 32,
     marginHorizontal: 7,
-
+    alignSelf:"center"
     // width: '100%',
   },
 });

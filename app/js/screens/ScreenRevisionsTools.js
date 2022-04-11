@@ -30,6 +30,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { getFontBasicStyle } from "../helpers/scripts";
 
 const { height, width } = Dimensions.get("window");
 
@@ -200,13 +201,14 @@ class ScreenRevisionsTools extends Component {
     this.props.navigation.navigate("Home", { screen: "Main" });
   }
   getItemTextStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? height / 46 : 16,
-      // lineHeight: this.props.strLang == "ar" ? height / 25 : 22,
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      marginHorizontal: 1,
-      color: "#0B721E",
-    };
+    return [
+      {
+        alignSelf: "center",
+        marginHorizontal: 1,
+        color: "#0B721E",
+      },
+      getFontBasicStyle(this.props.strLang, false),
+    ];
   }
   renderItem(item) {
     return (
