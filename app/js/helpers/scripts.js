@@ -37,3 +37,38 @@ export const getFontBasicStyle = (lang, bold = false) => {
       lineHeight: lang == "ar" ? height / 18 : height / 20,
     };
 };
+export const getTitleFontBasicStyle = (lang) => {
+  return {
+    fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
+    fontSize: lang == "ar" ? height / 24 : height / 30,
+    lineHeight: lang == "ar" ? height / 12 : height / 15,
+  };
+};
+export const getSubTitleFontBasicStyle = (lang) => {
+  return {
+    fontFamily: lang == "ar" ? "Amiri" : "Poppins",
+    fontSize: lang == "ar" ? height / 34 : height / 40,
+    lineHeight: lang == "ar" ? height / 18 : height / 20,
+  };
+};
+export const getSideTitleFontBasicStyle = (lang) => {
+  return {
+    fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
+    fontSize: lang == "ar" ? height / 40 : height / 42,
+    lineHeight: lang == "ar" ? height / 20 : height / 44,
+  };
+};
+export const getContentFontBasicStyle = (lang) => {
+  return {
+    fontFamily: lang == "ar" ? "Amiri" : "Poppins",
+    fontSize: lang == "ar" ? height / 40 : height / 42,
+    lineHeight: lang == "ar" ? height / 20 : height / 44,
+  };
+};
+export const getFootNoteFontBasicStyle = (lang) => {
+  return {
+    fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
+    fontSize: lang == "ar" ? height / 58 : 13,
+    lineHeight: lang == "ar" ? height / 26 : 13,
+  };
+};

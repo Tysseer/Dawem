@@ -16,6 +16,13 @@ import ActionBtn from "app/components/ActionBtn";
 import Screen from "app/components/Screen";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
+import {
+  getTitleFontBasicStyle,
+  getSubTitleFontBasicStyle,
+  getSideTitleFontBasicStyle,
+  getContentFontBasicStyle,
+  getFootNoteFontBasicStyle,
+} from "../helpers/scripts";
 
 class ScreenWelcome extends Component {
   constructor(props) {
@@ -58,7 +65,7 @@ class ScreenWelcome extends Component {
     return (
       <Screen>
         <View style={styles.mainContainer}>
-          <View style={{ width: "100%", alignItems: "center", height: "68%" }}>
+          <View style={{ width: "100%", alignItems: "center", height: "74%" }}>
             <View style={styles.messageContainer}>
               <ImageBackground
                 source={require("assets/backgroundPNG/green_background_withQuran.png")}
@@ -121,44 +128,44 @@ class ScreenWelcome extends Component {
     );
   }
   getTitleStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? this.height / 27 : 32,
-      // lineHeight: this.props.strLang == "ar" ? 63 : 50,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-      textAlign: "center",
-      color: "#FFFFFF",
-      margin: this.width / 25,
-    };
+    return [
+      {
+        textAlign: "center",
+        color: "#FFFFFF",
+        marginVertical: this.height / 50,
+      },
+      getTitleFontBasicStyle(this.props.strLang),
+    ];
   }
   getSubTitleStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? this.height / 42 : 16,
-      // lineHeight: this.props.strLang == "ar" ? 36 : 28,
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      textAlign: "center",
-      color: "#FFFFFF",
-    };
+    return [
+      {
+        textAlign: "center",
+        color: "#FFFFFF",
+        marginVertical: this.height / 100,
+      },
+      getSubTitleFontBasicStyle(this.props.strLang),
+    ];
   }
   getInstructionsTitleStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? this.height / 40 : 18,
-      // lineHeight: this.props.strLang == "ar" ? 36 : 30,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-      textDecorationLine: "underline",
-      color: "#FFFFFF",
-
-      alignSelf: "flex-start",
-      marginBottom: 10,
-    };
+    return [
+      {
+        textDecorationLine: "underline",
+        color: "#FFFFFF",
+        marginBottom: 10,
+        alignSelf: "flex-start",
+      },
+      getSideTitleFontBasicStyle(this.props.strLang),
+    ];
   }
   getInstructionsStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? this.height / 40 : 16,
-      // lineHeight: this.props.strLang == "ar" ? 36 : 30,
-      fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
-      alignSelf: "flex-start",
-      color: "#FFFFFF",
-    };
+    return [
+      {
+        alignSelf: "flex-start",
+        color: "#FFFFFF",
+      },
+      getContentFontBasicStyle(this.props.strLang),
+    ];
   }
   getCheckBoxContainerStyle() {
     return {
@@ -168,14 +175,14 @@ class ScreenWelcome extends Component {
     };
   }
   getCheckBoxTextStyle() {
-    return {
-      fontSize: this.props.strLang == "ar" ? this.height / 62 : 13,
-      fontFamily: this.props.strLang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-      textAlign: "center",
-      color: "#0C3D11",
-      // lineHeight: this.props.strLang == "ar" ? 30 : 28,
-      marginHorizontal: this.width / 70,
-    };
+    return [
+      {
+        textAlign: "center",
+        color: "#0C3D11",
+        marginHorizontal: this.width / 70,
+      },
+      getFootNoteFontBasicStyle(this.props.strLang),
+    ];
   }
 }
 const mapStateToProps = (state) => ({
