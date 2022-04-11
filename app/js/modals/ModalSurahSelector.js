@@ -12,7 +12,8 @@ import Center from "../../components/Center";
 import { colors } from "../../constants";
 import QuranIndexer from "../helpers/QuranIndexer";
 import SVGLoader from "../helpers/SVGLoader";
-const { width } = Dimensions.get("window");
+import { getContentFontBasicStyle } from "../helpers/scripts";
+const { height, width } = Dimensions.get("window");
 export default class ModalSurahSelector {
   constructor(parent /* should have .bShowSurahSelector and .refresh()*/) {
     this.parent = parent;
@@ -72,10 +73,22 @@ export default class ModalSurahSelector {
   }
   renderSurahName(item) {
     if (this.bIsAr) {
-      return <Text style={{ paddingHorizontal: 5 }}>{item}</Text>;
+      return (
+        <Text
+          style={[{ paddingHorizontal: 5 }, getContentFontBasicStyle("ar")]}
+        >
+          {item}
+        </Text>
+      );
     } else {
       return (
-        <Text numberOfLines={1} style={{ paddingHorizontal: 5, flex: 1 }}>
+        <Text
+          numberOfLines={1}
+          style={[
+            { paddingHorizontal: 5, flex: 1 },
+            getContentFontBasicStyle("en"),
+          ]}
+        >
           {item}
         </Text>
       );
@@ -92,7 +105,7 @@ export default class ModalSurahSelector {
 
     if (index != 0)
       return (
-        <View key={Math.random().toString()}>
+        <View key={index + 1000}>
           <TouchableHighlight
             onPress={() => this.selectSurah.bind(this)(index)}
             underlayColor="#FFFFFF11"

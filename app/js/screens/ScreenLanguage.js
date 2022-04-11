@@ -9,7 +9,6 @@ import {
   StyleSheet,
   View,
   Image,
-  TouchableWithoutFeedback,
   I18nManager,
   TouchableOpacity,
   Dimensions,
@@ -22,6 +21,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../constants";
 import EnFlag from "assets/images/lang_en.png";
 import ArFlag from "assets/images/lang_ar.png";
+import { getFontBasicStyle } from "../helpers/scripts";
 
 const langs = [
   {
@@ -66,6 +66,38 @@ class ScreenLanguage extends Component {
     }
     Updates.reloadAsync();
   }
+  renderLanguageItem(lang) {
+    return (
+      <TouchableOpacity
+        key={lang.key}
+        activeOpacity={0.7}
+        onPress={() => this.languageHandler(lang.key)}
+        style={styles.langContainer}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={lang.key == "en" ? EnFlag : ArFlag}
+            style={{
+              width: this.width / 10,
+              height: this.width / 10,
+              marginRight: this.width / 28,
+            }}
+          />
+          <Text style={this.getlangLabelTextStyle(lang.key)}>{lang.title}</Text>
+        </View>
+        {/* this.props.strLang */}
+        {this.state.selectedLang == lang.key ? (
+          <MaterialCommunityIcons
+            name="check"
+            size={24}
+            color={colors.primary}
+          />
+        ) : (
+          <View />
+        )}
+      </TouchableOpacity>
+    );
+  }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
     return (
@@ -76,40 +108,11 @@ class ScreenLanguage extends Component {
             style={{ resizeMode: "contain" }}
           />
         </View>
+
         <View style={styles.allLangsContainer}>
+          {this.renderLanguageItem(langs[0])}
           <View style={styles.separator} />
-          {langs.map((lang) => (
-            <TouchableOpacity
-              key={lang.key}
-              activeOpacity={0.7}
-              onPress={() => this.languageHandler(lang.key)}
-              style={styles.langContainer}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <Image
-                  source={lang.key == "en" ? EnFlag : ArFlag}
-                  style={{
-                    width: this.width / 10,
-                    height: this.width / 10,
-                    marginRight: this.width / 14,
-                  }}
-                />
-                <Text style={this.getlangLabelTextStyle(lang.key)}>
-                  {lang.title}
-                </Text>
-              </View>
-              {/* this.props.strLang */}
-              {this.state.selectedLang == lang.key ? (
-                <MaterialCommunityIcons
-                  name="check"
-                  size={24}
-                  color={colors.primary}
-                />
-              ) : (
-                <View />
-              )}
-            </TouchableOpacity>
-          ))}
+          {this.renderLanguageItem(langs[1])}
         </View>
 
         <ActionBtn
@@ -122,14 +125,14 @@ class ScreenLanguage extends Component {
     );
   }
   getlangLabelTextStyle(strLang) {
-    return {
-      fontSize: strLang == "ar" ? this.width / 19.58 : this.width / 23.8,
-      lineHeight: this.width / 12,
-
-      fontFamily: strLang == "ar" ? "Amiri" : "Poppins",
-      textAlign: "left",
-      color: "#0C3D11",
-    };
+    return [
+      {
+        lineHeight: 35,
+        alignSelf: "center",
+        color: "#0C3D11",
+      },
+      getFontBasicStyle(strLang, false),
+    ];
   }
 }
 const mapStateToProps = (state) => ({

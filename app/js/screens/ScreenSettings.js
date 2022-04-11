@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
   Image,
-  TouchableWithoutFeedback,
+  Dimensions,
   I18nManager,
   TouchableOpacity,
 } from "react-native";
@@ -33,6 +33,8 @@ const langs = [
 class ScreenSettings extends Component {
   constructor(props) {
     super(props);
+    this.height = Dimensions.get("window").height;
+    this.width = Dimensions.get("window").width;
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
     this.originalLang = this.props.strLang;
@@ -59,6 +61,38 @@ class ScreenSettings extends Component {
     }
     Updates.reloadAsync();
   }
+  renderLanguageItem(lang) {
+    return (
+      <TouchableOpacity
+        key={lang.key}
+        activeOpacity={0.7}
+        onPress={() => this.languageHandler(lang.key)}
+        style={styles.langContainer}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={lang.key == "en" ? EnFlag : ArFlag}
+            style={{
+              width: this.width / 10,
+              height: this.width / 10,
+              marginRight: this.width / 28,
+            }}
+          />
+          <Text style={this.getlangLabelTextStyle(lang.key)}>{lang.title}</Text>
+        </View>
+        {/* this.props.strLang */}
+        {this.state.selectedLang == lang.key ? (
+          <MaterialCommunityIcons
+            name="check"
+            size={24}
+            color={colors.primary}
+          />
+        ) : (
+          <View />
+        )}
+      </TouchableOpacity>
+    );
+  }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
     return (
@@ -70,35 +104,9 @@ class ScreenSettings extends Component {
           />
         </View>
         <View style={styles.allLangsContainer}>
+          {this.renderLanguageItem(langs[0])}
           <View style={styles.separator} />
-          {langs.map((lang) => (
-            <TouchableOpacity
-              key={lang.key}
-              activeOpacity={0.7}
-              onPress={() => this.languageHandler(lang.key)}
-              style={styles.langContainer}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <Image
-                  source={lang.key == "en" ? EnFlag : ArFlag}
-                  style={styles.langLogo}
-                />
-                <Text style={this.getlangLabelTextStyle(lang.key)}>
-                  {lang.title}
-                </Text>
-              </View>
-              {/* this.props.strLang */}
-              {this.state.selectedLang == lang.key ? (
-                <MaterialCommunityIcons
-                  name="check"
-                  size={24}
-                  color={colors.primary}
-                />
-              ) : (
-                <View />
-              )}
-            </TouchableOpacity>
-          ))}
+          {this.renderLanguageItem(langs[1])}
         </View>
 
         <ActionBtn
@@ -163,11 +171,6 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
 
     borderColor: "#0B721EFF",
-  },
-  langLogo: {
-    width: 40,
-    height: 40,
-    marginRight: 30,
   },
 
   separator: {
