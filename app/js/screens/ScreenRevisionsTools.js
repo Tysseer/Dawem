@@ -14,6 +14,7 @@ import {
   I18nManager,
   FlatList,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import * as strings from "js/helpers/StringsManager";
 import StringsManager from "js/helpers/StringsManager";
@@ -29,6 +30,9 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+
+const { height, width } = Dimensions.get("window");
+
 const Write = async (strWrite) => {
   let fileUri = FileSystem.documentDirectory + "Dawem.txt";
   await FileSystem.writeAsStringAsync(fileUri, strWrite, {
@@ -197,8 +201,8 @@ class ScreenRevisionsTools extends Component {
   }
   getItemTextStyle() {
     return {
-      fontSize: this.props.strLang == "ar" ? 20 : 16,
-      lineHeight: this.props.strLang == "ar" ? 36 : 22,
+      fontSize: this.props.strLang == "ar" ? height / 46 : 16,
+      // lineHeight: this.props.strLang == "ar" ? height / 25 : 22,
       fontFamily: this.props.strLang == "ar" ? "Amiri" : "Poppins",
       marginHorizontal: 1,
       color: "#0B721E",
@@ -253,15 +257,11 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: "#0B721E0D",
-    height: 55,
-    marginVertical: 16,
-    marginHorizontal: 16,
+    height: height / 16,
+    marginVertical: height / 55,
+    marginHorizontal: height / 55,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
-  },
-  title: {
-    fontSize: 32,
-    color: "red",
   },
 });

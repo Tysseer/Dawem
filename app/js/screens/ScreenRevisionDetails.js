@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TextInput, Text } from "react-native";
+import { StyleSheet, View, TextInput, Text, Dimensions } from "react-native";
 
 import Revision from "../helpers/Revision";
 import ModalSurahSelector from "../modals/ModalSurahSelector";
@@ -15,6 +15,8 @@ import StringsManager from "../helpers/StringsManager";
 import { colors } from "app/constants";
 import { getFontFamily } from "../helpers/scripts";
 import ActionBtn from "app/components/ActionBtn";
+
+const { height, width } = Dimensions.get("window");
 class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
@@ -418,80 +420,81 @@ const styles = StyleSheet.create({
     padding: 20,
     // paddingTop: 40,
   },
-  okButton: {
-    alignSelf: "center",
-    width: 90,
-    height: 90,
-    marginTop: 30,
-  },
+  // okButton: {
+  //   alignSelf: "center",
+  //   width: 90,
+  //   height: 90,
+  //   marginTop: 30,
+  // },
 
   revisionTitle: {
     alignSelf: "flex-start",
-    fontSize: 18,
-    margin: 10,
+    // fontSize: 18,
+    fontSize: height / 50,
+    margin: height / 90,
     fontFamily: "sans-serif",
     color: "#323223",
   },
-  buttonText: {
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 18,
-    // fontFamily: "sans-serif",
-    color: "#fff",
-  },
-  buttonTextContainer: {
-    justifyContent: "center",
-    width: "48%",
-    height: 55,
-    backgroundColor: "#0B721E",
-    borderRadius: 10,
-    borderStyle: "solid",
-  },
-  buttonSubmitContainer: {
-    marginRight: 20,
-    marginLeft: 20,
-    justifyContent: "center",
-    // width: "90%",
-    height: 55,
-    backgroundColor: "#0B721E",
-    borderRadius: 10,
-    borderStyle: "solid",
-  },
+  // buttonText: {
+  //   textAlign: "center",
+  //   textAlignVertical: "center",
+  //   fontSize: 18,
+  //   // fontFamily: "sans-serif",
+  //   color: "#fff",
+  // },
+  // buttonTextContainer: {
+  //   justifyContent: "center",
+  //   width: "48%",
+  //   height: 55,
+  //   backgroundColor: "#0B721E",
+  //   borderRadius: 10,
+  //   borderStyle: "solid",
+  // },
+  // buttonSubmitContainer: {
+  //   marginRight: 20,
+  //   marginLeft: 20,
+  //   justifyContent: "center",
+  //   // width: "90%",
+  //   height: 55,
+  //   backgroundColor: "#0B721E",
+  //   borderRadius: 10,
+  //   borderStyle: "solid",
+  // },
   startEndTitle: {
     paddingHorizontal: 3,
     textAlignVertical: "center",
     color: "#333",
-    fontSize: 18,
+    fontSize: height / 50,
     alignSelf: "flex-start",
-    marginBottom: 6,
+    marginBottom: height / 130,
   },
 
-  ayahContainer: {
-    backgroundColor: "#FFFFFF4D",
-    borderTopRightRadius: 3,
+  // ayahContainer: {
+  //   backgroundColor: "#FFFFFF4D",
+  //   borderTopRightRadius: 3,
 
-    width: "100%",
-    padding: 8,
-    margin: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  //   width: "100%",
+  //   padding: 8,
+  //   margin: 0,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
   input: {
     padding: 12,
-    height: 55,
+    height: height / 18,
     width: "100%",
     borderWidth: 1,
     borderColor: colors.primary,
     borderRadius: 10,
-    fontSize: 18,
+    fontSize: height / 50,
     color: colors.primary,
     backgroundColor: colors.light_bg,
   },
-  btnStyle: {
-    justifyContent: "center",
-    height: 55,
-    borderRadius: 10,
-    borderColor: colors.primary,
-    paddingHorizontal: 10,
-  },
+  // btnStyle: {
+  //   justifyContent: "center",
+  //   height: 55,
+  //   borderRadius: 10,
+  //   borderColor: colors.primary,
+  //   paddingHorizontal: 10,
+  // },
 });

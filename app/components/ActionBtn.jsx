@@ -1,10 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { colors } from "../constants";
 import { getFontFamily } from "../js/helpers/scripts";
 import Center from "./Center";
+const { height, width } = Dimensions.get("window");
 
 const ActionBtn = ({
   text,
@@ -48,8 +55,7 @@ const ActionBtn = ({
         {icon && <Feather name="plus" size={24} color="#fff" />}
 
         <Text
-            numberOfLines={1}
-
+          numberOfLines={1}
           style={{
             ...styles.text,
             ...getFontFamily(lang, bold),
@@ -70,17 +76,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    height: 55,
+    height: height / 18,
     backgroundColor: colors.primary,
     borderRadius: 10,
     borderColor: colors.primary,
   },
   text: {
     color: "#fff",
-    fontSize: 18,
-    lineHeight: 32,
+    fontSize: height / 50,
+    // lineHeight: 32,
     marginHorizontal: 7,
-    
+
     // width: '100%',
   },
 });
