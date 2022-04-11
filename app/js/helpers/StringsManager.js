@@ -78,12 +78,12 @@ export default class StringsManager {
     }
 
     if (nStrID == STR_REV_TITLE) {
-      if (strLang == "ar") return "اضافة ورد جديد";
+      if (strLang == "ar") return "إضافة ورد جديد";
       if (strLang == "en") return "Add new Revision";
       return "unsupported language";
     }
     if (nStrID == STR_ADD_REV) {
-      if (strLang == "ar") return "اضف";
+      if (strLang == "ar") return "أضف";
       if (strLang == "en") return "Add";
       return "unsupported language";
     }
@@ -306,7 +306,7 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_ADD_KHATMAH) {
-      if (strLang == "ar") return "أضف ختمة";
+      if (strLang == "ar") return "إضافة ختمة";
       if (strLang == "en") return "Add Khatam";
       return "unsupported language";
     }
