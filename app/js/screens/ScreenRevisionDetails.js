@@ -13,7 +13,7 @@ import RevisionsManager from "../helpers/RevisionsManager";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import { colors } from "app/constants";
-import { getFontFamily } from "../helpers/scripts";
+import { getContentFontBasicStyle } from "../helpers/scripts";
 import ActionBtn from "app/components/ActionBtn";
 
 const { height, width } = Dimensions.get("window");
@@ -68,7 +68,9 @@ class ScreenRevisionDetails extends Component {
       this.endAyah = iAyahEnd;
     }
 
-    this.getFontFamily = getFontFamily(this.props.strLang);
+    this.getContentFontBasicStyle = getContentFontBasicStyle(
+      this.props.strLang
+    );
   }
 
   // componentDidMount() {
@@ -156,11 +158,11 @@ class ScreenRevisionDetails extends Component {
   getRevisionTitle() {
     return (
       <View>
-        <Text style={[styles.revisionTitle, this.getFontFamily]}>
+        <Text style={[styles.revisionTitle, this.getContentFontBasicStyle]}>
           {this.stringsManager.getStr(strings.STR_TITLE)}
         </Text>
         <TextInput
-          style={{ ...styles.input, ...this.getFontFamily }}
+          style={{ ...styles.input, ...this.getContentFontBasicStyle }}
           onChangeText={this.onTitleChange.bind(this)}
           value={this.title}
           placeholder={this.stringsManager.getStr(strings.STR_ADD_REV_TITLE)}
@@ -176,7 +178,7 @@ class ScreenRevisionDetails extends Component {
     return (
       <View style={{ marginBottom: 15 }}>
         <View>
-          <Text style={[styles.startEndTitle, this.getFontFamily]}>
+          <Text style={[styles.startEndTitle, this.getContentFontBasicStyle]}>
             {strAyahTxt}
           </Text>
         </View>
@@ -203,7 +205,9 @@ class ScreenRevisionDetails extends Component {
         }}
       >
         <ActionBtn
+          style={{ width: "62%" }}
           text={surahTxt}
+          fullWidth={false}
           handler={
             bIsStart
               ? this.selectStartSurah.bind(this)
@@ -214,6 +218,8 @@ class ScreenRevisionDetails extends Component {
 
         {this.modalAyah.getModal()}
         <ActionBtn
+          style={{ width: "32%" }}
+          fullWidth={false}
           text={this.getAyahTxt(bIsStart)}
           contained={true}
           handler={
@@ -428,10 +434,10 @@ const styles = StyleSheet.create({
   // },
 
   revisionTitle: {
+    marginTop: 20,
     alignSelf: "flex-start",
     // fontSize: 18,
     fontSize: height / 50,
-    margin: height / 90,
     fontFamily: "sans-serif",
     color: "#323223",
   },
@@ -480,7 +486,7 @@ const styles = StyleSheet.create({
   //   justifyContent: "center",
   // },
   input: {
-    padding: 12,
+    paddingHorizontal: 10,
     height: height / 18,
     width: "100%",
     borderWidth: 1,

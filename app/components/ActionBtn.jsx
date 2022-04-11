@@ -38,7 +38,9 @@ const ActionBtn = ({
 
   const extraTextStyle = {
     color: contained ? "#B0B0B0" : "#fff",
-    alignSelf: fullWidth ? "center" : "flex-start",
+    alignSelf:  "center" ,
+    padding:3
+   // alignSelf: fullWidth ? "center" : "flex-start",
     // flexDirection: 'row',
     // alignSelf: fullWidth ? 'center' : 'flex-start',
     // textAlign: fullWidth ? 'center' : 'left',

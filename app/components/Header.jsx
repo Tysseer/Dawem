@@ -6,7 +6,7 @@ import {
   I18nManager,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { getFontFamily } from "../js/helpers/scripts";
+import { getFontBasicStyle } from "../js/helpers/scripts";
 import { colors } from "../constants";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -33,7 +33,7 @@ const Header = ({ title, empty, showIcon = true }) => {
 
           {title && (
             <Text
-              style={[styles.startTitle, getFontFamily(reducer.strLang, true)]}
+              style={[styles.startTitle, getFontBasicStyle(reducer.strLang, true)]}
             >
               {title}
             </Text>
@@ -58,5 +58,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     color: colors.primary,
     fontSize: 18,
+    alignSelf:'center'
   },
 });
