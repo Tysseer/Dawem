@@ -55,21 +55,21 @@ export const getSideTitleFontBasicStyle = (lang) => {
   return {
     fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
     fontSize: lang == "ar" ? height / 40 : height / 42,
-    lineHeight: lang == "ar" ? height / 20 : height / 44,
+    lineHeight: lang == "ar" ? height / 20 : height / 22,
   };
 };
 export const getContentFontBasicStyle = (lang) => {
   return {
     fontFamily: lang == "ar" ? "Amiri" : "Poppins",
-    fontSize: lang == "ar" ? height / 40 : height / 42,
-    lineHeight: lang == "ar" ? height / 22 : height / 44,
+    fontSize: lang == "ar" ? height / 40 : height / 44,
+    lineHeight: lang == "ar" ? height / 22 : height / 24,
   };
 };
 export const getFootNoteFontBasicStyle = (lang) => {
   return {
     fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-    fontSize: lang == "ar" ? height / 58 : 13,
-    lineHeight: lang == "ar" ? height / 26 : 13,
+    fontSize: lang == "ar" ? height / 58 : height / 56,
+    lineHeight: lang == "ar" ? height / 26 : height / 26,
   };
 };
 export const getLargeContentFontBasicStyle = (lang) => {

@@ -79,7 +79,7 @@ export default class StringsManager {
 
     if (nStrID == STR_REV_TITLE) {
       if (strLang == "ar") return "إضافة ورد جديد";
-      if (strLang == "en") return "Add new Revision";
+      if (strLang == "en") return "Add a Revision";
       return "unsupported language";
     }
     if (nStrID == STR_ADD_REV) {
