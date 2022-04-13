@@ -65,7 +65,7 @@ export default class RevisionItem extends Component {
                 numberOfLines={1}
                 style={[
                   styles.itemTitle,
-                  getSideTitleFontBasicStyle("ar", true),
+                  getSideTitleFontBasicStyle(this.props.strLang, true),
                 ]}
               >
                 {revision.getRevisionTitle()}
@@ -78,7 +78,13 @@ export default class RevisionItem extends Component {
                 paddingHorizontal: 8,
               }}
             >
-              <Text numberOfLines={1} style={styles.itemNumDays}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.itemNumDays,
+                  getSideTitleFontBasicStyle(this.props.strLang, true),
+                ]}
+              >
                 {this.props.strLang == "ar"
                   ? convertToArabicNumbers(revision.getNumdaysText(), "rtl")
                   : revision.getNumdaysText()}
@@ -200,6 +206,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
 
     width: (1.5 * width) / 17,
+    marginHorizontal: (0.2 * width) / 17,
 
     // marginLeft: 10,
     // alignSelf: 'center',
