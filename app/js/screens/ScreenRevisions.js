@@ -98,6 +98,7 @@ class ScreenRevisions extends Component {
                 deleteRevFn={this.onDeleteRevision.bind(this)}
                 onAddRevision={this.onAddRevision.bind(this)}
                 readRevFn={this.onReadRevision.bind(this)}
+                strLang={this.props.strLang}
               />
             )}
           </View>

@@ -18,6 +18,7 @@ export default class RevisionsList extends Component {
     updateRevFn: PropTypes.func.isRequired,
     refreshFn: PropTypes.func.isRequired,
     readRevFn: PropTypes.func.isRequired,
+    strLang: PropTypes.string.isRequired,
   };
   constructor(props) {
     super(props);
@@ -46,6 +47,7 @@ export default class RevisionsList extends Component {
               revision={curRevision}
               onPresses={pressHandlers}
               onLongPresses={longPressHandlers}
+              strLang={this.props.strLang}
             />
           ))}
         </ScrollView>

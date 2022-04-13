@@ -59,10 +59,10 @@ export default class Revision {
   }
   getRevisionTitle() {
     var strTitle = this.title;
-    if (strTitle.length > 14) {
-      strTitle = strTitle.substring(0, 11);
-      strTitle += "...";
-    }
+    // if (strTitle.length > 14) {
+    //   strTitle = strTitle.substring(0, 11);
+    //   strTitle += "...";
+    // }
     return strTitle;
   }
   getNumdaysText() {

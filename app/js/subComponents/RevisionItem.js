@@ -29,6 +29,7 @@ export default class RevisionItem extends Component {
     revision: PropTypes.instanceOf(Revision).isRequired,
     onPresses: PropTypes.instanceOf(Map).isRequired,
     onLongPresses: PropTypes.instanceOf(Map).isRequired,
+    strLang: PropTypes.string.isRequired,
   };
   constructor(props) {
     super(props);
@@ -78,7 +79,9 @@ export default class RevisionItem extends Component {
               }}
             >
               <Text numberOfLines={1} style={styles.itemNumDays}>
-                {convertToArabicNumbers(revision.getNumdaysText(), "rtl")}
+                {this.props.strLang == "ar"
+                  ? convertToArabicNumbers(revision.getNumdaysText(), "rtl")
+                  : revision.getNumdaysText()}
               </Text>
               {/* {NumDaysBtn} */}
               {renderReadReviseActions}
@@ -182,19 +185,22 @@ const styles = StyleSheet.create({
   itemTitleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    flexGrow: 1,
+    width: (9.5 * width) / 17,
   },
   itemTitle: {
     // fontSize: 18,
+    marginStart: (0.5 * width) / 17,
+    flex: 1,
     color: colors.primary,
-    marginHorizontal: width / 30,
   },
   itemNumDays: {
     fontSize: height / 51,
     fontFamily: "Amiri_Bold",
     // textAlign: 'center',
     color: colors.primary,
-    marginHorizontal: width / 30,
+
+    width: (1.5 * width) / 17,
+
     // marginLeft: 10,
     // alignSelf: 'center',
     // width: 60,

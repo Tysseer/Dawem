@@ -50,6 +50,7 @@ export const STR_RESTORE = 49;
 export const STR_REV_TOOLS = 50;
 export const STR_QURAN = 51;
 export const STR_JUZUU = 52;
+
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -229,7 +230,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_INSTRUCTIONS) {
       if (strLang == "ar")
-        return "1- قم بملء قائمة أورادك.\n2- قم بتحديث القائمة كلما راجعت وردا منها.\n3- داوم على المراجعة وقم بتفعيل أوسمتك.";
+        return "١- قم بملء قائمة أورادك.\n٢- قم بتحديث القائمة كلما راجعت وردا منها.\n٣- داوم على المراجعة وقم بتفعيل أوسمتك.";
       if (strLang == "en")
         return "1- Setup your list of revisions.\n2- Update the list as you revise.\n3- Light up badges and stay on track.";
       return "unsupported language";
