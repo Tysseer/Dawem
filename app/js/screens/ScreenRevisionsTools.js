@@ -132,10 +132,7 @@ class ScreenRevisionsTools extends Component {
       rev.title =
         this.props.strLang == "ar"
           ? this.quranIndexer.getSurahNameAr(i)
-          : this.quranIndexer.getSurahNameEn(i) +
-            " (" +
-            this.quranIndexer.getSurahNameEnTrns(i) +
-            ")";
+          : this.quranIndexer.getSurahNameEnTrns(i);
       rev.progress = 0;
       rev.strt = this.quranIndexer.getArrSurahAyahStart(i);
       rev.end = this.quranIndexer.getArrSurahAyahStart(i + 1) - 1;
