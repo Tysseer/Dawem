@@ -1,21 +1,21 @@
-import React from 'react';
-import { Dimensions, ScrollView, StyleSheet, View, Image } from 'react-native';
-import { useKeepAwake } from 'expo-keep-awake';
+import React from "react";
+import { Dimensions, ScrollView, StyleSheet, View, Image } from "react-native";
+import { useKeepAwake } from "expo-keep-awake";
 
-import Screen from 'app/components/Screen';
+import Screen from "app/components/Screen";
 
-import SwipeableMushaf from './comp/SwipeableMushaf';
-import PagerView from './comp/PagerView';
+import SwipeableMushaf from "./comp/SwipeableMushaf";
+import PagerView from "./comp/PagerView";
 
 export const assets = [
-  require('assets/temp/1.jpg'),
-  require('assets/temp/3.jpg'),
-  require('assets/temp/5.jpg'),
-  require('assets/temp/4.jpg'),
-  require('assets/temp/2.jpg'),
+  require("assets/temp/1.jpg"),
+  require("assets/temp/3.jpg"),
+  require("assets/temp/5.jpg"),
+  require("assets/temp/4.jpg"),
+  require("assets/temp/2.jpg"),
 ];
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 const MushafScreen = () => {
   // prevent screen form sleeping
   useKeepAwake();
@@ -33,7 +33,7 @@ const MushafScreen = () => {
   // );
 
   return (
-    <Screen style={{ padding: 10 }}>
+    <Screen style={{ padding: 10, direction: "rtl" }}>
       {/* <TestSwip /> */}
       <SwipeableMushaf />
       {/* <PagerView /> */}
@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
   pictures: {
     width: width * assets.length,
     height,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   picture: {
     width,
     height,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   image: {
     ...StyleSheet.absoluteFillObject,

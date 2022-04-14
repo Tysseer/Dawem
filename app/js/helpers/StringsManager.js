@@ -19,7 +19,9 @@ export const STR_WEEK_BADGE_INACTIVE = 18;
 export const STR_GREETING = 19;
 export const STR_MOTIVATION = 20;
 export const STR_INSTRUCTIONS_TITLE = 21;
-export const STR_INSTRUCTIONS = 22;
+export const STR_INSTRUCTIONS1 = 22;
+export const STR_INSTRUCTIONS2 = 53;
+export const STR_INSTRUCTIONS3 = 54;
 export const STR_SKIP_SCREEN = 23;
 export const STR_DAYS_SINCE_REV = 24;
 export const STR_REVISED = 25;
@@ -228,11 +230,19 @@ export default class StringsManager {
       if (strLang == "en") return "Here's how it works:";
       return "unsupported language";
     }
-    if (nStrID == STR_INSTRUCTIONS) {
-      if (strLang == "ar")
-        return "١- قم بملء قائمة أورادك.\n٢- قم بتحديث القائمة كلما راجعت وردا منها.\n٣- داوم على المراجعة وقم بتفعيل أوسمتك.";
-      if (strLang == "en")
-        return "1- Setup your list of revisions.\n2- Update the list as you revise.\n3- Light up badges and stay on track.";
+    if (nStrID == STR_INSTRUCTIONS1) {
+      if (strLang == "ar") return "١- قم بملء قائمة أورادك.";
+      if (strLang == "en") return "1- Setup your list of revisions.";
+      return "unsupported language";
+    }
+    if (nStrID == STR_INSTRUCTIONS2) {
+      if (strLang == "ar") return "٢- قم بتحديث القائمة كلما راجعت وردا منها.";
+      if (strLang == "en") return "2- Update the list as you revise.";
+      return "unsupported language";
+    }
+    if (nStrID == STR_INSTRUCTIONS3) {
+      if (strLang == "ar") return "٣- داوم على المراجعة وقم بتفعيل أوسمتك.";
+      if (strLang == "en") return "3- Light up badges and stay on track.";
       return "unsupported language";
     }
     if (nStrID == STR_SKIP_SCREEN) {

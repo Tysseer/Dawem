@@ -83,7 +83,13 @@ class ScreenWelcome extends Component {
                     {this.stringsManager.getStr(strings.STR_INSTRUCTIONS_TITLE)}
                   </Text>
                   <Text style={this.getInstructionsStyle()}>
-                    {this.stringsManager.getStr(strings.STR_INSTRUCTIONS)}
+                    {this.stringsManager.getStr(strings.STR_INSTRUCTIONS1)}
+                  </Text>
+                  <Text style={this.getInstructionsStyle()}>
+                    {this.stringsManager.getStr(strings.STR_INSTRUCTIONS2)}
+                  </Text>
+                  <Text style={this.getInstructionsStyle()}>
+                    {this.stringsManager.getStr(strings.STR_INSTRUCTIONS3)}
                   </Text>
                 </View>
               </ImageBackground>
@@ -162,6 +168,8 @@ class ScreenWelcome extends Component {
     return [
       {
         color: "#FFFFFF",
+        // backgroundColor: "red",
+        alignSelf: "flex-start",
       },
       getContentFontBasicStyle(this.props.strLang),
     ];

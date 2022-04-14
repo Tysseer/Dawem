@@ -49,7 +49,7 @@ export default class ScreenQuranBrowser extends Component {
               rightThreshold={35}
               ref={this.swipeableRef}
             >
-              <Text style={styles.textContainer}>
+              {/* <Text style={styles.textContainer}>
                 {this.state.curPage.ayat.map((ayah, index) => (
                   <AyahRenderer
                     key={Math.random().toString()}
@@ -62,7 +62,7 @@ export default class ScreenQuranBrowser extends Component {
                     onLongPresses={longPressHandlers}
                   />
                 ))}
-              </Text>
+              </Text> */}
             </Swipeable>
           </ScrollView>
         </View>
