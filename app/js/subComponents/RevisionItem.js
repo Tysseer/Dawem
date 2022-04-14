@@ -21,6 +21,7 @@ const { height, width } = Dimensions.get("window");
 import { getContentFontBasicStyle } from "../helpers/scripts";
 
 const ITEM_HEIGHT = height / 15;
+const BASE_WIDTH = width / 17;
 
 export default class RevisionItem extends Component {
   static propTypes = {
@@ -127,7 +128,7 @@ export default class RevisionItem extends Component {
         <TouchableOpacity
           onPress={() => this.props.onPresses.get("deleteIcon")(revision)}
         >
-          <MaterialIcons name="close" size={width / 17} color="#fff" />
+          <MaterialIcons name="close" size={BASE_WIDTH} color="#fff" />
         </TouchableOpacity>
 
         <View style={{ width: width / 40 }} />
@@ -135,7 +136,7 @@ export default class RevisionItem extends Component {
         <TouchableOpacity
           onPress={() => this.props.onPresses.get("editIcon")(revision)}
         >
-          <MaterialIcons name="edit" size={width / 17} color="#fff" />
+          <MaterialIcons name="edit" size={BASE_WIDTH} color="#fff" />
         </TouchableOpacity>
       </View>
     );
@@ -155,11 +156,11 @@ export default class RevisionItem extends Component {
           {revision.numDays == 0 ? (
             <MaterialCommunityIcons
               name="shield-check"
-              size={width / 17}
+              size={BASE_WIDTH}
               color={colors.primary}
             />
           ) : (
-            <Feather name="check" size={width / 17} color={colors.primary} />
+            <Feather name="check" size={BASE_WIDTH} color={colors.primary} />
           )}
         </TouchableOpacity>
 
@@ -170,7 +171,7 @@ export default class RevisionItem extends Component {
         >
           <MaterialIcons
             name="menu-book"
-            size={width / 17}
+            size={BASE_WIDTH}
             color={colors.primary}
           />
         </TouchableOpacity>
@@ -191,23 +192,21 @@ const styles = StyleSheet.create({
   },
   itemTitleContainer: {
     flexDirection: "row",
-    width: (9.5 * width) / 17,
+    width: 9.5 * BASE_WIDTH,
     alignItems: "center",
   },
   itemTitle: {
     // fontSize: 18,
-    marginStart: (0.5 * width) / 17,
+    marginStart: 0.5 * BASE_WIDTH,
     // flex: 1,
     color: colors.primary,
   },
   itemNumDays: {
-    fontSize: height / 51,
-    fontFamily: "Amiri_Bold",
     // textAlign: 'center',
     color: colors.primary,
 
-    width: (1.5 * width) / 17,
-    marginHorizontal: (0.2 * width) / 17,
+    width: 1.5 * BASE_WIDTH,
+    marginHorizontal: 0.2 * BASE_WIDTH,
 
     // marginLeft: 10,
     // alignSelf: 'center',
