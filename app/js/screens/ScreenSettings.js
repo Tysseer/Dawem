@@ -40,21 +40,20 @@ class ScreenSettings extends Component {
     this.originalLang = this.props.strLang;
     this.state = {
       selectedLang: this.props.strLang,
+      buttonTxt: this.stringsManager.getStr(strings.STR_SEL_LANGUAGE),
     };
   }
 
-  arLangPressed() {
-    this.props.reduxActionSetLanguage("ar");
-  }
-  enLangPressed() {
-    this.props.reduxActionSetLanguage("en");
-  }
   languageHandler(lang) {
-    this.setState({ selectedLang: lang });
-    this.props.reduxActionSetLanguage(lang);
+    this.stringsManager.setLanguage(lang);
+    this.setState({
+      selectedLang: lang,
+      buttonTxt: this.stringsManager.getStr(strings.STR_SEL_LANGUAGE),
+    });
   }
   okButtonPressed() {
-    if (this.props.strLang == "ar") {
+    this.props.reduxActionSetLanguage(this.state.selectedLang);
+    if (this.state.selectedLang == "ar") {
       I18nManager.forceRTL(true);
     } else {
       I18nManager.forceRTL(false);
@@ -110,7 +109,7 @@ class ScreenSettings extends Component {
         </View>
 
         <ActionBtn
-          text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
+          text={this.state.buttonTxt}
           handler={this.okButtonPressed.bind(this)}
           lang={this.props.strLang}
           style={{ height: this.height / 12.5, width: "93%" }}
