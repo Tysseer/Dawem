@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   itemTitle: {
     // fontSize: 18,
     marginStart: (0.5 * width) / 17,
-    flex: 1,
+    // flex: 1,
     color: colors.primary,
   },
   itemNumDays: {
