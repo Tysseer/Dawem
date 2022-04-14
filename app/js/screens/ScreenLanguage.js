@@ -119,7 +119,7 @@ class ScreenLanguage extends Component {
           text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
           handler={this.okButtonPressed.bind(this)}
           lang={this.props.strLang}
-          style={{ height: this.height / 15.6, width: "93%" }}
+          style={{ height: this.height / 12.5, width: "93%" }}
         />
       </View>
     );

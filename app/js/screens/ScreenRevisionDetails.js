@@ -25,6 +25,8 @@ class ScreenRevisionDetails extends Component {
       bRefresh: true,
       addBtnDisabled: true,
     };
+    this.height = Dimensions.get("window").height;
+    this.width = Dimensions.get("window").width;
     this.bIsAr = this.props.strLang == "ar";
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
@@ -116,6 +118,7 @@ class ScreenRevisionDetails extends Component {
             disabled={!this.title.length}
             lang={this.props.strLang}
             icon={this.bIsNewRev}
+            style={{ height: this.height / 12.5 }}
           />
         </View>
       </View>

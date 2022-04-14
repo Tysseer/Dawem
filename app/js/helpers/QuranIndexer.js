@@ -9,6 +9,7 @@ export default class QuranIndexer {
     this.arrSurahNamesTrns = []; // the names in transliteration
     this.arrSurahNamesEnTrns = []; // names in format:  english (trans)
     this.arrSurahNumAyah = []; // number of ayat for each surah
+    this.arrSurahLength = []; // length of surah (ratio between 0,1) =number of letters per surah/number of all letters in quran
     this.arrSurahAyahStart = []; // the global index of first ayah in each surah
     this.arrJuzuuAyahStart = []; // the global index of first ayah in each Juzuu
   }
@@ -36,6 +37,11 @@ export default class QuranIndexer {
     iSurah = this.secureIndexRange(iSurah, 114);
     if (this.arrSurahNumAyah.length == 0) this.fillArrSurahNumAyah();
     return this.arrSurahNumAyah[iSurah];
+  }
+  getSurahLength(iSurah /*one-based */) {
+    iSurah = this.secureIndexRange(iSurah, 114);
+    if (this.arrSurahNumAyah.length == 0) this.fillArrSurahLength();
+    return this.arrSurahLength[iSurah];
   }
   getSurahFromAyah(iAyah /*one-based */) {
     iAyah = this.secureIndexRange(iAyah, 6236);
@@ -146,6 +152,12 @@ export default class QuranIndexer {
   }
   getNumSuras() {
     return 114; // todo: read from db
+  }
+  getNumWords() {
+    return 157935; // unverified
+  }
+  getNumLetters() {
+    return 668684; // unverified
   }
   secureIndexRange(iIndx, iRange) {
     while (iIndx < 1) iIndx += iRange;
@@ -1365,6 +1377,33 @@ export default class QuranIndexer {
       52, 44, 28, 28, 20, 56, 40, 31, 50, 40, 46, 42, 29, 19, 36, 25, 22, 17,
       19, 26, 30, 20, 15, 21, 11, 8, 8, 19, 5, 8, 8, 11, 11, 8, 3, 9, 5, 4, 7,
       3, 6, 3, 5, 4, 5, 6,
+    ];
+  }
+  fillArrSurahLength() {
+    this.arrSurahLength = [
+      0, 0.000469579, 0.078720292, 0.045276992, 0.047623392, 0.0357897,
+      0.039045349, 0.042695803, 0.016201973, 0.033915871, 0.02235286,
+      0.024178835, 0.021702329, 0.011006694, 0.010543097, 0.008817319,
+      0.023790011, 0.020262187, 0.020671947, 0.012244947, 0.01735947,
+      0.015117754, 0.016357502, 0.013266356, 0.016922792, 0.011681153,
+      0.016357502, 0.01452405, 0.017672024, 0.0124917, 0.010472809, 0.006602521,
+      0.004715232, 0.016963169, 0.010897524, 0.009708622, 0.009032667,
+      0.011808268, 0.009870133, 0.014702012, 0.015534991, 0.010362144,
+      0.010807796, 0.011195124, 0.00452082, 0.006231643, 0.008316335,
+      0.007257539, 0.007712163, 0.004320426, 0.004710745, 0.0047586,
+      0.004265094, 0.004594098, 0.004718223, 0.004902166, 0.005290989,
+      0.007685244, 0.006147896, 0.00593853, 0.00467934, 0.002733728,
+      0.002102637, 0.00232995, 0.003263126, 0.003755137, 0.003162929,
+      0.00404825, 0.00412751, 0.00346651, 0.002908698, 0.002841402, 0.003625031,
+      0.002617081, 0.003400709, 0.002160961, 0.003367809, 0.00247202,
+      0.002419678, 0.002666431, 0.001987486, 0.001502952, 0.001091697,
+      0.002273122, 0.001485006, 0.001487997, 0.000782133, 0.000954113,
+      0.001248721, 0.00181102, 0.00108721, 0.000979536, 0.001051319,
+      0.000625108, 0.000396301, 0.000418733, 0.000832979, 0.000354428,
+      0.00122928, 0.000477056, 0.000557812, 0.000512948, 0.000387328,
+      0.000197403, 0.000444156, 0.000303581, 0.000278158, 0.000326013,
+      0.000161511, 0.000285636, 0.000285636, 0.000288627, 0.000139079,
+      0.000254231, 0.000249744,
     ];
   }
   fillArrJuzuuAyahStart() {

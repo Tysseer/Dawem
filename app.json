@@ -24,7 +24,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -38,10 +40,15 @@
         "backgroundColor": "#EEEEEE"
       },
       "useNextNotificationsApi": true,
-      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "description": " Dawem is an application to make it easy to frequently read quran and plan your recitation so no verses are left unvisited for long ",
+    "githubUrl": "https://github.com/tysseer/dawem"
   }
 }

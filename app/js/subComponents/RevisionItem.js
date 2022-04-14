@@ -18,7 +18,7 @@ import SVGLoader from "../helpers/SVGLoader";
 import { colors } from "../../constants";
 import { convertToArabicNumbers } from "../helpers/convertToArabicNumbers";
 const { height, width } = Dimensions.get("window");
-import { getSideTitleFontBasicStyle } from "../helpers/scripts";
+import { getContentFontBasicStyle } from "../helpers/scripts";
 
 const ITEM_HEIGHT = height / 15;
 
@@ -49,6 +49,7 @@ export default class RevisionItem extends Component {
         style={{
           backgroundColor: "rgba(11, 114, 30, 0.05)",
           marginBottom: height / 50,
+          borderRadius: 10,
         }}
       >
         <View>
@@ -65,7 +66,7 @@ export default class RevisionItem extends Component {
                 numberOfLines={1}
                 style={[
                   styles.itemTitle,
-                  getSideTitleFontBasicStyle(this.props.strLang, true),
+                  getContentFontBasicStyle(this.props.strLang, false),
                 ]}
               >
                 {revision.getRevisionTitle()}
@@ -82,7 +83,7 @@ export default class RevisionItem extends Component {
                 numberOfLines={1}
                 style={[
                   styles.itemNumDays,
-                  getSideTitleFontBasicStyle(this.props.strLang, true),
+                  getContentFontBasicStyle(this.props.strLang, false),
                 ]}
               >
                 {this.props.strLang == "ar"
@@ -182,16 +183,16 @@ const styles = StyleSheet.create({
     flex: 1,
     height: ITEM_HEIGHT,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
     position: "relative",
     borderRadius: 10,
     overflow: "hidden",
+    alignItems: "center",
   },
   itemTitleContainer: {
     flexDirection: "row",
-    alignItems: "center",
     width: (9.5 * width) / 17,
+    alignItems: "center",
   },
   itemTitle: {
     // fontSize: 18,
@@ -215,8 +216,8 @@ const styles = StyleSheet.create({
 
   itemToolBar: {
     flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "red",
+    alignItems: "center",
 
     // justifyContent: 'space-between',
   },

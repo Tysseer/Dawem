@@ -113,7 +113,7 @@ class ScreenSettings extends Component {
           text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
           handler={this.okButtonPressed.bind(this)}
           lang={this.props.strLang}
-          style={{ height: 60, width: "93%" }}
+          style={{ height: this.height / 12.5, width: "93%" }}
         />
       </View>
     );

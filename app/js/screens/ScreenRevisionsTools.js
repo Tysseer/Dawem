@@ -30,7 +30,8 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { getFontBasicStyle } from "../helpers/scripts";
+import { getContentFontBasicStyle } from "../helpers/scripts";
+import { convertToArabicNumbers } from "../helpers/scripts";
 
 const { height, width } = Dimensions.get("window");
 
@@ -101,13 +102,17 @@ class ScreenRevisionsTools extends Component {
   onPressByJuzuu() {
     // console.log("here");
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
-    var strJuzuu = this.stringsManager.getStr(strings.STR_JUZUU) + " [";
+    var strJuzuu = this.stringsManager.getStr(strings.STR_JUZUU) + " (";
     var revs = [];
     var id = this.revisionsManager.getNewRevisionId();
     for (var i = 1; i <= 30; i++) {
       let rev = new Revision();
+      let iStr = "" + i;
       rev.id = id++;
-      rev.title = strJuzuu + i + "]";
+      rev.title = strJuzuu;
+      rev.title +=
+        this.props.strLang == "ar" ? convertToArabicNumbers(iStr, "rtl") : iStr;
+      rev.title += ")";
       rev.progress = 0;
       rev.strt = this.quranIndexer.getJuzuuStartAyah(i);
       rev.end = this.quranIndexer.getJuzuuStartAyah(i + 1) - 1;
@@ -125,7 +130,9 @@ class ScreenRevisionsTools extends Component {
   onPressBySurah() {
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
     var revs = [];
+    let prevdays = 0;
     var id = this.revisionsManager.getNewRevisionId();
+
     for (var i = 1; i <= 114; i++) {
       let rev = new Revision();
       rev.id = id++;
@@ -136,14 +143,13 @@ class ScreenRevisionsTools extends Component {
       rev.progress = 0;
       rev.strt = this.quranIndexer.getArrSurahAyahStart(i);
       rev.end = this.quranIndexer.getArrSurahAyahStart(i + 1) - 1;
-      rev.dateofLastRevision = this.revisionsManager.getPastDate(
-        31 - i / 30 + 1
-      );
+
+      rev.dateofLastRevision = this.revisionsManager.getPastDate(31 - prevdays);
+      prevdays += 30 * this.quranIndexer.getSurahLength(i);
       rev.updateNumDays();
       revs.push(rev);
     }
 
-    revs[29].end = this.quranIndexer.getNumAyas();
     this.props.reduxActionAddMultipleRevisions(revs);
 
     this.props.navigation.navigate("Home", { screen: "Main" });
@@ -204,7 +210,7 @@ class ScreenRevisionsTools extends Component {
         marginHorizontal: 1,
         color: "#0B721E",
       },
-      getFontBasicStyle(this.props.strLang, false),
+      getContentFontBasicStyle(this.props.strLang, false),
     ];
   }
   renderItem(item) {

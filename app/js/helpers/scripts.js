@@ -27,7 +27,7 @@ export const getFontBasicStyle = (lang, bold = false) => {
   if (bold)
     return {
       fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-      fontSize: lang == "ar" ? height / 37 : height / 40,
+      fontSize: lang == "ar" ? height / 34 : height / 40,
       lineHeight: lang == "ar" ? height / 18 : height / 20,
     };
   else
@@ -51,18 +51,26 @@ export const getSubTitleFontBasicStyle = (lang) => {
     lineHeight: lang == "ar" ? height / 18 : height / 20,
   };
 };
-export const getSideTitleFontBasicStyle = (lang) => {
-  return {
-    fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-    fontSize: lang == "ar" ? height / 40 : height / 42,
-    lineHeight: lang == "ar" ? height / 20 : height / 22,
-  };
+export const getSideTitleFontBasicStyle = (lang, bIsBold = true) => {
+  if (bIsBold) {
+    return {
+      fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
+      fontSize: lang == "ar" ? height / 40 : height / 42,
+      lineHeight: lang == "ar" ? height / 20 : height / 22,
+    };
+  } else {
+    return {
+      fontFamily: lang == "ar" ? "Amiri" : "Poppins",
+      fontSize: lang == "ar" ? height / 40 : height / 42,
+      lineHeight: lang == "ar" ? height / 20 : height / 22,
+    };
+  }
 };
 export const getContentFontBasicStyle = (lang) => {
   return {
-    fontFamily: lang == "ar" ? "Amiri" : "Poppins",
+    fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins",
     fontSize: lang == "ar" ? height / 40 : height / 44,
-    lineHeight: lang == "ar" ? height / 22 : height / 24,
+    lineHeight: lang == "ar" ? height / 22 : height / 32,
   };
 };
 export const getFootNoteFontBasicStyle = (lang) => {

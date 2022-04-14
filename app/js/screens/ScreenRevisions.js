@@ -48,6 +48,8 @@ function RefreshBadgesOnFocus({ onUpdate }) {
 class ScreenRevisions extends Component {
   constructor(props) {
     super(props);
+    this.height = Dimensions.get("window").height;
+    this.width = Dimensions.get("window").width;
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
     this.svgLoader = new SVGLoader();
@@ -72,7 +74,7 @@ class ScreenRevisions extends Component {
     var longPressHandlers = this.getBadgesOnLongPressHandlers();
 
     return (
-      <Screen>
+      <Screen style={{ paddingTop: 0 }}>
         <RefreshBadgesOnFocus onUpdate={this.onFocus.bind(this)} />
         <BadgesBar
           svgLoader={this.svgLoader}
@@ -109,7 +111,7 @@ class ScreenRevisions extends Component {
           icon={true}
           lang={this.props.strLang}
           fullWidth={true}
-          style={{ height: height / 15.6, marginTop: height / 46 }}
+          style={{ height: this.height / 12.5, marginTop: height / 46 }}
         />
       </Screen>
     );

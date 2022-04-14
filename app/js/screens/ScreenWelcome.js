@@ -118,7 +118,7 @@ class ScreenWelcome extends Component {
             handler={this.okButtonPressed.bind(this)}
             lang={this.props.strLang}
             style={{
-              height: this.height / 15.6,
+              height: this.height / 12.5,
               width: "100%",
               marginBottom: "2%",
             }}
