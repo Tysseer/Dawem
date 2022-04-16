@@ -75,7 +75,10 @@ export default class ModalSurahSelector {
     if (this.bIsAr) {
       return (
         <Text
-          style={[{ paddingHorizontal: 5 }, getContentFontBasicStyle("ar")]}
+          style={[
+            { paddingHorizontal: 5, color: colors.primary },
+            getContentFontBasicStyle("ar"),
+          ]}
         >
           {item}
         </Text>
@@ -85,7 +88,7 @@ export default class ModalSurahSelector {
         <Text
           numberOfLines={1}
           style={[
-            { paddingHorizontal: 5, flex: 1 },
+            { paddingHorizontal: 5, flex: 1, color: colors.primary },
             getContentFontBasicStyle("en"),
           ]}
         >
