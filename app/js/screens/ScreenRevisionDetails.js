@@ -426,7 +426,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#EEE",
     height: "100%",
-    padding: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
     // paddingTop: 40,
   },
   // okButton: {
@@ -437,7 +438,7 @@ const styles = StyleSheet.create({
   // },
 
   revisionTitle: {
-    marginTop: 20,
+    //marginTop: 20,
     alignSelf: "flex-start",
     // fontSize: 18,
     color: "#323223",

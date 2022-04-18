@@ -76,7 +76,10 @@ export default class ModalSurahSelector {
       return (
         <Text
           style={[
-            { paddingHorizontal: 5, color: colors.primary },
+            {
+              paddingHorizontal: 8,
+              color: colors.primary,
+            },
             getContentFontBasicStyle("ar"),
           ]}
         >
@@ -88,7 +91,11 @@ export default class ModalSurahSelector {
         <Text
           numberOfLines={1}
           style={[
-            { paddingHorizontal: 5, flex: 1, color: colors.primary },
+            {
+              paddingHorizontal: 8,
+              flex: 1,
+              color: colors.primary,
+            },
             getContentFontBasicStyle("en"),
           ]}
         >
@@ -136,6 +143,7 @@ export default class ModalSurahSelector {
               </View>
 
               {/* icon */}
+
               <View
                 style={{
                   height: 14,
@@ -178,10 +186,9 @@ export default class ModalSurahSelector {
 }
 const styles = StyleSheet.create({
   contentContainer: {
-    width,
-    paddingTop: 40,
+    paddingVertical: 40,
     flex: 1,
-    backgroundColor: "rgba(0,0,0,.6)",
+    backgroundColor: "rgba(0,0,0,.8)",
   },
   modalView: {
     borderRadius: 30,

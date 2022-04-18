@@ -34,32 +34,31 @@ const langs = [
   },
 ];
 
-class ScreenLanguage extends Component {
+class ScreenSettings extends Component {
   constructor(props) {
     super(props);
-    // const { height, width } = Dimensions.get("window");
     this.height = Dimensions.get("window").height;
     this.width = Dimensions.get("window").width;
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
+    this.originalLang = this.props.strLang;
     this.state = {
       selectedLang: this.props.strLang,
+      buttonTxt: this.stringsManager.getStr(strings.STR_SEL_LANGUAGE),
     };
   }
 
-  arLangPressed() {
-    this.props.reduxActionSetLanguage("ar");
-  }
-  enLangPressed() {
-    this.props.reduxActionSetLanguage("en");
-  }
   languageHandler(lang) {
-    this.setState({ selectedLang: lang });
-    this.props.reduxActionSetLanguage(lang);
+    this.stringsManager.setLanguage(lang);
+    this.setState({
+      selectedLang: lang,
+      buttonTxt: this.stringsManager.getStr(strings.STR_SEL_LANGUAGE),
+    });
   }
   okButtonPressed() {
     this.props.reduxActionSetFirstRunFlag(false);
-    if (this.props.strLang == "ar") {
+    this.props.reduxActionSetLanguage(this.state.selectedLang);
+    if (this.state.selectedLang == "ar") {
       I18nManager.forceRTL(true);
     } else {
       I18nManager.forceRTL(false);
@@ -108,7 +107,6 @@ class ScreenLanguage extends Component {
             style={{ resizeMode: "contain" }}
           />
         </View>
-
         <View style={styles.allLangsContainer}>
           {this.renderLanguageItem(langs[0])}
           <View style={styles.separator} />
@@ -116,10 +114,15 @@ class ScreenLanguage extends Component {
         </View>
 
         <ActionBtn
-          text={this.stringsManager.getStr(strings.STR_SEL_LANGUAGE)}
+          text={this.state.buttonTxt}
           handler={this.okButtonPressed.bind(this)}
-          lang={this.props.strLang}
-          style={{ height: this.height / 12.5, width: "93%" }}
+          lang={this.state.selectedLang}
+          style={{
+            height: this.height / 12.5,
+            width: "90%",
+            marginTop: this.height / 46,
+            marginBottom: this.height / 37.5,
+          }}
         />
       </View>
     );
@@ -136,20 +139,19 @@ class ScreenLanguage extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  isSkipWelcome: state.bSkipWelcome,
   strLang: state.strLang,
 });
 const mapDispatchToProps = () => {
   return {
-    reduxActionSetFirstRunFlag,
     reduxActionSetLanguage,
+    reduxActionSetFirstRunFlag,
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps())(ScreenLanguage);
+export default connect(mapStateToProps, mapDispatchToProps())(ScreenSettings);
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#EEEEEE",
   },
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   },
   allLangsContainer: {
     width: "100%",
-    height: "25%",
+    height: 200,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -171,9 +173,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "93%",
-    // height: 70,
-    height: "35%",
-
+    height: 70,
     // borderTopLeftRadius: 10,
     // borderTopRightRadius: 10,
     // borderBottomLeftRadius: 10,
@@ -182,11 +182,6 @@ const styles = StyleSheet.create({
 
     borderColor: "#0B721EFF",
   },
-  // langLogo: {
-  //   width: 40,
-  //   height: 40,
-  //   marginRight: 30,
-  // },
 
   separator: {
     borderColor: "#88888859",
@@ -199,17 +194,4 @@ const styles = StyleSheet.create({
     width: "93%",
     marginVertical: 15,
   },
-  // okButton: {
-  //   backgroundColor: "#0B721E",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   width: "93%",
-  //   height: 70,
-  //   borderTopLeftRadius: 10,
-  //   borderTopRightRadius: 10,
-  //   borderBottomLeftRadius: 10,
-  //   borderBottomRightRadius: 10,
-  //   marginTop: 50,
-  //   marginBottom: 25,
-  // },
 });

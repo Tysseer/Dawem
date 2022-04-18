@@ -111,8 +111,13 @@ class ScreenSettings extends Component {
         <ActionBtn
           text={this.state.buttonTxt}
           handler={this.okButtonPressed.bind(this)}
-          lang={this.props.strLang}
-          style={{ height: this.height / 12.5, width: "93%" }}
+          lang={this.state.selectedLang}
+          style={{
+            height: this.height / 12.5,
+            width: "90%",
+            marginTop: this.height / 46,
+            marginBottom: this.height / 37.5,
+          }}
         />
       </View>
     );
@@ -140,7 +145,7 @@ export default connect(mapStateToProps, mapDispatchToProps())(ScreenSettings);
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#EEEEEE",
   },
@@ -182,18 +187,5 @@ const styles = StyleSheet.create({
     height: 2,
     width: "93%",
     marginVertical: 15,
-  },
-  okButton: {
-    backgroundColor: "#0B721E",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "93%",
-    height: 70,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    marginTop: 50,
-    marginBottom: 25,
   },
 });

@@ -74,7 +74,7 @@ export default class ModalAyahSelector {
                 onSubmitEditing={this.onNumberSubmit.bind(this)}
               />
               <Text
-                numberOfLines={1}
+                numberOfLines={bIsValidSel ? 1 : 2}
                 style={{
                   flex: 0.6,
                   textAlign: "center",
@@ -82,7 +82,12 @@ export default class ModalAyahSelector {
                   fontSize: 18,
                 }}
               >
-                {bIsValidSel ? allAyat[indx].text : "Choose Ayah Number"}
+                {bIsValidSel
+                  ? allAyat[indx].text
+                  : this.stringsManager.getStr(strings.STR_CHOOSE_BETWEEN) +
+                    "\n[1, " +
+                    this.ayahRange +
+                    "]"}
               </Text>
             </View>
           </View>

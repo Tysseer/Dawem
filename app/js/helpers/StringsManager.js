@@ -20,8 +20,6 @@ export const STR_GREETING = 19;
 export const STR_MOTIVATION = 20;
 export const STR_INSTRUCTIONS_TITLE = 21;
 export const STR_INSTRUCTIONS1 = 22;
-export const STR_INSTRUCTIONS2 = 53;
-export const STR_INSTRUCTIONS3 = 54;
 export const STR_SKIP_SCREEN = 23;
 export const STR_DAYS_SINCE_REV = 24;
 export const STR_REVISED = 25;
@@ -52,7 +50,9 @@ export const STR_RESTORE = 49;
 export const STR_REV_TOOLS = 50;
 export const STR_QURAN = 51;
 export const STR_JUZUU = 52;
-
+export const STR_INSTRUCTIONS2 = 53;
+export const STR_INSTRUCTIONS3 = 54;
+export const STR_CHOOSE_BETWEEN = 55;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -137,7 +137,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_DAY_BADGE_MIN_REV) {
       if (strLang == "ar")
-        return "لا ينفتح هذا الوسام إلا بعد إضافة 3 مراجعات!";
+        return "لا ينفتح هذا الوسام إلا بعد إضافة ٣ مراجعات!";
       if (strLang == "en")
         return "This badge will be active after adding at least 3 revisions!";
       return "unsupported language";
@@ -165,7 +165,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_MONTH_BADGE_MIN_REV) {
       if (strLang == "ar")
-        return "لا ينفتح هذا الوسام إلا بعد إضافة 10 مراجعات!";
+        return "لا ينفتح هذا الوسام إلا بعد إضافة ١٠ مراجعات!";
       if (strLang == "en")
         return "This badge will be active after adding at least 10 revisions!";
       return "unsupported language";
@@ -179,7 +179,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_MONTH_BADGE_INACTIVE) {
       if (strLang == "ar")
-        return "لم تقم بتفعيل هذا الوسام بعد. اقرأ كل أورادك في 30 يوما لينفتح الوسام!";
+        return "لم تقم بتفعيل هذا الوسام بعد. اقرأ كل أورادك في ٣٠ يوما لينفتح الوسام!";
       if (strLang == "en")
         return "You Still Did Not Activate This Badge. Finish all revisions in 30 days to light it up!";
       return "unsupported language";
@@ -193,9 +193,9 @@ export default class StringsManager {
     }
     if (nStrID == STR_WEEK_BADGE_MIN_REV) {
       if (strLang == "ar")
-        return "لا ينفتح هذا الوسام إلا بعد إضافة 7 مراجعات!";
+        return "لا ينفتح هذا الوسام إلا بعد إضافة ٧ مراجعات!";
       if (strLang == "en")
-        return "This badge will be active after adding at least 7 revisions!";
+        return "This badge will be active after adding at least ٧ revisions!";
       return "unsupported language";
     }
     if (nStrID == STR_WEEK_BADGE_ACTIVE) {
@@ -374,6 +374,11 @@ export default class StringsManager {
     if (nStrID == STR_JUZUU) {
       if (strLang == "ar") return "الجزء";
       if (strLang == "en") return "Juzuu";
+      return "unsupported language";
+    }
+    if (nStrID == STR_CHOOSE_BETWEEN) {
+      if (strLang == "ar") return "اختر بين";
+      if (strLang == "en") return "Select between";
       return "unsupported language";
     }
     return "unkown string";
