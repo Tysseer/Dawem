@@ -25,8 +25,8 @@ const coloredList = [
 ];
 
 const { width,height } = Dimensions.get('window');
-const quranFont = height/34;
-const ayaNumSize = height/25;
+const quranFont = width*0.05;//Math.max(10,width*0.054);
+const ayaNumSize = quranFont*1.5;//Math.max(22,height/26);
 const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   const svgLoader = new SVGLoader();
   const [markedAyah, setMarkedAyah] = useState();
@@ -116,6 +116,7 @@ export default memo(RenderAyat);
 const styles = StyleSheet.create({
   ayah: {
     fontSize: quranFont,
+    lineHeight:quranFont*1.85,
     flexGrow: 1,
     textAlign: 'center',
     fontFamily: 'UthmanicHafs',

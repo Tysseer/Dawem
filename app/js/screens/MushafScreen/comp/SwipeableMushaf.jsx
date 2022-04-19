@@ -79,7 +79,7 @@ const SwipeableMushaf = () => {
             <View
               key={Math.random().toString()}
               style={{
-                flexDirection: 'row',
+                flexDirection:bIsAr? 'row':'row-reverse',
                 alignItems: 'center',
                 justifyContent: page.shortTxt && 'center',
               }}
@@ -139,7 +139,7 @@ const SwipeableMushaf = () => {
   }, [pageNum]);
 
   return (
-    <Screen style={{ padding: 10 }}>
+    <Screen style={{ paddingBottom: 2,paddingTop:8,paddingHorizontal:4 }}>
       {/* <Sandbox /> */}
 
       <GestureHandlerRootView>
