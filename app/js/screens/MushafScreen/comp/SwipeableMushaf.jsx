@@ -12,7 +12,7 @@ import SurahHeader from './SurahHeader';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import RenderAyat from './RenderAyat';
 
-const { width } = Dimensions.get('window');
+const { width,height } = Dimensions.get('window');
 
 const SwipeableMushaf = () => {
   const route = useRoute();
@@ -105,12 +105,12 @@ const SwipeableMushaf = () => {
       data={pageContent}
       renderItem={renderItem}
       ListFooterComponent={() => (
-        <Center style={{ marginTop: 20 }}>
+        <Center style={{ marginTop: 10 }}>
           <Text>{pageNum}</Text>
         </Center>
       )}
       contentContainerStyle={{
-        height: '99%',
+        height: '100%',
         width: '100%',
         justifyContent: ![1, 2].includes(pageNum) ? 'space-between' : 'center',
       }}

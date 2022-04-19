@@ -58,6 +58,7 @@ export default function BottomNav() {
           header: () => (
             <Header
               lang={{ strLang }}
+              showIcon={false}
               title={stringsManager.getStr(strings.STR_REV_TOOLS)}
             />
           ),

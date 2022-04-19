@@ -24,7 +24,9 @@ const coloredList = [
   'ٱللَّهَ',
 ];
 
-const { width } = Dimensions.get('window');
+const { width,height } = Dimensions.get('window');
+const quranFont = height/34;
+const ayaNumSize = height/25;
 const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   const svgLoader = new SVGLoader();
   const [markedAyah, setMarkedAyah] = useState();
@@ -92,7 +94,9 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
                   backgroundColor: getNumBg(ayah.num, ayah.surahIndex),
                 }}
               >
-                {svgLoader.getSurahNumBorder(ayah.num, 26)}
+                
+                {svgLoader.getSurahNumBorder(ayah.num, ayaNumSize)}
+               
               </TouchableOpacity>
             </Center>
           )}
@@ -111,7 +115,7 @@ export default memo(RenderAyat);
 
 const styles = StyleSheet.create({
   ayah: {
-    fontSize: width * 0.043,
+    fontSize: quranFont,
     flexGrow: 1,
     textAlign: 'center',
     fontFamily: 'UthmanicHafs',
