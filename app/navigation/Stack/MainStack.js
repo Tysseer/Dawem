@@ -1,20 +1,20 @@
-import { View } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import ScreenRevisions from 'app/js/screens/ScreenRevisions';
-import ScreenQuranBrowser from 'app/js/screens/ScreenQuranBrowser';
-import ScreenRevisionDetails from 'app/js/screens/ScreenRevisionDetails';
-import ScreenSettings from 'app/js/screens/ScreenSettings';
-import Header from 'app/components/Header';
-import MushafScreen from '../../js/screens/MushafScreen';
-import ScreenDayBadge from '../../js/screens/ScreenDayBadge';
-import ScreenMonthBadge from '../../js/screens/ScreenMonthBadge';
-import ScreenWeekBadge from '../../js/screens/ScreenWeekBadge';
+import ScreenRevisions from "app/js/screens/ScreenRevisions";
+import ScreenQuranBrowser from "app/js/screens/ScreenQuranBrowser";
+import ScreenRevisionDetails from "app/js/screens/ScreenRevisionDetails";
+import ScreenSettings from "app/js/screens/ScreenSettings";
+import Header from "app/components/Header";
+import MushafScreen from "../../js/screens/MushafScreen";
+import ScreenDayBadge from "../../js/screens/ScreenDayBadge";
+import ScreenMonthBadge from "../../js/screens/ScreenMonthBadge";
+import ScreenWeekBadge from "../../js/screens/ScreenWeekBadge";
 // import ScreenRevisionsTools from "../../js/screens/ScreenRevisionsTools";
-import CreateFile from '../../js/screens/CreateFile';
-import StringsManager from 'js/helpers/StringsManager';
-import * as strings from 'js/helpers/StringsManager';
-import { useSelector } from 'react-redux';
+import CreateFile from "../../js/screens/CreateFile";
+import StringsManager from "js/helpers/StringsManager";
+import * as strings from "js/helpers/StringsManager";
+import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,12 +61,13 @@ export default function MainStack() {
         name="Mushaf"
         component={MushafScreen}
         options={{
-          header: () => (
-            <Header
-              lang={{ strLang }}
-              title={stringsManager.getStr(strings.STR_QURAN)}
-            />
-          ),
+          headerShown: false,
+          // header: () => (
+          //   <Header
+          //     lang={{ strLang }}
+          //     title={stringsManager.getStr(strings.STR_QURAN)}
+          //   />
+          // ),
         }}
       />
       <Stack.Screen name="ScrSettings" component={ScreenSettings} />
@@ -125,7 +126,7 @@ export default function MainStack() {
           header: () => (
             <Header
               lang={{ strLang }}
-              title={stringsManager.getStr('create File')}
+              title={stringsManager.getStr("create File")}
             />
           ),
         }}
