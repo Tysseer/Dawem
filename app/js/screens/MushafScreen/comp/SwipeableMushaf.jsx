@@ -23,7 +23,7 @@ const SwipeableMushaf = () => {
   const [pageNum, setPageNum] = useState();
   const [pageContent, setPageContent] = useState();
 
-  const { ayahIndex } = route.params;
+  const { ayahIndex,bIsAr } = route.params;
 
   var quranIndexer = new QuranIndexer();
 
@@ -38,9 +38,9 @@ const SwipeableMushaf = () => {
   const renderSpecialSurah = (ayat, shortTxt) => (
     <View
       key={Math.random().toString()}
-      style={{ flexDirection: 'row', justifyContent: 'center' }}
+      style={{ flexDirection:bIsAr? 'row':'row-reverse', justifyContent: 'center' }}
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: bIsAr? 'row':'row-reverse', alignItems: 'center' }}>
         <RenderAyat
           ayat={ayat}
           shortTxt={shortTxt}

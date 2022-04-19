@@ -33,7 +33,7 @@ const MushafScreen = () => {
   // );
 
   return (
-    <Screen style={{ padding: 10, direction: "rtl" }}>
+    <Screen style={{ padding: 10}}>
       {/* <TestSwip /> */}
       <SwipeableMushaf />
       {/* <PagerView /> */}
