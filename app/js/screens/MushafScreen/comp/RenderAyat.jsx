@@ -25,8 +25,9 @@ const coloredList = [
 ];
 
 const { width,height } = Dimensions.get('window');
-const quranFont = width*0.05;//Math.max(10,width*0.054);
-const ayaNumSize = quranFont*1.5;//Math.max(22,height/26);
+const quranFont = width*0.049;//Math.max(10,width*0.054);
+const quranLineHeight = quranFont*1.82;
+const ayaNumSize = quranFont*1.3;//Math.max(22,height/26);
 const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   const svgLoader = new SVGLoader();
   const [markedAyah, setMarkedAyah] = useState();
@@ -73,7 +74,7 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
                     ...styles.ayah,
                     color: coloredList.includes(word) && 'red',
                     flexGrow: !shortTxt ? 1 : 0,
-                    paddingHorizontal: shortTxt && 4,
+                    paddingHorizontal: shortTxt && 3,
                   }}
                 >
                   {word.trim()}
@@ -83,7 +84,7 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
           {ayah.num && (
             <Center
               style={{
-                paddingHorizontal: 4,
+                paddingHorizontal: 2,
               }}
             >
               <TouchableOpacity
@@ -116,7 +117,7 @@ export default memo(RenderAyat);
 const styles = StyleSheet.create({
   ayah: {
     fontSize: quranFont,
-    lineHeight:quranFont*1.85,
+    lineHeight:quranLineHeight,
     flexGrow: 1,
     textAlign: 'center',
     fontFamily: 'UthmanicHafs',
