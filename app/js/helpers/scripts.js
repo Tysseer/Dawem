@@ -28,6 +28,7 @@ const size_7 = height / 42;
 const size_8 = height / 44;
 const size_9 = height / 56;
 const size_10 = height / 58;
+
 const lineH_1 = height / 12;
 const lineH_2 = height / 15;
 const lineH_3 = height / 18;
@@ -44,13 +45,13 @@ export const getFontBasicStyle = (lang, bold = false) => {
   if (bold)
     return {
       fontFamily: lang == "ar" ? "Amiri_Bold" : "Poppins-Bold",
-      fontSize: lang == "ar" ? size_3 : size_6,
+      fontSize: lang == "ar" ? size_4 : size_7,
       lineHeight: lang == "ar" ? lineH_3 : lineH_5,
     };
   else
     return {
       fontFamily: lang == "ar" ? "Amiri" : "Poppins",
-      fontSize: lang == "ar" ? size_5 : size_6,
+      fontSize: lang == "ar" ? size_5 : size_7,
       lineHeight: lang == "ar" ? lineH_3 : lineH_4,
     };
 };
