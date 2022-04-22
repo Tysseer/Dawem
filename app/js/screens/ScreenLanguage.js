@@ -33,7 +33,17 @@ const langs = [
     title: "العربية",
   },
 ];
-
+const ApplyAndRestartApp = async (
+  fnreduxActionSetFirstRunFlag,
+  fnreduxActionSetLanguage,
+  newLang
+) => {
+  I18nManager.forceRTL(newLang == "ar");
+  await fnreduxActionSetLanguage(newLang);
+  let bFirst = false;
+  await fnreduxActionSetFirstRunFlag(bFirst);
+  await Updates.reloadAsync();
+};
 class ScreenSettings extends Component {
   constructor(props) {
     super(props);
@@ -57,11 +67,11 @@ class ScreenSettings extends Component {
   }
   okButtonPressed() {
     let newLang = this.state.selectedLang;
-    this.props.reduxActionSetLanguage(newLang);
-    let bFirst = false;
-    this.props.reduxActionSetFirstRunFlag(bFirst);
-    I18nManager.forceRTL(newLang == "ar");
-    Updates.reloadAsync();
+    ApplyAndRestartApp(
+      this.props.reduxActionSetFirstRunFlag,
+      this.props.reduxActionSetLanguage,
+      newLang
+    );
   }
   renderLanguageItem(lang) {
     return (
