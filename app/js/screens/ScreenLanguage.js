@@ -38,11 +38,15 @@ const ApplyAndRestartApp = async (
   fnreduxActionSetLanguage,
   newLang
 ) => {
-  I18nManager.forceRTL(newLang == "ar");
-  await fnreduxActionSetLanguage(newLang);
-  let bFirst = false;
-  await fnreduxActionSetFirstRunFlag(bFirst);
-  await Updates.reloadAsync();
+  try {
+    I18nManager.forceRTL(newLang == "ar");
+    await fnreduxActionSetLanguage(newLang);
+    let bFirst = false;
+    await fnreduxActionSetFirstRunFlag(bFirst);
+    await Updates.reloadAsync();
+  } catch (err) {
+    console.log(err);
+  }
 };
 class ScreenSettings extends Component {
   constructor(props) {
