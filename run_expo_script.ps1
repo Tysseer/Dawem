@@ -1,1 +1,1 @@
-expo r -c
+expo build:android

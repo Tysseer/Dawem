@@ -52,12 +52,11 @@ class ScreenSettings extends Component {
     });
   }
   okButtonPressed() {
-    this.props.reduxActionSetLanguage(this.state.selectedLang);
-    if (this.state.selectedLang == "ar") {
-      I18nManager.forceRTL(true);
-    } else {
-      I18nManager.forceRTL(false);
-    }
+    let newLang = this.state.selectedLang;
+    this.props.reduxActionSetLanguage(newLang);
+
+    I18nManager.forceRTL(newLang == "ar");
+
     Updates.reloadAsync();
   }
   renderLanguageItem(lang) {
