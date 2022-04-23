@@ -83,13 +83,6 @@ const MushafScreen = () => {
       return '#ff0';
   };
 
-  const handleRevProgress = (iAyah) => {
-    reduxState.curRevision.updateProgress(iAyah);
-    if (reduxState.curRevision.progress > 100) {
-      reduxState.curRevision.makeRevisionDateNow();
-      reduxState.revisionsManager.sortRevisions();
-    }
-  };
 
   const renderSurahHeader = (name) => (
     <View

@@ -18,6 +18,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
   reduxActionSetCurRevision,
+  reduxActionUpdateRevision,
   reduxActionDelRevision,
 } from "../redux/reduxActions";
 import * as strings from "../helpers/StringsManager";
@@ -165,10 +166,12 @@ class ScreenRevisions extends Component {
   }
   onRevProgress(iAyah) {
     this.props.curRevision.updateProgress(iAyah);
-    if (this.props.curRevision.progress > 100) {
+    if (this.props.curRevision.progress >= 100) {
       this.props.curRevision.makeRevisionDateNow();
-      this.props.revisionsManager.sortRevisions();
+      //this.props.revisionsManager.sortRevisions();
     }
+    this.props.reduxActionUpdateRevision(this.props.curRevision);
+
     //this.refresh();
   }
   onEditRevision(revision) {
@@ -226,6 +229,7 @@ const mapDispatchToProps = () => {
   return {
     reduxActionSetCurRevision,
     reduxActionDelRevision,
+    reduxActionUpdateRevision,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenRevisions);

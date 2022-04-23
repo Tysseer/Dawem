@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import {UPDATE_REVISION} from "app/js/redux/reduxActions";
 
 import Center from 'app/components/Center';
 import SVGLoader from 'app/js/helpers/SVGLoader';
@@ -35,7 +36,8 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   var quranIndexer = new QuranIndexer();
   // quranIndexer.f;
   const reduxState = useSelector((state) => state);
-
+  const dispatch = useDispatch();
+ 
   const getNumBg = (num, idx) => {
     if (
       convertToArabicNumbers(num, 'ltr') == markedAyah &&
@@ -54,11 +56,15 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   };
 
   const handleRevProgress = (iAyah) => {
+    
     reduxState.curRevision.updateProgress(iAyah);
-    if (reduxState.curRevision.progress > 100) {
+    if (reduxState.curRevision.progress >= 100) {
       reduxState.curRevision.makeRevisionDateNow();
-      reduxState.revisionsManager.sortRevisions();
+     // reduxState.revisionsManager.sortRevisions();
     }
+
+    const updateRev = state => dispatch({ type: UPDATE_REVISION, payload:   state.curRevision});
+    updateRev(reduxState);
   };
 
   const renderContent = () =>
