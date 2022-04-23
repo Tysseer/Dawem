@@ -82,6 +82,7 @@ const SwipeableMushaf = () => {
                 flexDirection:bIsAr? 'row':'row-reverse',
                 alignItems: 'center',
                 justifyContent: page.shortTxt && 'center',
+                flexWrap :"wrap"
               }}
             >
               <RenderAyat

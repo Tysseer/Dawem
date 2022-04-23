@@ -25,7 +25,7 @@ const coloredList = [
 ];
 
 const { width,height } = Dimensions.get('window');
-const quranFont = width*0.049;//Math.max(10,width*0.054);
+const quranFont = (width-20)*0.049;//Math.max(10,width*0.054);
 const quranLineHeight = quranFont*1.82;
 const ayaNumSize = quranFont*1.3;//Math.max(22,height/26);
 const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
