@@ -9,8 +9,10 @@ import RevisionItem from "./RevisionItem";
 // import Toast from "react-native-simple-toast";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
-import { colors } from "../../constants";
-export default class RevisionsList extends Component {
+import { reduxActionUpdateRevision } from "../redux/reduxActions";
+import { connect } from "react-redux";
+
+class RevisionsList extends Component {
   static propTypes = {
     revisionsManager: PropTypes.instanceOf(RevisionsManager).isRequired,
     stringsManager: PropTypes.instanceOf(StringsManager).isRequired,
@@ -80,10 +82,10 @@ export default class RevisionsList extends Component {
     revision.progress += 9;
     revision.lastAyahRead = -1;
     if (revision.progress > 100) {
-      revision.makeRevisionDateNow();
-      this.props.revisionsManager.sortRevisions();
-    }
-    this.refresh();
+      // revision.makeRevisionDateNow();
+      // this.props.revisionsManager.sortRevisions();
+      this.onItemIconRevisedPress(revision);
+    } else this.refresh();
   }
 
   onItemPress(revision) {
@@ -109,8 +111,9 @@ export default class RevisionsList extends Component {
   }
 
   onItemIconRevisedPress(revision) {
+    // this.props.revisionsManager.sortRevisions();
     revision.makeRevisionDateNow();
-    this.props.revisionsManager.sortRevisions();
+    this.props.reduxActionUpdateRevision(revision);
     this.refresh();
   }
 
@@ -126,6 +129,18 @@ export default class RevisionsList extends Component {
     this.props.deleteRevFn(revision);
   }
 }
+const mapDispatchToProps = () => {
+  return {
+    reduxActionUpdateRevision,
+  };
+};
+const mapStateToProps = (state) => ({
+  // revisions: state.revisions,
+  // curRevision: state.curRevision,
+  // strLang: state.strLang,
+});
+export default connect(mapStateToProps, mapDispatchToProps())(RevisionsList);
+
 const styles = StyleSheet.create({
   listContainer: {
     width: "100%",
