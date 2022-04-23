@@ -53,12 +53,20 @@ const SwipeableMushaf = () => {
 
   const onswipeLeft = () => {
     swipeableRef.current.close();
-    setPageNum(pageNum == 604 ? 1 : pageNum + 1);
+    let newpage = pageNum + 1;
+    if(newpage>604) newpage=1;
+    const content = null;
+    setPageContent(content);
+    setPageNum(newpage);
   };
 
   const onswipeRight = () => {
     swipeableRef.current.close();
-    setPageNum(pageNum - 1);
+    let newpage = pageNum - 1;
+    if(newpage<1) newpage=604;
+    const content = null;
+    setPageContent(content);
+    setPageNum(newpage);
   };
 
   const renderItem = ({ item: page }) => {
