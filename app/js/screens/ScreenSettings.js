@@ -31,10 +31,10 @@ const langs = [
 ];
 const ApplyAndRestartApp = async (fnreduxActionSetLanguage, newLang) => {
   try {
-    I18nManager.forceRTL(newLang == "ar");
     await fnreduxActionSetLanguage(newLang);
 
-    await Updates.reloadAsync();
+    I18nManager.forceRTL(newLang == "ar");
+    Updates.reloadAsync();
   } catch (err) {
     console.log(err);
   }

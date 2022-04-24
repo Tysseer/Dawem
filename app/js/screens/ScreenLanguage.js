@@ -39,11 +39,11 @@ const ApplyAndRestartApp = async (
   newLang
 ) => {
   try {
-    I18nManager.forceRTL(newLang == "ar");
     await fnreduxActionSetLanguage(newLang);
     let bFirst = false;
     await fnreduxActionSetFirstRunFlag(bFirst);
-    await Updates.reloadAsync();
+    I18nManager.forceRTL(newLang == "ar");
+    Updates.reloadAsync();
   } catch (err) {
     console.log(err);
   }
