@@ -191,7 +191,10 @@ class ScreenRevisions extends Component {
   getInitialPrompt() {
     return (
       <ImageBackground source={bgImage} style={styles.bgImage}>
-        <Image source={require("assets/icon.png")} style={styles.bgIcon} />
+        <Image
+          source={require("assets/icon_trans.png")}
+          style={styles.bgIcon}
+        />
         <Center style={{ height: "100%" }}>
           <View>
             <Text
