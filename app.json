@@ -4,7 +4,7 @@
     "name": "Dawem",
     "slug": "Dawem",
     
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "plugins": [
@@ -31,7 +31,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.imuslim.dawem",
-      "buildNumber": "1.0.1",
+      "buildNumber": "1.0.2",
       "infoPlist": {
         "NSPhotoLibraryAddUsageDescriptio": "This app uses the location to detect your currency.",
         "NSPhotoLibraryUsageDescription": "This app uses the location to detect your currency."
@@ -39,7 +39,7 @@
     },
     "android": {
       "package": "com.imuslim.dawem",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#EEEEEE"

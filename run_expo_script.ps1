@@ -1,1 +1,1 @@
-expo build:android
+eas build --platform android
