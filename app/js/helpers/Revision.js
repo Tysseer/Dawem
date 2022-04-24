@@ -29,6 +29,7 @@ export default class Revision {
   }
   updateProgress(iAyahGlobal) {
     this.lastAyahRead = iAyahGlobal;
+
     if (this.end == this.strt) this.progress = 50;
     else {
       if (iAyahGlobal > this.strt) {

@@ -65,7 +65,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
       var newRevArr = revisions.concat([rev]);
       var revisionsManager = new RevisionsManager();
       revisionsManager.m_loadedRevisions = newRevArr;
-      revisionsManager.sortRevisions();
+      // revisionsManager.sortRevisions();
       newRevArr = revisionsManager.m_loadedRevisions;
       const newState = {
         bIsFirstRun: bIsFirstRun,
@@ -105,13 +105,14 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         if (revisions[i].id != rev.id) {
           newRevArr.push(revisions[i]); //currev[i].clone()
           continue;
+        } else {
+          if (action.type == allActions.UPDATE_REVISION) newRevArr.push(rev); //rev.clone()
         }
       }
-      if (action.type == allActions.UPDATE_REVISION) newRevArr.push(rev); //rev.clone()
 
       var revisionsManager = new RevisionsManager();
       revisionsManager.m_loadedRevisions = newRevArr;
-      revisionsManager.sortRevisions();
+      //revisionsManager.sortRevisions();
       newRevArr = revisionsManager.m_loadedRevisions;
       const newState = {
         bIsFirstRun: bIsFirstRun,

@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import {UPDATE_REVISION} from "app/js/redux/reduxActions";
 
 import Center from 'app/components/Center';
 import SVGLoader from 'app/js/helpers/SVGLoader';
@@ -25,7 +26,7 @@ const coloredList = [
 ];
 
 const { width,height } = Dimensions.get('window');
-const quranFont = (width-20)*0.049;//Math.max(10,width*0.054);
+const quranFont = (width-25)*0.049;//Math.max(10,width*0.054);
 const quranLineHeight = quranFont*1.82;
 const ayaNumSize = quranFont*1.3;//Math.max(22,height/26);
 const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
@@ -35,7 +36,8 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   var quranIndexer = new QuranIndexer();
   // quranIndexer.f;
   const reduxState = useSelector((state) => state);
-
+  const dispatch = useDispatch();
+ 
   const getNumBg = (num, idx) => {
     if (
       convertToArabicNumbers(num, 'ltr') == markedAyah &&
@@ -54,11 +56,15 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   };
 
   const handleRevProgress = (iAyah) => {
+    
     reduxState.curRevision.updateProgress(iAyah);
-    if (reduxState.curRevision.progress > 100) {
+    if (reduxState.curRevision.progress >= 100) {
       reduxState.curRevision.makeRevisionDateNow();
-      reduxState.revisionsManager.sortRevisions();
+     // reduxState.revisionsManager.sortRevisions();
     }
+
+    const updateRev = state => dispatch({ type: UPDATE_REVISION, payload:   state.curRevision});
+    updateRev(reduxState);
   };
 
   const renderContent = () =>
