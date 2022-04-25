@@ -22,6 +22,7 @@ import { colors } from "../../constants";
 import EnFlag from "assets/images/lang_en.png";
 import ArFlag from "assets/images/lang_ar.png";
 import { getFontBasicStyle } from "../helpers/scripts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const langs = [
   {
@@ -69,8 +70,9 @@ class ScreenSettings extends Component {
       buttonTxt: this.stringsManager.getStr(strings.STR_SEL_LANGUAGE),
     });
   }
-  okButtonPressed() {
+  async okButtonPressed() {
     let newLang = this.state.selectedLang;
+    await AsyncStorage.setItem("strLang", newLang);
     ApplyAndRestartApp(
       this.props.reduxActionSetFirstRunFlag,
       this.props.reduxActionSetLanguage,
