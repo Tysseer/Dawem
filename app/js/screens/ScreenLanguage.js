@@ -46,7 +46,7 @@ const ApplyAndRestartApp = async (
     setTimeout(function () {
       I18nManager.forceRTL(newLang == "ar");
       Updates.reloadAsync();
-    }, 600);
+    }, 800);
   } catch (err) {
     console.log(err);
   }
@@ -74,7 +74,9 @@ class ScreenSettings extends Component {
   }
   async okButtonPressed() {
     let newLang = this.state.selectedLang;
+    let bFirst = false;
     await AsyncStorage.setItem("strLang", newLang);
+    await AsyncStorage.setItem("bIsFirstRun", bFirst);
     this.stringsManager.setLanguage(newLang);
     alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
     ApplyAndRestartApp(
