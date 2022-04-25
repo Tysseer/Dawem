@@ -384,8 +384,8 @@ export default class StringsManager {
     }
     if (nStrID == STR_RESTART_PROMPT) {
       if (strLang == "ar")
-        return "برجاء إعادة تشغيل التطبيق لتفعيل كل التعديلات";
-      if (strLang == "en") return "Please restart app to apply all changes.";
+        return "ستتم إعادة تشغيل التطبيق لتفعيل كل التعديلات";
+      if (strLang == "en") return "App will restart to apply all changes.";
       return "unsupported language";
     }
     return "unkown string";

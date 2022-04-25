@@ -43,8 +43,10 @@ const ApplyAndRestartApp = async (
     await fnreduxActionSetLanguage(newLang);
     let bFirst = false;
     await fnreduxActionSetFirstRunFlag(bFirst);
-    I18nManager.forceRTL(newLang == "ar");
-    Updates.reloadAsync();
+    setTimeout(function () {
+      I18nManager.forceRTL(newLang == "ar");
+      Updates.reloadAsync();
+    }, 600);
   } catch (err) {
     console.log(err);
   }
@@ -73,6 +75,8 @@ class ScreenSettings extends Component {
   async okButtonPressed() {
     let newLang = this.state.selectedLang;
     await AsyncStorage.setItem("strLang", newLang);
+    this.stringsManager.setLanguage(newLang);
+    alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
     ApplyAndRestartApp(
       this.props.reduxActionSetFirstRunFlag,
       this.props.reduxActionSetLanguage,

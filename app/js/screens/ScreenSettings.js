@@ -51,8 +51,12 @@ function RefreshBadgesOnFocus({ onUpdate }) {
 const ApplyAndRestartApp = async (fnreduxActionSetLanguage, newLang) => {
   try {
     await fnreduxActionSetLanguage(newLang);
-    I18nManager.forceRTL(newLang == "ar");
-    Updates.reloadAsync();
+
+    setTimeout(function () {
+      I18nManager.forceRTL(newLang == "ar");
+      Updates.reloadAsync();
+    }, 600);
+
     // let strMgr = new StringsManager();
     // strMgr.setLanguage(newLang);
     // alert(strMgr.getStr(strings.STR_RESTART_PROMPT));
@@ -84,6 +88,8 @@ class ScreenSettings extends Component {
   async okButtonPressed() {
     let newLang = this.state.selectedLang;
     await AsyncStorage.setItem("strLang", newLang);
+    this.stringsManager.setLanguage(newLang);
+    alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
     ApplyAndRestartApp(this.props.reduxActionSetLanguage, newLang);
   }
   onFocus() {
