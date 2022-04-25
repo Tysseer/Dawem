@@ -33,17 +33,14 @@ const langs = [
     title: "العربية",
   },
 ];
-const ApplyAndRestartApp = async (
-  fnreduxActionSetFirstRunFlag,
-  fnreduxActionSetLanguage,
-  newLang
-) => {
+const ApplyAndRestartApp = async (fnreduxActionSetLanguage, newLang) => {
   try {
     await fnreduxActionSetLanguage(newLang);
-    let bFirst = false;
-    await fnreduxActionSetFirstRunFlag(bFirst);
-    I18nManager.forceRTL(newLang == "ar");
-    Updates.reloadAsync();
+    // I18nManager.forceRTL(newLang == "ar");
+    // Updates.reloadAsync();
+    let strMgr = new StringsManager();
+    strMgr.setLanguage(newLang);
+    alert(strMgr.getStr(strings.STR_RESTART_PROMPT));
   } catch (err) {
     console.log(err);
   }
@@ -71,11 +68,13 @@ class ScreenSettings extends Component {
   }
   okButtonPressed() {
     let newLang = this.state.selectedLang;
-    ApplyAndRestartApp(
-      this.props.reduxActionSetFirstRunFlag,
-      this.props.reduxActionSetLanguage,
-      newLang
-    );
+    let bFirst = false;
+    this.props.reduxActionSetFirstRunFlag(bFirst);
+    if (this.originalLang != newLang) {
+      I18nManager.forceRTL(newLang == "ar");
+      ApplyAndRestartApp(this.props.reduxActionSetLanguage, newLang);
+    }
+    this.props.navigation.navigate("ScrWelcome");
   }
   renderLanguageItem(lang) {
     return (

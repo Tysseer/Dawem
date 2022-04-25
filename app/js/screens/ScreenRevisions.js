@@ -162,7 +162,7 @@ class ScreenRevisions extends Component {
     this.props.navigation.navigate("Mushaf", {
       ayahIndex: revision.getProgressAyah(),
       bIsAr: this.props.strLang == "ar",
-      longPressHandler: this.onRevProgress.bind(this),
+      // longPressHandler: this.onRevProgress.bind(this),
     });
   }
   onRevProgress(iAyah) {
