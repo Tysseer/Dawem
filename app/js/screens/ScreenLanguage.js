@@ -34,14 +34,17 @@ const langs = [
     title: "العربية",
   },
 ];
-const ApplyAndRestartApp = async (fnreduxActionSetLanguage, newLang) => {
+const ApplyAndRestartApp = async (
+  fnreduxActionSetFirstRunFlag,
+  fnreduxActionSetLanguage,
+  newLang
+) => {
   try {
     await fnreduxActionSetLanguage(newLang);
-    // I18nManager.forceRTL(newLang == "ar");
-    // Updates.reloadAsync();
-    let strMgr = new StringsManager();
-    strMgr.setLanguage(newLang);
-    alert(strMgr.getStr(strings.STR_RESTART_PROMPT));
+    let bFirst = false;
+    await fnreduxActionSetFirstRunFlag(bFirst);
+    I18nManager.forceRTL(newLang == "ar");
+    Updates.reloadAsync();
   } catch (err) {
     console.log(err);
   }

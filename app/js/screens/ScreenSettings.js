@@ -47,14 +47,15 @@ function RefreshBadgesOnFocus({ onUpdate }) {
   );
   return null;
 }
+
 const ApplyAndRestartApp = async (fnreduxActionSetLanguage, newLang) => {
   try {
     await fnreduxActionSetLanguage(newLang);
-    // I18nManager.forceRTL(newLang == "ar");
-    // Updates.reloadAsync();
-    let strMgr = new StringsManager();
-    strMgr.setLanguage(newLang);
-    alert(strMgr.getStr(strings.STR_RESTART_PROMPT));
+    I18nManager.forceRTL(newLang == "ar");
+    Updates.reloadAsync();
+    // let strMgr = new StringsManager();
+    // strMgr.setLanguage(newLang);
+    // alert(strMgr.getStr(strings.STR_RESTART_PROMPT));
   } catch (err) {
     console.log(err);
   }
@@ -84,6 +85,14 @@ class ScreenSettings extends Component {
     let newLang = this.state.selectedLang;
     await AsyncStorage.setItem("strLang", newLang);
     ApplyAndRestartApp(this.props.reduxActionSetLanguage, newLang);
+  }
+  onFocus() {
+    this.stringsManager.setLanguage(this.props.strLang);
+    this.originalLang = this.props.strLang;
+    this.state = {
+      selectedLang: this.props.strLang,
+      buttonTxt: this.stringsManager.getStr(strings.STR_SEL_LANGUAGE),
+    };
   }
   renderLanguageItem(lang) {
     return (
@@ -117,6 +126,7 @@ class ScreenSettings extends Component {
       </TouchableOpacity>
     );
   }
+
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
     return (
