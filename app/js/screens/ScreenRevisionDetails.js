@@ -135,6 +135,10 @@ class ScreenRevisionDetails extends Component {
       this.endSurah,
       this.endAyah
     );
+    let realStrt = Math.min(this.revision.strt, this.revision.end);
+    let realEnd = Math.max(this.revision.strt, this.revision.end);
+    this.revision.strt = realStrt;
+    this.revision.end = realEnd;
     if (this.bIsNewRev) this.props.reduxActionAddRevision(this.revision);
     else this.props.reduxActionUpdateRevision(this.revision);
     this.props.navigation.navigate("ScrList");

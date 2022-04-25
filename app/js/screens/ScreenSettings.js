@@ -14,6 +14,8 @@ import * as strings from "js/helpers/StringsManager";
 import StringsManager from "js/helpers/StringsManager";
 import ActionBtn from "app/components/ActionBtn";
 import * as Updates from "expo-updates";
+import { useFocusEffect } from "@react-navigation/native";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../constants";
 import EnFlag from "assets/images/lang_en.png";
@@ -31,12 +33,28 @@ const langs = [
     title: "العربية",
   },
 ];
+
+function RefreshBadgesOnFocus({ onUpdate }) {
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      onUpdate();
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+  return null;
+}
 const ApplyAndRestartApp = async (fnreduxActionSetLanguage, newLang) => {
   try {
     await fnreduxActionSetLanguage(newLang);
-
-    I18nManager.forceRTL(newLang == "ar");
-    Updates.reloadAsync();
+    // I18nManager.forceRTL(newLang == "ar");
+    // Updates.reloadAsync();
+    let strMgr = new StringsManager();
+    strMgr.setLanguage(newLang);
+    alert(strMgr.getStr(strings.STR_RESTART_PROMPT));
   } catch (err) {
     console.log(err);
   }
@@ -103,6 +121,7 @@ class ScreenSettings extends Component {
     this.stringsManager.setLanguage(this.props.strLang);
     return (
       <View style={styles.mainContainer}>
+        <RefreshBadgesOnFocus onUpdate={this.onFocus.bind(this)} />
         <View style={styles.quranLogoContainer}>
           <Image
             source={require("assets/images/Quran_logo.png")}

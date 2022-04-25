@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import ScreenRevisions from "app/js/screens/ScreenRevisions";
-import ScreenQuranBrowser from "app/js/screens/ScreenQuranBrowser";
+//import ScreenQuranBrowser from "app/js/screens/ScreenQuranBrowser";
 import ScreenRevisionDetails from "app/js/screens/ScreenRevisionDetails";
 import ScreenSettings from "app/js/screens/ScreenSettings";
 import Header from "app/components/Header";
@@ -52,11 +52,11 @@ export default function MainStack() {
           ),
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ScrQuran"
         component={ScreenQuranBrowser}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="Mushaf"
         component={MushafScreen}

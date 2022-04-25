@@ -162,7 +162,7 @@ class ScreenRevisions extends Component {
     this.props.navigation.navigate("Mushaf", {
       ayahIndex: revision.getProgressAyah(),
       bIsAr: this.props.strLang == "ar",
-      longPressHandler: this.onRevProgress.bind(this),
+      // longPressHandler: this.onRevProgress.bind(this),
     });
   }
   onRevProgress(iAyah) {
@@ -191,7 +191,10 @@ class ScreenRevisions extends Component {
   getInitialPrompt() {
     return (
       <ImageBackground source={bgImage} style={styles.bgImage}>
-        <Image source={require("assets/icon.png")} style={styles.bgIcon} />
+        <Image
+          source={require("assets/icon_trans.png")}
+          style={styles.bgIcon}
+        />
         <Center style={{ height: "100%" }}>
           <View>
             <Text

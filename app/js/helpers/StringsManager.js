@@ -53,6 +53,7 @@ export const STR_JUZUU = 52;
 export const STR_INSTRUCTIONS2 = 53;
 export const STR_INSTRUCTIONS3 = 54;
 export const STR_CHOOSE_BETWEEN = 55;
+export const STR_RESTART_PROMPT = 56;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -379,6 +380,12 @@ export default class StringsManager {
     if (nStrID == STR_CHOOSE_BETWEEN) {
       if (strLang == "ar") return "اختر بين";
       if (strLang == "en") return "Select between";
+      return "unsupported language";
+    }
+    if (nStrID == STR_RESTART_PROMPT) {
+      if (strLang == "ar")
+        return "برجاء إعادة تشغيل التطبيق لتفعيل كل التعديلات";
+      if (strLang == "en") return "Please restart app to apply all changes.";
       return "unsupported language";
     }
     return "unkown string";
