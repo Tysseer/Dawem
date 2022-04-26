@@ -76,7 +76,7 @@ class ScreenSettings extends Component {
     let newLang = this.state.selectedLang;
     let bFirst = false;
     await AsyncStorage.setItem("strLang", newLang);
-    await AsyncStorage.setItem("bIsFirstRun", bFirst);
+    await AsyncStorage.setItem("bIsFirstRun", "false");
     this.stringsManager.setLanguage(newLang);
     alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
     ApplyAndRestartApp(
