@@ -141,7 +141,28 @@ export default class RevisionItem extends Component {
       </View>
     );
   }
+  getRevisionIcon(revision) {
+    if (revision.bIsNewRev) {
+      return (
+        <MaterialIcons
+          name="new-releases"
+          size={BASE_WIDTH}
+          color={colors.primary}
+        />
+      );
+    }
+    if (revision.numDays == 0) {
+      return (
+        <MaterialCommunityIcons
+          name="shield-check"
+          size={BASE_WIDTH}
+          color={colors.primary}
+        />
+      );
+    }
 
+    return <Feather name="check" size={BASE_WIDTH} color={colors.primary} />;
+  }
   renderReadReviseActions(revision) {
     return (
       <View
@@ -153,15 +174,7 @@ export default class RevisionItem extends Component {
         <TouchableOpacity
           onPress={() => this.props.onPresses.get("revisedIcon")(revision)}
         >
-          {revision.numDays == 0 ? (
-            <MaterialCommunityIcons
-              name="shield-check"
-              size={BASE_WIDTH}
-              color={colors.primary}
-            />
-          ) : (
-            <Feather name="check" size={BASE_WIDTH} color={colors.primary} />
-          )}
+          {this.getRevisionIcon(revision)}
         </TouchableOpacity>
 
         <View style={{ width: width / 30 }} />

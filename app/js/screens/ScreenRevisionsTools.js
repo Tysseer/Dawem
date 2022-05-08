@@ -116,7 +116,8 @@ class ScreenRevisionsTools extends Component {
       rev.progress = 0;
       rev.strt = this.quranIndexer.getJuzuuStartAyah(i);
       rev.end = this.quranIndexer.getJuzuuStartAyah(i + 1) - 1;
-      rev.dateofLastRevision = this.revisionsManager.getPastDate(31 - i);
+      rev.dateofLastRevision = new Date(); //this.revisionsManager.getPastDate(32 - i);
+      rev.bIsNewRev = true;
       rev.updateNumDays();
       revs.push(rev);
     }
@@ -144,8 +145,10 @@ class ScreenRevisionsTools extends Component {
       rev.strt = this.quranIndexer.getArrSurahAyahStart(i);
       rev.end = this.quranIndexer.getArrSurahAyahStart(i + 1) - 1;
 
-      rev.dateofLastRevision = this.revisionsManager.getPastDate(31 - prevdays);
-      prevdays += 30 * this.quranIndexer.getSurahLength(i);
+      rev.dateofLastRevision = new Date(); //this.revisionsManager.getPastDate(31 - prevdays);
+      // prevdays += 30 * this.quranIndexer.getSurahLength(i);
+      rev.bIsNewRev = true;
+
       rev.updateNumDays();
       revs.push(rev);
     }

@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TextInput, Text, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  Dimensions,
+  KeyboardAvoidingView,
+} from "react-native";
 
 import Revision from "../helpers/Revision";
 import ModalSurahSelector from "../modals/ModalSurahSelector";
@@ -36,7 +43,7 @@ class ScreenRevisionDetails extends Component {
     if (this.revision == null) {
       this.bIsNewRev = true;
       this.revision = new Revision();
-
+      this.revision.bIsNewRev = true;
       this.bShowSurahSelector = false;
       this.bShowAyahSelector = false;
       this.title = "";
@@ -85,7 +92,7 @@ class ScreenRevisionDetails extends Component {
   render() {
     return (
       // <Text>{JSON.stringify(this.quranReaderByLine.getPage(165))}</Text>
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         {/* header */}
         {/* <Header
           title={this.stringsManager.getStr(strings.STR_REV_TITLE)}
@@ -121,7 +128,7 @@ class ScreenRevisionDetails extends Component {
             style={{ height: this.height / 12.5 }}
           />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
   okButtonPressed() {

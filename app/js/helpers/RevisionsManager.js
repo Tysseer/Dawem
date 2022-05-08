@@ -44,12 +44,21 @@ export default class RevisionsManager {
     if (this.m_loadedRevisions.length == 0) return [false, false, false];
     var bIsToday = false;
     var maxDays = 0;
+    var bNoMaxAvailable = true;
     for (var i = 0; i < this.m_loadedRevisions.length; i++) {
       this.m_loadedRevisions[i].updateNumDays();
-      if (this.m_loadedRevisions[i].numDays > maxDays)
+
+      bNoMaxAvailable = false;
+
+      if (this.m_loadedRevisions[i].numDays > maxDays) {
         maxDays = this.m_loadedRevisions[i].numDays;
-      if (this.m_loadedRevisions[i].numDays == 0) bIsToday = true;
+      }
+      if (this.m_loadedRevisions[i].bIsNewRev)
+        maxDays = 1000; // ignore actual num days if new
+      else if (this.m_loadedRevisions[i].numDays == 0) bIsToday = true; // ignore bIsToday if new
     }
+
+    if (bNoMaxAvailable) return [false, false, false];
 
     var bIsWeek = maxDays <= 7;
     var bIsMonth = maxDays <= 30;

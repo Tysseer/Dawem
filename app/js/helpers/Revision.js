@@ -8,6 +8,7 @@ export default class Revision {
     this.dateofLastRevision = new Date();
     (this.numDays = 0), this.updateNumDays();
     this.lastAyahRead = -1;
+    this.bIsNewRev = false;
   }
   fillFromSerializedObj(obj) {
     this.id = obj.id;
@@ -20,6 +21,8 @@ export default class Revision {
     if (obj.hasOwnProperty("lastAyahRead"))
       this.lastAyahRead = obj.lastAyahRead;
     else this.lastAyahRead = -1;
+    if (obj.hasOwnProperty("bIsNewRev")) this.bIsNewRev = obj.bIsNewRev;
+    else this.bIsNewRev = false;
   }
   updateNumDays() {
     this.numDays = Math.round(
@@ -57,6 +60,7 @@ export default class Revision {
     this.dateofLastRevision = new Date();
     this.numDays = 0;
     this.progress = 0;
+    this.bIsNewRev = false;
   }
   getRevisionTitle() {
     var strTitle = this.title;
@@ -68,11 +72,13 @@ export default class Revision {
   }
   getNumdaysText() {
     var strNumDays = "";
+    //if (this.bIsNewRev) strNumDays = "";
     if (this.numDays >= 1000) strNumDays = "  ∞ ";
     else if (this.numDays < 10) strNumDays = "  " + this.numDays + "";
     //one digit
     else if (this.numDays < 100) strNumDays = " " + this.numDays + ""; //two digits
     if (this.numDays < 1) strNumDays = "";
+
     return strNumDays;
   }
   getAsStringArr() {

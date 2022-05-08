@@ -6,6 +6,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   Image,
+  KeyboardAvoidingView,
   TextInput,
 } from "react-native";
 import ActionBtn from "../../components/ActionBtn";
@@ -57,7 +58,7 @@ export default class ModalAyahSelector {
         onRequestClose={() => {}}
         onDismiss={() => {}}
       >
-        <View style={styles.contentContainer}>
+        <KeyboardAvoidingView style={styles.contentContainer}>
           <View style={styles.selectorsContainer}>
             <View style={{ flexDirection: "row" }}>
               <TextInput
@@ -106,7 +107,7 @@ export default class ModalAyahSelector {
               style={{ marginHorizontal: 3 }}
             />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     );
   }
