@@ -28,7 +28,15 @@ import { getSubTitleFontBasicStyle } from "../helpers/scripts";
 import ActionBtn from "app/components/ActionBtn";
 // import bgImage from 'assets/backgroundPNG/green_background.png';
 import bgImage from "assets/images/mainBg.png";
+import dayBadgeImg from "assets/images/dayBadge.png";
+import monthBadgeImg from "assets/images/monthBadge.png";
+import weekBadgeImg from "assets/images/weekBadge.png";
+import twoBadgesImg from "assets/images/prize1.png";
+import threeBadgesImg from "assets/images/prize2.png";
+import allBadgesDoneImg from "assets/images/prize3.png";
+import allRevsDoneImg from "assets/images/prize4.png";
 import Screen from "app/components/Screen";
+import ModalCongrats from "../modals/ModalCongrats";
 
 const { height, width } = Dimensions.get("window");
 
@@ -64,10 +72,33 @@ class ScreenRevisions extends Component {
       isBadgeDay: res[0],
       isBadgeMonth: res[1],
       isBadgeWeek: res[2],
+      bShowCongrats: false,
+      nNumDoneRevs: this.revisionsManager.getNumDoneRevisions(),
     };
+    this.congratsMsgs = [];
   }
   onFocus() {
     this.refresh();
+  }
+  showHideCongrats(bShow) {
+    if (bShow == false) this.congratsMsgs.pop();
+    this.setState({
+      bShowCongrats: this.congratsMsgs.length, //bShow,
+    });
+  }
+  getCongratsModal() {
+    if (this.state.bShowCongrats == false || this.congratsMsgs.length == 0)
+      return <></>;
+    var msgImg = this.congratsMsgs[this.congratsMsgs.length - 1].msgImg;
+    var msgTxtIndx = this.congratsMsgs[this.congratsMsgs.length - 1].msgTxtIndx;
+    return (
+      <ModalCongrats
+        strLang={this.props.strLang}
+        badgeImg={msgImg}
+        badgeMsg={msgTxtIndx}
+        setModalVisible={this.showHideCongrats.bind(this)}
+      />
+    );
   }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
@@ -78,6 +109,7 @@ class ScreenRevisions extends Component {
     return (
       <Screen style={{ paddingTop: 0 }}>
         <RefreshBadgesOnFocus onUpdate={this.onFocus.bind(this)} />
+        {this.getCongratsModal()}
         <BadgesBar
           svgLoader={this.svgLoader}
           isBadgeDay={this.state.isBadgeDay == false}
@@ -212,12 +244,62 @@ class ScreenRevisions extends Component {
   }
 
   updateBadgesStates() {
+    var oldState = [
+      this.state.isBadgeDay,
+      this.state.isBadgeMonth,
+      this.state.isBadgeWeek,
+    ];
+    var nNumDone = this.revisionsManager.getNumDoneRevisions();
     var res = this.revisionsManager.getBadgesStates();
+    var strImgPath = [dayBadgeImg, monthBadgeImg, weekBadgeImg];
+    var nNumActivated = 0,
+      nNumActiveNow = 0;
+    for (var i = 0; i < 3; i++) {
+      if (res[i] == true) nNumActiveNow++;
+      if (oldState[i] == false && res[i] == true) {
+        this.congratsMsgs.push({
+          msgImg: strImgPath[i],
+          msgTxtIndx: strings.STR_DAYBADGE_CONGRATS + i,
+        });
+        nNumActivated++;
+      }
+    }
+    if (nNumActivated == 2) {
+      this.congratsMsgs.push({
+        msgImg: twoBadgesImg,
+        msgTxtIndx: strings.STR_TWOBADGES_CONGRATS,
+      });
+    }
+    if (nNumActivated == 3) {
+      this.congratsMsgs.push({
+        msgImg: threeBadgesImg,
+        msgTxtIndx: strings.STR_THREEBADGES_CONGRATS,
+      });
+    }
+    if (nNumActivated > 0 && nNumActiveNow == 3) {
+      this.congratsMsgs.push({
+        msgImg: allBadgesDoneImg,
+        msgTxtIndx: strings.STR_ALLBADGES_DONE_CONGRATS,
+      });
+    }
+    if (
+      nNumDone > this.state.nNumDoneRevs &&
+      nNumDone == this.revisionsManager.getNumRevisions()
+    ) {
+      // finished all revisions
+      this.congratsMsgs.push({
+        msgImg: allRevsDoneImg,
+        msgTxtIndx: strings.STR_ALLREVS_DONE_CONGRATS,
+      });
+    }
+    this.congratsMsgs.reverse();
 
     this.setState({
       isBadgeDay: res[0],
       isBadgeMonth: res[1],
       isBadgeWeek: res[2],
+      bShowCongrats: this.congratsMsgs.length > 0,
+      nNumDoneRevs: nNumDone,
     });
   }
   refresh() {

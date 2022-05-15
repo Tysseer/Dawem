@@ -40,6 +40,18 @@ export default class RevisionsManager {
     }
     this.m_loadedRevisions = newRevArr;
   }
+  getNumDoneRevisions() {
+    var nRet = 0;
+    for (var i = 0; i < this.m_loadedRevisions.length; i++) {
+      this.m_loadedRevisions[i].updateNumDays();
+      if (
+        this.m_loadedRevisions[i].bIsNewRev == false &&
+        this.m_loadedRevisions[i].numDays == 0
+      )
+        nRet++;
+    }
+    return nRet;
+  }
   getBadgesStates() {
     if (this.m_loadedRevisions.length == 0) return [false, false, false];
     var bIsToday = false;
@@ -116,7 +128,7 @@ export default class RevisionsManager {
     rev.progress = 0;
     rev.strt = this.quranIndexer.getArrSurahAyahStart(6);
     rev.end = rev.strt + 49;
-    rev.dateofLastRevision = this.getPastDate(15);
+    rev.dateofLastRevision = this.getPastDate(31);
     rev.updateNumDays();
     this.m_loadedRevisions.push(rev);
 

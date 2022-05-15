@@ -54,6 +54,14 @@ export const STR_INSTRUCTIONS2 = 53;
 export const STR_INSTRUCTIONS3 = 54;
 export const STR_CHOOSE_BETWEEN = 55;
 export const STR_RESTART_PROMPT = 56;
+export const STR_ALHAMDULELLAH = 57;
+export const STR_DAYBADGE_CONGRATS = 58;
+export const STR_MONTHBADGE_CONGRATS = 59;
+export const STR_WEEKBADGE_CONGRATS = 60;
+export const STR_TWOBADGES_CONGRATS = 61;
+export const STR_THREEBADGES_CONGRATS = 62;
+export const STR_ALLBADGES_DONE_CONGRATS = 63;
+export const STR_ALLREVS_DONE_CONGRATS = 64;
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -87,8 +95,8 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_ADD_REV) {
-      if (strLang == "ar") return "أضف";
-      if (strLang == "en") return "Add";
+      if (strLang == "ar") return "تأكيد الإضافة";
+      if (strLang == "en") return "Confirm";
       return "unsupported language";
     }
     if (nStrID == STR_CANCEL) {
@@ -133,7 +141,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "هذا الوسام ينفتح لك عندما تقوم بأداء مراجعة واحدة على الأقل يوميا.\nداوم على زيارة أورادك القرآنية كل يوم, وقم ببناء هذه العادة المحببة";
       if (strLang == "en")
-        return "This Badge Activates When You Finish at Least One Revision Daily.\nMake It a Habit and Visit Your List of Revisions Everyday!";
+        return "The Initiative Badge Activates When You Finish at Least One Revision Daily.\nMake It a Habit and Visit Your List of Revisions Everyday!";
       return "unsupported language";
     }
     if (nStrID == STR_DAY_BADGE_MIN_REV) {
@@ -147,7 +155,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "بارك الله فيك! لقد قمت بتفعيل وسام المبادرة.";
       if (strLang == "en")
-        return "Great Job! You activated your Initiative Badge.";
+        return "Great Job! You have activated the Initiative Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_DAY_BADGE_INACTIVE) {
@@ -161,7 +169,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "وسام المصاحبة ينفتح لك عندما تقرأ كل أورادك في شهر أو أقل. فلتتعود مصاحبة القرآن وتتأسى بالصالحين في تلاوته آناء الليل وأطراف النهار.";
       if (strLang == "en")
-        return "This Badge Activates When You Finish All Revisions in 30 Days or Less.\nMake It a Habit and Visit All Your Revisions at Least Once a Month!";
+        return "The Companionship Badge Activates When You Finish All Revisions in 30 Days or Less.\nMake It a Habit and Visit All Your Revisions at Least Once a Month!";
       return "unsupported language";
     }
     if (nStrID == STR_MONTH_BADGE_MIN_REV) {
@@ -175,7 +183,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return " فتح الله عليك أبواب الخير! لقد قمت بتفعيل وسام المصاحبة, وصرت صاحبا للقرآن.";
       if (strLang == "en")
-        return "Great Job! You activated your Companionship Badge.";
+        return "Great Job! You have activated your Companionship Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_MONTH_BADGE_INACTIVE) {
@@ -189,7 +197,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "وسام المثابرة ينفتح لك عندما تقوم بمراجعة كل أورادك في خلال أسبوع أو أقل. فهذا كان دأب الصحابة الكرام ومن تبعهم بإحسان.";
       if (strLang == "en")
-        return "This Badge Activates When You Finish All Revisions in 7 Days or Less.\nMake It a Habit and Visit All Your Revisions at Least Once a Week!";
+        return "The Dedication Badge Activates When You Finish All Revisions in 7 Days or Less.\nMake It a Habit and Visit All Your Revisions at Least Once a Week!";
       return "unsupported language";
     }
     if (nStrID == STR_WEEK_BADGE_MIN_REV) {
@@ -203,7 +211,7 @@ export default class StringsManager {
       if (strLang == "ar")
         return "زادك الله فضلا! لقد قمت بتفعيل وسام المثابرة, وصرت من أهل القرآن.";
       if (strLang == "en")
-        return "Great Job! You activated your Perseverance Badge.";
+        return "Great Job! You have activated the dedication Badge.";
       return "unsupported language";
     }
     if (nStrID == STR_WEEK_BADGE_INACTIVE) {
@@ -284,7 +292,7 @@ export default class StringsManager {
     }
     if (nStrID == STR_WEEKBADGE_NAME) {
       if (strLang == "ar") return "وسام المثابرة";
-      if (strLang == "en") return "Perseverance Badge";
+      if (strLang == "en") return "Dedication Badge";
       return "unsupported language";
     }
     if (nStrID == STR_MONTHBADGE_NAME) {
@@ -386,6 +394,56 @@ export default class StringsManager {
       if (strLang == "ar")
         return "ستتم إعادة تشغيل التطبيق لتفعيل كل التعديلات";
       if (strLang == "en") return "App will restart to apply all changes.";
+      return "unsupported language";
+    }
+    if (nStrID == STR_ALHAMDULELLAH) {
+      if (strLang == "ar") return "الحمد لله!";
+      if (strLang == "en") return "Alhamdulellah!";
+      return "unsupported language";
+    }
+    if (nStrID == STR_DAYBADGE_CONGRATS) {
+      if (strLang == "ar") return "أحسنت صنعا! لقد قمت بتفعيل وسام المبادرة";
+      if (strLang == "en") return "Good job! Initiative Badge activated";
+      return "unsupported language";
+    }
+    if (nStrID == STR_MONTHBADGE_CONGRATS) {
+      if (strLang == "ar")
+        return "بارك الله فيك! لقد نجحت في تفعيل وسام المصاحبة";
+      if (strLang == "en")
+        return "May Allah bless you! Companionship Badge activated";
+      return "unsupported language";
+    }
+    if (nStrID == STR_WEEKBADGE_CONGRATS) {
+      if (strLang == "ar") return "رائع جدا! لقد قمت بتفعيل وسام المثابرة";
+      if (strLang == "en")
+        return "ُExcellent! You have activated the Dedication Badge";
+      return "unsupported language";
+    }
+    if (nStrID == STR_TWOBADGES_CONGRATS) {
+      if (strLang == "ar")
+        return "ضاعف الله لك أجرك! لقد قمت بتفعيل وسامين في وقت واحد, أحسنت!";
+      if (strLang == "en")
+        return "Wonderful effort! You have activated two badges simultaneously";
+      return "unsupported language";
+    }
+    if (nStrID == STR_THREEBADGES_CONGRATS) {
+      if (strLang == "ar")
+        return "زادك الله قربا منه! لقد فعلت ثلاثة أوسمة في وقت واحد";
+      if (strLang == "en")
+        return "Amazing! You have activated three badges simultaneously";
+      return "unsupported language";
+    }
+    if (nStrID == STR_ALLBADGES_DONE_CONGRATS) {
+      if (strLang == "ar")
+        return "رفعك الله في الدارين! لقد نجحت في تفعيل كل الأوسمة";
+      if (strLang == "en")
+        return "May Allah elevate you higher! You have activated all badges";
+      return "unsupported language";
+    }
+    if (nStrID == STR_ALLREVS_DONE_CONGRATS) {
+      if (strLang == "ar")
+        return "أداؤك ممتاز, تبارك الله! لقد راجعت كل أوراد قائمتك";
+      if (strLang == "en") return "Awesome! You have finished all revisions";
       return "unsupported language";
     }
     return "unkown string";

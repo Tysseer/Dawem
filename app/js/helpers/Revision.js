@@ -122,6 +122,7 @@ export default class Revision {
         this.dateofLastRevision = new Date(strArr[iStrt++].split("===")[1]);
         this.numDays = parseInt(strArr[iStrt++].split("===")[1]);
         this.lastAyahRead = parseInt(strArr[iStrt++].split("===")[1]);
+        this.bIsNewRev = true;
         return iConsumed;
       } else {
         return -2; //unkown version

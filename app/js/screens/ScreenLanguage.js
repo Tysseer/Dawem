@@ -78,7 +78,7 @@ class ScreenSettings extends Component {
     await AsyncStorage.setItem("strLang", newLang);
     await AsyncStorage.setItem("bIsFirstRun", "false");
     this.stringsManager.setLanguage(newLang);
-    alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
+    // alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
     ApplyAndRestartApp(
       this.props.reduxActionSetFirstRunFlag,
       this.props.reduxActionSetLanguage,

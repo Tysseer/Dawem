@@ -89,7 +89,7 @@ class ScreenSettings extends Component {
     let newLang = this.state.selectedLang;
     await AsyncStorage.setItem("strLang", newLang);
     this.stringsManager.setLanguage(newLang);
-    alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
+    // alert(this.stringsManager.getStr(strings.STR_RESTART_PROMPT));
     ApplyAndRestartApp(this.props.reduxActionSetLanguage, newLang);
   }
   onFocus() {

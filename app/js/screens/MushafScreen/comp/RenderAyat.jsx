@@ -56,7 +56,7 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   };
 
   const handleRevProgress = (iAyah) => {
-    
+    if(reduxState.curRevision==null) return;
     reduxState.curRevision.updateProgress(iAyah);
     if (reduxState.curRevision.progress >= 100) {
       reduxState.curRevision.makeRevisionDateNow();
