@@ -58,7 +58,10 @@ export default class ModalAyahSelector {
         onRequestClose={() => {}}
         onDismiss={() => {}}
       >
-        <KeyboardAvoidingView style={styles.contentContainer}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.contentContainer}
+        >
           <View style={styles.selectorsContainer}>
             <View style={{ flexDirection: "row" }}>
               <TextInput
