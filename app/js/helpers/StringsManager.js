@@ -62,6 +62,10 @@ export const STR_TWOBADGES_CONGRATS = 61;
 export const STR_THREEBADGES_CONGRATS = 62;
 export const STR_ALLBADGES_DONE_CONGRATS = 63;
 export const STR_ALLREVS_DONE_CONGRATS = 64;
+export const STR_ADD_REV_BY_TXT = 65;
+export const STR_ADD_REV_BY_TXT_PROMPT = 66;
+export const STR_CANT_UNDERSTAND = 67;
+import { convertToArabicNumbers } from "./scripts.js";
 export default class StringsManager {
   constructor() {
     this.strLang = "ar";
@@ -446,6 +450,52 @@ export default class StringsManager {
       if (strLang == "en") return "Awesome! You have finished all revisions";
       return "unsupported language";
     }
+    if (nStrID == STR_ADD_REV_BY_TXT) {
+      if (strLang == "ar") return "البحث عن الورد";
+      if (strLang == "en") return "Search for Revision";
+      return "unsupported language";
+    }
+    if (nStrID == STR_ADD_REV_BY_TXT_PROMPT) {
+      if (strLang == "ar") return "اكتب بداية ونهاية الورد هنا";
+      if (strLang == "en") return "Write start & end of revision here";
+      return "unsupported language";
+    }
+    if (nStrID == STR_CANT_UNDERSTAND) {
+      if (strLang == "ar")
+        return "المعذرة, لم أستطع فهم هذه الجملة. هل يمكنك كتابتها بشكل مختلف؟";
+      if (strLang == "en")
+        return "I'm sorry, I didn't get that. Can you rephrase your query?";
+      return "unsupported language";
+    }
     return "unkown string";
+  }
+
+  getNumDaysSinceRevMessage(numDays) {
+    if (this.strLang == "ar") {
+      if (numDays == 1) {
+        return "يوم واحد منذ آخر مراجعة";
+      }
+      if (numDays == 2) {
+        return "يومان منذ آخر مراجعة";
+      }
+      if (numDays <= 10) {
+        return (
+          convertToArabicNumbers(numDays.toString(), "rtl") +
+          " أيام منذ آخر مراجعة"
+        );
+      }
+
+      return (
+        convertToArabicNumbers(numDays.toString(), "rtl") +
+        " يوماً منذ آخر مراجعة"
+      );
+    }
+    if (this.strLang == "en") {
+      if (numDays == 1) {
+        return "One day since last revision";
+      }
+      return numDays + " days since last revision";
+    }
+    return "unsupported language";
   }
 }

@@ -44,8 +44,8 @@ const MushafScreen = () => {
 
   const route = useRoute();
 
-  const [localSurahIdx, setLocalSurahIdx] = useState();
-  const [localAyahIdx, setLocalAyahIdx] = useState();
+  const [localSurahIndx, setLocalSurahIdx] = useState();
+  const [localAyahIndx, setLocalAyahIdx] = useState();
   const [pageNum, setPageNum] = useState();
   const [pageContent, setPageContent] = useState();
   const [markedAyah, setMarkedAyah] = useState();
@@ -57,11 +57,11 @@ const MushafScreen = () => {
   const reduxState = useSelector((state) => state);
 
   const onAyahLongPress = (iAyah /*local */, iSurah) => {
-    if (iSurah == localSurahIdx) {
+    if (iSurah == localSurahIndx) {
       var engNum = convertToArabicNumbers(iAyah, 'ltr');
       setMarkedAyah(engNum);
       // console.log('here ' + iAyah + ' ' + engNum + ' ' + iSurah.surahIndex);
-      // console.log('localSurahIdx', localSurahIdx);
+      // console.log('localSurahIndx', localSurahIndx);
       var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah, +engNum);
       handleRevProgress(globalAyah);
       // longPressHandler(globalAyah);
@@ -77,8 +77,8 @@ const MushafScreen = () => {
   const getNumBg = (num, idx) => {
     if (
       convertToArabicNumbers(num, 'ltr') == markedAyah &&
-      // convertToArabicNumbers(num, 'ltr') == localAyahIdx &&
-      idx == localSurahIdx
+      // convertToArabicNumbers(num, 'ltr') == localAyahIndx &&
+      idx == localSurahIndx
     )
       return '#ff0';
   };
@@ -156,7 +156,7 @@ const MushafScreen = () => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 onLongPress={() => onAyahLongPress(ayah.num, ayah.surahIndex)}
-                disabled={ayah.surahIndex !== localSurahIdx}
+                disabled={ayah.surahIndex !== localSurahIndx}
                 style={{
                   backgroundColor: getNumBg(ayah.num, ayah.surahIndex),
                 }}
@@ -255,12 +255,12 @@ const MushafScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      const { localSurahIdx, localAyahIdx } =
+      const { localSurahIndx, localAyahIndx } =
         quranIndexer.getAyahLocalIndx(ayahIndex);
 
-      setLocalSurahIdx(localSurahIdx);
-      setLocalAyahIdx(localAyahIdx);
-      setMarkedAyah(localAyahIdx);
+      setLocalSurahIdx(localSurahIndx);
+      setLocalAyahIdx(localAyahIndx);
+      setMarkedAyah(localAyahIndx);
 
       const pageNum = quranIndexer.getPageFromAyah(ayahIndex);
       setPageNum(pageNum);

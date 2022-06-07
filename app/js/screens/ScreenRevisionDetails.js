@@ -6,7 +6,10 @@ import {
   Text,
   Dimensions,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Toast from "react-native-root-toast";
 
 import Revision from "../helpers/Revision";
 import ModalSurahSelector from "../modals/ModalSurahSelector";
@@ -22,8 +25,12 @@ import StringsManager from "../helpers/StringsManager";
 import { colors } from "app/constants";
 import { getContentFontBasicStyle } from "../helpers/scripts";
 import ActionBtn from "app/components/ActionBtn";
-
+import SearchTextParser from "../helpers/SearchTextParser";
 const { height, width } = Dimensions.get("window");
+const height12_5 = height / 12.5;
+const height18 = height / 18;
+const height50 = height / 50;
+const height130 = height / 130;
 class ScreenRevisionDetails extends Component {
   constructor(props) {
     super(props);
@@ -65,10 +72,10 @@ class ScreenRevisionDetails extends Component {
       this.bShowAyahSelector = false;
       this.title = this.revision.title;
 
-      const { localSurahIdx: iSurahStrt, localAyahIdx: iAyahStrt } =
+      const { localSurahIndx: iSurahStrt, localAyahIndx: iAyahStrt } =
         this.modalSurah.surahInfo.getAyahLocalIndx(this.revision.strt);
 
-      const { localSurahIdx: iSurahEnd, localAyahIdx: iAyahEnd } =
+      const { localSurahIndx: iSurahEnd, localAyahIndx: iAyahEnd } =
         this.modalSurah.surahInfo.getAyahLocalIndx(this.revision.end);
 
       this.strtSurah = iSurahStrt;
@@ -76,6 +83,7 @@ class ScreenRevisionDetails extends Component {
       this.endSurah = iSurahEnd;
       this.endAyah = iAyahEnd;
     }
+    this.search = "";
 
     this.getContentFontBasicStyle = getContentFontBasicStyle(
       this.props.strLang
@@ -109,6 +117,8 @@ class ScreenRevisionDetails extends Component {
           <View>
             {this.modalSurah.getModal()}
             {this.modalAyah.getModal()}
+            {this.getRevisionSearch()}
+            <View style={styles.separator}></View>
             {this.getStartAyah()}
             {this.getEndAyah()}
             {this.getRevisionTitle()}
@@ -125,7 +135,7 @@ class ScreenRevisionDetails extends Component {
             disabled={!this.title.length}
             lang={this.props.strLang}
             icon={this.bIsNewRev}
-            style={{ height: this.height / 12.5 }}
+            style={{ height: height12_5 }}
           />
         </View>
       </KeyboardAvoidingView>
@@ -165,9 +175,89 @@ class ScreenRevisionDetails extends Component {
     this.bAutoName = false;
     this.refresh();
   }
+  onSearchChange(text) {
+    var str = "";
+    str = text;
+    this.search = str;
+    this.refresh();
+  }
   onTitleSubmit(text) {
     this.revision.title = this.title;
     this.bAutoName = false;
+  }
+  onRevSearch() {
+    var text = this.search;
+    if (text == null || text == "") return;
+    var parser = new SearchTextParser();
+    var ret = parser.parseRevisionQuery(text);
+    if (ret != null && ret.bIsSuccess) {
+      this.strtSurah = ret.strtSurah;
+      this.strtAyah = ret.strtAyah;
+      this.endSurah = ret.endSurah;
+      this.endAyah = ret.endAyah;
+
+      this.title = this.getAutoTitle(); // or text?
+
+      this.bAutoName = true;
+    } else {
+      let strMsg = this.stringsManager.getStr(strings.STR_CANT_UNDERSTAND);
+      let toast = Toast.show(strMsg, {
+        duration: Toast.durations.long,
+        position: Toast.positions.CENTER,
+        shadow: true,
+        shadowColor: colors.primary,
+        animation: true,
+        hideOnPress: true,
+        opacity: 1,
+        backgroundColor: "#eee",
+        textColor: "#333",
+        onShow: () => {
+          // calls on toast\`s appear animation start
+        },
+        onShown: () => {
+          // calls on toast\`s appear animation end.
+        },
+        onHide: () => {
+          // calls on toast\`s hide animation start.
+        },
+        onHidden: () => {
+          // calls on toast\`s hide animation end.
+        },
+      });
+    }
+
+    this.refresh();
+  }
+  getRevisionSearch() {
+    return (
+      <View>
+        <Text style={[styles.revisionTitle, this.getContentFontBasicStyle]}>
+          {this.stringsManager.getStr(strings.STR_ADD_REV_BY_TXT)}
+        </Text>
+        <View style={styles.searchBar}>
+          <TextInput
+            style={{ ...styles.input, ...this.getContentFontBasicStyle }}
+            onChangeText={this.onSearchChange.bind(this)}
+            value={this.search}
+            placeholder={this.stringsManager.getStr(
+              strings.STR_ADD_REV_BY_TXT_PROMPT
+            )}
+            onSubmitEditing={this.onRevSearch.bind(this)}
+          />
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={this.onRevSearch.bind(this)}
+          >
+            <MaterialCommunityIcons
+              name={"text-box-search-outline"}
+              size={height18 - 8}
+              margin={4}
+              color={colors.primary}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   }
   getRevisionTitle() {
     return (
@@ -483,9 +573,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
     textAlignVertical: "center",
     color: "#333",
-    fontSize: height / 50,
+    fontSize: height50,
     alignSelf: "flex-start",
-    marginBottom: height / 130,
+    marginBottom: height130,
   },
 
   // ayahContainer: {
@@ -500,14 +590,32 @@ const styles = StyleSheet.create({
   // },
   input: {
     paddingHorizontal: 10,
-    height: height / 18,
+    height: height18,
     width: "100%",
     borderWidth: 1,
     borderColor: colors.primary,
     borderRadius: 10,
-    fontSize: height / 50,
+    fontSize: height50,
     color: colors.primary,
     backgroundColor: colors.light_bg,
+  },
+  separator: {
+    borderColor: "#88888859",
+    borderWidth: 1,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    height: 2,
+    width: "101%",
+    marginVertical: 15,
+  },
+  searchBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
+    padding: 5,
   },
   // btnStyle: {
   //   justifyContent: "center",

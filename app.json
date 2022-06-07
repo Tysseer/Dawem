@@ -53,6 +53,7 @@
       "favicon": "./app/assets/favicon.png"
     },
     "description": " Dawem is an application to make it easy to frequently read quran and plan your recitation so no verses are left unvisited for long ",
-    "githubUrl": "https://github.com/tysseer/dawem"
+    "githubUrl": "https://github.com/tysseer/dawem",
+    "sdkVersion": "44.0.0"
   }
 }

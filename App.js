@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import 'react-native-gesture-handler';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import AppLoading from 'expo-app-loading';
-import * as Font from 'expo-font';
+import { StyleSheet, Text, View, Platform, StatusBar } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import "react-native-gesture-handler";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import AppLoading from "expo-app-loading";
+import * as Font from "expo-font";
 
-import reduxStore from './app/js/redux/reduxStore';
-import reduxPersistor from './app/js/redux/reduxPersistor';
+import reduxStore from "./app/js/redux/reduxStore";
+import reduxPersistor from "./app/js/redux/reduxPersistor";
 
-import Revision from './app/js/helpers/Revision';
-import Navigation from './app/navigation';
-
+import Revision from "./app/js/helpers/Revision";
+import Navigation from "./app/navigation";
+import { RootSiblingParent } from "react-native-root-siblings";
 export default class App extends Component {
   async fetchFonts() {
     const y = await Font.loadAsync({
-      'sans-serif': require('./app/assets/fonts/ArabicKufi.ttf'),
-      'Segoe UI': require('./app/assets/fonts/SegoeUI.ttf'),
-      'Segoe UI_MSFontService': require('./app/assets/fonts/SegoeUIBold.ttf'),
-      Amiri: require('./app/assets/fonts/Amiri-Regular.ttf'),
-      Amiri_Bold: require('./app/assets/fonts/Amiri-Bold.ttf'),
-      Poppins: require('./app/assets/fonts/Poppins-Regular.ttf'),
-      'Poppins-Bold': require('./app/assets/fonts/Poppins-Bold.ttf'),
-      Poppins_xBold: require('./app/assets/fonts/Poppins-ExtraBold.ttf'),
-      QuranSurah2: require('./app/assets/fonts/QuranSurah2.ttf'),
-      Quraan: require('./app/assets/fonts/Quraan.ttf'),
-      noorehidayat: require('./app/assets/fonts/noorehidayat.ttf'),
-      UthmanicHafs: require('./app/assets/fonts/UthmanicHafs.ttf'),
+      "sans-serif": require("./app/assets/fonts/ArabicKufi.ttf"),
+      "Segoe UI": require("./app/assets/fonts/SegoeUI.ttf"),
+      "Segoe UI_MSFontService": require("./app/assets/fonts/SegoeUIBold.ttf"),
+      Amiri: require("./app/assets/fonts/Amiri-Regular.ttf"),
+      Amiri_Bold: require("./app/assets/fonts/Amiri-Bold.ttf"),
+      Poppins: require("./app/assets/fonts/Poppins-Regular.ttf"),
+      "Poppins-Bold": require("./app/assets/fonts/Poppins-Bold.ttf"),
+      Poppins_xBold: require("./app/assets/fonts/Poppins-ExtraBold.ttf"),
+      QuranSurah2: require("./app/assets/fonts/QuranSurah2.ttf"),
+      Quraan: require("./app/assets/fonts/Quraan.ttf"),
+      noorehidayat: require("./app/assets/fonts/noorehidayat.ttf"),
+      UthmanicHafs: require("./app/assets/fonts/UthmanicHafs.ttf"),
     });
     this.setState({ fontLoadedFinished: true });
     return y;
@@ -70,7 +70,7 @@ export default class App extends Component {
   getLoadingRender() {
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: 40, color: 'red' }}>Loading</Text>
+        <Text style={{ fontSize: 40, color: "red" }}>Loading</Text>
       </View>
     );
   }
@@ -82,7 +82,7 @@ export default class App extends Component {
       return null;
     } else {
       return (
-        <>
+        <RootSiblingParent>
           <Provider store={reduxStore}>
             <PersistGate
               loading={null}
@@ -99,9 +99,9 @@ export default class App extends Component {
                 </SafeAreaView>
               </SafeAreaProvider>
             </PersistGate>
-            <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+            <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
           </Provider>
-        </>
+        </RootSiblingParent>
       );
     }
   }
@@ -109,8 +109,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#666',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#666",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

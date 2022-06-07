@@ -1,17 +1,98 @@
-import TouchHistoryMath from "react-native/Libraries/Interaction/TouchHistoryMath";
-
-export default class QuranIndexer {
+import MiscUtilities from "./MiscUtilities";
+class QuranIndexer {
   constructor() {
     this.arrPageFirstAyah = []; // the global index of first ayah in each page
     this.arrSurahPage = []; // the page index for surah starting ayah
     this.arrSurahNamesAr = []; // the names in arabic
     this.arrSurahNamesEn = []; // the names in english
     this.arrSurahNamesTrns = []; // the names in transliteration
+    this.arrSurahNamesAr_normalized = []; // the names in arabic
+    this.arrSurahNamesEn_normalized = []; // the names in english
+    this.arrSurahNamesTrns_normalized = []; // the names in transliteration
     this.arrSurahNamesEnTrns = []; // names in format:  english (trans)
     this.arrSurahNumAyah = []; // number of ayat for each surah
     this.arrSurahLength = []; // length of surah (ratio between 0,1) =number of letters per surah/number of all letters in quran
     this.arrSurahAyahStart = []; // the global index of first ayah in each surah
     this.arrJuzuuAyahStart = []; // the global index of first ayah in each Juzuu
+    this.arrJuzuuNamesAr = [];
+    this.arrJuzuuNamesAr_normalized = [];
+    this.arrJuzuuNamesTrns = [];
+    this.arrJuzuuNamesTrns_normalized = [];
+    this.arrJuzuuNamesEn = [];
+    this.arrJuzuuNamesEn_normalized = [];
+  }
+  isJuzuuName(text, bExact) {
+    let prepTxt = MiscUtilities.normalizeString(text);
+    if (/[a-z]/.test(prepTxt)) {
+      prepTxt = MiscUtilities.removeThe(prepTxt);
+      if (this.arrJuzuuNamesEn_normalized.length == 0)
+        this.fillArrJuzuuNamesEn_normalized();
+      var resEn = MiscUtilities.lookupStrIn2DArr(
+        prepTxt,
+        this.arrJuzuuNamesEn_normalized,
+        bExact ? 0 : 4
+      );
+      if (resEn.dist == 0) return resEn.indx + 30;
+      if (this.arrJuzuuNamesTrns_normalized.length == 0)
+        this.fillArrJuzuuNamesTrns_normalized();
+      var resTrns = MiscUtilities.lookupStrIn2DArr(
+        prepTxt,
+        this.arrJuzuuNamesTrns_normalized,
+        bExact ? 0 : 4
+      );
+      if (resTrns.indx <= 0 && resEn.indx <= 0 - 1) return -1;
+      if (resTrns.dist == 0) return resTrns.indx + 60;
+      if (resEn.dist <= resTrns.dist) return resEn.indx + 30;
+      return resTrns.indx + 60;
+    } else {
+      prepTxt = MiscUtilities.removeLeadingAlefLam(prepTxt);
+      if (this.arrJuzuuNamesAr_normalized.length == 0)
+        this.fillArrJuzuuNamesAr_normalized();
+      var resAr = MiscUtilities.lookupStrIn2DArr(
+        prepTxt,
+        this.arrJuzuuNamesAr_normalized,
+        bExact ? 0 : 4
+      );
+      if (resAr.indx <= 0) return -1;
+      return resAr.indx;
+    }
+  }
+
+  isSurahName(text, bExact) {
+    let prepTxt = MiscUtilities.normalizeString(text);
+    if (/[a-z]/.test(prepTxt)) {
+      prepTxt = MiscUtilities.removeThe(prepTxt);
+      if (this.arrSurahNamesEn_normalized.length == 0)
+        this.fillArrSurahNamesEn_normalized();
+      var resEn = MiscUtilities.lookupStrIn2DArr(
+        prepTxt,
+        this.arrSurahNamesEn_normalized,
+        bExact ? 0 : 4
+      );
+      if (resEn.dist == 0) return resEn.indx + 114;
+      if (this.arrSurahNamesTrns_normalized.length == 0)
+        this.fillArrSurahNamesTrns_normalized();
+      var resTrns = MiscUtilities.lookupStrInArr(
+        prepTxt,
+        this.arrSurahNamesTrns_normalized,
+        bExact ? 0 : 4
+      );
+      if (resTrns.indx <= 0 && resEn.indx <= 0) return -1;
+      if (resTrns.dist == 0) return resTrns.indx + 228;
+      if (resEn.dist <= resTrns.dist) return resEn.indx + 114;
+      return resTrns.indx + 228;
+    } else {
+      prepTxt = MiscUtilities.removeLeadingAlefLam(prepTxt);
+      if (this.arrSurahNamesAr_normalized.length == 0)
+        this.fillArrSurahNamesAr_normalized();
+      var resAr = MiscUtilities.lookupStrInArr(
+        prepTxt,
+        this.arrSurahNamesAr_normalized,
+        bExact ? 0 : 4
+      );
+      if (resAr.indx <= 0) return -1;
+      return resAr.indx;
+    }
   }
   getSurahNameAr(iSurah /*one-based */) {
     iSurah = this.secureIndexRange(iSurah, 114);
@@ -81,6 +162,26 @@ export default class QuranIndexer {
         : this.arrPageFirstAyah[iPage + 1] - 1;
     return [start, end];
   }
+  getSurahAyahRange(iSurah) {
+    iSurah = this.secureIndexRange(iSurah, this.getNumSuras());
+    if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
+    var start = this.arrSurahAyahStart[iSurah];
+    var end =
+      iSurah == this.getNumSuras() /*last surah */
+        ? 6236
+        : this.arrSurahAyahStart[iSurah + 1] - 1;
+    return [start, end];
+  }
+  getJuzuuAyahRange(iJuzuu) {
+    iJuzuu = this.secureIndexRange(iJuzuu, this.getNumPages());
+    if (this.arrJuzuuAyahStart.length == 0) this.fillArrJuzuuAyahStart();
+    var start = this.arrJuzuuAyahStart[iJuzuu];
+    var end =
+      iJuzuu == this.getNumJuzuu() /*last juzuu */
+        ? 6236
+        : this.arrJuzuuAyahStart[iJuzuu + 1] - 1;
+    return [start, end];
+  }
   getAyahGlobalIndx(iSurah, iAyah) {
     iSurah = this.secureIndexRange(iSurah, 114);
     if (this.arrSurahNumAyah.length == 0) this.fillArrSurahNumAyah();
@@ -90,11 +191,11 @@ export default class QuranIndexer {
   }
   getAyahLocalIndx(iAyah) {
     iAyah = this.secureIndexRange(iAyah, 6236);
-    iSurah = this.getSurahFromAyah(iAyah);
+    let iSurah = this.getSurahFromAyah(iAyah);
     if (this.arrSurahAyahStart.length == 0) this.fillArrSurahAyahStart();
     return {
-      localSurahIdx: iSurah,
-      localAyahIdx: iAyah + 1 - this.arrSurahAyahStart[iSurah],
+      localSurahIndx: iSurah,
+      localAyahIndx: iAyah + 1 - this.arrSurahAyahStart[iSurah],
     };
   }
   isValidLocalAyahIndex(iSurah, iAyah) {
@@ -140,6 +241,25 @@ export default class QuranIndexer {
     iJuzu = this.secureIndexRange(iJuzu, 30);
     if (iJuzu == 1) return 1;
     return 2 + (iJuzu - 1) * 20;
+  }
+  isValidPage(iPage) {
+    return iPage >= 1 && iPage <= 604;
+  }
+  isValidSurah(iSurah) {
+    return iSurah >= 1 && iSurah <= 114;
+  }
+  isValidJuzuu(iJuzuu) {
+    return iJuzuu >= 1 && iJuzuu <= 30;
+  }
+  isValidAyah(iAyah) {
+    return iAyah >= 1 && iAyah <= 6236;
+  }
+  isValidAyah(iSurah, iLocalAyah) {
+    return (
+      this.isValidSurah(iSurah) &&
+      iLocalAyah >= 1 &&
+      iLocalAyah <= this.getSurahNumAyah()
+    );
   }
   getNumPages() {
     return 604; // todo: read from db
@@ -972,7 +1092,7 @@ export default class QuranIndexer {
       "القيامة",
       "الانسان",
       "المرسلات",
-      "النبإ",
+      "النبأ",
       "النازعات",
       "عبس",
       "التكوير",
@@ -1010,6 +1130,17 @@ export default class QuranIndexer {
       "الفلق",
       "الناس",
     ];
+  }
+  fillArrSurahNamesAr_normalized() {
+    if (this.arrSurahNamesAr.length == 0) this.fillArrSurahNamesAr();
+    this.arrSurahNamesAr_normalized = [[""]];
+    for (var i = 1; i < this.arrSurahNamesAr.length; i++) {
+      this.arrSurahNamesAr_normalized.push(
+        MiscUtilities.removeLeadingAlefLam(
+          MiscUtilities.normalizeString(this.arrSurahNamesAr[i])
+        )
+      );
+    }
   }
   fillArrSurahNamesEn() {
     this.arrSurahNamesEn = [
@@ -1130,6 +1261,17 @@ export default class QuranIndexer {
       "Mankind",
     ];
   }
+  fillArrSurahNamesEn_normalized() {
+    if (this.arrSurahNamesEn.length == 0) this.fillArrSurahNamesEn();
+    this.arrSurahNamesEn_normalized = [[""]];
+    for (var i = 1; i < this.arrSurahNamesEn.length; i++) {
+      this.arrSurahNamesEn_normalized.push(
+        MiscUtilities.removeThe(
+          MiscUtilities.normalizeString(this.arrSurahNamesEn[i])
+        )
+      );
+    }
+  }
   fillArrSurahNamesTrns() {
     this.arrSurahNamesTrns = [
       "",
@@ -1248,6 +1390,17 @@ export default class QuranIndexer {
       "Al-Falaq",
       "An-Naas",
     ];
+  }
+  fillArrSurahNamesTrns_normalized() {
+    if (this.arrSurahNamesTrns.length == 0) this.fillArrSurahNamesTrns();
+    this.arrSurahNamesTrns_normalized = [[""]];
+    for (var i = 1; i < this.arrSurahNamesTrns.length; i++) {
+      let arrSplit = this.arrSurahNamesTrns[i].split("-");
+      let norm = arrSplit.pop();
+      this.arrSurahNamesTrns_normalized.push(
+        MiscUtilities.normalizeString(norm)
+      );
+    }
   }
   fillArrSurahNamesEnTrns() {
     this.arrSurahNamesEnTrns = [
@@ -1446,4 +1599,267 @@ export default class QuranIndexer {
       6214, 6217, 6222, 6226, 6231,
     ];
   }
+  fillArrJuzuuNamesAr() {
+    this.arrJuzuuNamesAr = [
+      [""],
+      ["واحد", "الأول", "الحمد لله", "البسملة"],
+      ["اثنان", "الثاني", "سيقول السفهاء"],
+      ["ثلاثة", "الثالث", "تلك الرسل"],
+      ["أربعة", "الرابع", "لن تنالوا البر", "كل الطعام"],
+      ["خمسة", "الخامس", "والمحصنات"],
+      ["ستة", "السادس", "لا يحب الله"],
+      ["سبعة", "السابع", "لتجدن", "وإذا سمعوا"],
+      ["ثمانية", "الثامن", "ولو أننا نزلنا"],
+      ["تسعة", "التاسع", "قال الملأ"],
+      ["عشرة", "العاشر", "واعلموا"],
+      ["أحد عشر", "الحادي عشر", "إنما السبيل"],
+      ["إثني عشر", "الثاني عشر", "ومامن دابة"],
+      ["الثالثعشر", "الثالث عشر", "وما أبرئ نفسي"],
+      ["الرابعشر", "الرابع عشر" /*"الـر"*/],
+      ["الخامسعشر", "الخامس عشر", "سبحان"],
+      ["السادسعشر", "السادس عشر", "قال ألم", "أما السفينة"],
+      ["السابعشر", "السابع عشر", "اقترب للناس"],
+      ["الثامنعشر", "الثامن عشر", "قد أفلح"],
+      ["التاسعشر", "التاسع عشر", "وقال الذين لا يرجون"],
+      ["العشرين", "العشرون", "فما كان جواب قومه"],
+      ["الحادي والعشرين", "الحادي والعشرون", "ولا تجادلوا"],
+      ["الثاني والعشرين", "الثاني والعشرون", "ومن يقنت"],
+      ["الثالث والعشرين", "الثالث والعشرون", "وما أنزلنا" /*"يس"*/],
+      ["الرابع والعشرين", "الرابع والعشرون", "فمن أظلم"],
+      ["الخامس والعشرين", "الخامس والعشرون", "إليه يرد"],
+      ["السادس والعشرين", "السادس والعشرون", "حـم" /*" الأحقاف"*/],
+      ["السابع والعشرين", "السابع والعشرون", "قال فما خطبكم" /*"الذاريات"*/],
+      ["الثامن والعشرين", "الثامن والعشرون", "قد سمع"],
+      ["التاسع والعشرين", "التاسع والعشرون", "تبارك"],
+      ["الثلاثين", "الثلاثون", "عمّ"],
+    ];
+  }
+  fillArrJuzuuNamesAr_normalized() {
+    if (this.arrJuzuuNamesAr.length == 0) this.fillArrJuzuuNamesAr();
+    this.arrJuzuuNamesAr_normalized = [[""]];
+    for (var i = 1; i < this.arrJuzuuNamesAr.length; i++) {
+      this.arrJuzuuNamesAr_normalized.push([]); //create empty array
+      for (var j = 0; j < this.arrJuzuuNamesAr[i].length; j++) {
+        this.arrJuzuuNamesAr_normalized[i].push(
+          MiscUtilities.removeLeadingAlefLam(
+            MiscUtilities.normalizeString(this.arrJuzuuNamesAr[i][j])
+          )
+        );
+      }
+    }
+  }
+  fillArrJuzuuNamesEn() {
+    this.arrJuzuuNamesEn = [
+      [""],
+      ["one", "first", "1st"],
+      ["two", "second", "2nd"],
+      ["three", "third", "3rd"],
+      ["four", "fourth", "4th"],
+      ["five", "fifth", "5th"],
+      ["six", "sixth", "6th"],
+      ["seven", "seventh", "7th"],
+      ["eight", "eighth", "8th"],
+      ["nine", "ninth", "9th"],
+      ["ten", "tenth", "10th"],
+      ["eleven", "eleventh", "11th"],
+      ["twelve", "twelfth", "12th"],
+      ["thirteen", "thirteenth", "13th"],
+      ["fourteen", "fourteenth", "14th"],
+      ["fifteen", "fifteenth", "15th"],
+      ["sixteen", "sixteenth", "16th"],
+      ["seventeen", "seventeenth", "17th"],
+      ["eighteen", "eighteenth", "18th"],
+      ["nineteen", "nineteenth", "19th"],
+      ["twenty", "twentieth", "20th"],
+      [
+        "twenty-one",
+        "twenty-first",
+        "21st",
+        "twenty one",
+        "twenty first",
+        "twentyone",
+        "twentyfirst",
+      ],
+      [
+        "twenty-two",
+        "twenty-second",
+        "22nd",
+        "twenty two",
+        "twenty second",
+        "twentytwo",
+        "twentysecond",
+      ],
+      [
+        "twenty-three",
+        "twenty-third",
+        "23rd",
+        "twenty three",
+        "twenty third",
+        "twentythree",
+        "twentythird",
+      ],
+      [
+        "twenty-four",
+        "twenty-fourth",
+        "24th",
+        "twenty four",
+        "twenty fourth",
+        "twentyfour",
+        "twentyfourth",
+      ],
+      [
+        "twenty-five",
+        "twenty-fifth",
+        "25th",
+        "twenty five",
+        "twenty fifth",
+        "twentyfive",
+        "twentyfifth",
+      ],
+      [
+        "twenty-six",
+        "twenty-sixth",
+        "26th",
+        "twenty six",
+        "twenty sixth",
+        "twentysix",
+        "twentysixth",
+      ],
+      [
+        "twenty-seven",
+        "twenty-seventh",
+        "27th",
+        "twenty seven",
+        "twenty seventh",
+        "twentyseven",
+        "twentyseventh",
+      ],
+      [
+        "twenty-eight",
+        "twenty-eighth",
+        "28th",
+        "twenty eight",
+        "twenty eighth",
+        "twentyeight",
+        "twentyeighth",
+      ],
+      [
+        "twenty-nine",
+        "twenty-ninth",
+        "29th",
+        "twenty nine",
+        "twenty ninth",
+        "twentynine",
+        "twentyninth",
+      ],
+      ["thirty", "thirtieth", "30th"],
+    ];
+  }
+  fillArrJuzuuNamesEn_normalized() {
+    if (this.arrJuzuuNamesEn.length == 0) this.fillArrJuzuuNamesEn();
+    this.arrJuzuuNamesEn_normalized = [[""]];
+    for (var i = 1; i < this.arrJuzuuNamesEn.length; i++) {
+      this.arrJuzuuNamesEn_normalized.push([]); //create empty array
+      for (var j = 0; j < this.arrJuzuuNamesEn[i].length; j++) {
+        this.arrJuzuuNamesEn_normalized[i].push(
+          MiscUtilities.removeThe(
+            MiscUtilities.normalizeString(this.arrJuzuuNamesEn[i][j])
+          )
+        );
+      }
+    }
+  }
+  fillArrJuzuuNamesTrns() {
+    this.arrJuzuuNamesTrns = [
+      [""],
+      ["Alif Lam Meem"],
+      ["Sayaqool"],
+      ["Tilkal Rusulu"],
+      ["Lan tanaloo albirra", "Lan tanaloo "],
+      ["Wal Mohsanatu"],
+      ["La Yuhibbullah"],
+      ["Wa Iza Samiu"],
+      ["Wa Lau Annana"],
+      ["Qalal Malao"],
+      ["Wa A'lamu"],
+      ["Yatazeroon"],
+      ["Wa Mamin Da'abatin"],
+      ["Wa Ma Ubrioo"],
+      ["Rubama"],
+      ["Subhan iladhi"],
+      ["Qala Alam"],
+      ["Iqtaraba li’n-nasi"],
+      ["Qadd Aflaha"],
+      ["Wa Qala illadhina"],
+      ["A'man Khalaqa"],
+      ["Utlu Ma Oohiya"],
+      ["Wa-Man yaqnut"],
+      ["Wa Mali"],
+      ["Fa-man Azlamu"],
+      ["Ilayhi Yuruddu"],
+      ["Ha Meem"],
+      ["Qala Fama Khatbukum", "Qala Fama "],
+      ["Qadd Sami Allah", "Qadd Sami"],
+      ["Tabaraka lladhi", "Tabaraka"],
+      ["Amma"],
+    ];
+  }
+  fillArrJuzuuNamesTrns_normalized() {
+    if (this.arrJuzuuNamesTrns.length == 0) this.fillArrJuzuuNamesTrns();
+    this.arrJuzuuNamesTrns_normalized = [[""]];
+    for (var i = 1; i < this.arrJuzuuNamesTrns.length; i++) {
+      this.arrJuzuuNamesTrns_normalized.push([]); //create empty array
+      for (var j = 0; j < this.arrJuzuuNamesTrns[i].length; j++) {
+        this.arrJuzuuNamesTrns_normalized[i].push(
+          MiscUtilities.normalizeString(this.arrJuzuuNamesTrns[i][j])
+        );
+      }
+    }
+  }
+  replaceJuzuuNamesFromString(str) {
+    var bIsEnglish = /[a-z]/.test(str);
+    if (bIsEnglish) {
+      if (this.arrJuzuuNamesTrns_normalized.length == 0)
+        this.fillArrJuzuuNamesTrns_normalized();
+      for (var i = this.arrJuzuuNamesAr_normalized.length - 1; i > 0; i--) {
+        // must make last before start because of partial words
+        for (var j = 0; j < this.arrJuzuuNamesTrns_normalized[i].length; j++) {
+          str = MiscUtilities.replaceStringParts(
+            str,
+            this.arrJuzuuNamesTrns_normalized[i][j],
+            " juzuu " + i.toString()
+          );
+        }
+      }
+      if (this.arrJuzuuNamesEn_normalized.length == 0)
+        this.fillArrJuzuuNamesEn_normalized();
+
+      for (var i = this.arrJuzuuNamesAr_normalized.length - 1; i > 0; i--) {
+        // must make last before start because of partial words
+        for (var j = 0; j < this.arrJuzuuNamesEn_normalized[i].length; j++) {
+          str = MiscUtilities.replaceStringParts(
+            str,
+            this.arrJuzuuNamesEn_normalized[i][j],
+            " juzuu " + i.toString()
+          );
+        }
+      }
+    } else {
+      if (this.arrJuzuuNamesAr_normalized.length == 0)
+        this.fillArrJuzuuNamesAr_normalized();
+
+      for (var i = this.arrJuzuuNamesAr_normalized.length - 1; i > 0; i--) {
+        // must make last before start because of partial words
+        for (var j = 0; j < this.arrJuzuuNamesAr_normalized[i].length; j++) {
+          str = MiscUtilities.replaceStringParts(
+            str,
+            this.arrJuzuuNamesAr_normalized[i][j],
+            " جزء " + i.toString()
+          );
+        }
+      }
+    }
+    return str;
+  }
 }
+export default QuranIndexer;

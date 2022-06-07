@@ -48,8 +48,8 @@ const PagerView = () => {
 
   const route = useRoute();
 
-  const [localSurahIdx, setLocalSurahIdx] = useState();
-  const [localAyahIdx, setLocalAyahIdx] = useState();
+  const [localSurahIndx, setLocalSurahIdx] = useState();
+  const [localAyahIndx, setLocalAyahIdx] = useState();
   const [pageNum, setPageNum] = useState();
   const [pageContent, setPageContent] = useState([]);
   const [multiPageContent, setMultiPageContent] = useState([]);
@@ -64,7 +64,7 @@ const PagerView = () => {
   const reduxState = useSelector((state) => state);
 
   const onAyahLongPress = (iAyah /*local */, iSurah) => {
-    if (iSurah == localSurahIdx) {
+    if (iSurah == localSurahIndx) {
       var engNum = convertToArabicNumbers(iAyah, 'ltr');
       setMarkedAyah(engNum);
       var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah, +engNum);
@@ -81,8 +81,8 @@ const PagerView = () => {
   const getNumBg = (num, idx) => {
     if (
       convertToArabicNumbers(num, 'ltr') == markedAyah &&
-      // convertToArabicNumbers(num, 'ltr') == localAyahIdx &&
-      idx == localSurahIdx
+      // convertToArabicNumbers(num, 'ltr') == localAyahIndx &&
+      idx == localSurahIndx
     )
       return '#ff0';
   };
@@ -104,7 +104,7 @@ const PagerView = () => {
         <RenderAyat
           ayat={ayat}
           shortTxt={shortTxt}
-          localSurahIdx={localSurahIdx}
+          localSurahIndx={localSurahIndx}
         />
         {/* {newRenderAyat(ayat)} */}
       </View>
@@ -135,7 +135,7 @@ const PagerView = () => {
               <RenderAyat
                 ayat={page.allAyat}
                 shortTxt={page.shortTxt}
-                localSurahIdx={localSurahIdx}
+                localSurahIndx={localSurahIndx}
               />
               {/* {newRenderAyat(page.allAyat, page.shortTxt)} */}
             </View>
@@ -169,12 +169,12 @@ const PagerView = () => {
 
   useFocusEffect(
     useCallback(() => {
-      const { localSurahIdx, localAyahIdx } =
+      const { localSurahIndx, localAyahIndx } =
         quranIndexer.getAyahLocalIndx(ayahIndex);
 
-      setLocalSurahIdx(localSurahIdx);
-      setLocalAyahIdx(localAyahIdx);
-      setMarkedAyah(localAyahIdx);
+      setLocalSurahIdx(localSurahIndx);
+      setLocalAyahIdx(localAyahIndx);
+      setMarkedAyah(localAyahIndx);
 
       const pageNum = quranIndexer.getPageFromAyah(ayahIndex);
       setPageNum(pageNum);

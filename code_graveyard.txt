@@ -712,3 +712,90 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
 });
+
+
+ for (var iTok = 0; iTok < tokens.length; iTok++) {
+      var tokClass = this.classifyToken(tokens[iTok]);
+      console.log(tokClass);
+      if (
+        tokClass.tokType == tokenTypes.ignore ||
+        tokClass.tokType == tokenTypes.unkown
+      )
+        continue;
+      tokensClassified.push(tokClass);
+
+      if (
+        tokClass.tokType == tokenTypes.juzuuID ||
+        tokClass.tokType == tokenTypes.surahID ||
+        tokClass.tokType == tokenTypes.number
+      ) {
+        if (tokClass.tokType == tokenTypes.number) {
+          if (importantTokens.length > 1) {
+            //there are prev tokens, try to use them to know what the number represents
+            var prev = importantTokens[importantTokens.length - 1]; // todo: this should search backwards until another important token is found
+            if (prev.tokType == tokenTypes.pageWord) {
+              tokClass.tokType = tokenTypes.pageID;
+            }
+            if (prev.tokType == tokenTypes.surahWord) {
+              tokClass.tokType = tokenTypes.surahID;
+            }
+            if (prev.tokType == tokenTypes.juzuuWord) {
+              tokClass.tokType = tokenTypes.juzuuID;
+            }
+            if (prev.tokType == tokenTypes.ayahWord) {
+              tokClass.tokType = tokenTypes.ayahID;
+            }
+          }
+        }
+
+        if (tokClass.tokType == tokenTypes.ayahID) {
+          // add this as a child to prevtokens if possible
+          if (importantTokens.length > 1) {
+            importantTokens[importantTokens.length - 1].child = tokClass; // todo: must search for surahID or juzuuID
+            continue;
+          }
+        }
+        importantTokens.push(tokClass);
+      }
+    }
+
+    if (importantTokens.length == 1) {
+      var ret = this.getLocation(importantTokens[0]);
+      console.log(ret);
+      return ret;
+    }
+    if (importantTokens.length == 2) {
+      return this.getCombinedLocation(importantTokens[0], importantTokens[1]);
+    }
+
+
+
+     var bIsEnglish = /[a-z]/.test(str);
+    var to = bIsEnglish ? "to" : "حتي";
+    var text = str.replace(/[\t\r\n']/g, " ").toLowerCase();
+
+    text = text.replace(/[-؟؛٠,،;:_]/g, " " + to + " ").toLowerCase();
+
+    text = text.replace(/(\d+)/g, " $1 "); // make sure numbers have spaces around them
+
+    //remove special characters & tashkeel
+    text = text.replace(/([^\u0621-\u063A\u0641-\u064A\u0660-\u0669])/g, "");
+
+    //normalize Arabic
+    text = text.replace(/(آ|إ|أ)/g, "ا");
+
+    text = text.replace(/(ة)/g, "ه");
+
+    text = text.replace(/(ئ|ؤ)/g, "ء");
+
+    text = text.replace(/(ى)/g, "ي");
+    text = text.replace(/(ـ)/g, "ي");
+
+    if (text.startsWith("ال")) {
+      if (text.length >= 3) text = text.substring(2);
+      else return "";
+    }
+
+    var ret = MiscUtilities.convertToArabicNumbers(text);
+
+    return ret;

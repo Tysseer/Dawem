@@ -18,8 +18,8 @@ const SwipeableMushaf = () => {
   const route = useRoute();
   const swipeableRef = useRef();
 
-  const [localSurahIdx, setLocalSurahIdx] = useState();
-  const [localAyahIdx, setLocalAyahIdx] = useState();
+  const [localSurahIndx, setLocalSurahIdx] = useState();
+  const [localAyahIndx, setLocalAyahIdx] = useState();
   const [pageNum, setPageNum] = useState();
   const [pageContent, setPageContent] = useState();
 
@@ -44,8 +44,8 @@ const SwipeableMushaf = () => {
         <RenderAyat
           ayat={ayat}
           shortTxt={shortTxt}
-          localSurahIdx={localSurahIdx}
-          localAyahIdx={localAyahIdx}
+          localSurahIndx={localSurahIndx}
+          localAyahIndx={localAyahIndx}
         />
       </View>
     </View>
@@ -96,8 +96,8 @@ const SwipeableMushaf = () => {
               <RenderAyat
                 ayat={page.allAyat}
                 shortTxt={page.shortTxt}
-                localSurahIdx={localSurahIdx}
-                localAyahIdx={localAyahIdx}
+                localSurahIndx={localSurahIndx}
+                localAyahIndx={localAyahIndx}
               />
             </View>
           );
@@ -130,12 +130,12 @@ const SwipeableMushaf = () => {
 
   useFocusEffect(
     useCallback(() => {
-      const { localSurahIdx, localAyahIdx } =
+      const { localSurahIndx, localAyahIndx } =
         quranIndexer.getAyahLocalIndx(ayahIndex);
 
-      setLocalSurahIdx(localSurahIdx);
-      setLocalAyahIdx(localAyahIdx);
-      // setMarkedAyah(localAyahIdx);
+      setLocalSurahIdx(localSurahIndx);
+      setLocalAyahIdx(localAyahIndx);
+      // setMarkedAyah(localAyahIndx);
 
       const pageNum = quranIndexer.getPageFromAyah(ayahIndex);
       setPageNum(pageNum);

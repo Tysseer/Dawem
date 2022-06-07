@@ -6,12 +6,12 @@ import RevisionsManager from "../helpers/RevisionsManager";
 import QuranIndexer from "../helpers/QuranIndexer";
 import SVGLoader from "../helpers/SVGLoader";
 import RevisionItem from "./RevisionItem";
-// import Toast from "react-native-simple-toast";
 import * as strings from "../helpers/StringsManager";
 import StringsManager from "../helpers/StringsManager";
 import { reduxActionUpdateRevision } from "../redux/reduxActions";
 import { connect } from "react-redux";
-
+import Toast from "react-native-root-toast";
+import { colors } from "../../constants";
 class RevisionsList extends Component {
   static propTypes = {
     revisionsManager: PropTypes.instanceOf(RevisionsManager).isRequired,
@@ -103,16 +103,65 @@ class RevisionsList extends Component {
     var strMsg =
       revision.numDays == 0
         ? this.props.stringsManager.getStr(strings.STR_REVISED)
-        : revision.numDays +
+        : this.props.stringsManager.getNumDaysSinceRevMessage(revision.numDays);
+    /* revision.numDays +
           " " +
-          this.props.stringsManager.getStr(strings.STR_DAYS_SINCE_REV);
+          this.props.stringsManager.getStr(strings.STR_DAYS_SINCE_REV);*/
     // Toast.showWithGravity(strMsg, Toast.SHORT, Toast.CENTER);
-    // console.log(strMsg);
+    //console.log(strMsg);
+
+    let toast = Toast.show(strMsg, {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.CENTER,
+      shadow: true,
+      shadowColor: colors.primary,
+      animation: true,
+      hideOnPress: true,
+      opacity: 1,
+      backgroundColor: "#eee",
+      textColor: colors.primary,
+      onShow: () => {
+        // calls on toast\`s appear animation start
+      },
+      onShown: () => {
+        // calls on toast\`s appear animation end.
+      },
+      onHide: () => {
+        // calls on toast\`s hide animation start.
+      },
+      onHidden: () => {
+        // calls on toast\`s hide animation end.
+      },
+    });
   }
 
   onItemIconRevisedPress(revision) {
     // this.props.revisionsManager.sortRevisions();
     revision.makeRevisionDateNow();
+    let strMsg = this.props.stringsManager.getStr(strings.STR_REVISED);
+    let toast = Toast.show(strMsg, {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      shadowColor: colors.primary,
+      animation: true,
+      hideOnPress: true,
+      opacity: 1,
+      backgroundColor: "#eee",
+      textColor: "#030",
+      onShow: () => {
+        // calls on toast\`s appear animation start
+      },
+      onShown: () => {
+        // calls on toast\`s appear animation end.
+      },
+      onHide: () => {
+        // calls on toast\`s hide animation start.
+      },
+      onHidden: () => {
+        // calls on toast\`s hide animation end.
+      },
+    });
     this.props.reduxActionUpdateRevision(revision);
     this.refresh();
   }

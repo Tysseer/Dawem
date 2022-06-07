@@ -29,7 +29,7 @@ const { width,height } = Dimensions.get('window');
 const quranFont = (width-30)*0.045;//Math.max(10,width*0.054);
 const quranLineHeight = quranFont*1.82;
 const ayaNumSize = quranFont*1.3;//Math.max(22,height/26);
-const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
+const RenderAyat = ({ ayat, shortTxt, localSurahIndx, localAyahIndx }) => {
   const svgLoader = new SVGLoader();
   const [markedAyah, setMarkedAyah] = useState();
 
@@ -41,13 +41,13 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
   const getNumBg = (num, idx) => {
     if (
       convertToArabicNumbers(num, 'ltr') == markedAyah &&
-      idx == localSurahIdx
+      idx == localSurahIndx
     )
       return '#ff0';
   };
 
   const onAyahLongPress = (iAyah /*local */, iSurah) => {
-    if (iSurah == localSurahIdx) {
+    if (iSurah == localSurahIndx) {
       var engNum = convertToArabicNumbers(iAyah, 'ltr');
       setMarkedAyah(engNum);
       var globalAyah = quranIndexer.getAyahGlobalIndx(iSurah, +engNum);
@@ -96,7 +96,7 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 onLongPress={() => onAyahLongPress(ayah.num, ayah.surahIndex)}
-                disabled={ayah.surahIndex !== localSurahIdx}
+                disabled={ayah.surahIndex !== localSurahIndx}
                 style={{
                   backgroundColor: getNumBg(ayah.num, ayah.surahIndex),
                 }}
@@ -112,8 +112,8 @@ const RenderAyat = ({ ayat, shortTxt, localSurahIdx, localAyahIdx }) => {
     });
 
   useEffect(() => {
-    setMarkedAyah(localAyahIdx);
-  }, [localAyahIdx]);
+    setMarkedAyah(localAyahIndx);
+  }, [localAyahIndx]);
 
   return renderContent();
 };

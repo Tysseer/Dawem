@@ -80,17 +80,24 @@ export default class RevisionItem extends Component {
                 paddingHorizontal: 8,
               }}
             >
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.itemNumDays,
-                  getContentFontBasicStyle(this.props.strLang, false),
-                ]}
+              <TouchableOpacity
+                onPress={() => this.props.onPresses.get("numDays")(revision)}
+                onLongPress={() =>
+                  this.props.onLongPresses.get("numDays")(revision)
+                }
               >
-                {this.props.strLang == "ar"
-                  ? convertToArabicNumbers(revision.getNumdaysText(), "rtl")
-                  : revision.getNumdaysText()}
-              </Text>
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.itemNumDays,
+                    getContentFontBasicStyle(this.props.strLang, false),
+                  ]}
+                >
+                  {this.props.strLang == "ar"
+                    ? convertToArabicNumbers(revision.getNumdaysText(), "rtl")
+                    : revision.getNumdaysText()}
+                </Text>
+              </TouchableOpacity>
               {/* {NumDaysBtn} */}
               {renderReadReviseActions}
             </View>
@@ -153,15 +160,21 @@ export default class RevisionItem extends Component {
     }
     if (revision.numDays == 0) {
       return (
-        <MaterialCommunityIcons
-          name="shield-check"
+        <MaterialIcons
+          name="check-box"
           size={BASE_WIDTH}
           color={colors.primary}
         />
       );
     }
 
-    return <Feather name="check" size={BASE_WIDTH} color={colors.primary} />;
+    return (
+      <MaterialIcons
+        name="check-box-outline-blank"
+        size={BASE_WIDTH}
+        color={colors.primary}
+      />
+    );
   }
   renderReadReviseActions(revision) {
     return (
