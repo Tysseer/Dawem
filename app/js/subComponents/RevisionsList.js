@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, View, ScrollView } from "react-native";
+import { getLargeContentFontBasicStyle } from "../helpers/scripts";
 
 import RevisionsManager from "../helpers/RevisionsManager";
 import QuranIndexer from "../helpers/QuranIndexer";
@@ -148,7 +149,8 @@ class RevisionsList extends Component {
       hideOnPress: true,
       opacity: 1,
       backgroundColor: "#eee",
-      textColor: "#030",
+      textStyle: getLargeContentFontBasicStyle(),
+      textColor: "#031",
       onShow: () => {
         // calls on toast\`s appear animation start
       },
