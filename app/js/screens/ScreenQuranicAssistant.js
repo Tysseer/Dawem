@@ -7,7 +7,7 @@ import {
   ScrollView,
   Image,
   TouchableWithoutFeedback,
-  I18nManager,
+  KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
   Dimensions,
@@ -25,7 +25,6 @@ import * as msgs from "../helpers/Messages";
 import Screen from "app/components/Screen";
 import { reduxActionAddRevision } from "../redux/reduxActions";
 import Revision from "../helpers/Revision";
-import { KeyboardAvoidingView } from "react-native-web";
 const { height, width } = Dimensions.get("window");
 const height18 = height / 18;
 const height50 = height / 50;
