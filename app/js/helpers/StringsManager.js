@@ -65,6 +65,8 @@ export const STR_ALLREVS_DONE_CONGRATS = 64;
 export const STR_ADD_REV_BY_TXT = 65;
 export const STR_ADD_REV_BY_TXT_PROMPT = 66;
 export const STR_CANT_UNDERSTAND = 67;
+export const STR_ASSISTANT = 68;
+
 import { convertToArabicNumbers } from "./scripts.js";
 export default class StringsManager {
   constructor() {
@@ -465,6 +467,11 @@ export default class StringsManager {
         return "المعذرة, لم أستطع فهم هذه الجملة. هل يمكنك كتابتها بشكل مختلف؟";
       if (strLang == "en")
         return "I'm sorry, I didn't get that. Can you rephrase your query?";
+      return "unsupported language";
+    }
+    if (nStrID == STR_ASSISTANT) {
+      if (strLang == "ar") return "المساعد القرآني";
+      if (strLang == "en") return "َQuranic Assistant";
       return "unsupported language";
     }
     return "unkown string";

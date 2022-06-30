@@ -1,1 +1,1 @@
-eas build --platform android
+expo doctor --fix-dependencies

@@ -10,6 +10,7 @@ import MushafScreen from "../../js/screens/MushafScreen";
 import ScreenDayBadge from "../../js/screens/ScreenDayBadge";
 import ScreenMonthBadge from "../../js/screens/ScreenMonthBadge";
 import ScreenWeekBadge from "../../js/screens/ScreenWeekBadge";
+import ScreenQuranicAssistant from "../../js/screens/ScreenQuranicAssistant";
 // import ScreenRevisionsTools from "../../js/screens/ScreenRevisionsTools";
 import CreateFile from "../../js/screens/CreateFile";
 import StringsManager from "js/helpers/StringsManager";
@@ -103,6 +104,18 @@ export default function MainStack() {
             <Header
               lang={{ strLang }}
               title={stringsManager.getStr(strings.STR_WEEKBADGE_NAME)}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ScrQuranAssist"
+        component={ScreenQuranicAssistant}
+        options={{
+          header: () => (
+            <Header
+              lang={{ strLang }}
+              title={stringsManager.getStr(strings.STR_ASSISTANT)}
             />
           ),
         }}

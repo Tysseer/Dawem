@@ -8,6 +8,16 @@ var MiscUtilities = {
   getComposedRegex: function (...regexes) {
     return new RegExp(regexes.map((regex) => regex.source).join("|"));
   },
+  convertToIndianNumbers: function (strE) {
+    let indianNumbers = ["۰", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+    let chars = strE.split("");
+    for (let i = 0; i < chars.length; i++) {
+      if (/\d/.test(chars[i])) {
+        chars[i] = indianNumbers[chars[i]];
+      }
+    }
+    return chars.join("");
+  },
   convertToArabicNumbers: function (strA) {
     // const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
     // const e2a = s => s.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);

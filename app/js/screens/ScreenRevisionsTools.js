@@ -59,46 +59,66 @@ class ScreenRevisionsTools extends Component {
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
     this.quranIndexer = new QuranIndexer();
-    this.commands = [
-      {
-        id: 1,
-        title: this.stringsManager.getStr(strings.STR_BY_JUZUU),
-        onPress: this.onPressByJuzuu.bind(this),
-        icon: "add",
-      },
-      {
-        id: 2,
-        title: this.stringsManager.getStr(strings.STR_BY_SURAH),
-        onPress: this.onPressBySurah.bind(this),
-        icon: "add",
-      },
-      {
-        id: 3,
-        title: this.stringsManager.getStr(strings.STR_RESET_ALL),
-        onPress: this.onPressResetAll.bind(this),
-        icon: "check",
-      },
-      {
-        id: 4,
-        title: this.stringsManager.getStr(strings.STR_DEL_ALL),
-        onPress: this.onPressDeleteAll.bind(this),
-        icon: "close",
-      },
-      {
-        id: 5,
-        title: this.stringsManager.getStr(strings.STR_BACKUP),
-        onPress: this.onPressBackup.bind(this),
-        icon: "sd-card",
-      },
-      {
-        id: 6,
-        title: this.stringsManager.getStr(strings.STR_RESTORE),
-        onPress: this.onPressRestore.bind(this),
-        icon: "restore",
-      },
-    ];
+    let newID = 1;
+    this.commands = [];
+    this.commands.push({
+      id: newID++,
+      title: this.stringsManager.getStr(strings.STR_ASSISTANT),
+      onPress: this.onPressAssist.bind(this),
+      icon: "contact-support",
+    });
+    this.commands.push({
+      id: newID++,
+      title: null,
+      onPress: null,
+      icon: null,
+    });
+    this.commands.push({
+      id: newID++,
+      title: this.stringsManager.getStr(strings.STR_BY_JUZUU),
+      onPress: this.onPressByJuzuu.bind(this),
+      icon: "add",
+    });
+    this.commands.push({
+      id: newID++,
+      title: this.stringsManager.getStr(strings.STR_BY_SURAH),
+      onPress: this.onPressBySurah.bind(this),
+      icon: "add",
+    });
+    this.commands.push({
+      id: newID++,
+      title: null,
+      onPress: null,
+      icon: null,
+    });
+    this.commands.push({
+      id: newID++,
+      title: this.stringsManager.getStr(strings.STR_RESET_ALL),
+      onPress: this.onPressResetAll.bind(this),
+      icon: "check",
+    });
+    this.commands.push({
+      id: newID++,
+      title: this.stringsManager.getStr(strings.STR_DEL_ALL),
+      onPress: this.onPressDeleteAll.bind(this),
+      icon: "close",
+    });
+    this.commands.push({
+      id: newID++,
+      title: this.stringsManager.getStr(strings.STR_BACKUP),
+      onPress: this.onPressBackup.bind(this),
+      icon: "sd-card",
+    });
+    this.commands.push({
+      id: newID++,
+      title: this.stringsManager.getStr(strings.STR_RESTORE),
+      onPress: this.onPressRestore.bind(this),
+      icon: "restore",
+    });
   }
-
+  onPressAssist() {
+    this.props.navigation.navigate("ScrQuranAssist");
+  }
   onPressByJuzuu() {
     // console.log("here");
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
@@ -217,6 +237,9 @@ class ScreenRevisionsTools extends Component {
     ];
   }
   renderItem(item) {
+    if (item.item.icon == null) {
+      return <View style={styles.separator}></View>;
+    }
     return (
       <TouchableOpacity onPress={item.item.onPress}>
         <View style={styles.item}>
@@ -271,5 +294,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
+  },
+  separator: {
+    borderColor: "#0B721E0D",
+    borderWidth: 1,
+    borderRadius: 10,
+    width: width,
+    height: 1,
+    marginBottom: 15,
   },
 });
