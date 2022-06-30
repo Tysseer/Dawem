@@ -25,6 +25,7 @@ import * as msgs from "../helpers/Messages";
 import Screen from "app/components/Screen";
 import { reduxActionAddRevision } from "../redux/reduxActions";
 import Revision from "../helpers/Revision";
+import { KeyboardAvoidingView } from "react-native-web";
 const { height, width } = Dimensions.get("window");
 const height18 = height / 18;
 const height50 = height / 50;
@@ -154,15 +155,19 @@ class ScreenQuranicAssistant extends Component {
       <Screen>
         <View style={styles.mainContainer}>
           <View style={styles.listContainer}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              ref={(ref) => (this.scrollView = ref)}
-              onContentSizeChange={() => {
-                this.scrollView.scrollToEnd({ animated: false });
-              }}
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
             >
-              {this.messages.map((msg) => msg.getRender(this))}
-            </ScrollView>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                ref={(ref) => (this.scrollView = ref)}
+                onContentSizeChange={() => {
+                  this.scrollView.scrollToEnd({ animated: false });
+                }}
+              >
+                {this.messages.map((msg) => msg.getRender(this))}
+              </ScrollView>
+            </KeyboardAvoidingView>
             {this.getUserChatBox()}
           </View>
           <View style={styles.sendMsgBar}></View>

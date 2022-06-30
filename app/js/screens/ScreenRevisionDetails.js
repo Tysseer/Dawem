@@ -100,7 +100,10 @@ class ScreenRevisionDetails extends Component {
   render() {
     return (
       // <Text>{JSON.stringify(this.quranReaderByLine.getPage(165))}</Text>
-      <KeyboardAvoidingView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         {/* header */}
         {/* <Header
           title={this.stringsManager.getStr(strings.STR_REV_TITLE)}
