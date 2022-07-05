@@ -35,6 +35,7 @@ class ActionMessage {
   }
   applyAction() {
     if (this.strAction == "EnableChat") this.screen.userChatEnabled = true;
+    if (this.strAction == "DisableChat") this.screen.userChatEnabled = false;
   }
 }
 class ScreenQuranicAssistant extends Component {
@@ -131,8 +132,10 @@ class ScreenQuranicAssistant extends Component {
     if (bEnable) {
       this.userTxt = "";
       //this.flushAllMessages();
+      this.messageReady(new ActionMessage(this, "EnableChat"));
+    } else {
+      this.messageReady(new ActionMessage(this, "DisableChat"));
     }
-    this.messageReady(new ActionMessage(this, "EnableChat"));
     //this.userChatEnabled = bEnable;
   }
   flushAllMessages() {
@@ -154,22 +157,18 @@ class ScreenQuranicAssistant extends Component {
       <Screen>
         <View style={styles.mainContainer}>
           <View style={styles.listContainer}>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              ref={(ref) => (this.scrollView = ref)}
+              onContentSizeChange={() => {
+                this.scrollView.scrollToEnd({ animated: false });
+              }}
             >
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                ref={(ref) => (this.scrollView = ref)}
-                onContentSizeChange={() => {
-                  this.scrollView.scrollToEnd({ animated: false });
-                }}
-              >
-                {this.messages.map((msg) => msg.getRender(this))}
-              </ScrollView>
-            </KeyboardAvoidingView>
+              {this.messages.map((msg) => msg.getRender(this))}
+            </ScrollView>
+
             {this.getUserChatBox()}
           </View>
-          <View style={styles.sendMsgBar}></View>
         </View>
       </Screen>
     );
@@ -245,7 +244,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderRadius: 10,
   },
-
+  listContainer: {
+    width: "100%",
+    flex: 1,
+    marginBottom: 20,
+    justifyContent: "center",
+  },
   avatar: {
     width: 50,
     height: 50,
@@ -264,14 +268,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "flex-end",
     justifyContent: "space-between",
-    marginHorizontal: 10,
-    paddingHorizontal: 5,
+    width: "100%",
   },
   sendMsgInput: {
     marginHorizontal: 5,
     paddingHorizontal: 10,
     height: height18,
-    width: "100%",
+    flex: 1,
     borderWidth: 1,
     borderColor: colors.primary,
     borderRadius: 10,

@@ -39,6 +39,12 @@ export const STR_ASSISTANT_ASK_HELP_FILL_AGAIN = 38;
 export const STR_HUMAN_ACCEPT_FILL_AGAIN = 39;
 export const STR_HUMAN_REJECT_FILL_AGAIN = 40;
 export const STR_ASSISTANT_EXPLAIN_FILL_AGAIN = 41;
+export const STR_ASSISTANT_ASK_DIVIDE_REVISION = 42;
+export const STR_HUMAN_ACCEPT_DIVIDE = 43;
+export const STR_HUMAN_REJECT_DIVIDE = 44;
+export const STR_ASSISTANT_CONFIRM_DIVIDE_REVISION = 45;
+
+import MiscUtilities from "./MiscUtilities";
 export default class QuranicAssistantStrings {
   constructor() {
     this.strLang = "ar";
@@ -309,6 +315,58 @@ export default class QuranicAssistantStrings {
       if (strLang == "en") return "No, thanks.";
       return "unsupported language";
     }
+
+    if (nStrID == STR_ASSISTANT_ASK_DIVIDE_REVISION) {
+      if (strLang == "ar")
+        return "إن هذا الورد يبدو طويلا, هل تريد أن أقسمه لك إلى أوراد أصغر؟ سيسهل هذا عليك مراجعته";
+      if (strLang == "en")
+        return "This looks like a long revision, do you want me to divide this revision into smaller ones? This will make it easier to revise";
+      return "unsupported language";
+    }
+
+    if (nStrID == STR_HUMAN_ACCEPT_DIVIDE) {
+      if (strLang == "ar") return "نعم, أريد تقسيمه";
+      if (strLang == "en") return "Yes, I want divide it";
+      return "unsupported language";
+    }
+    if (nStrID == STR_HUMAN_REJECT_DIVIDE) {
+      if (strLang == "ar") return "لا شكرا, لا أريد ذلك";
+      if (strLang == "en") return "No, thanks.";
+      return "unsupported language";
+    }
+
+    if (nStrID == STR_ASSISTANT_CONFIRM_DIVIDE_REVISION) {
+      if (strLang == "ar")
+        return "حسنا, سأقوم بتقسيمه وسأحاول أن أربط التقسيم بمعاني الآيات قدر إمكاني";
+      if (strLang == "en")
+        return "Ok, I will do my best to divide it into meaningul parts";
+      return "unsupported language";
+    }
+
     return "unkown string" + nStrID;
+  }
+  getDivideRevisionSuccessMsg(nNumRev) {
+    if (this.strLang == "ar") {
+      if (nNumRev == 1)
+        return "المعذرة, لم أنجح في تقسيم هذا الورد فتركته كما هو";
+      if (nNumRev == 2) return "لقد نجحت في تقسيم هذا الورد إلى  جزئين";
+      let part = "لقد نجحت في تقسيم هذا الورد إلى  ";
+      let end = nNumRev <= 10 ? "أوراد" : "ورداً";
+      return (
+        part +
+        MiscUtilities.convertToIndianNumbers(nNumRev.toString()) +
+        " " +
+        end
+      );
+    } else {
+      if (nNumRev == 1)
+        return "I'm sorry, I couldn't find a proper way to divide this revision so I left it whole.";
+      else
+        return (
+          "I've successfully divided this revision into " +
+          nNumRev.toString() +
+          " revisions"
+        );
+    }
   }
 }

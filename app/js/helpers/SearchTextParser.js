@@ -652,6 +652,7 @@ class SearchTextParser {
     text = MiscUtilities.removeLeadingAlefLam(
       MiscUtilities.normalizeString(text).replace(/ الي /g, " حتي ")
     );
+
     text = this.quranInfo.replaceJuzuuNamesFromString(text);
     var newStr = text;
     //console.log("nomalized: \n" + newStr);
@@ -667,9 +668,6 @@ class SearchTextParser {
         continue;
       tokensClassified.push(tokClass);
     }
-    //console.log("classified tokens");
-    //console.log(tokensClassified);
-
     this.chunks = [];
     var curArr = tokensClassified.slice(0); // copy of the arr
     var iTok = 1;
@@ -737,50 +735,6 @@ class SearchTextParser {
         return strRet;
       },
     };
-  }
-  getAutoTitle(parseRes, bIsAr) {
-    var strStrtA = parseRes.strtAyah.toString();
-    var strEndA = parseRes.endAyah.toString();
-    if (bIsAr) {
-      strStrtA = MiscUtilities.convertToIndianNumbers(strStrtA);
-      strEndA = MiscUtilities.convertToIndianNumbers(strEndA);
-    }
-    var strStrt = bIsAr
-      ? this.quranInfo.getSurahNameAr(parseRes.strtSurah)
-      : this.quranInfo.getSurahNameEnTrns(parseRes.strtSurah);
-    var strEnd = bIsAr
-      ? this.quranInfo.getSurahNameAr(parseRes.endSurah)
-      : this.quranInfo.getSurahNameEnTrns(parseRes.endSurah);
-    if (strStrt == strEnd) {
-      //same surah
-      if (parseRes.strtAyah == 1) {
-        // starting from beginning of surah
-        if (
-          parseRes.endAyah == this.quranInfo.getSurahNumAyah(parseRes.endSurah)
-        ) {
-          // all of the surah
-          return strStrt;
-        }
-      }
-      return strStrt + " (" + strStrtA + " - " + strEndA + ")";
-    } else {
-      if (parseRes.strtAyah == 1) {
-        // starting from beginning of surah
-        if (
-          parseRes.endAyah == this.quranInfo.getSurahNumAyah(parseRes.endSurah)
-        ) {
-          // all of the suras
-          return strStrt + " - " + strEnd;
-        }
-      }
-      strStrt += " (" + strStrtA + ")";
-      strEnd += " (" + strEndA + ")";
-      return strStrt + " " + strEnd;
-      // this.strtSurah = ret.strtSurah;
-      // this.strtAyah = ret.strtAyah;
-      // this.endSurah = ret.endSurah;
-      // this.endAyah = ret.endAyah;
-    }
   }
 }
 export default SearchTextParser;

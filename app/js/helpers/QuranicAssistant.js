@@ -2,7 +2,7 @@ import * as qstrings from "./QuranicAssistantStrings";
 import QuranicAssistantStrings from "./QuranicAssistantStrings";
 import * as msgs from "./Messages";
 import SearchTextParser from "./SearchTextParser";
-
+import allAyat from "./quranAyat";
 export default class QuranicAssistant {
   constructor() {
     this.stringsManager = new QuranicAssistantStrings();
@@ -12,6 +12,8 @@ export default class QuranicAssistant {
     this.assistantUser = null;
     this.humanUser = null;
     this.screen = null;
+    this.revToBeDivided = null; //used in case of dividing the revision the user input
+    this.queryParser = new SearchTextParser();
   }
   addCustomTextMessage(strMsg) {
     this.screen.messageReady(
@@ -144,27 +146,128 @@ export default class QuranicAssistant {
     this.addTextMessage(qstrings.STR_ASSISTANT_EXPLAIN_FILL_AGAIN);
     this.screen.enableUserChat(true);
   }
+  addHeldRevision(bDivide) {
+    if (this.revToBeDivided == null) return;
+    let revs = [];
+    if (bDivide) {
+      this.addTextMessage(qstrings.STR_ASSISTANT_CONFIRM_DIVIDE_REVISION);
+
+      // divide pages by Rukuu
+      let iStrtRukuu = this.queryParser.quranInfo.getRukuuFromAyah(
+        this.revToBeDivided.strtAyah
+      );
+
+      let iEndRukuu = this.queryParser.quranInfo.getRukuuFromAyah(
+        this.revToBeDivided.endAyah
+      );
+      let rangeStrt = this.queryParser.quranInfo.getRukuuAyahRange(iStrtRukuu);
+      let rangeEnd = this.queryParser.quranInfo.getRukuuAyahRange(iEndRukuu);
+      let bIsAr = this.stringsManager.getLanguage() == "ar";
+
+      for (let i = iStrtRukuu + 1; i < iEndRukuu; i++) {
+        let range = this.queryParser.quranInfo.getRukuuAyahRange(i);
+        revs.push({
+          strtAyah: range[0],
+          endAyah: range[1],
+          title: this.queryParser.quranInfo.getAutoTitle(
+            range[0],
+            range[1],
+            bIsAr
+          ),
+        });
+      }
+      if (revs.length == 0) {
+        revs.push(this.revToBeDivided);
+      } else {
+        if ((rangeStrt[0] + rangeStrt[1]) / 2 < this.revToBeDivided.strtAyah) {
+          // don't add it , join it to first rev
+          revs[0].strtAyah = this.revToBeDivided.strtAyah;
+          revs[0].title = this.queryParser.quranInfo.getAutoTitle(
+            revs[0].strtAyah,
+            revs[0].endAyah,
+            bIsAr
+          );
+        } else {
+          revs.unshift({
+            strtAyah: this.revToBeDivided.strtAyah,
+            endAyah: rangeStrt[1],
+            title: this.queryParser.quranInfo.getAutoTitle(
+              this.revToBeDivided.strtAyah,
+              rangeStrt[1],
+              bIsAr
+            ),
+          });
+        }
+
+        if ((rangeEnd[0] + rangeEnd[1]) / 2 < this.revToBeDivided.endAyah) {
+          // don't add it , join it to last rev
+          revs[revs.length - 1].endAyah = this.revToBeDivided.endAyah;
+          revs[revs.length - 1].title = this.queryParser.quranInfo.getAutoTitle(
+            revs[revs.length - 1].strtAyah,
+            revs[revs.length - 1].endAyah,
+            bIsAr
+          );
+        } else {
+          revs.push({
+            strtAyah: this.revToBeDivided.strtAyah,
+            endAyah: rangeStrt[1],
+            title: this.queryParser.quranInfo.getAutoTitle(
+              this.revToBeDivided.strtAyah,
+              rangeStrt[1],
+              bIsAr
+            ),
+          });
+        }
+      }
+    } else {
+      revs.push(this.revToBeDivided);
+    }
+    if (bDivide) {
+      this.addCustomTextMessage(
+        this.stringsManager.getDivideRevisionSuccessMsg(revs.length)
+      );
+    }
+    for (let i = 0; i < revs.length; i++) {
+      this.screen.addNewRev(revs[i]);
+    }
+    let title = this.revToBeDivided.title;
+    this.revToBeDivided = null;
+    this.addTextMessage(qstrings.STR_REVISION_ADDED);
+    this.addCustomTextMessage(title);
+    this.promptForAddingRevs(qstrings.STR_REVISION_ADDED);
+  }
 
   handleRevisionQuery(text) {
-    var parser = new SearchTextParser();
-    var ret = parser.parseRevisionQuery(text);
+    var ret = this.queryParser.parseRevisionQuery(text);
     if (ret != null && ret.bIsSuccess) {
-      ret.title = parser.getAutoTitle(
-        ret,
-        this.stringsManager.getLanguage() == "ar"
-      ); // or text?
-      ret.strtAyah = parser.quranInfo.getAyahGlobalIndx(
+      ret.strtAyah = this.queryParser.quranInfo.getAyahGlobalIndx(
         ret.strtSurah,
         ret.strtAyah
       );
-      ret.endAyah = parser.quranInfo.getAyahGlobalIndx(
+      ret.endAyah = this.queryParser.quranInfo.getAyahGlobalIndx(
         ret.endSurah,
         ret.endAyah
       );
-      this.screen.addNewRev(ret);
-      this.addTextMessage(qstrings.STR_REVISION_ADDED);
-      this.addCustomTextMessage(ret.title);
-      this.promptForAddingRevs(qstrings.STR_REVISION_ADDED);
+      ret.title = this.queryParser.quranInfo.getAutoTitle(
+        ret.strtAyah,
+        ret.endAyah,
+        this.stringsManager.getLanguage() == "ar"
+      ); // or text?
+      let iStrtPage = this.queryParser.quranInfo.getPageFromAyah(ret.strtAyah);
+      let iEndPage = this.queryParser.quranInfo.getPageFromAyah(ret.endAyah);
+      if (iEndPage - iStrtPage > 4) {
+        this.revToBeDivided = ret;
+        this.addTextMessage(qstrings.STR_ASSISTANT_ASK_DIVIDE_REVISION);
+        this.addYesNoBtnsMsg(
+          qstrings.STR_HUMAN_ACCEPT_DIVIDE,
+          qstrings.STR_HUMAN_REJECT_DIVIDE
+        );
+      } else {
+        this.screen.addNewRev(ret);
+        this.addTextMessage(qstrings.STR_REVISION_ADDED);
+        this.addCustomTextMessage(ret.title);
+        this.promptForAddingRevs(qstrings.STR_REVISION_ADDED);
+      }
     } else {
       this.addTextMessage(qstrings.STR_REVISION_FAILED);
       this.promptForAddingRevs(qstrings.STR_REVISION_FAILED);
@@ -195,6 +298,9 @@ export default class QuranicAssistant {
     else if (id == qstrings.STR_HUMAN_REJECT_FILL) this.endConversation();
     else if (id == qstrings.STR_HUMAN_ACCEPT_FILL_AGAIN) this.continueFill();
     else if (id == qstrings.STR_HUMAN_REJECT_FILL_AGAIN) this.endConversation();
+    else if (id == qstrings.STR_HUMAN_ACCEPT_DIVIDE) this.addHeldRevision(true);
+    else if (id == qstrings.STR_HUMAN_REJECT_DIVIDE)
+      this.addHeldRevision(false);
     else {
       if (strUserCustomMsg != "") {
         this.addUserTextMessage(-1, strUserCustomMsg);
@@ -202,7 +308,10 @@ export default class QuranicAssistant {
       if (this.myLastMsg == qstrings.STR_ASSISTANT_ASK_WHY_FORGET) {
         this.explainSpacedRep();
       }
-      if (this.myLastMsg == qstrings.STR_ASSISTANT_EXPLAIN_FILL) {
+      if (
+        this.myLastMsg == qstrings.STR_ASSISTANT_EXPLAIN_FILL ||
+        this.myLastMsg == qstrings.STR_ASSISTANT_EXPLAIN_FILL_AGAIN
+      ) {
         this.handleRevisionQuery(strUserCustomMsg);
       } else {
         this.askForExplanation();
