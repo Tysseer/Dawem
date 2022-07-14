@@ -66,6 +66,7 @@ export const STR_ADD_REV_BY_TXT = 65;
 export const STR_ADD_REV_BY_TXT_PROMPT = 66;
 export const STR_CANT_UNDERSTAND = 67;
 export const STR_ASSISTANT = 68;
+export const STR_CLOSE = 69;
 
 import { convertToArabicNumbers } from "./scripts.js";
 export default class StringsManager {
@@ -472,6 +473,11 @@ export default class StringsManager {
     if (nStrID == STR_ASSISTANT) {
       if (strLang == "ar") return "المساعد القرآني";
       if (strLang == "en") return "َQuranic Assistant";
+      return "unsupported language";
+    }
+    if (nStrID == STR_CLOSE) {
+      if (strLang == "ar") return "إغلاق";
+      if (strLang == "en") return "Close";
       return "unsupported language";
     }
     return "unkown string";

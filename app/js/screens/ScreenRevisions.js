@@ -37,7 +37,8 @@ import allBadgesDoneImg from "assets/images/prize3.png";
 import allRevsDoneImg from "assets/images/prize4.png";
 import Screen from "app/components/Screen";
 import ModalCongrats from "../modals/ModalCongrats";
-
+import ModalPlayback from "../modals/ModalPlayback";
+import QuranIndexer from "../helpers/QuranIndexer";
 const { height, width } = Dimensions.get("window");
 
 function RefreshBadgesOnFocus({ onUpdate }) {
@@ -61,6 +62,7 @@ class ScreenRevisions extends Component {
     this.width = Dimensions.get("window").width;
     this.stringsManager = new StringsManager();
     this.stringsManager.setLanguage(this.props.strLang);
+    this.quranInfo = new QuranIndexer();
     this.svgLoader = new SVGLoader();
     this.revisionsManager = new RevisionsManager();
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
@@ -73,6 +75,7 @@ class ScreenRevisions extends Component {
       isBadgeMonth: res[1],
       isBadgeWeek: res[2],
       bShowCongrats: false,
+      bShowPlayBack: false,
       nNumDoneRevs: this.revisionsManager.getNumDoneRevisions(),
     };
     this.congratsMsgs = [];
@@ -100,6 +103,17 @@ class ScreenRevisions extends Component {
       />
     );
   }
+  getListenModal() {
+    if (this.state.bShowPlayBack == false || this.props.curRevision == null)
+      return <></>;
+    return (
+      <ModalPlayback
+        strLang={this.props.strLang}
+        quranInfo={this.quranInfo}
+        setModalVisible={this.showHideCongrats.bind(this)}
+      />
+    );
+  }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
     this.revisionsManager.m_loadedRevisions = this.props.revisions;
@@ -110,6 +124,7 @@ class ScreenRevisions extends Component {
       <Screen style={{ paddingTop: 0 }}>
         <RefreshBadgesOnFocus onUpdate={this.onFocus.bind(this)} />
         {this.getCongratsModal()}
+        {this.getListenModal()}
         <BadgesBar
           svgLoader={this.svgLoader}
           isBadgeDay={this.state.isBadgeDay == false}
@@ -134,6 +149,7 @@ class ScreenRevisions extends Component {
                 deleteRevFn={this.onDeleteRevision.bind(this)}
                 onAddRevision={this.onAddRevision.bind(this)}
                 readRevFn={this.onReadRevision.bind(this)}
+                listenRevFn={this.onListenRevision.bind(this)}
                 strLang={this.props.strLang}
               />
             )}
@@ -195,6 +211,13 @@ class ScreenRevisions extends Component {
       ayahIndex: revision.getProgressAyah(),
       bIsAr: this.props.strLang == "ar",
       // longPressHandler: this.onRevProgress.bind(this),
+    });
+  }
+  onListenRevision(revision) {
+    this.props.reduxActionSetCurRevision(null);
+    this.props.reduxActionSetCurRevision(revision);
+    this.setState({
+      bShowPlayBack: true, //bShow,
     });
   }
   onRevProgress(iAyah) {

@@ -6,7 +6,7 @@ export default class Revision {
     this.strt = 0;
     this.end = 0;
     this.dateofLastRevision = new Date();
-    (this.numDays = 0), this.updateNumDays();
+    this.numDays = 0;
     this.lastAyahRead = -1;
     this.bIsNewRev = false;
   }

@@ -21,6 +21,7 @@ class RevisionsList extends Component {
     updateRevFn: PropTypes.func.isRequired,
     refreshFn: PropTypes.func.isRequired,
     readRevFn: PropTypes.func.isRequired,
+    listenRevFn: PropTypes.func.isRequired,
     strLang: PropTypes.string.isRequired,
   };
   constructor(props) {
@@ -65,6 +66,7 @@ class RevisionsList extends Component {
     pressHandlers.set("revisedIcon", this.onItemIconRevisedPress.bind(this));
     pressHandlers.set("readIcon", this.onItemIconReadPress.bind(this));
     pressHandlers.set("editIcon", this.onItemIconEditPress.bind(this));
+    pressHandlers.set("listenIcon", this.onItemIconListenPress.bind(this));
     pressHandlers.set("deleteIcon", this.onItemIconDeletePress.bind(this));
     return pressHandlers;
   }
@@ -76,6 +78,7 @@ class RevisionsList extends Component {
     longPressHandlers.set("revisedIcon", this.onLongPress.bind(this));
     longPressHandlers.set("readIcon", this.onLongPress.bind(this));
     longPressHandlers.set("editIcon", this.onLongPress.bind(this));
+    longPressHandlers.set("listenIcon", this.onLongPress.bind(this));
     longPressHandlers.set("deleteIcon", this.onLongPress.bind(this));
     return longPressHandlers;
   }
@@ -174,6 +177,9 @@ class RevisionsList extends Component {
 
   onItemIconEditPress(revision) {
     this.props.updateRevFn(revision);
+  }
+  onItemIconListenPress(revision) {
+    this.props.listenRevFn(revision);
   }
 
   onItemIconDeletePress(revision) {

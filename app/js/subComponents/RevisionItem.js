@@ -127,6 +127,7 @@ export default class RevisionItem extends Component {
         style={{
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: "center",
           backgroundColor: colors.primary,
           height: ITEM_HEIGHT,
           paddingHorizontal: width / 40,
@@ -144,6 +145,17 @@ export default class RevisionItem extends Component {
           onPress={() => this.props.onPresses.get("editIcon")(revision)}
         >
           <MaterialIcons name="edit" size={BASE_WIDTH} color="#fff" />
+        </TouchableOpacity>
+        <View style={{ width: width / 40 }} />
+
+        <TouchableOpacity
+          onPress={() => this.props.onPresses.get("listenIcon")(revision)}
+        >
+          <MaterialCommunityIcons
+            name="headphones"
+            size={BASE_WIDTH}
+            color="#fff"
+          />
         </TouchableOpacity>
       </View>
     );
