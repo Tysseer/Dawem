@@ -26,7 +26,25 @@ const height18 = height / 18;
 const height50 = height / 50;
 import MiscUtilities from "../helpers/MiscUtilities";
 import QuranIndexer from "../helpers/QuranIndexer";
+import * as Notifications from "expo-notifications";
 
+const triggerNotifications = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You’ve got mail! 📬",
+      body: "Here is the notification body",
+      data: { data: "goes here" },
+    },
+    trigger: { seconds: 2 },
+  });
+};
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true,
+    };
+  },
+});
 class ModalPlayback extends Component {
   static propTypes = {
     strLang: PropTypes.string.isRequired,
@@ -111,6 +129,7 @@ class ModalPlayback extends Component {
     });
   }
   onPlay() {
+    triggerNotifications();
     this.bIsPlaying = !this.bIsPlaying;
     this.refresh();
   }

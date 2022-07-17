@@ -8,11 +8,11 @@
     "icon": "./app/assets/icon.png",
     "plugins": [
       [
-        "expo-media-library",
+
+        "expo-notifications",
         {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
-          "isAccessMediaLocationEnabled": "true"
+          "icon": "./local/assets/dayBadge.png",
+          "color": "#ffffff"
         }
       ]
     ],

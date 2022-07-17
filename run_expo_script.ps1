@@ -1,1 +1,1 @@
-expo doctor --fix-dependencies
+expo install expo-device
