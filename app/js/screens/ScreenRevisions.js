@@ -7,7 +7,7 @@ import {
   Text,
   Dimensions,
   ScrollView,
-  TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
 
 import RevisionsList from "../subComponents/RevisionsList";
@@ -242,7 +242,10 @@ class ScreenRevisions extends Component {
 
     this.refresh();
   }
-
+  goToAssistant() {
+    this.props.reduxActionSetCurRevision(null);
+    this.props.navigation.navigate("ScrQuranAssist");
+  }
   getInitialPrompt() {
     return (
       <ImageBackground source={bgImage} style={styles.bgImage}>
@@ -260,6 +263,21 @@ class ScreenRevisions extends Component {
             >
               {this.stringsManager.getStr(strings.STR_REVS_PROMPT)}
             </Text>
+            <TouchableHighlight
+              activeOpacity={0.6}
+              underlayColor="#DDDDDD"
+              onPress={() => this.goToAssistant()}
+            >
+              <Text
+                style={{
+                  ...styles.text,
+                  ...getSubTitleFontBasicStyle(this.props.strLang),
+                  ...{ textDecorationLine: "underline" },
+                }}
+              >
+                {this.stringsManager.getStr(strings.STR_REVS_PROMPT_ASSISTANT)}
+              </Text>
+            </TouchableHighlight>
           </View>
         </Center>
       </ImageBackground>

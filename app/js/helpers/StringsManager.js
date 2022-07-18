@@ -70,6 +70,7 @@ export const STR_CLOSE = 69;
 export const STR_DAILY_REMINDER = 70;
 export const DAILY_NOTIFICATION_TITLE = 71;
 export const DAILY_NOTIFICATION_BODY = 72;
+export const STR_REVS_PROMPT_ASSISTANT = 73;
 import { convertToArabicNumbers } from "./scripts.js";
 export default class StringsManager {
   constructor() {
@@ -497,6 +498,11 @@ export default class StringsManager {
         return "لا تجعل زحام يومك يلهيك عن وردك من القرآن, فكلما زادت تلاوتك زادك الله بركة في الوقت";
       if (strLang == "en")
         return "Don't let a busy day take you away from your Quran. Bless your day with the words of Allah The Almighty";
+      return "unsupported language";
+    }
+    if (nStrID == STR_REVS_PROMPT_ASSISTANT) {
+      if (strLang == "ar") return "أو استعن ب(مُديم) المساعد القرآني";
+      if (strLang == "en") return "Or visit (Modeem) the Quranic assistant";
       return "unsupported language";
     }
     return "unkown string";
