@@ -67,7 +67,9 @@ export const STR_ADD_REV_BY_TXT_PROMPT = 66;
 export const STR_CANT_UNDERSTAND = 67;
 export const STR_ASSISTANT = 68;
 export const STR_CLOSE = 69;
-
+export const STR_DAILY_REMINDER = 70;
+export const DAILY_NOTIFICATION_TITLE = 71;
+export const DAILY_NOTIFICATION_BODY = 72;
 import { convertToArabicNumbers } from "./scripts.js";
 export default class StringsManager {
   constructor() {
@@ -478,6 +480,23 @@ export default class StringsManager {
     if (nStrID == STR_CLOSE) {
       if (strLang == "ar") return "إغلاق";
       if (strLang == "en") return "Close";
+      return "unsupported language";
+    }
+    if (nStrID == STR_DAILY_REMINDER) {
+      if (strLang == "ar") return "التذكير اليومي";
+      if (strLang == "en") return "Daily Reminder";
+      return "unsupported language";
+    }
+    if (nStrID == DAILY_NOTIFICATION_TITLE) {
+      if (strLang == "ar") return "داوم على قرآنك";
+      if (strLang == "en") return "Dawem! Go Visit Quran";
+      return "unsupported language";
+    }
+    if (nStrID == DAILY_NOTIFICATION_BODY) {
+      if (strLang == "ar")
+        return "لا تجعل زحام يومك يلهيك عن وردك من القرآن, فكلما زادت تلاوتك زادك الله بركة في الوقت";
+      if (strLang == "en")
+        return "Don't let a busy day take you away from your Quran. Bless your day with the words of Allah The Almighty";
       return "unsupported language";
     }
     return "unkown string";

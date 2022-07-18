@@ -1,5 +1,6 @@
 export const APP_FIRST_RUN_FLAG = "APP_FIRST_RUN_FLAG";
 export const SKIP_WELCOME_FLAG = "SKIP_WELCOME_FLAG";
+export const DAILY_NOTIFICATION_FLAG = "DAILY_NOTIFICATION_FLAG";
 export const LANGUAGE = "LANGUAGE";
 export const ADD_REVISION = "ADD_REVISION";
 export const UPDATE_REVISION = "UPDATE_REVISION";
@@ -48,4 +49,8 @@ export const reduxActionResetAllRevisions = () => ({
 export const reduxActionAddMultipleRevisions = (revisions) => ({
   type: ADD_MULTIPLE_REVISIONS,
   payload: revisions,
+});
+export const reduxActionSetNotifFlag = (bIsNotify) => ({
+  type: DAILY_NOTIFICATION_FLAG,
+  payload: bIsNotify,
 });

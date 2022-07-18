@@ -4,5 +4,6 @@ const INITIAL_STATE = {
   strLang: "ar",
   revisions: [],
   curRevision: null,
+  bDailyNotification: true,
 };
 export default INITIAL_STATE;

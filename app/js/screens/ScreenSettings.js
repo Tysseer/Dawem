@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { reduxActionSetLanguage } from "../redux/reduxActions";
+import {
+  reduxActionSetLanguage,
+  reduxActionSetNotifFlag,
+} from "../redux/reduxActions";
 import {
   Text,
   StyleSheet,
@@ -9,6 +12,7 @@ import {
   Dimensions,
   I18nManager,
   TouchableOpacity,
+  Switch,
 } from "react-native";
 import * as strings from "js/helpers/StringsManager";
 import StringsManager from "js/helpers/StringsManager";
@@ -22,7 +26,36 @@ import EnFlag from "assets/images/lang_en.png";
 import ArFlag from "assets/images/lang_ar.png";
 import { getFontBasicStyle } from "../helpers/scripts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from "expo-notifications";
 
+const addDailyNotification = async (strMgr) => {
+  // const identifier1 = await Notifications.scheduleNotificationAsync({
+  //   content: {
+  //     title: strMgr.getStr(strings.DAILY_NOTIFICATION_TITLE),
+  //     body: strMgr.getStr(strings.DAILY_NOTIFICATION_BODY),
+  //     //  data: { data: "goes here" },
+  //   },
+  //   trigger: { seconds: 2, repeats: true },
+  // });
+
+  const identifier = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: strMgr.getStr(strings.DAILY_NOTIFICATION_TITLE),
+      body: strMgr.getStr(strings.DAILY_NOTIFICATION_BODY),
+      //  data: { data: "goes here" },
+    },
+    trigger: { hour: 12, minute: 10, repeats: true },
+  });
+  return identifier;
+};
+async function cancelNotifications(identifier) {
+  await Notifications.cancelScheduledNotificationAsync(identifier);
+}
+async function cancelAllNotifications() {
+  await Notifications.cancelAllScheduledNotificationsAsync();
+}
+//  this.localNotificationId = triggerNotifications();
+//  cancelAllNotifications();
 const langs = [
   {
     key: "en",
@@ -75,6 +108,7 @@ class ScreenSettings extends Component {
     this.state = {
       selectedLang: this.props.strLang,
       buttonTxt: this.stringsManager.getStr(strings.STR_SEL_LANGUAGE),
+      bNotifFlag: this.props.bDailyNotification,
     };
   }
 
@@ -132,7 +166,15 @@ class ScreenSettings extends Component {
       </TouchableOpacity>
     );
   }
-
+  onToggleNotif() {
+    let bNewDailyNotification = !this.state.bNotifFlag;
+    reduxActionSetNotifFlag(bNewDailyNotification);
+    cancelAllNotifications();
+    if (bNewDailyNotification) addDailyNotification(this.stringsManager);
+    this.setState({
+      bNotifFlag: bNewDailyNotification,
+    });
+  }
   render() {
     this.stringsManager.setLanguage(this.props.strLang);
     return (
@@ -144,6 +186,27 @@ class ScreenSettings extends Component {
             style={{ resizeMode: "contain" }}
           />
         </View>
+        <View style={styles.separator} />
+
+        <View style={styles.notifSettingBar}>
+          <View style={{ flexDirection: "row" }}>
+            <Switch
+              trackColor={{
+                false: colors.primary_disabled,
+                true: colors.primary,
+              }}
+              thumbColor={this.state.bNotifFlag ? "#ddd" : "#aaa"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={this.onToggleNotif.bind(this)}
+              value={this.state.bNotifFlag}
+              style={{ marginVertical: 15 }}
+            />
+            <Text style={this.getlangLabelTextStyle(this.originalLang)}>
+              {this.stringsManager.getStr(strings.STR_DAILY_REMINDER)}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.separator} />
         <View style={styles.allLangsContainer}>
           {this.renderLanguageItem(langs[0])}
           <View style={styles.separator} />
@@ -177,10 +240,12 @@ class ScreenSettings extends Component {
 }
 const mapStateToProps = (state) => ({
   strLang: state.strLang,
+  bDailyNotification: state.bDailyNotification,
 });
 const mapDispatchToProps = () => {
   return {
     reduxActionSetLanguage,
+    reduxActionSetNotifFlag,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps())(ScreenSettings);
@@ -190,6 +255,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#EEEEEE",
+  },
+  notifSettingBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "93%",
+    height: 30,
   },
   quranLogoContainer: {
     alignItems: "center",

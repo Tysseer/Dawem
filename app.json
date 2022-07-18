@@ -16,6 +16,10 @@
         }
       ]
     ],
+    "notifications": {
+      "icon": "./app/assets/notification.png",
+      "iosDisplayInForeground":"true"
+    },
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",

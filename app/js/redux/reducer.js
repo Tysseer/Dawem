@@ -3,7 +3,14 @@ import * as allActions from "./reduxActions";
 import INITIAL_STATE from "./reduxState";
 import { REHYDRATE } from "redux-persist";
 const actionsReducer = (state = INITIAL_STATE, action) => {
-  const { bIsFirstRun, bSkipWelcome, strLang, revisions, curRevision } = state;
+  const {
+    bIsFirstRun,
+    bSkipWelcome,
+    strLang,
+    revisions,
+    curRevision,
+    bDailyNotification,
+  } = state;
   switch (action.type) {
     case REHYDRATE: {
       const newState = {
@@ -12,6 +19,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: revisions,
         curRevision: curRevision,
+        bDailyNotification: bDailyNotification,
       };
 
       return newState;
@@ -19,11 +27,25 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
     case allActions.APP_FIRST_RUN_FLAG: {
       const newflag = action.payload;
       const newState = {
+        bIsFirstRun: bIsFirstRun,
         bIsFirstRun: newflag,
         bSkipWelcome: bSkipWelcome,
         strLang: strLang,
         revisions: revisions,
         curRevision: curRevision,
+        bDailyNotification: newflag,
+      };
+      return newState;
+    }
+    case allActions.DAILY_NOTIFICATION_FLAG: {
+      const newflag = action.payload;
+      const newState = {
+        bIsFirstRun: newflag,
+        bSkipWelcome: bSkipWelcome,
+        strLang: strLang,
+        revisions: revisions,
+        curRevision: curRevision,
+        bDailyNotification: bDailyNotification,
       };
       return newState;
     }
@@ -35,6 +57,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: revisions,
         curRevision: curRevision,
+        bDailyNotification: bDailyNotification,
       };
       return newState;
     }
@@ -46,6 +69,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: newlang,
         revisions: revisions,
         curRevision: curRevision,
+        bDailyNotification: bDailyNotification,
       };
       return newState;
     }
@@ -57,6 +81,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: revisions,
         curRevision: rev,
+        bDailyNotification: bDailyNotification,
       };
       return newState;
     }
@@ -73,6 +98,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: newRevArr,
         curRevision: null,
+        bDailyNotification: bDailyNotification,
       };
 
       return newState;
@@ -91,6 +117,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: newRevArr,
         curRevision: null,
+        bDailyNotification: bDailyNotification,
       };
 
       return newState;
@@ -120,6 +147,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: newRevArr,
         curRevision: null,
+        bDailyNotification: bDailyNotification,
       };
       return newState;
     }
@@ -131,6 +159,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: newRevArr,
         curRevision: null,
+        bDailyNotification: bDailyNotification,
       };
       return newState;
     }
@@ -146,6 +175,7 @@ const actionsReducer = (state = INITIAL_STATE, action) => {
         strLang: strLang,
         revisions: newRevArr,
         curRevision: null,
+        bDailyNotification: bDailyNotification,
       };
       return newState;
     }

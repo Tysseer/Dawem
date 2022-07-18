@@ -24,6 +24,7 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
+
 async function registerForPushNotificationsAsync() {
   let token;
   if (Device.isDevice) {
