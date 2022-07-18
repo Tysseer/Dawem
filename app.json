@@ -16,7 +16,7 @@
         }
       ]
     ],
-    "notifications": {
+    "notification": {
       "icon": "./app/assets/notification.png",
       "iosDisplayInForeground":"true"
     },
