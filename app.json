@@ -8,7 +8,6 @@
     "icon": "./app/assets/icon.png",
     "plugins": [
       [
-
         "expo-notifications",
         {
           "icon": "./local/assets/dayBadge.png",
@@ -18,7 +17,7 @@
     ],
     "notification": {
       "icon": "./app/assets/notification.png",
-      "iosDisplayInForeground":"true"
+      "iosDisplayInForeground": true
     },
     "splash": {
       "image": "./app/assets/splash.png",
@@ -28,16 +27,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.imuslim.dawem",
       "buildNumber": "1.0.5",
       "infoPlist": {
         "NSPhotoLibraryAddUsageDescriptio": "This app uses the location to detect your currency.",
-        "NSPhotoLibraryUsageDescription": "This app uses the location to detect your currency."
+        "NSPhotoLibraryUsageDescription": "This app uses the location to detect your currency.",
+        "UIBackgroundModes": ["audio"]
       }
     },
     "android": {
@@ -48,10 +46,7 @@
         "backgroundColor": "#EEEEEE"
       },
       "useNextNotificationsApi": true,
-      "permissions": [
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-      ]
+      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
