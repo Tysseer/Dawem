@@ -142,7 +142,7 @@ class ModalPlayback extends Component {
       if (status.didJustFinish && !status.isLooping) {
         this._advanceIndex(true);
         this._loadNewPlaybackInstance(true);
-      } else {
+      } else if (this.ayahNumLines > 3) {
         let curProgress = parseInt(
           (100 * status.positionMillis) / status.durationMillis
         );
