@@ -16,7 +16,7 @@ import Navigation from "./app/navigation";
 import { RootSiblingParent } from "react-native-root-siblings";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-
+import { Audio } from "expo-av";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -55,6 +55,17 @@ async function registerForPushNotificationsAsync() {
   }
 
   return token;
+}
+async function setAudioSettingsAsync() {
+  let promise = await Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+    staysActiveInBackground: true,
+    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS,
+    shouldDuckAndroid: true,
+    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+    playThroughEarpieceAndroid: true,
+  });
+  return promise;
 }
 export default class App extends Component {
   async fetchFonts() {
@@ -107,10 +118,12 @@ export default class App extends Component {
       rev.fillFromSerializedObj(reduxStore.getState().revisions[i]);
       reduxStore.getState().revisions[i] = rev;
     }
-    registerForPushNotificationsAsync();
     registerForPushNotificationsAsync().then(
       (token) => (this.m_pushNotificationToken = token)
     );
+    setAudioSettingsAsync().catch((error) => {
+      alert("Audio setings error:" + error);
+    });
 
     this.setState({ bIsLoaded: true });
   }

@@ -75,6 +75,7 @@ class ScreenQuranicAssistant extends Component {
       this.showDelayedMessages();
     }, 700);
     this.delay = 1400;
+    this.scrollView = React.createRef();
   }
   messageReady(msg) {
     this.addDelayedMsg(msg);

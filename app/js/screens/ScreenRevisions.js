@@ -83,6 +83,7 @@ class ScreenRevisions extends Component {
   onFocus() {
     this.refresh();
   }
+
   showHideCongrats(bShow) {
     if (bShow == false) this.congratsMsgs.pop();
     this.setState({
@@ -103,6 +104,11 @@ class ScreenRevisions extends Component {
       />
     );
   }
+  showHidePlayBack(bShow) {
+    this.setState({
+      bShowPlayBack: bShow, //bShow,
+    });
+  }
   getListenModal() {
     if (this.state.bShowPlayBack == false || this.props.curRevision == null)
       return <></>;
@@ -110,7 +116,7 @@ class ScreenRevisions extends Component {
       <ModalPlayback
         strLang={this.props.strLang}
         quranInfo={this.quranInfo}
-        setModalVisible={this.showHideCongrats.bind(this)}
+        setModalVisible={this.showHidePlayBack.bind(this)}
       />
     );
   }
