@@ -79,8 +79,7 @@ class ModalPlayback extends Component {
       duration: 1000,
       useNativeDriver: true,
     }).start(({ finished }) => {
-      console.log("finished anim, ready to play");
-      //TrackPlayer.add(this.constructTracks());
+      //console.log("finished anim, ready to play");
       this._loadNewPlaybackInstance(false);
     });
     this.ayahStyle = getTitleFontBasicStyle("ar");
