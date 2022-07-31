@@ -79,7 +79,6 @@ class ModalPlayback extends Component {
       duration: 1000,
       useNativeDriver: true,
     }).start(({ finished }) => {
-      //console.log("finished anim, ready to play");
       this._loadNewPlaybackInstance(false);
     });
     this.ayahStyle = getTitleFontBasicStyle("ar");
@@ -94,7 +93,7 @@ class ModalPlayback extends Component {
     let ret = [];
     let baseURL =
       "https://filedn.eu/lN31ymlFlgGQjKjbcGyu9xY/QuranVerses/Hosary/";
-    for (let i = this.revision.strt; i < this.revision.end; i++) {
+    for (let i = this.revision.strt; i <= this.revision.end; i++) {
       let ayaInfo = this.props.quranInfo.getAyahLocalIndx(i); //{localSurahIndx,localAyahIndx}
       let title = this.bIsAr
         ? this.props.quranInfo.getSurahNameAr(ayaInfo.localSurahIndx)
@@ -141,7 +140,7 @@ class ModalPlayback extends Component {
       // });
       if (status.didJustFinish && !status.isLooping) {
         this._advanceIndex(true);
-        this._loadNewPlaybackInstance(true);
+        this._loadNewPlaybackInstance(this.bIsPlaying);
       } else if (this.ayahNumLines > 3) {
         let curProgress = parseInt(
           (100 * status.positionMillis) / status.durationMillis
@@ -209,13 +208,13 @@ class ModalPlayback extends Component {
       if (this.bIsRepeat) this.currentAyah = this.revision.strt;
       else {
         this.currentAyah = this.revision.end;
-        onStop();
+        this.onStop();
       }
     if (this.currentAyah < this.revision.strt)
       if (this.bIsRepeat) this.currentAyah = this.revision.end;
       else {
         this.currentAyah = this.revision.strt;
-        onStop();
+        this.onStop();
       }
   }
 
@@ -255,14 +254,12 @@ class ModalPlayback extends Component {
     return " (" + str + ") ";
   }
   onAyahTextLayout(e) {
-    //console.log("num lines " + e.nativeEvent.lines.length);
-    this.ayahNumLines = e.nativeEvent.lines.length;
+    this.ayahNumLines = Math.max(3, e.nativeEvent.lines.length);
     this.refresh();
   }
   render() {
     var strMgr = new StringsManager();
     strMgr.setLanguage(this.props.strLang);
-    //console.log(this.ayahNumLines);
     return (
       <Modal transparent={true} visible={true}>
         <Animated.View
