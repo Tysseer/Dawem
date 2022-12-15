@@ -1,1 +1,1 @@
-expo install expo-device
+gcloud auth application-default login

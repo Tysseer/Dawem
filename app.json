@@ -27,7 +27,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.imuslim.dawem",
@@ -35,7 +37,9 @@
       "infoPlist": {
         "NSPhotoLibraryAddUsageDescriptio": "This app uses the location to detect your currency.",
         "NSPhotoLibraryUsageDescription": "This app uses the location to detect your currency.",
-        "UIBackgroundModes": ["audio"]
+        "UIBackgroundModes": [
+          "audio"
+        ]
       }
     },
     "android": {
@@ -46,7 +50,10 @@
         "backgroundColor": "#EEEEEE"
       },
       "useNextNotificationsApi": true,
-      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./app/assets/favicon.png"

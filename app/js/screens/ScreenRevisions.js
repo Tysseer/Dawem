@@ -278,7 +278,7 @@ class ScreenRevisions extends Component {
                 style={{
                   ...styles.text,
                   ...getSubTitleFontBasicStyle(this.props.strLang),
-                  ...{ textDecorationLine: "underline" },
+                  ...{ textDecorationLine: "underline", fontWeight: "bold" },
                 }}
               >
                 {this.stringsManager.getStr(strings.STR_REVS_PROMPT_ASSISTANT)}

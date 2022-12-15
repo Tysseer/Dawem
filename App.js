@@ -56,8 +56,10 @@ async function registerForPushNotificationsAsync() {
 
   return token;
 }
+
 async function setAudioSettingsAsync() {
   let promise = await Audio.setAudioModeAsync({
+    allowsRecordingIOS: false,
     playsInSilentModeIOS: true,
     staysActiveInBackground: true,
     interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS,
