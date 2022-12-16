@@ -25,7 +25,8 @@
       "backgroundColor": "#EEEEEE"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/dc27bfba-be30-4659-a10b-58e3e98a5609"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -60,6 +61,13 @@
     },
     "description": " Dawem is an application to make it easy to frequently read quran and plan your recitation so no verses are left unvisited for long ",
     "githubUrl": "https://github.com/tysseer/dawem",
-    "sdkVersion": "44.0.0"
+    "extra": {
+      "eas": {
+        "projectId": "dc27bfba-be30-4659-a10b-58e3e98a5609"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }

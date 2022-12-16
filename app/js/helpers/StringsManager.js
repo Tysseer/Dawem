@@ -501,8 +501,10 @@ export default class StringsManager {
       return "unsupported language";
     }
     if (nStrID == STR_REVS_PROMPT_ASSISTANT) {
-      if (strLang == "ar") return "أو استعن ب(مُديم) المساعد القرآني";
-      if (strLang == "en") return "Or visit (Modeem) the Quranic assistant";
+      if (strLang == "ar")
+        return "أو اضغط هنا لتستعين ب(مُديم) المساعد القرآني";
+      if (strLang == "en")
+        return "Or press here to go to (Modeem) the Quranic assistant";
       return "unsupported language";
     }
     return "unkown string";

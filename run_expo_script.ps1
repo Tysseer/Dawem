@@ -1,1 +1,1 @@
-gcloud auth application-default login
+eas update

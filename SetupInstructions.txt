@@ -24,4 +24,4 @@ expo install @expo-google-fonts/inter expo-font
 //expo doctor --fix-dependencies
 //expo r -c
 //yarn install 
-// expo install expo-notifications
+// expo install expo-notificationsw
