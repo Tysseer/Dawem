@@ -649,11 +649,27 @@ class SearchTextParser {
   }
   parseRevisionQuery(text) {
     //console.log("parsing: \n" + text);
+    var bIsEnglish = /[a-z]/.test(text);
+    if (bIsEnglish) {
+      text = MiscUtilities.normalizeString(text).replace(/-{1,}/g, " to ");
+      text = MiscUtilities.normalizeString(text).replace(/[,]+/g, " to ");
+      text = MiscUtilities.normalizeString(text).replace(/[;]+/g, " to ");
+      text = MiscUtilities.normalizeString(text).replace(/[:]+/g, " to ");
+    } else {
+      text = MiscUtilities.normalizeString(text).replace(/-{1,}/g, " حتي ");
+      text = MiscUtilities.normalizeString(text).replace(/[,]+/g, " حتي ");
+      text = MiscUtilities.normalizeString(text).replace(/[;]+/g, " حتي ");
+      text = MiscUtilities.normalizeString(text).replace(/[؛]+/g, " حتي ");
+      text = MiscUtilities.normalizeString(text).replace(/[،]+/g, " حتي ");
+      text = MiscUtilities.normalizeString(text).replace(/[:]+/g, " حتي ");
+    }
     text = MiscUtilities.removeLeadingAlefLam(
       MiscUtilities.normalizeString(text).replace(/ الي /g, " حتي ")
     );
+    //console.log("removeLeadingAlefLam: " + text);
 
     text = this.quranInfo.replaceJuzuuNamesFromString(text);
+    //console.log("replaceJuzuuNamesFromString: " + text);
     var newStr = text;
     //console.log("nomalized: \n" + newStr);
     var tokens = newStr.split(" ");

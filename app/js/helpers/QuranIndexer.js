@@ -2414,7 +2414,8 @@ class QuranIndexer {
           str = MiscUtilities.replaceStringParts(
             str,
             this.arrJuzuuNamesTrns_normalized[i][j],
-            " juzuu " + i.toString()
+            " juzuu " + i.toString(),
+            ["to", "from", "at"]
           );
         }
       }
@@ -2427,7 +2428,8 @@ class QuranIndexer {
           str = MiscUtilities.replaceStringParts(
             str,
             this.arrJuzuuNamesEn_normalized[i][j],
-            " juzuu " + i.toString()
+            " juzuu " + i.toString(),
+            ["to", "from", "at"]
           );
         }
       }
@@ -2441,7 +2443,8 @@ class QuranIndexer {
           str = MiscUtilities.replaceStringParts(
             str,
             this.arrJuzuuNamesAr_normalized[i][j],
-            " جزء " + i.toString()
+            " جزء " + i.toString(),
+            ["من", "حتي"]
           );
         }
       }

@@ -43,7 +43,7 @@ var MiscUtilities = {
     strRet = p2e(strRet);
     return strRet;
   },
-  replaceStringParts: function (strTxt, strSrc, strReplace) {
+  replaceStringParts: function (strTxt, strSrc, strReplace, hotWords) {
     let parts = strSrc.split(" ");
     let destParts = strTxt.split(" ");
     if (parts.length == 0 || destParts.length == 0) return strTxt;
@@ -54,6 +54,7 @@ var MiscUtilities = {
         destParts[iDest],
         parts[0]
       );
+      if (hotWords.includes(destParts[iDest])) dist += 1000;
       if (dist == 0 || dist / parts[0].length < 0.4) {
         let bDiff = false;
         let iStrt = iDest;
@@ -64,6 +65,8 @@ var MiscUtilities = {
             destParts[iDest],
             parts[iPart]
           );
+          if (hotWords.includes(destParts[iDest])) dist += 1000;
+
           if (dist == 0 || dist / parts[iPart].length < 0.4) {
             iDest++;
             iPart++;
