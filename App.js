@@ -16,7 +16,12 @@ import Navigation from "./app/navigation";
 import { RootSiblingParent } from "react-native-root-siblings";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import { Audio } from "expo-av";
+import {
+  Audio,
+  /* Inside expo-av/src/Audio.types.ts: */
+  InterruptionModeAndroid,
+  InterruptionModeIOS,
+} from "expo-av";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -62,9 +67,11 @@ async function setAudioSettingsAsync() {
     allowsRecordingIOS: false,
     playsInSilentModeIOS: true,
     staysActiveInBackground: true,
-    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS,
+    interruptionModeIOS:
+      InterruptionModeIOS.INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS,
     shouldDuckAndroid: true,
-    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+    interruptionModeAndroid:
+      InterruptionModeAndroid.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
     playThroughEarpieceAndroid: true,
   });
   return promise;
